@@ -1,0 +1,72 @@
+import { ButtonHTMLAttributes, ReactNode, useState } from 'react'
+import Image from 'next/image'
+import { Tooltip as ReactTooltip } from 'react-tooltip'
+import iconCopy from '@/icons/profile/profile-info/copy.svg'
+
+import cornertl from '@/icons/button/corner-tl.svg'
+import cornerbl from '@/icons/button/corner-bl.svg'
+import cornertr from '@/icons/button/corner-tr.svg'
+import cornerbr from '@/icons/button/corner-br.svg'
+
+type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
+  children?: ReactNode
+}
+
+export default function Button({ children, className, ...atributes }: Props) {
+  return (
+    <button
+      className={
+        className +
+        ' relative flex h-10 items-center justify-center gap-2 rounded-[5.71px] bg-[url(/images/header/red-btn-bg.png)] bg-cover bg-center bg-no-repeat px-6 text-center text-sm uppercase text-text-white shadow-btn lg:h-14 lg:rounded-lg lg:px-8 lg:shadow-btn-lg'
+      }
+      {...atributes}
+    >
+      <Image
+        src={cornertl}
+        alt=''
+        className='absolute left-[6px] top-[6px] h-[11.43] w-[25.71] lg:left-2 lg:top-2 lg:h-4 lg:w-9'
+      />
+      <Image
+        src={cornerbl}
+        alt=''
+        className='absolute bottom-[6px] left-[6px] h-[11.43] w-[25.71] lg:bottom-2 lg:left-2 lg:h-4 lg:w-9'
+      />
+      <Image
+        src={cornertr}
+        alt=''
+        className='absolute right-[6px] top-[6px] h-[11.43] w-[25.71] lg:right-2 lg:top-2 lg:h-4 lg:w-9'
+      />
+      <Image
+        src={cornerbr}
+        alt=''
+        className='absolute bottom-[6px] right-[6px] h-[11.43] w-[25.71] lg:bottom-2 lg:right-2 lg:h-4 lg:w-9'
+      />
+      {children}
+    </button>
+  )
+}
+
+export const IconCopy = ({ text, customIcon }: any) => {
+  const [statusCopy, setStatusCopy] = useState('')
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(text)
+    setStatusCopy('Copied')
+    setTimeout(() => {
+      setStatusCopy('')
+    }, 1000)
+  }
+
+  return (
+    <button onClick={() => handleCopy()}>
+      <span
+        data-tooltip-id='icon-copy'
+        className='flex size-4 cursor-pointer items-center justify-center'
+        onClick={handleCopy}
+      >
+        {customIcon ? customIcon : <Image src={iconCopy} alt='' width={16} height={16} />}
+      </span>
+      <ReactTooltip id='icon-copy' place='top' content={statusCopy} />
+    </button>
+  )
+}

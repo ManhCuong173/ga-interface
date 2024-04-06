@@ -1,0 +1,103 @@
+import chevronDownBlackIcon from '@/icons/header/chevron-down-sm-black.svg'
+import chevronDownIcon from '@/icons/header/chevron-down-sm.svg'
+import earthIcon from '@/icons/header/earth.svg'
+import earthBlackIcon from '@/icons/header/earth-black.svg'
+import { Language } from '@/types/language'
+import Image from 'next/image'
+import { useEffect, useRef, useState } from 'react'
+
+type Props = {
+  mode: 'transparent' | 'solid'
+}
+
+export default function LanguageSelect({ mode }: Props) {
+  const [show, setShow] = useState(false)
+  const [language, setLanguage] = useState<Language>('en')
+
+  const selfRef = useRef<HTMLDivElement>(null)
+  const dropdownRef = useRef<HTMLDivElement>(null)
+
+  const handleChangeLanguge = (lang: Language) => {
+    // TODO: add logic to change language here
+    setLanguage(lang)
+    setShow(false)
+  }
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        selfRef.current &&
+        !selfRef.current.contains(event.target as Node) &&
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setShow(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
+
+  return (
+    <div className='relative'>
+      <div
+        className={`${mode === 'transparent' ? 'text-_white' : ''} relative flex h-10 cursor-pointer items-center justify-center gap-2.5 px-2.5 text-base font-medium`}
+        onClick={() => setShow((prev) => !prev)}
+        ref={selfRef}
+      >
+        <span className='relative size-6'>
+          <Image
+            src={earthIcon}
+            alt=''
+            className={`${mode === 'transparent' ? 'opacity-100' : 'opacity-0'} absolute inset-0 transition-all`}
+          />
+          <Image
+            src={earthBlackIcon}
+            alt=''
+            className={`${mode === 'transparent' ? 'opacity-0' : 'opacity-100'} absolute inset-0 transition-all`}
+          />
+        </span>
+        <span className='whitespace-nowrap'>{language === 'en' ? 'EN' : '中国人'}</span>
+        <span className='relative size-6'>
+          <Image
+            src={chevronDownIcon}
+            alt=''
+            className={`${mode === 'transparent' ? 'opacity-100' : 'opacity-0'} absolute inset-0 m-auto transition-all`}
+          />
+          <Image
+            src={chevronDownBlackIcon}
+            alt=''
+            className={`${mode === 'transparent' ? 'opacity-0' : 'opacity-100'} absolute inset-0 m-auto transition-all`}
+          />
+        </span>
+      </div>
+      <div
+        className={`${show ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-50'} absolute inset-x-0 top-full mt-2 origin-top overflow-hidden rounded-lg border border-text-black_3 text-black1 transition-all duration-300`}
+        style={{
+          boxShadow: '3px 6px 30px 0px rgba(0, 0, 0, 0.12)',
+        }}
+        ref={dropdownRef}
+      >
+        <div
+          className='flex h-11 cursor-pointer items-center justify-start gap-4 bg-white px-4 hover:bg-[#FAF5F0]'
+          onClick={() => {
+            handleChangeLanguge('en')
+          }}
+        >
+          <span className='text-sm font-light leading-5 tracking-[-0.42px]'>EN</span>
+        </div>
+        <div
+          className='flex h-11 cursor-pointer items-center justify-start gap-4 bg-white px-4 hover:bg-[#FAF5F0]'
+          onClick={() => {
+            handleChangeLanguge('cn')
+          }}
+        >
+          <span className='text-sm font-light leading-5 tracking-[-0.42px]'>中国人</span>
+        </div>
+      </div>
+    </div>
+  )
+}
