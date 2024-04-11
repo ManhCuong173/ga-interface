@@ -135,21 +135,31 @@ export default function History({ open, onClose }: Props) {
             </h2>
           </div>
           <div className='space-y-4'>
-            <div className='flex flex-col justify-end gap-4 lg:flex-row lg:px-[18px]'>
-              <Dropdown
-                options={rounds}
-                value={selectedRound}
-                setValue={setSelectedRound}
-                className='min-w-[285px]'
-              />
-              <Dropdown
-                label='PRIZE'
-                options={prizeOptions}
-                value={selectedPrize}
-                setValue={setSelectedPrize}
-                className='min-w-[154px]'
-              />
+            <div className='flex flex-col gap-4'>
+              <div className='flex flex-col justify-end gap-4 lg:flex-row lg:px-[18px]'>
+                <Dropdown
+                  options={rounds}
+                  value={selectedRound}
+                  setValue={setSelectedRound}
+                  className='min-w-[240px]'
+                />
+                <Dropdown
+                  label='PRIZE'
+                  options={prizeOptions}
+                  value={selectedPrize}
+                  setValue={setSelectedPrize}
+                  className='min-w-[154px]'
+                />
+              </div>
+              <div className='lg:px-[18px] flex flex-col lg:flex-row items-center space-x-1'>
+                <h2 className='text-sm text-left font-medium text-[#EF232C]'>Reward wallet:</h2>
+                <p className='relative text-[12px] lg:text-sm text-left font-light text-[#4E473F]'>
+                  {data?.data.reward_wallet}
+                </p>
+                <IconCopy text={data?.data.reward_wallet} />
+              </div>
             </div>
+
             <div className='max-w-full overflow-x-auto'>
               <div className='min-w-[500px] space-y-4 '>
                 <div className='flex h-11 rounded border border-[#EEE0E0] text-center text-sm font-light leading-5 text-[#9F232D] lg:mx-[18px]'>
@@ -192,15 +202,6 @@ export default function History({ open, onClose }: Props) {
                 )} */}
               </div>
             </div>
-          </div>
-          <div className='mx-auto w-full md:w-[434px] lg:mt-5'>
-            <h2 className='mb-1 text-xl font-medium text-[#EF232C]'>Reward wallet</h2>
-            <figure className='relative flex h-[60px] w-full items-center justify-center'>
-              <Image src={bgReward} alt='bg reward' fill priority />
-              <p className='relative text-[10px] font-light text-[#4E473F] lg:text-sm'>
-                {data?.data.reward_wallet}
-              </p>
-            </figure>
           </div>
         </div>
 

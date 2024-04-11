@@ -9,7 +9,7 @@ import Card from './card'
 
 export default function NFTGallery() {
   return (
-    <div id='section-nft-gallery' className='snap-center bg-[url(/images/commons/background-home-full.png)] bg-no-repeat bg-cover'>
+    <div id='section-nft-gallery' className='snap-center'>
       <div className='mx-auto flex max-w-[1440px] items-center justify-center lg:h-screen lg:pl-20 lg:pr-6'>
         <div className='relative flex h-fit max-h-full w-[1304px] max-w-full flex-col gap-6 border-[1.852px] border-[#FACE5D] bg-white/10 p-4 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] backdrop-blur-[5px]'>
           <div className='flex flex-col gap-6 bg-[linear-gradient(180deg,#FFF4DD_0%,rgba(255,244,221,0.45)_100%)] px-4 py-6 lg:px-[33px]'>

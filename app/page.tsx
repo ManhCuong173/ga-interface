@@ -86,7 +86,7 @@ export default function Home() {
     <>
       <div
         id='background'
-        className='fixed inset-x-0 top-0 aspect-[414/1736] w-full bg-full lg:aspect-[1442/2300]'
+        className='fixed inset-x-0 top-0 aspect-[414/1736] w-full bg-[url(/images/commons/background-home-full.png)] bg-full lg:aspect-[1442/2300]'
       />
       <div
         id='root-div'
@@ -96,10 +96,8 @@ export default function Home() {
         <Banner />
         <NFTGallery />
         <LuckyDraw />
-        <div className='bg-[url(/images/commons/background-home-full.png)] bg-cover bg-no-repeat'>
-          <CRM />
-          <Slogan />
-        </div>
+        <CRM />
+        <Slogan />
         <Footer />
       </div>
     </>

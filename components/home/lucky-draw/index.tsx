@@ -38,10 +38,11 @@ export default function LuckyDraw() {
     queryFn: async () => roundService.getActivated(),
   })
 
+  // bg-[url(/images/commons/background-home-full.png)]  bg-cover bg-no-repeat
   return (
     <div
       id='section-lucky-draw'
-      className='snap-start bg-[url(/images/commons/background-home-full.png)]  bg-cover bg-no-repeat text-_white'
+      className='snap-start text-_white'
     >
       <div className='items-center justify-center px-4 pb-[47.5px] pt-[45.5px] lg:flex lg:h-screen lg:p-0'>
         <div className='border-[1.852px] border-[#FACE5D] bg-white/10 p-4 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] lg:p-8 lg:backdrop-blur-[5px]'>

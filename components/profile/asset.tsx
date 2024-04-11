@@ -71,7 +71,7 @@ export default function Asset({ onShowInfo, onList, onCancel, ...props }: Props)
           }}
         >
           <span
-            className={`${props.is_listing ? 'bg-[url(/images/profile/button-cancel-2.png)] text-[#B26802] group-hover:bg-[url(/images/profile/button-cancel-2-hover.png)]' : 'bg-[url(/images/profile/button-list-2.png)] text-yellow1 group-hover:bg-[url(/images/profile/button-list-2-hover.png)]'} flex h-[30.13px] w-full items-center justify-center bg-full text-[12px] text-base font-medium leading-[18px] tracking-[-0.36px] group-hover:shadow-btn-list-hover`}
+            className={`${props.is_listing ? 'bg-[url(/images/profile/button-cancel-2.png)] text-[#B26802] group-hover:bg-[url(/images/profile/button-cancel-2-hover.png)]' : 'bg-[url(/images/profile/button-list-2.png)] text-yellow1 group-hover:bg-[url(/images/profile/button-list-2-hover.png)]'} flex h-[30.13px] w-full items-center justify-center whitespace-nowrap bg-full text-[12px] text-sm font-medium leading-[18px] tracking-[-0.36px] group-hover:shadow-btn-list-hover lg:text-base`}
           >
             {props.is_listing ? 'Cancel listing' : 'List'}
           </span>

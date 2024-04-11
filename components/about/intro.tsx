@@ -8,8 +8,8 @@ import bg_img from '@/images/marketplace/background.png'
 const Intro = () => {
   return (
     <div className='relative overflow-y-hidden lg:h-[734px]'>
-      <Image src={bg_img} alt='' className='absolute z-0 hidden w-full sm:block' />
-      <Image src={bg_img_mb} alt='' className='absolute z-0 w-full sm:hidden' />
+      {/* <Image src={bg_img} alt='' className='absolute z-0 hidden w-full sm:block' />
+      <Image src={bg_img_mb} alt='' className='absolute z-0 w-full sm:hidden' /> */}
 
       <div className='mx-auto w-full max-w-[1440px] items-center justify-between px-5 py-10 lg:flex lg:h-[750px] lg:px-[158px] relative z-10'>
         <div className='mx-auto'>

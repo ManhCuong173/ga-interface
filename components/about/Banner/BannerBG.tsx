@@ -38,7 +38,7 @@ const BannerBG = (props: Props) => {
   return (
     <>
       <div className='relative h-[734px] w-full lg:block hidden'>
-        <Image src={bg_img} alt='' className='w-full relative z-0'/>
+        {/* <Image src={bg_img} alt='' className='w-full relative z-0'/> */}
 
         <div className='flex w-full justify-center lg:justify-between absolute inset-0 z-10  translate-y-[-50px] px-5'>
           <Image src={frame_left} alt='' className='max-lg:hidden' />
@@ -52,7 +52,6 @@ const BannerBG = (props: Props) => {
         <div className='w-full h-full justify-center items-center flex absolute inset-0 z-10'>
           <Image src={apple} width={258} alt='' className='' />
         </div>
-
 
         <div className='w-full h-[568px] flex flex-col justify-between absolute inset-0 z-20 p-5'>
           <div className='w-full flex justify-between'>

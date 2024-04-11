@@ -11,6 +11,7 @@ import decor from '@/images/profile/profile-info/decor.png'
 import { selectAddress, selectedPublicKey } from '@/lib/features/wallet/wallet-slice'
 import { useAppSelector } from '@/lib/hook'
 import { truncate } from '@/lib/truncate'
+import { backend } from '@/services/endpoint/endpoint'
 import { QueryObserverResult, RefetchOptions, useQueryClient } from '@tanstack/react-query'
 import Image from 'next/image'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
@@ -19,8 +20,6 @@ import { ProfileType } from '../../types/profile'
 import { IconCopy } from '../button'
 import ButtonConnect from './button/btnconnect'
 import ModalEditProfile from './modal/modal-edit-profile'
-import ButtonConnectSolana from './button/btn-connect-solana'
-import { backend } from '@/services/endpoint/endpoint'
 
 interface Props {
   profile: ProfileType | undefined
@@ -136,13 +135,13 @@ export default function ProfileInfo({ profile, refetch }: Props) {
             <h2 className='w-[250px] truncate text-center text-2xl font-medium leading-8 tracking-[-2%] text-black'>
               {profile?.name || 'Unknown Name'}
             </h2>
-            <div className='flex h-fit items-center justify-center gap-2 text-xs font-light leading-[18px] tracking-[-3%] text-text-black'>
+            {/* <div className='flex h-fit items-center justify-center gap-2 text-xs font-light leading-[18px] tracking-[-3%] text-text-black'>
               <span> {truncate(address, 13, '...')}</span>
               <IconCopy text={address} />
-            </div>
+            </div> */}
           </div>
           <div className='flex h-[60px] w-[202px] items-center justify-center gap-2 bg-[url(/images/profile/profile-info/point.png)] bg-full'>
-            <span className='text-[20px] font-medium leading-6 tracking-[-2%] text-black1'>
+            <span className='text-[20px] font-medium leading-6 tracking-[-2%] text-[#EF232C]'>
               {point}
             </span>
             <span className='text-base font-medium leading-6 tracking-[-2%] text-text-sub'>
@@ -181,11 +180,6 @@ export default function ProfileInfo({ profile, refetch }: Props) {
           status={profile?.discord_connect}
           text={profile?.discord_connect ? profile.discord_username : 'connect discord'}
           onClick={connectDiscord}
-        />
-        <ButtonConnectSolana
-          refetch={refetch}
-          isConnected={profile?.solana_connect}
-          solana_wallet={profile?.solana_wallet}
         />
       </div>
       <ModalEditProfile

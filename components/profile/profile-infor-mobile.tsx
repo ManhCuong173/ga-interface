@@ -16,8 +16,6 @@ import { ProfileType } from '../../types/profile'
 import { IconCopy } from '../button'
 import ButtonConnect from './button/btnconnect'
 import ModalEditProfile from './modal/modal-edit-profile'
-import ButtonConnectSolana from './button/btn-connect-solana'
-
 interface PropsProfile {
   profile: ProfileType | undefined
   refetch: (
@@ -98,12 +96,12 @@ const ProfileInfoMobile = ({ profile, refetch }: PropsProfile) => {
       <h2 className='mx-auto w-[250px] truncate text-center text-2xl font-medium leading-8 tracking-[-2%] text-black'>
         {profile?.name || 'Unknown name '}
       </h2>
-      <div className='flex h-fit items-center justify-center gap-2 text-xs font-light leading-[18px] tracking-[-3%] text-text-black'>
+      {/* <div className='flex h-fit items-center justify-center gap-2 text-xs font-light leading-[18px] tracking-[-3%] text-text-black'>
         <span> {sliceAddress(profile?.wallet_address)}</span>
         <IconCopy text={String(profile?.wallet_address)} />
-      </div>
+      </div> */}
       <div className='flex items-center justify-center gap-2'>
-        <span className='text-[20px] font-medium leading-6 tracking-[-2%] text-black1'>
+        <span className='text-[20px] font-medium leading-6 tracking-[-2%] text-[#EF232C]'>
           {point || 0}
         </span>
         <span className='text-base font-medium leading-6 tracking-[-2%] text-text-sub'>POINTS</span>
@@ -134,12 +132,6 @@ const ProfileInfoMobile = ({ profile, refetch }: PropsProfile) => {
           icon={ic_discord}
           text={profile?.discord_connect ? profile.discord_username : 'connect discord'}
           onClick={connectDiscord}
-        />
-        <ButtonConnectSolana
-          className='bg-[#fff]'
-          refetch={refetch}
-          isConnected={profile?.solana_connect}
-          solana_wallet={profile?.solana_wallet}
         />
       </div>
       <Image src={decor} alt='' className='mx-auto w-[180px]' />

@@ -16,12 +16,9 @@ import { setBtnToUsdRateData } from '@/lib/features/wallet/fee-slice'
 import { useAppDispatch } from '@/lib/hook'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
-import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect } from 'react'
 import 'react-toastify/dist/ReactToastify.css'
-import mkp_bg from '@/images/marketplace/background.png'
-import mkp_bg_mb from '@/images/marketplace/background-mg.png'
 
 const tabs = [
   {
@@ -87,13 +84,11 @@ const Marketplace = () => {
   }, [param, handleRenderContent])
 
   return (
-    <div className='w-full'>
+    <div className='w-full bg-[url(/images/marketplace/background-mg.png)] bg-fixed lg:bg-[url(/images/marketplace/background.png)] bg-cover bg-no-repeat'>
       <BannerMarketPlace />
       <div className='relative'>
-        <Image src={mkp_bg} alt='' className=' absolute inset-0 z-0 sm:block hidden w-full' />
-        <Image src={mkp_bg_mb} alt='' className=' absolute inset-0 z-0 sm:hidden w-full' />
         {isComingSoonMode && <ComingSoon />}
-        <div className=' mx-auto px-4 sm:py-10 lg:px-[60px] relative z-10'>
+        <div className='relative z-10 mx-auto px-4 sm:py-10 lg:px-[60px]'>
           <div className='mx-auto flex w-full items-center gap-[10px] border-b border-[#D4C79C] max-sm:my-4 lg:max-w-[1440px]'>
             {tabs.map((tab, index) => {
               return (

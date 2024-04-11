@@ -1,4 +1,3 @@
-
 'use client'
 import Footer from '@/components/footer'
 import Inscribe from '@/components/inscribe'
@@ -12,17 +11,12 @@ import axios from 'axios'
 import { MutableRefObject, Suspense, useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
-import mkp_bg from '@/images/marketplace/background.png'
-import mkp_bg_mb from '@/images/marketplace/background-mg.png'
-
-import Image from 'next/image'
 
 export default function InscribePage() {
+  const ref: MutableRefObject<any> = useRef()
+  const mintProcessStep = useSelector(selectMintProcess)
 
-  const ref: MutableRefObject<any> = useRef();
-  const mintProcessStep = useSelector(selectMintProcess);
-
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
 
   const { data: btnToUsdRateData } = useQuery({
     queryKey: ['btcPrice'],
@@ -35,29 +29,27 @@ export default function InscribePage() {
   })
 
   dispatch(setBtnToUsdRateData(btnToUsdRateData))
-  
+
   useEffect(() => {
     ref.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
+      behavior: 'smooth',
+      block: 'start',
     })
   }, [mintProcessStep])
 
-  
-
   return (
     <Suspense>
-      <div ref={ref} className='sm:pt-[66px] pt-[72px] max-sm:px-4 pb-[170px] relative'>
-        <Image src={mkp_bg} alt='' className=' absolute inset-0 z-0 lg:block hidden w-full' />
-        <Image src={mkp_bg_mb} alt='' className=' absolute inset-0 z-0 lg:hidden w-full' />
-
+      <div
+        ref={ref}
+        className='relative bg-[url(/images/marketplace/background-mg.png)] bg-fixed pb-[170px] pt-[72px] max-sm:px-4 sm:pt-[66px] lg:bg-[url(/images/marketplace/background.png)] bg-cover bg-no-repeat'
+      >
         <div className='relative z-10'>
           <Introduce />
           <Inscribe />
           <MyOrders />
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </Suspense>
   )
 }

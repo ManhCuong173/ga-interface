@@ -55,7 +55,6 @@ const ConfirmModal = ({
     enabled: !!open,
   })
 
-
   const feeRate =
     selectedNetworkFee !== 'custom' ? feeData?.fee[selectedNetworkFee] || 0 : customNetworkFee
 
@@ -176,7 +175,7 @@ const ConfirmModal = ({
                   alt=''
                 />
               </div>
-              <div className='absolute left-[27px] py-1 px-2 top-[27px] flex h-8 min-w-[124px] items-center justify-center gap-2 rounded bg-[rgba(255,244,221,0.50)]'>
+              <div className='absolute left-[27px] top-[27px] flex h-8 min-w-[124px] items-center justify-center gap-2 rounded bg-[rgba(255,244,221,0.50)] px-2 py-1'>
                 <div className='flex h-5 w-5 items-center justify-center rounded-full bg-[#FFF4DD]'>
                   {/* <Image src={''} alt=''/> */}
                   <Image src={handleReturnIconType(item.nft_id)} alt='' width={20} height={20} />
@@ -194,7 +193,7 @@ const ConfirmModal = ({
               <ChooseNetworkFee
                 loading={loadingNetworkFee}
                 networkFee={feeData?.fee as any}
-                customNetworkFee={Number(feeData?.fee['normal'])}
+                customNetworkFee={customNetworkFee}
                 setCustomNetworkFee={setCustomNetworkFee}
                 selected={selectedNetworkFee}
                 setSelected={setSelectedNetworkFee}
@@ -274,14 +273,18 @@ const ConfirmModal = ({
 
             <div className='flex justify-center gap-4'>
               <button
-                className='flex w-[167px] h-[60px] lg:w-[280px] justify-center items-center border-[2px] border-[#D4C79C] lg:py-[26px]'
+                className='flex h-[60px] w-[167px] items-center justify-center border-[2px] border-[#D4C79C] lg:w-[280px] lg:py-[26px]'
                 onClick={() => closeModal()}
               >
                 <span className='text-base font-medium leading-6 tracking-[-0.48px] text-[#AE9955]'>
                   Cancel
                 </span>
               </button>
-              <CustomButton className='w-[167px] h-[60px] lg:w-[280px]' text={'confirm'} handleClick={handleConfirm} />
+              <CustomButton
+                className='h-[60px] w-[167px] lg:w-[280px]'
+                text={'confirm'}
+                handleClick={handleConfirm}
+              />
             </div>
             {isBuying && <Loading />}
           </>
