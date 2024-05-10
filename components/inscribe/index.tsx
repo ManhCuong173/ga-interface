@@ -1,10 +1,10 @@
 'use client'
 
-import InscribeContextProvider, { useInscribeContext } from '@/context/InscribeContext'
+import InscribeContextProvider from '@/context/InscribeContext'
 import { selectMintProcess, setProcessState } from '@/lib/features/wallet/mintProcess'
-import { useAppDispatch } from '@/lib/hook'
-import { MutableRefObject, useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import InscribeOrderModal from '../inscribe-order-modal'
 import { MintModalLayout } from '../mintNFTs/MintModalLayout'
 import FrmStepMyOrder from './frmSteps/frmStepMyOrder'
 import FrmStepSubmit from './frmSteps/frmStepSubmit'
@@ -15,6 +15,8 @@ export default function Inscribe() {
     const mintProcessStep = useSelector(selectMintProcess);
     const [step, setStep] = useState(mintProcessStep);
     const dispatch = useDispatch()
+    const [showInscribeOrderModal, setShowInscribeOrderModal] = useState(false)
+    const [order, setOrder] = useState<any>()
 
     useEffect(() => {
         setStep(mintProcessStep);
@@ -39,8 +41,16 @@ export default function Inscribe() {
 
                 <InscribeContextProvider>
                     {
-                        step === 1 ? <FrmStepMyOrder setStep={setStep} /> : <FrmStepSubmit/>
+                        step === 1 ? <FrmStepMyOrder setStep={setStep} /> : <FrmStepSubmit
+                            setOrder={setOrder}
+                            setShowInscribeOrderModal={setShowInscribeOrderModal}
+                        />
                     }
+                    <InscribeOrderModal
+                        open={showInscribeOrderModal}
+                        order={order}
+                        setOpen={setShowInscribeOrderModal}
+                    />
                 </InscribeContextProvider>
 
             </div>

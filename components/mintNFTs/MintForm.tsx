@@ -14,22 +14,15 @@ import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import CustomButton from '../CustomButton'
-import InscribeOrderModal from '../inscribe-order-modal'
 import ReceiveAddress from '../receiver'
 import { NFTSection } from './NFTSection'
-import { PolicyConfirm } from './PolicyConfirm'
 import { SetFee } from './SetFee'
 
-export const MintForm = () => {
+export const MintForm = ({setOrder,setShowInscribeOrderModal}:any) => {
   const address = useAppSelector(selectAddress)
   const [dataForm, setDataForm] = useState<any>()
   const addressReceiver = useAppSelector(selectAddressReceiver)
-
-  // const [addressInput, setAddressInput] = useState('')
-  const [confirmCheckbox, setConfirmCheckbox] = useState(false)
   const publickey = useAppSelector(selectedPublicKey)
-  const [showInscribeOrderModal, setShowInscribeOrderModal] = useState(false)
-  const [order, setOrder] = useState<any>()
 
   const queryClient = useQueryClient()
 
@@ -41,10 +34,6 @@ export const MintForm = () => {
     handleCreateMintOrder()
     setShowInscribeOrderModal(true)
   }
-
-  // useEffect(() => {
-  //   if (address) setAddressInput(address)
-  // }, [address])
 
   const handleSetAddressInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setAddressReceiver(e.currentTarget.value.trimStart()))
@@ -97,7 +86,6 @@ export const MintForm = () => {
         />
       </div>
       <div className='z-0 flex flex-col items-center gap-6'>
-        {/* <PolicyConfirm confirmCheckbox={confirmCheckbox} setConfirmCheckbox={setConfirmCheckbox} /> */}
         <CustomButton
           disabled={
             !address || !addressReceiver
@@ -107,13 +95,6 @@ export const MintForm = () => {
           handleClick={handleSubmitPayInvoice}
         />
       </div>
-      {showInscribeOrderModal && order?.id_create && (
-        <InscribeOrderModal
-          open={showInscribeOrderModal}
-          order={order}
-          setOpen={setShowInscribeOrderModal}
-        />
-      )}
     </div>
   )
 }

@@ -19,6 +19,7 @@ import StepInscribing from './steps/step-inscribing'
 export default function InscribeOrderModal({ setOpen, order, open }: any) {
   const [payBTC, setPayBTC] = useState(true)
   const [limitTime, setLimitTime] = useState(180)
+  const [countdown, setCountdown] = useState(15)
   const publicKey = useAppSelector(selectedPublicKey)
   const [orderDetail, setOrderDetail] = useState<any>()
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -28,6 +29,7 @@ export default function InscribeOrderModal({ setOpen, order, open }: any) {
   const [NFT, setNFT] = useState('')
   const [isOpenWallet, setIsOpenWallet] = useState(false)
   const queryClient = useQueryClient()
+  const [txidd,setTxidd] = useState('')
 
   const getOrderDetail = useCallback(async () => {
     setIsLoading(true)
@@ -61,10 +63,8 @@ export default function InscribeOrderModal({ setOpen, order, open }: any) {
         Math.ceil(order?.fee_mint * Math.pow(10, 8)),
       )
       if (txid) {
+        setTxidd(txid)
         setIsOpenWallet(false)
-        setTimeout(() => {
-          confirmPayment(order?.id_create)
-        }, 5000)
       }
     } catch (e) {
       setIsOpenWallet(false)
@@ -103,6 +103,7 @@ export default function InscribeOrderModal({ setOpen, order, open }: any) {
   const closeModal = () => {
     setOpen(false)
     dispatch(setProcessState(1))
+    queryClient.invalidateQueries({ queryKey: ['orders'] })
   }
 
   useEffect(() => {
@@ -134,7 +135,20 @@ export default function InscribeOrderModal({ setOpen, order, open }: any) {
   }, [step, getOrderDetail, order?.status])
 
   useEffect(() => {
-    if (!payBTC) setLimitTime(180)
+    if(countdown>0 && txidd && orderDetail?.status === 'pending') {
+      const time = setInterval(() => {
+        confirmPayment(order?.id_create)
+        setCountdown(countdown - 1)
+      }, 1000)
+      return () => {
+        clearInterval(time)
+      }
+    }
+  }, [countdown,txidd])
+
+
+  useEffect(() => {
+    if (!payBTC && !txidd) setLimitTime(180)
     else if (limitTime > 0 && open) {
       if (!orderDetail || orderDetail?.status === 'pending') {
         const time = setInterval(() => {
@@ -148,7 +162,7 @@ export default function InscribeOrderModal({ setOpen, order, open }: any) {
     } else {
       setOpen(false)
     }
-  }, [limitTime, order, payBTC, open, setOpen, confirmPayment, orderDetail])
+  }, [limitTime, order, payBTC, open, setOpen, confirmPayment, orderDetail,txidd])
 
   return (
     <Dialog

@@ -5,6 +5,8 @@ import earthIcon from '@/images/five-elements/earth.svg'
 import metalIcon from '@/images/five-elements/mental.svg'
 import woodIcon from '@/images/five-elements/wood.svg'
 import waterIcon from '@/images/five-elements/water.svg'
+import { cards } from '@/constants/gallery-card.constant'
+import Card from '../home/nft-gallery/card'
 
 export default function Elementals() {
   return (
@@ -15,42 +17,10 @@ export default function Elementals() {
           ELEMENTALS
         </h2>
       </div>
-      <div className='grid grid-cols-1 gap-3 lg:grid-cols-5 lg:px-[71px]'>
-        <div className='relative aspect-[382/220] bg-[url(/images/about/elementals/cards/fire-mobile.png)] bg-full lg:aspect-[235/480] lg:bg-[url(/images/about/elementals/cards/fire.png)]'>
-          {/* <Image
-            src={fireIcon}
-            alt=''
-            className='absolute inset-x-0 bottom-8 left-1/2 size-20 -translate-x-1/2 lg:bottom-[-40.51px] lg:size-[120px]'
-          /> */}
-        </div>
-        <div className='relative aspect-[382/220] bg-[url(/images/about/elementals/cards/earth-mobile.png)] bg-full lg:aspect-[235/480] lg:bg-[url(/images/about/elementals/cards/earth.png)]'>
-          {/* <Image
-            src={earthIcon}
-            alt=''
-            className='absolute inset-x-0 bottom-8 left-1/2 size-20 -translate-x-1/2 lg:bottom-[-40.51px] lg:size-[120px]'
-          /> */}
-        </div>
-        <div className='relative aspect-[382/220] bg-[url(/images/about/elementals/cards/metal-mobile.png)] bg-full lg:aspect-[235/480] lg:bg-[url(/images/about/elementals/cards/metal.png)]'>
-          {/* <Image
-            src={metalIcon}
-            alt=''
-            className='absolute inset-x-0 bottom-8 left-1/2 size-20 -translate-x-1/2 lg:bottom-[-40.51px] lg:size-[120px]'
-          /> */}
-        </div>
-        <div className='relative aspect-[382/220] bg-[url(/images/about/elementals/cards/wood-mobile.png)] bg-full lg:aspect-[235/480] lg:bg-[url(/images/about/elementals/cards/wood.png)]'>
-          {/* <Image
-            src={woodIcon}
-            alt=''
-            className='absolute inset-x-0 bottom-8 left-1/2 size-20 -translate-x-1/2 lg:bottom-[-40.51px] lg:size-[120px]'
-          /> */}
-        </div>
-        <div className='relative aspect-[382/220] bg-[url(/images/about/elementals/cards/water-mobile.png)] bg-full lg:aspect-[235/480] lg:bg-[url(/images/about/elementals/cards/water.png)]'>
-          {/* <Image
-            src={waterIcon}
-            alt=''
-            className='absolute inset-x-0 bottom-8 left-1/2 size-20 -translate-x-1/2 lg:bottom-[-40.51px] lg:size-[120px]'
-          /> */}
-        </div>
+      <div className='grid h-fit gap-4 lg:grid-cols-5'>
+        {cards.map((card, index) => (
+          <Card key={index} {...card} />
+        ))}
       </div>
     </div>
   )

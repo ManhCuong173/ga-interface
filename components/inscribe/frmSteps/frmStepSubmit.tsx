@@ -2,9 +2,12 @@
 import { MintForm } from '@/components/mintNFTs/MintForm';
 import { memo } from 'react';
 
-const FrmStepSubmit = () => {
+const FrmStepSubmit = ({setOrder,setShowInscribeOrderModal}:any) => {
   return (
-    <MintForm/>
+    <MintForm
+      setOrder={setOrder}
+      setShowInscribeOrderModal={setShowInscribeOrderModal}
+    />
   )
 }
 

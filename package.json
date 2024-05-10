@@ -8,8 +8,8 @@
     "start": "next start",
     "start:dev": "env-cmd -f .env/.env.development next dev --turbo",
     "build:dev": "env-cmd -f .env/.env.development next build",
-    "build:stag": "env-cmd -f .env/.env.staging next build",
-    "start:stag": "env-cmd -f .env/.env.staging next start",
+    "build:stag-v2": "env-cmd -f .env/.env.staging next build",
+    "start:stag-v2": "env-cmd -f .env/.env.staging next start",
     "build:main": "env-cmd -f .env/.env.production next build",
     "start:main": "env-cmd -f .env/.env.production next dev",
     "lint": "next lint"

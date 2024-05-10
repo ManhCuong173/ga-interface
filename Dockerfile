@@ -6,7 +6,7 @@ WORKDIR /webapps
 COPY package.json /webapps
 RUN yarn install && npm i sharp
 ADD . .
-RUN yarn build:stag
+RUN yarn build:$env
 
 FROM base AS runner
 WORKDIR /webapps

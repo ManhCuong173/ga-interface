@@ -86,7 +86,7 @@ export default function Home() {
     <>
       <div
         id='background'
-        className='fixed inset-x-0 top-0 aspect-[414/1736] w-full bg-[url(/images/commons/background-home-full.png)] bg-full lg:aspect-[1442/2300]'
+        className='fixed inset-x-0 top-0 aspect-[414/2000] w-full bg-[url(/images/commons/background-home-full-mobile.png)] bg-full lg:aspect-[1442/2440] lg:bg-[url(/images/commons/background-home-full.png)]'
       />
       <div
         id='root-div'
