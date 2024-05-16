@@ -1,66 +1,92 @@
-import discord from '@/icons/home/discord.svg'
-import twitter from '@/icons/home/twitter.svg'
-import Image from 'next/image'
-import Link from 'next/link'
-import logo from '@/images/commons/logo.svg'
+import { urlRoute } from '@/constants/endpoints';
+import discord from '@/icons/home/discord.svg';
+import twitter from '@/icons/home/twitter.svg';
+import logo from '@/images/commons/logo.svg';
+import { cn } from '@/lib/utils';
+import Image from 'next/image';
+import Link from 'next/link';
+import LanguageSelect from './header/language-select';
 
-export default function Footer() {
+const Social: React.FC<{ className?: string; size?: string }> = ({
+  className,
+  size,
+}) => {
   return (
-    <footer id='footer' className='flex h-fit snap-center flex-col bg-full lg:bg-none'>
-      <div className='relative flex h-fit w-full flex-col items-center bg-[url(/images/footer/background.png)] bg-full'>
-        <div className='relative mb-[73.7px] flex w-full flex-col items-start gap-6 p-6 lg:mb-[165px] lg:flex-row lg:justify-between lg:px-20 lg:py-10'>
-          <div className='absolute right-6 top-6 flex h-11 gap-[11.4px] lg:hidden'>
-            <Link href='' className='h-fit'>
-              <button className='flex size-8 items-center justify-center rounded-full border border-_white'>
-                <Image src={twitter} alt='' width={14.84} height={14.84} />
-              </button>
-            </Link>
-            <Link href='' className='h-fit'>
-              <button className='flex size-8 items-center justify-center rounded-full border border-_white'>
-                <Image src={discord} alt='' width={20.81} height={14.91} />
-              </button>
-            </Link>
-          </div>
-          <div className='flex flex-col items-start gap-[15px] lg:flex-row lg:gap-[103px]'>
-            <Link
-              href='/'
-              className='flex items-center gap-[8.78px] text-sm font-semibold text-_white lg:gap-[11.37px] lg:text-[28px] lg:leading-[28px]'
-            >
-              <Image src={logo} alt='' className='size-[29.25px] lg:size-[68.25px]' />
-              <span>
-                <span className='tracking-[0.06em]'>GOLDEN</span> <br />
-                <span className='tracking-[0.24em]'>APPLE</span>
-              </span>
-            </Link>
-            <p className='w-[316.85px ] text-xs font-light leading-[18px] tracking-[0.15px] text-_white lg:w-[379.57px] lg:text-sm lg:leading-[30px]'>
-              The world’s first and largest digital marketplace for crypto collectibles and
-              non-fungible tokens (NFTs). Buy, sell, and discover exclusive digital items.
-            </p>
-          </div>
-          <div className='flex flex-col items-end gap-6'>
-            <div className='hidden h-11 gap-5 lg:flex'>
-              <Link href='' className='h-fit'>
-                <button className='flex size-11 items-center justify-center rounded-full border border-_white'>
-                  <Image src={twitter} alt='' width={20.4} height={20.4} />
-                </button>
+    <div className={cn('grid grid-cols-2 gap-3 w-fit', className)}>
+      <Link href={urlRoute.twitter} className={cn('flex w-full h-full', size)}>
+        <Image src={twitter} alt='twitter' width={48} height={48} />
+      </Link>
+      <Link href={urlRoute.discord} className={cn('flex w-full h-full', size)}>
+        <Image src={discord} alt='discord' width={48} height={48} />
+      </Link>
+    </div>
+  );
+};
+
+const Footer = () => {
+  return (
+    <footer
+      id='footer'
+      className='flex h-fit snap-center flex-col bg-full lg:bg-none bg-secondary'
+    >
+      <div className='py-7 px-5 lg:py-14 lg:px-20 relative flex h-fit w-full flex-col items-center'>
+        <div className='w-full grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] lg:gap-10'>
+          <div className='grid grid-cols-1 lg:grid-cols-[400px_1fr] items-start'>
+            <div className='flex justify-between mb-5 lg:mb-0'>
+              <Link
+                href='/'
+                className='flex items-center text-base font-semibold lg:text-[24px] lg:leading-[24px]'
+              >
+                <Image
+                  src={logo}
+                  alt=''
+                  className='size-[42px] lg:size-[48px] mr-3'
+                />
+                <span>GOLDEN APPLE</span>
               </Link>
-              <Link href='' className='h-fit'>
-                <button className='flex size-11 items-center justify-center rounded-full border border-_white'>
-                  <Image src={discord} alt='' width={28.61} height={20.5} />
-                </button>
-                ``
-              </Link>
+              <Social className=' lg:hidden' size='max-w-[42px]' />
             </div>
-            <div className='flex gap-[22px] text-xs font-medium leading-6 tracking-[0.03em] text-yellow1 lg:text-base '>
-              <Link href=''>Privacy Policy</Link>
-              <Link href=''>Terms of service</Link>
+            <div className='flex flex-col'>
+              <p className='w-[316.85px] text-xs font-medium font-Roboto leading-[1.4] tracking-[0.15px] text-black1  lg:w-[379.57px] lg:text-sm'>
+                The world’s first and largest digital marketplace for crypto
+                collectibles and non-fungible tokens (NFTs). Buy, sell, and
+                discover exclusive digital items.
+              </p>
+              <Social className='hidden lg:grid mt-6' size='max-w-12' />
             </div>
           </div>
+          <div className='grid grid-cols-[max-content_max-content_max-content_max-content] mt-7 mb-5 lg:mt-0 lg:mb-0   lg:grid-cols-1 gap-6 w-fit  text-sm font-bold leading-6 tracking-[0.03em lg:text-base'>
+            <Link className='w-fit' href={urlRoute.home}>
+              HOME
+            </Link>
+            <Link className='w-fit' href={urlRoute.marketplace}>
+              MARKETPLACE
+            </Link>
+            <Link className='w-fit' href={urlRoute.mint}>
+              MINT
+            </Link>
+            <Link className='w-fit' href={urlRoute.about}>
+              ABOUT
+            </Link>
+          </div>
+
+          <LanguageSelect
+            className='border border-bgAlt rounded-md w-max lg:hidden'
+            mode='solid'
+          />
         </div>
       </div>
-      <div className='flex h-[34px] items-center justify-center bg-[#131313] text-xs font-light leading-[18px] tracking-[-0.03em] text-yellow1 lg:h-16 lg:text-sm lg:leading-5'>
-        @ 2023 by golden apple. All rights reserved.
+      <div className='py-4 px-5 lg:py-6 lg:px-20 flex flex-col-reverse gap-4 lg:flex-row justify-between border-t-[1px] border-solid border-bgAlt'>
+        <div className='font-Roboto text-base'>
+          @ 2023 by golden apple. All rights reserved.
+        </div>
+
+        <div className='flex items-center font-Roboto gap-6 text-xs lg:text-sm font-medium  text-black1 '>
+          <Link href={urlRoute.privacy}>Privacy Policy</Link>
+          <Link href={urlRoute.terms}>Terms of service</Link>
+        </div>
       </div>
     </footer>
-  )
-}
+  );
+};
+export default Footer;

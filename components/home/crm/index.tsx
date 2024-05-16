@@ -1,13 +1,8 @@
-import { appearAnimation } from '@/constants/animation.constant'
-import candle from '@/icons/home/candle.svg'
-import cornertl from '@/icons/home/corner-tl.svg'
-import cornertr from '@/icons/home/corner-tr.svg'
+import { HeadMarkIcon } from '@/components/ui/icons'
 import { convertTimeStampToDate } from '@/lib/crm'
 import { crmService } from '@/services/crm.service'
 import { CRMChartData } from '@/types/crm'
 import { useQuery } from '@tanstack/react-query'
-import { motion } from 'framer-motion'
-import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import Transaction from './transaction'
 import Volume from './volume'
@@ -35,53 +30,30 @@ export default function CRM() {
   }, [data])
 
   return (
-    <div id='section-crm' className='snap-center'>
-      <div className='mx-auto flex aspect-[414/984] w-[1440px] max-w-full items-center justify-center px-4 pb-[59px] pt-8 lg:aspect-[1440/750] lg:p-[60px_40px_60px_96px] lg:pl-24 lg:pr-10'>
-        <div className='max-w-full border-[1.852px] border-[#FACE5D] bg-white/10 p-4 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] lg:p-8 lg:backdrop-blur-[5px]'>
-          <div
-            className='relative flex h-fit max-w-full flex-col gap-6 bg-cover p-4 lg:gap-8 lg:p-8'
-            style={{
-              background: 'linear-gradient(180deg, #FFF4DD 0%, rgba(255, 244, 221, 0.45) 100%)',
-            }}
-          >
-            <motion.div
-              {...appearAnimation}
-              transition={{ duration: 0.4, delay: 1 }}
-              className='flex items-center justify-center gap-2'
-            >
-              <span className='flex h-6 w-6 items-center justify-center lg:h-12 lg:w-12'>
-                <Image
-                  src={candle}
-                  alt=''
-                  className='h-[22.222px] w-[11.04px] flex-shrink-0 lg:h-[44.444px] lg:w-[20.081px]'
-                />
-              </span>
-              <span className='text-5xl text-[32px] font-medium leading-[68px] tracking-[-0.96px] text-black1 lg:text-5xl lg:leading-[unset]'>
+    <div id="section-crm" className="snap-center my-24 lg:my-64">
+      <div className="w-full flex items-center justify-center px-6">
+        <div className="w-full max-w-[1280px]">
+          <div className="relative flex  flex-col h-fit max-w-full">
+            <div className="flex  items-center justify-evenly w-full  mb-8 lg:mb-14">
+              <HeadMarkIcon className="hidden lg:block" />
+              <span className="text-2xl lg:text-[40px] font-semibold tracking-[-0.96px] text-red-light lg:text-5xl">
                 CRM
               </span>
-            </motion.div>
-            <div className='lg:flex-rowflex-1 flex flex-col gap-4 lg:grid lg:grid-cols-2'>
+              <HeadMarkIcon className="hidden lg:block" />
+            </div>
+
+            <div className="lg:flex-rowflex-1 flex flex-col gap-8 lg:grid lg:grid-cols-2">
               {isLoading ? (
-                <div className='col-span-full text-center'>is loading...</div>
+                <div className="col-span-full text-center">is loading...</div>
               ) : data ? (
                 <>
                   <Volume data={dateFormattedData} />
                   <Transaction data={dateFormattedData} />
                 </>
               ) : (
-                <div className='col-span-full text-center'>no data</div>
+                <div className="col-span-full text-center">no data</div>
               )}
             </div>
-            <Image
-              src={cornertl}
-              alt=''
-              className='absolute left-[18.25px] top-4 h-[36.2222px] w-[81.5px] lg:left-8 lg:top-8 lg:h-[64px] lg:w-[144px]'
-            />
-            <Image
-              src={cornertr}
-              alt=''
-              className='absolute right-[20.5px] top-4 h-[36.2222px] w-[81.5px] lg:right-8 lg:top-8 lg:h-[64px] lg:w-[144px]'
-            />
           </div>
         </div>
       </div>

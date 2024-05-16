@@ -58,11 +58,7 @@ const Marketplace = () => {
   const { data: btnToUsdRateData } = useQuery({
     queryKey: ['btcPrice'],
     queryFn: async () =>
-      (
-        await axios.get(
-          'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd',
-        )
-      ).data.bitcoin.usd,
+      (await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd')).data.bitcoin.usd,
   })
 
   dispatch(setBtnToUsdRateData(btnToUsdRateData))
@@ -84,12 +80,13 @@ const Marketplace = () => {
   }, [param, handleRenderContent])
 
   return (
-    <div className='w-full bg-[url(/images/marketplace/background-mg.png)] bg-fixed lg:bg-[url(/images/marketplace/background.png)] bg-cover bg-no-repeat'>
+    <div className="w-full">
       <BannerMarketPlace />
-      <div className='relative'>
+
+      <div className="relative">
         {isComingSoonMode && <ComingSoon />}
-        <div className='relative z-10 mx-auto px-4 sm:py-10 lg:px-[60px]'>
-          <div className='mx-auto flex w-full items-center gap-[10px] border-b border-[#D4C79C] max-sm:my-4 lg:max-w-[1440px]'>
+        <div className="relative z-10 mx-auto px-4 sm:py-10 lg:px-[60px]">
+          <div className="mx-auto flex w-full items-center gap-[10px] border-b border-[#D4C79C] max-sm:my-4 lg:max-w-[1440px]">
             {tabs.map((tab, index) => {
               return (
                 <TabIndicator
@@ -107,7 +104,7 @@ const Marketplace = () => {
             })}
           </div>
 
-          <div className='min-h-[800px] '>{handleRenderContent()}</div>
+          <div className="min-h-[800px] ">{handleRenderContent()}</div>
         </div>
       </div>
       <Footer />

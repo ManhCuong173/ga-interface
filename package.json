@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "env-cmd -f .env/.env.development next dev",
+    "dev": "env-cmd -f .env/.env.development next dev -p 3080",
     "build": "next build",
     "start": "next start",
     "start:dev": "env-cmd -f .env/.env.development next dev --turbo",
@@ -29,6 +29,7 @@
     "dayjs": "^1.11.10",
     "framer-motion": "^11.0.7",
     "next": "14.1.0",
+    "pino-pretty": "^11.0.0",
     "react": "^18",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",
@@ -38,6 +39,7 @@
     "react-toastify": "^10.0.4",
     "react-tooltip": "^5.26.3",
     "sharp": "^0.33.2",
+    "tailwind-merge": "^2.3.0",
     "use-debounce": "^10.0.0"
   },
   "devDependencies": {

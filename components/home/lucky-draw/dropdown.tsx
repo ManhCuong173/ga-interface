@@ -48,27 +48,28 @@ export default function Dropdown({ label, options, className, value, setValue }:
       className={`${className} relative flex h-11 items-center rounded border border-text-sub px-4 text-[#4E473F] transition-all`}
     >
       <div
-        className='flex size-full cursor-pointer items-center justify-between gap-4 text-sm font-medium'
+        className="flex size-full cursor-pointer justify-between items-center gap-4 text-sm font-medium"
         ref={selfRef}
         onClick={() => {
           setShow((prev) => !prev)
         }}
       >
-        {label || ' ' + ' '}
-
-        {!label && (
-          <span className={`${label && 'text-[#FF6634]'}`}>
-            {String(options.find((item) => item.value === value)?.label) || 'all'}
-          </span>
-        )}
-        <div className={`w-full} flex items-center space-x-3`}>
-          {label && (
-            <span className={`${label && 'text-[#FF6634]'}`}>
+        <div className="flex item-centers justify-center">
+          {label || ' ' + ''}
+          {!label && (
+            <span className={`${label && 'text-red-light'}`}>
               {String(options.find((item) => item.value === value)?.label) || 'all'}
             </span>
           )}
-          <Image src={chevronDownIcon} alt='' className='size-5' />
+          <div className={`w-full} flex items-center space-x-3 ml-1`}>
+            {label && (
+              <span className={`${label && 'text-red-light'}`}>
+                {String(options.find((item) => item.value === value)?.label) || 'all'}
+              </span>
+            )}
+          </div>
         </div>
+        <Image src={chevronDownIcon} alt="" className="size-5" />
       </div>
       <div
         className={`${show ? 'scale-y-100' : 'scale-y-0'} absolute inset-x-0 top-full z-10 flex max-h-[196px] origin-top flex-col gap-[1px] overflow-hidden overflow-y-auto rounded-lg border border-[#E5E4E3] bg-[#e5e4e3] shadow-[3px_6px_30px_0px_#0000001F] transition-all`}
@@ -77,13 +78,11 @@ export default function Dropdown({ label, options, className, value, setValue }:
         {options.map((item) => (
           <div
             key={item.value}
-            className='flex h-10 cursor-pointer items-center justify-between whitespace-nowrap bg-white px-4 pr-4 text-sm font-light tracking-[-0.2px] transition-all hover:bg-[#FAF5F0]'
+            className="flex h-10 cursor-pointer items-center justify-between whitespace-nowrap bg-white px-4 pr-4 text-sm font-light tracking-[-0.2px] transition-all hover:bg-[#FAF5F0]"
             onClick={() => handleSelect(item.value)}
           >
             <span>{item.label}</span>
-            <span>
-              {item.value === value && <Image src={checkIcon} alt='' width={16} height={11} />}
-            </span>
+            <span>{item.value === value && <Image src={checkIcon} alt="" width={16} height={11} />}</span>
           </div>
         ))}
       </div>

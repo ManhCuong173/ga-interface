@@ -1,27 +1,29 @@
-import chevronDownBlackIcon from '@/icons/header/chevron-down-sm-black.svg'
-import chevronDownIcon from '@/icons/header/chevron-down-sm.svg'
-import earthIcon from '@/icons/header/earth.svg'
-import earthBlackIcon from '@/icons/header/earth-black.svg'
-import { Language } from '@/types/language'
-import Image from 'next/image'
-import { useEffect, useRef, useState } from 'react'
+import chevronDownBlackIcon from '@/icons/header/chevron-down-sm-black.svg';
+import chevronDownIcon from '@/icons/header/chevron-down-sm.svg';
+import earthBlackIcon from '@/icons/header/earth-black.svg';
+import earthIcon from '@/icons/header/earth.svg';
+import { cn } from '@/lib/utils';
+import { Language } from '@/types/language';
+import Image from 'next/image';
+import { useEffect, useRef, useState } from 'react';
 
 type Props = {
-  mode: 'transparent' | 'solid'
-}
+  mode: 'transparent' | 'solid';
+  className?: string;
+};
 
-export default function LanguageSelect({ mode }: Props) {
-  const [show, setShow] = useState(false)
-  const [language, setLanguage] = useState<Language>('en')
+const LanguageSelect = ({ mode, className }: Props) => {
+  const [show, setShow] = useState(false);
+  const [language, setLanguage] = useState<Language>('en');
 
-  const selfRef = useRef<HTMLDivElement>(null)
-  const dropdownRef = useRef<HTMLDivElement>(null)
+  const selfRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleChangeLanguge = (lang: Language) => {
     // TODO: add logic to change language here
-    setLanguage(lang)
-    setShow(false)
-  }
+    setLanguage(lang);
+    setShow(false);
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -31,20 +33,23 @@ export default function LanguageSelect({ mode }: Props) {
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
       ) {
-        setShow(false)
+        setShow(false);
       }
-    }
-    document.addEventListener('mousedown', handleClickOutside)
+    };
+    document.addEventListener('mousedown', handleClickOutside);
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [])
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
-    <div className='relative'>
+    <div className={cn('relative', className)}>
       <div
-        className={`${mode === 'transparent' ? 'text-_white' : ''} relative flex h-10 cursor-pointer items-center justify-center gap-2.5 px-2.5 text-base font-medium`}
+        className={cn(
+          'relative flex h-10 cursor-pointer items-center justify-center gap-2.5 px-2.5 text-base font-medium',
+          mode === 'transparent' ? 'text-_white' : ''
+        )}
         onClick={() => setShow((prev) => !prev)}
         ref={selfRef}
       >
@@ -57,10 +62,15 @@ export default function LanguageSelect({ mode }: Props) {
           <Image
             src={earthBlackIcon}
             alt=''
-            className={`${mode === 'transparent' ? 'opacity-0' : 'opacity-100'} absolute inset-0 transition-all`}
+            className={cn(
+              'absolute inset-0 transition-all',
+              mode === 'transparent' ? 'opacity-0' : 'opacity-100'
+            )}
           />
         </span>
-        <span className='whitespace-nowrap'>{language === 'en' ? 'EN' : '中国人'}</span>
+        <span className='whitespace-nowrap'>
+          {language === 'en' ? 'English' : '中国人'}
+        </span>
         <span className='relative size-6'>
           <Image
             src={chevronDownIcon}
@@ -75,7 +85,10 @@ export default function LanguageSelect({ mode }: Props) {
         </span>
       </div>
       <div
-        className={`${show ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-50'} absolute inset-x-0 top-full mt-2 origin-top overflow-hidden rounded-lg border border-text-black_3 text-black1 transition-all duration-300`}
+        className={cn(
+          'absolute inset-x-0 top-full mt-2 origin-top overflow-hidden rounded-lg border border-text-black_3 text-black1 transition-all duration-300',
+          show ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-50'
+        )}
         style={{
           boxShadow: '3px 6px 30px 0px rgba(0, 0, 0, 0.12)',
         }}
@@ -84,20 +97,25 @@ export default function LanguageSelect({ mode }: Props) {
         <div
           className='flex h-11 cursor-pointer items-center justify-start gap-4 bg-white px-4 hover:bg-[#FAF5F0]'
           onClick={() => {
-            handleChangeLanguge('en')
+            handleChangeLanguge('en');
           }}
         >
-          <span className='text-sm font-light leading-5 tracking-[-0.42px]'>EN</span>
+          <span className='text-sm font-light leading-5 tracking-[-0.42px]'>
+            English
+          </span>
         </div>
         <div
           className='flex h-11 cursor-pointer items-center justify-start gap-4 bg-white px-4 hover:bg-[#FAF5F0]'
           onClick={() => {
-            handleChangeLanguge('cn')
+            handleChangeLanguge('cn');
           }}
         >
-          <span className='text-sm font-light leading-5 tracking-[-0.42px]'>中国人</span>
+          <span className='text-sm font-light leading-5 tracking-[-0.42px]'>
+            中国人
+          </span>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
+export default LanguageSelect;

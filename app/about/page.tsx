@@ -1,17 +1,16 @@
 'use client'
 
 import Banner from '@/components/about/Banner'
-import Elementals from '@/components/about/elementals'
 import Intro from '@/components/about/intro'
 import Footer from '@/components/footer'
+import NFTGallery from '@/components/home/nft-gallery'
 
 export default function About() {
   return (
-    <div className='bg-[#FAF5F0] bg-[url(/images/marketplace/background.png)] bg-cover bg-fixed pt-[67px]'>
+    <div>
       <Banner />
       <Intro />
-      <Elementals />
-      {/* <Slogan /> */}
+      <NFTGallery />
       <Footer />
     </div>
   )

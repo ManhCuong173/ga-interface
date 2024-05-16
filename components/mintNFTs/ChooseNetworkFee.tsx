@@ -1,7 +1,5 @@
-import checkedIcon from '@/icons/mint/checked.svg'
-import uncheckIcon from '@/icons/mint/uncheck.svg'
+import { cn } from '@/lib/utils'
 import { NetworkFeeType } from '@/types/fee'
-import Image from 'next/image'
 import { toast } from 'react-toastify'
 import ProgressBar from '../progress-bar'
 
@@ -32,50 +30,38 @@ export default function ChooseNetworkFee({
 }: Props) {
   return (
     <>
-      <div className='mx-auto flex w-full gap-4 max-sm:flex-col'>
+      <div className="mx-auto flex w-full gap-2 max-sm:flex-col">
         {(['normal', 'high', 'custom'] as NetworkFeeType[]).map((network) => (
           <div
             key={network}
-            className={`${network === selected ? 'bg-[linear-gradient(180deg,#FF6B00_-36.94%,#FFB800_136.07%)] p-[2px] shadow-[0px_6px_12px_0px_rgba(0,0,0,0.10)]' : 'bg-[rgba(246,238,227,0.50)]'} w-full cursor-pointer rounded`}
+            className={cn(
+              network === selected ? 'bg-[#ef232c1a] border-red-light' : 'border-bgAlt',
+              `w-full cursor-pointer rounded-lg py-2 pl-[14px] pr-8 text-xs border-2 `,
+            )}
             onClick={() => {
               setSelected(network)
             }}
           >
-            <div
-              className={`${network === selected ? 'bg-[#FFDFAC]' : 'bg-[rgba(246,238,227,0.50)]'} flex flex-col gap-3 rounded p-3`}
-            >
-              <div className='flex items-center justify-between'>
-                <div className='text-xs font-medium uppercase leading-[18px] tracking-[-0.36px] first-letter:uppercase'>
-                  {network}
-                </div>
-                {network === selected ? (
-                  <Image src={checkedIcon} alt='' width={20} height={20} />
-                ) : (
-                  <Image src={uncheckIcon} alt='' width={20} height={20} />
-                )}
-              </div>
-              <div>
-                {loading ? (
-                  'loading'
-                ) : networkFee ? (
-                  <p className='flex items-center gap-1'>
-                    <span className='mr-1 text-lg font-medium leading-7 tracking-[-0.54px] text-[rgba(247,144,9,1)]'>
-                      {network !== 'custom' ? networkFee[network] : customNetworkFee}
-                    </span>
-                    <span className='text-sm font-light uppercase leading-5 tracking-[-0.42px] text-[#66605B]'>
-                      sats/vB
-                    </span>
-                  </p>
-                ) : (
-                  'empty'
-                )}
-              </div>
+            <div className="mb-1 capitalize font-bold">{network}</div>
+            <div>
+              {loading ? (
+                'loading'
+              ) : networkFee ? (
+                <p className="flex flex-col font-ProtoMono  gap-1">
+                  <span className="font-bold text-red-light">
+                    {network !== 'custom' ? networkFee[network] : customNetworkFee}
+                  </span>
+                  <span className="text-black1">sats/vB</span>
+                </p>
+              ) : (
+                'empty'
+              )}
             </div>
           </div>
         ))}
       </div>
       {selected === 'custom' && (
-        <div className='flex items-center gap-8'>
+        <div className="flex items-center gap-8">
           {/* {isDisplayTime && <div className='p-3 max-sm:hidden'>
             <div className='relative h-[80px] w-[80px]'>
               <Image src={time_range} alt='' />
@@ -83,7 +69,7 @@ export default function ChooseNetworkFee({
                 <p className='text-lg font-medium uppercase leading-7 tracking-[-0.54px] text-[#FF6634]'>
                   10m
                 </p>
-                <p className='text-sm font-light uppercase leading-5 tracking-[-0.42px] text-[#383F4A]'>
+                <p className='font-light uppercase leading-5 tracking-[-0.42px] text-[#383F4A]'>
                   Time
                 </p>
               </div>
@@ -101,17 +87,15 @@ export default function ChooseNetworkFee({
               </div>
             </div>
           </div>} */}
-          <div className='flex w-full flex-col gap-3'>
-            <div className='flex items-center justify-between'>
-              <p className='text-sm font-medium uppercase leading-5 tracking-[-0.42px]'>
-                Custom fee
-              </p>
-              <div className='w-[86px] rounded-[4px] bg-[linear-gradient(180deg,#FF6634_-36.94%,#FFEF5F_136.07%)] p-[2px]'>
-                <div className='h-full w-full rounded bg-white px-2 py-[6px]'>
+          <div className="flex w-full flex-col gap-3">
+            <div className="flex items-center justify-between">
+              <p className="font-medium uppercase leading-5 tracking-[-0.42px]">Custom fee</p>
+              <div className="w-[86px] rounded-[4px] bg-[linear-gradient(180deg,#FF6634_-36.94%,#FFEF5F_136.07%)] p-[2px]">
+                <div className="h-full w-full rounded bg-white px-2 py-[6px]">
                   <input
-                    className='w-full border-none text-end text-sm font-light leading-5 tracking-[-0.42px] text-[#383F4A] outline-none'
+                    className="w-full border-none text-end font-light leading-5 tracking-[-0.42px] text-[#383F4A] outline-none"
                     value={customNetworkFee}
-                    type='number'
+                    type="number"
                     onChange={(e) => setCustomNetworkFee(Number.parseInt(e.target.value))}
                     onBlur={(e) => {
                       const value = Number.parseInt(e.target.value)
@@ -127,30 +111,17 @@ export default function ChooseNetworkFee({
               </div>
             </div>
             <div className={` flex h-4 origin-top items-center transition-all`}>
-              <div className='relative w-full'>
-                <div className='relative z-[1]'>
+              <div className="relative w-full">
+                <div className="relative z-[1]">
                   <ProgressBar value={customNetworkFee - min} total={500 - min} bulletSize={20}>
-                    <svg
-                      xmlns='http://www.w3.org/2000/svg'
-                      width='20'
-                      height='20'
-                      viewBox='0 0 20 20'
-                      fill='none'
-                    >
-                      <circle
-                        cx='10'
-                        cy='10'
-                        r='9'
-                        fill='white'
-                        stroke='#FF6634'
-                        stroke-width='2'
-                      />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                      <circle cx="10" cy="10" r="9" fill="white" stroke="#FF6634" strokeWidth="2" />
                     </svg>
                   </ProgressBar>
                 </div>
                 <input
-                  type='range'
-                  className='absolute inset-0 z-[2] w-full cursor-pointer opacity-0'
+                  type="range"
+                  className="absolute inset-0 z-[2] w-full cursor-pointer opacity-0"
                   min={min}
                   max={500}
                   step={1}

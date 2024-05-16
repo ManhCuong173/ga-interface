@@ -1,12 +1,7 @@
 .text_heading {
-    //font-medium text-base text-center uppercase tracking-[-3%]
-    font-size: 24px;
-    font-weight: 500;
-    line-height: 32px;
-    text-transform: uppercase;
-    letter-spacing: -3%;
-    text-align: center;
+    @apply text-2xl text-red-light  font-medium
 }
+
 .nft_list {
     &::-webkit-scrollbar {
         width: 8px;

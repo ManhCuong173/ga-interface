@@ -1,82 +1,72 @@
 'use client'
 
 import { appearAnimation } from '@/constants/animation.constant'
-import discord from '@/icons/home/discord.svg'
-import twitter from '@/icons/home/twitter.svg'
 import { motion } from 'framer-motion'
-import Image from 'next/image'
-import Link from 'next/link'
+import WrapperHero from './WrapperHero'
 
 export default function Banner() {
   return (
-    <div id='banner' className='snap-center'>
-      <div className='h-[600px] bg-[url(/images/home/heading.png)] bg-[auto_100%] px-4 pb-[294.26px] lg:h-screen lg:bg-full lg:bg-left-top lg:px-0 lg:pb-[100px]'>
-        <div className='relative mx-auto flex h-full max-w-container flex-col items-start justify-end text-_white lg:items-end lg:justify-between lg:pr-[60px] lg:pt-[98px]'>
-          <div className='absolute bottom-[calc(-296px+54px)] flex gap-4 lg:relative lg:bottom-0'>
-            <motion.div
-              initial='start'
-              whileInView='end'
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-              variants={{
-                start: { y: -100, opacity: 0 },
-                end: { y: 0, opacity: 1 },
-              }}
-            >
-              <Link href='/'>
-                <div className='space-y-[9px]'>
-                  <Image src={twitter} alt='' width={34} height={34} />
-                </div>
-              </Link>
-            </motion.div>
-            <motion.div
-              initial='start'
-              whileInView='end'
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 1 }}
-              variants={{
-                start: { y: -100, opacity: 0 },
-                end: { y: 0, opacity: 1 },
-              }}
-            >
-              <Link href='/'>
-                <div className='space-y-[9px]'>
-                  <Image src={discord} alt='' width={34} height={34} />
-                </div>
-              </Link>
-            </motion.div>
-          </div>
-          <div className='space-y-4'>
-            <motion.div {...appearAnimation} transition={{ duration: 0.5, delay: 1.5 }}>
-              <h1
-                className='inline-block w-fit !bg-clip-text text-4xl font-medium tracking-[-1.8px] text-transparent lg:text-[64px] lg:leading-[80px] lg:tracking-[-3.2px]'
-                style={{
-                  background:
-                    'linear-gradient(131deg, #FFECCF 8.55%, #FEF396 38.02%, rgba(255, 223, 172, 0.00) 90.09%',
-                }}
-              >
-                golden <span className='text-red-light'>apple</span>
+    <div id="banner" className="snap-center">
+      <WrapperHero src="/images/home/bg-home.svg">
+        <div className="relative mx-auto flex flex-1 pt-[72px] h-full max-w-container flex-col items-center justify-center text-_white lg:items-center lg:justify-center lg:pr-[60px] lg:pt-[98px]">
+          <div className="space-y-4 text-center">
+            <motion.div {...appearAnimation} transition={{ duration: 0.5, delay: 0.5 }}>
+              <h1 className="w-fit  font-semibold tracking-[0.96px] lg:tracking-[-2.1px]  lg:text-[70px] lg:leading-[84.01px]  hidden lg:inline-block">
+                Create your own
+              </h1>
+              <h1 className="w-fit text-[32px]  font-semibold tracking-[0.96px] lg:tracking-[-2.1px] inline-block lg:hidden">
+                Create your
               </h1>
             </motion.div>
             <motion.div
-              initial='start'
-              whileInView='end'
+              initial="start"
+              whileInView="end"
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 2 }}
+              transition={{ duration: 0.5, delay: 0.75 }}
               variants={{
                 start: { opacity: 0 },
                 end: { opacity: 1 },
               }}
             >
-              <p className='w-[257px] text-sm font-light leading-5 tracking-[-0.42px] lg:w-[440px] lg:leading-[32px]'>
-                Golden Apple is the GameFi platform for the Bitcoin Ecosystem. Through mapping the
-                Bitcoin Assets (BRC20, Ordinals NFT and others) to Ethereum (and other Layer2)
-                networks,
-              </p>
+              <h1 className="hidden lg:inline-block w-fit text-4xl font-semibold tracking-[0.96px] lg:tracking-[-2.1px]  lg:text-[70px] lg:leading-[84.01px] ">
+                <span className="bg-[#EF232C] p-2  rounded-xl">NFT</span> Dream Gallery
+              </h1>
+              <h1 className="w-fit text-[32px]  font-semibold tracking-[0.96px] lg:tracking-[-2.1px] inline-block lg:hidden">
+                Own <span className="bg-[#EF232C] p-2  rounded-xl">NFT</span> Dream
+              </h1>
+            </motion.div>
+            <motion.div
+              initial="start"
+              whileInView="end"
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 2.5 }}
+              variants={{
+                start: { opacity: 0 },
+                end: { opacity: 1 },
+              }}
+            >
+              <h1 className="w-fit text-[32px]  font-semibold tracking-[0.96px] lg:tracking-[-2.1px] inline-block lg:hidden">
+                Gallery
+              </h1>
             </motion.div>
           </div>
+
+          <motion.div
+            initial="start"
+            whileInView="end"
+            viewport={{ once: true }}
+            transition={{ duration: 0.75, delay: 1 }}
+            variants={{
+              start: { opacity: 0 },
+              end: { opacity: 1 },
+            }}
+            className="max-w-[269px] mt-[53px] text-[21px] leadig-[150%] font-[400] lg:max-w-[383px] font-Roboto text-center"
+          >
+            Get started with the easiest and most secure platform to buy and collect NFTs
+          </motion.div>
         </div>
-      </div>
+      </WrapperHero>
     </div>
   )
 }
+

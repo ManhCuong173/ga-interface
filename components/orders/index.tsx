@@ -1,7 +1,7 @@
 import { useDebounce } from '@/hooks/custom/useDebouce'
 import React, { useState } from 'react'
+import InputField from '../InputField'
 import InscribeOrderModal from '../inscribe-order-modal'
-import InputField from '../inscribe/InputField'
 import { MintModalLayout } from '../mintNFTs/MintModalLayout'
 import ListOrders from './list'
 import SelectStatus from './status'
@@ -20,15 +20,15 @@ const MyOrders = () => {
 
   return (
     <>
-      <MintModalLayout className='relative mx-auto mt-8 flex w-full flex-col gap-6 font-ProtoMono font-medium sm:mt-10 lg:w-[800px]'>
-        <main className='relative z-10 flex flex-col gap-12'>
-          <p className='text_heading text-center capitalize text-[#4E473F]'>my orders</p>
+      <MintModalLayout className="relative mx-auto mt-8 flex w-full flex-col gap-6 font-ProtoMono font-medium sm:mt-10 lg:w-[800px]">
+        <main className="relative z-10 flex flex-col gap-12">
+          <p className="text_heading text-center capitalize text-[#4E473F]">my orders</p>
 
-          <div className='flex items-center space-x-2'>
+          <div className="flex items-center space-x-2">
             <InputField
               onChange={handleSearchOrderID}
-              className='grow border border-stroke lg:h-[44px]'
-              placeholder='Search by order ID'
+              className="grow border border-stroke lg:h-[44px]"
+              placeholder="Search by order ID"
             />
             <SelectStatus statusValue={statusValue} setStatusValue={setStatusValue} />
           </div>

@@ -13,6 +13,7 @@ const config: Config = {
       },
       backgroundSize: {
         full: '100% 100%',
+        '180%': '180%',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
@@ -30,10 +31,15 @@ const config: Config = {
         _black: '#0D0C22',
         black1: '#4E473F',
         black2: '#B2B0AD',
+        black3: '#f6eee380',
         line: '#66605B',
         primary: '#BB5C4E',
         text: '#383F4A',
         stroke: '#E5E4E3',
+        secondary: '#FAF5F0',
+        bgAlt: '#D4C79C',
+        mark: '#2D8B6F',
+
         'text-primary': '#F4EADE',
         'text-black': '#4E473F',
         'text-black_3': '#E5E4E3',
@@ -42,14 +48,18 @@ const config: Config = {
         'text-sub': '#AE9955',
         'text-white': '#FFF7F6',
         'red-light': '#EF232C',
+        'red-darker': '#9F232D',
         yellow1: '#FFDFAC',
         orange: '#FF6634',
+
+        subtle: '#ADADAD',
       },
       fontFamily: {
         Japanese3017: ['"Japanese 3017"'],
         DKLemonYellowSun: ['DK Lemon Yellow Sun'],
         Quicksand: ['Quicksand'],
         ProtoMono: ['Proto Mono'],
+        Roboto: ['Roboto', 'sans-serif'],
       },
       height: {
         header: '106px',

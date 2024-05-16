@@ -3,7 +3,6 @@
 import chevronDownBlackIcon from '@/icons/header/chevron-down-black.svg'
 import chevronDownIcon from '@/icons/header/chevron-down.svg'
 import disconnect from '@/icons/header/disconnect.svg'
-import farmerBlackIcon from '@/icons/header/farmer-black.svg'
 import farmerIcon from '@/icons/header/farmer.svg'
 import oldManIcon from '@/icons/header/old-man.svg'
 import { selectAddress } from '@/lib/features/wallet/wallet-slice'
@@ -53,31 +52,23 @@ export default function Menu({ mode, handleDisconnect }: Props) {
   }, [setShow])
 
   return (
-    <div className='relative'>
+    <div className="relative">
       <div
-        className='flex items-center gap-2'
+        className="flex items-center gap-2"
         ref={selfRef}
         onClick={() => {
           setShow((prev) => !prev)
         }}
       >
-        <span className='flex size-6 items-center justify-center'>
-          {mode === 'transparent' ? (
-            <Image src={farmerIcon} alt='' width={24} height={24} />
-          ) : (
-            <Image src={farmerBlackIcon} alt='' width={24} height={24} />
-          )}
+        <span className="flex size-6 items-center justify-center">
+          <Image src={farmerIcon} alt="" width={24} height={24} className="fill-red-light" />
         </span>
-        <span
-          className={`${mode === 'transparent' ? 'text-_white' : 'text-black1'} text-base font-medium`}
-        >
-          {truncate(address, 13, '...')}
-        </span>
-        <span className='hidden size-6 items-center justify-center lg:flex'>
+        <span className={`text-red-light text-base font-medium`}>{truncate(address, 13, '...')}</span>
+        <span className="hidden size-6 items-center justify-center lg:flex">
           {mode === 'transparent' ? (
-            <Image src={chevronDownIcon} alt='' width={12} height={6} />
+            <Image src={chevronDownIcon} alt="" width={12} height={6} />
           ) : (
-            <Image src={chevronDownBlackIcon} alt='' width={12} height={6} />
+            <Image src={chevronDownBlackIcon} alt="" width={12} height={6} />
           )}
         </span>
       </div>
@@ -89,20 +80,20 @@ export default function Menu({ mode, handleDisconnect }: Props) {
         }}
       >
         <div
-          className='flex h-11 items-center justify-start gap-4 bg-white px-4 hover:bg-[#FAF5F0]'
+          className="flex h-11 items-center justify-start gap-4 bg-white px-4 hover:bg-[#FAF5F0]"
           onClick={handleDisconnect}
         >
-          <Image src={disconnect} alt='' />
-          <span className='text-sm font-light leading-5 tracking-[-0.42px]'>Disconnect</span>
+          <Image src={disconnect} alt="" />
+          <span className="text-sm font-light leading-5 tracking-[-0.42px]">Disconnect</span>
         </div>
         <div
-          className='flex h-11 items-center justify-start gap-4 bg-white px-4 hover:bg-[#FAF5F0]'
+          className="flex h-11 items-center justify-start gap-4 bg-white px-4 hover:bg-[#FAF5F0]"
           onClick={() => {
             handleNavigate('/profile')
           }}
         >
-          <Image src={oldManIcon} alt='' />
-          <span className='text-sm font-light leading-5 tracking-[-0.42px]'>User Profile</span>
+          <Image src={oldManIcon} alt="" />
+          <span className="text-sm font-light leading-5 tracking-[-0.42px]">User Profile</span>
         </div>
       </div>
     </div>

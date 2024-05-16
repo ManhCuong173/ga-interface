@@ -11,7 +11,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import QRBox from '../QRBox'
 import { MintModalLayout } from '../mintNFTs/MintModalLayout'
 import NFTDetail from '../mintNFTs/NFTDetail'
-import { NFTSection } from '../mintNFTs/NFTSection'
+import NFTSection from '../mintNFTs/NFTSection'
 import FeeDetail from './fee-detail'
 import Stepper from './stepper'
 import StepInscribing from './steps/step-inscribing'
@@ -29,7 +29,7 @@ export default function InscribeOrderModal({ setOpen, order, open }: any) {
   const [NFT, setNFT] = useState('')
   const [isOpenWallet, setIsOpenWallet] = useState(false)
   const queryClient = useQueryClient()
-  const [txidd,setTxidd] = useState('')
+  const [txidd, setTxidd] = useState('')
 
   const getOrderDetail = useCallback(async () => {
     setIsLoading(true)
@@ -41,18 +41,21 @@ export default function InscribeOrderModal({ setOpen, order, open }: any) {
     setOrderDetail(res)
   }, [order?.id_create, publicKey])
 
-  const confirmPayment = useCallback(async (id_create: string) => {
-    try {
-      const res: any = await mintService.confirm({
-        id_create: id_create,
-      })
-      if (res && res.data && res.data.status === 'inscribing') {
-        getOrderDetail()
+  const confirmPayment = useCallback(
+    async (id_create: string) => {
+      try {
+        const res: any = await mintService.confirm({
+          id_create: id_create,
+        })
+        if (res && res.data && res.data.status === 'inscribing') {
+          getOrderDetail()
+        }
+      } catch (error) {
+        console.log('err: ', error)
       }
-    } catch (error) {
-      console.log('err: ', error)
-    }
-  }, [getOrderDetail])
+    },
+    [getOrderDetail],
+  )
 
   const handlePayWithWallet = async () => {
     try {
@@ -135,7 +138,7 @@ export default function InscribeOrderModal({ setOpen, order, open }: any) {
   }, [step, getOrderDetail, order?.status])
 
   useEffect(() => {
-    if(countdown>0 && txidd && orderDetail?.status === 'pending') {
+    if (countdown > 0 && txidd && orderDetail?.status === 'pending') {
       const time = setInterval(() => {
         confirmPayment(order?.id_create)
         setCountdown(countdown - 1)
@@ -144,8 +147,7 @@ export default function InscribeOrderModal({ setOpen, order, open }: any) {
         clearInterval(time)
       }
     }
-  }, [countdown,txidd])
-
+  }, [countdown, txidd])
 
   useEffect(() => {
     if (!payBTC && !txidd) setLimitTime(180)
@@ -162,80 +164,63 @@ export default function InscribeOrderModal({ setOpen, order, open }: any) {
     } else {
       setOpen(false)
     }
-  }, [limitTime, order, payBTC, open, setOpen, confirmPayment, orderDetail,txidd])
+  }, [limitTime, order, payBTC, open, setOpen, confirmPayment, orderDetail, txidd])
 
   return (
     <Dialog
       open={open}
       onClose={closeModal}
       ref={modalRef}
-      className={
-        'fixed inset-0 z-20 flex w-full justify-center overflow-auto bg-black/70 pt-[120px]'
-      }
+      className={'fixed inset-0 z-20 flex w-full justify-center overflow-auto bg-black/70 pt-[120px]'}
     >
-      <Dialog.Panel className='h-fit pb-[120px] max-sm:w-full max-sm:px-4'>
+      <Dialog.Panel className="h-fit pb-[120px] max-sm:w-full max-sm:px-4">
         <MintModalLayout className={'py-8'}>
-          <div className='flex flex-col gap-8 text-[#4E473F] sm:gap-10'>
-            <div className='flex flex-col items-start max-sm:gap-2'>
-              <div className='flex w-full justify-between'>
-                <p className='text-2xl font-normal leading-10 tracking-[-0.48px] sm:text-[32px] sm:font-medium sm:tracking-[-0.64px]'>
+          <div className="flex flex-col gap-8 text-[#4E473F] sm:gap-10">
+            <div className="flex flex-col items-start max-sm:gap-2">
+              <div className="flex w-full justify-between">
+                <p className="text-2xl font-normal leading-10 tracking-[-0.48px] sm:text-[32px] sm:font-medium sm:tracking-[-0.64px]">
                   Inscribing Order
                 </p>
-                <div className='cursor-pointer' onClick={closeModal}>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    width='45'
-                    height='45'
-                    viewBox='0 0 45 45'
-                    fill='none'
-                  >
-                    <rect
-                      x='0.515625'
-                      y='1.20093'
-                      width='43'
-                      height='43'
-                      rx='7.5'
-                      stroke='#D4C79C'
+                <div className="cursor-pointer" onClick={closeModal}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 45 45" fill="none">
+                    <rect x="0.515625" y="1.20093" width="43" height="43" rx="7.5" stroke="#D4C79C" />
+                    <path
+                      d="M30.3916 14.325L13.6396 31.0769"
+                      stroke="#AE9955"
+                      strokeWidth="3"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
                     />
                     <path
-                      d='M30.3916 14.325L13.6396 31.0769'
-                      stroke='#AE9955'
-                      stroke-width='3'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
-                    />
-                    <path
-                      d='M13.6396 14.325L30.3916 31.0769'
-                      stroke='#AE9955'
-                      stroke-width='3'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
+                      d="M13.6396 14.325L30.3916 31.0769"
+                      stroke="#AE9955"
+                      strokeWidth="3"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
                     />
                   </svg>
                 </div>
               </div>
-              <p className='text-sm font-medium leading-5 tracking-[-0.42px]'>
+              <p className="text-sm font-medium leading-5 tracking-[-0.42px]">
                 {' '}
-                <span className='font-light text-[#B2B0AD]'>Order ID:</span>{' '}
-                {orderDetail?.id_create}
+                <span className="font-light text-[#B2B0AD]">Order ID:</span> {orderDetail?.id_create}
               </p>
-              <div className='flex gap-8'>
-                <p className='text-sm font-light leading-5 tracking-[-0.42px] text-[#383F4A]'>
+              <div className="flex gap-8">
+                <p className="text-sm font-light leading-5 tracking-[-0.42px] text-[#383F4A]">
                   {' '}
-                  <span className=' text-[#B2B0AD]'>Quantity:</span>{' '}
-                  {orderDetail?.mint_list?.length}
+                  <span className=" text-[#B2B0AD]">Quantity:</span> {orderDetail?.mint_list?.length}
                 </p>
-                <p className='text-sm font-medium leading-5 tracking-[-0.42px] text-[#FF6634]'>
+                <p className="text-sm font-medium leading-5 tracking-[-0.42px] text-[#FF6634]">
                   {' '}
-                  <span className='font-light text-[#B2B0AD]'>Status:</span>
+                  <span className="font-light text-[#B2B0AD]">Status:</span>
                   {orderDetail?.status}
                 </p>
               </div>
             </div>
             <NFTSection
-              listNft={orderDetail?.mint_list}
+              nfts={orderDetail?.mint_list}
               isLoading={isLoading}
-              ableView={orderDetail?.status === 'minted'}
+              // ableView={orderDetail?.status === 'minted'}
               setNFT={setNFT}
             />
             <Stepper step={step} />

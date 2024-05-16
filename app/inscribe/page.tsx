@@ -1,7 +1,7 @@
 'use client'
 import Footer from '@/components/footer'
 import Inscribe from '@/components/inscribe'
-import Introduce from '@/components/introduce'
+import Introduce from '@/components/inscribe/introduce'
 import MyOrders from '@/components/orders'
 import { setBtnToUsdRateData } from '@/lib/features/wallet/fee-slice'
 import { selectMintProcess } from '@/lib/features/wallet/mintProcess'
@@ -21,11 +21,7 @@ export default function InscribePage() {
   const { data: btnToUsdRateData } = useQuery({
     queryKey: ['btcPrice'],
     queryFn: async () =>
-      (
-        await axios.get(
-          'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd',
-        )
-      ).data.bitcoin.usd,
+      (await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd')).data.bitcoin.usd,
   })
 
   dispatch(setBtnToUsdRateData(btnToUsdRateData))
@@ -39,13 +35,12 @@ export default function InscribePage() {
 
   return (
     <Suspense>
-      <div
-        ref={ref}
-        className='relative bg-[url(/images/marketplace/background-mg.png)] bg-fixed pb-[170px] pt-[72px] max-sm:px-4 sm:pt-[66px] lg:bg-[url(/images/marketplace/background.png)] bg-cover bg-no-repeat'
-      >
-        <div className='relative z-10'>
+      <div ref={ref} className="relative pb-[170px] pt-[72px] sm:pt-[66px]">
+        <div className="relative z-10">
           <Introduce />
-          <Inscribe />
+          <div className="-mt-[14vh] lg:-mt-[12%] px-4 overflow-hidden">
+            <Inscribe />
+          </div>
           <MyOrders />
         </div>
       </div>

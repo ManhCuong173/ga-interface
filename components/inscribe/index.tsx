@@ -1,60 +1,36 @@
 'use client'
 
 import InscribeContextProvider from '@/context/InscribeContext'
-import { selectMintProcess, setProcessState } from '@/lib/features/wallet/mintProcess'
-import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useState } from 'react'
 import InscribeOrderModal from '../inscribe-order-modal'
-import { MintModalLayout } from '../mintNFTs/MintModalLayout'
-import FrmStepMyOrder from './frmSteps/frmStepMyOrder'
-import FrmStepSubmit from './frmSteps/frmStepSubmit'
+import MintForm from '../mintNFTs/MintForm'
+import NFTForm from './NftForm'
 
+const Inscribe = () => {
+  const [showInscribeOrderModal, setShowInscribeOrderModal] = useState(false)
+  const [order, setOrder] = useState<any>()
 
-export default function Inscribe() {
+  return (
+    <InscribeContextProvider>
+      <div className="relative rounded-xl bg-white mx-auto lg:max-w-[1280px] w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr]">
+          <div className="px-4 py-6 sm:p-[40px] border-r-2 border-solid border-bgAlt">
+            <p className="text_heading mb-4">Your NFT</p>
+            <NFTForm />
+          </div>
+          <div className="px-4 py-6 sm:p-[40px] flex flex-col">
+            <MintForm
+              onShowInscribeOrderModal={() => {
+                setShowInscribeOrderModal(true)
+              }}
+              onUpdateOrder={setOrder}
+            />
+          </div>
+        </div>
 
-    const mintProcessStep = useSelector(selectMintProcess);
-    const [step, setStep] = useState(mintProcessStep);
-    const dispatch = useDispatch()
-    const [showInscribeOrderModal, setShowInscribeOrderModal] = useState(false)
-    const [order, setOrder] = useState<any>()
-
-    useEffect(() => {
-        setStep(mintProcessStep);
-    }, [mintProcessStep])
-
-    return (
-        <MintModalLayout className='mx-auto font-medium lg:max-w-[800px] w-full mt-8 font-ProtoMono'>
-            <div className='flex flex-col gap-6 max-sm:py-[29px]'>
-                {step === 2 ? <div className='flex items-center justify-between w-full'>
-                    <button 
-                        className='flex gap-1 py-[6px] sm:px-6 px-2 items-center rounded border border-[#D4C79C]'
-                        onClick={() => dispatch(setProcessState(1))}
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                            <path d="M10 4L6 8L10 12" stroke="#AE9955" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <span className='text-[#AE9955] text-sm font-medium leading-5 tracking-[-0.42px]'>back</span>
-                    </button>
-                    <p className='text-[#4E473F] text_heading text-center'>Your NFT</p>
-                    <span className='w-[103px]'></span>
-                </div>:<p className='text-[#4E473F] text_heading text-center'>Your NFT</p>}
-
-                <InscribeContextProvider>
-                    {
-                        step === 1 ? <FrmStepMyOrder setStep={setStep} /> : <FrmStepSubmit
-                            setOrder={setOrder}
-                            setShowInscribeOrderModal={setShowInscribeOrderModal}
-                        />
-                    }
-                    <InscribeOrderModal
-                        open={showInscribeOrderModal}
-                        order={order}
-                        setOpen={setShowInscribeOrderModal}
-                    />
-                </InscribeContextProvider>
-
-            </div>
-
-        </MintModalLayout>
-    )
+        <InscribeOrderModal open={showInscribeOrderModal} order={order} setOpen={setShowInscribeOrderModal} />
+      </div>
+    </InscribeContextProvider>
+  )
 }
+export default Inscribe

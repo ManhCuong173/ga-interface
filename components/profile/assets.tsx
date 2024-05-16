@@ -6,7 +6,7 @@ import iconSearch from '@/icons/profile/search-icon.png'
 import { UserAsset } from '@/types/asset'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
-import SelectField from '../inscribe/Select'
+import SelectElement from '../SelectElement'
 
 type Props = {
   isLoading?: boolean
@@ -16,16 +16,10 @@ type Props = {
   onCancel: (asset: UserAsset) => void
 }
 
-export default function Assets({
-  isLoading,
-  assets,
-  onShowInfo,
-  onList: onListing,
-  onCancel,
-}: Props) {
+export default function Assets({ isLoading, assets, onShowInfo, onList: onListing, onCancel }: Props) {
   const [filteredAssets, setFilteredAssets] = useState(assets)
 
-  const [nftIds, setNftIds] = useState<number[]>([1, 2, 3, 4, 5])
+  const [nftIds, setNftIds] = useState<number[]>([-1, 1, 2, 3, 4, 5])
 
   const [search, setSearch] = useState('')
 
@@ -52,33 +46,33 @@ export default function Assets({
   }
 
   return (
-    <div className=''>
-      <div className='flex items-center gap-4'>
-        <div className='flex h-11 flex-1 items-center justify-center gap-2.5 rounded border border-[#D4C79C]  px-4'>
-          <Image src={iconSearch} alt='icon search' className='h-5 w-5 min-w-5' />
+    <div className="">
+      <div className="flex items-center gap-4">
+        <div className="flex h-11 flex-1 items-center justify-center gap-2.5 rounded border border-[#D4C79C]  px-4">
+          <Image src={iconSearch} alt="icon search" className="h-5 w-5 min-w-5" />
           <input
-            type='text'
+            type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className='w-full flex-1 border-none bg-transparent text-sm font-semibold outline-none placeholder:text-[#AE9955]'
-            placeholder='Search number'
+            className="w-full flex-1 border-none bg-transparent text-sm font-semibold outline-none placeholder:text-[#AE9955]"
+            placeholder="Search number"
           />
           {search && (
-            <button className='flex size-6 items-center justify-center' onClick={handleClearSearch}>
-              <Image src={clearSearchIcon} alt='' width={20} height={20} />
+            <button className="flex size-6 items-center justify-center" onClick={handleClearSearch}>
+              <Image src={clearSearchIcon} alt="" width={20} height={20} />
             </button>
           )}
         </div>
-        <SelectField
-          nftIds={nftIds}
-          setNftIds={setNftIds}
-          className='relative flex h-[44px] cursor-pointer items-center rounded border border-[#AE9955] py-2'
+        <SelectElement
+          elements={nftIds}
+          onSelectElements={setNftIds}
+          className="relative flex h-[44px] cursor-pointer items-center rounded border border-[#AE9955] py-2"
         />
       </div>
       {isLoading ? (
-        <div className='flex min-h-[420px] items-center justify-center'>loading...</div>
+        <div className="flex min-h-[420px] items-center justify-center">loading...</div>
       ) : filteredAssets?.length ? (
-        <div className='my-6 grid grid-cols-2 gap-4 rounded md:grid-cols-3 lg:grid-cols-4'>
+        <div className="my-6 grid grid-cols-2 gap-4 rounded md:grid-cols-3 lg:grid-cols-4">
           {filteredAssets.map((asset) => (
             <Asset
               key={asset.id_inscription}
@@ -90,7 +84,7 @@ export default function Assets({
           ))}
         </div>
       ) : (
-        <div className='flex min-h-[420px] items-center justify-center font-light'>No NFTs</div>
+        <div className="flex min-h-[420px] items-center justify-center font-light">No NFTs</div>
       )}
     </div>
   )

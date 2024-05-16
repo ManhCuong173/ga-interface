@@ -1,3 +1,4 @@
+import ic_all_elements from '@/images/five-elements/all-elements.svg'
 import ic_earth from '@/images/five-elements/earth.svg'
 import ic_fire from '@/images/five-elements/fire.svg'
 import ic_mental from '@/images/five-elements/mental.svg'
@@ -6,6 +7,12 @@ import ic_wood from '@/images/five-elements/wood.svg'
 import { NFTType } from '@/types/nft'
 
 export const nftTypes: NFTType[] = [
+  {
+    id: 0,
+    label: 'All',
+    color: '',
+    icon: ic_all_elements,
+  },
   {
     id: 1,
     label: 'Fire',
@@ -36,5 +43,6 @@ export const nftTypes: NFTType[] = [
     color: '#0BA5EC',
     icon: ic_water,
   },
-  
 ]
+
+export const MAX_PAGE_SIZE_NFT = 100

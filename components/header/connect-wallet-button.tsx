@@ -1,7 +1,5 @@
 'use client'
 
-import disconnect from '@/icons/header/button-disconnect.svg'
-import walletBlack from '@/icons/header/wallet-black.svg'
 import wallet from '@/icons/header/wallet.svg'
 import {
   selectedPublicKey,
@@ -60,8 +58,7 @@ export default function ConnectWalletButton({ mode }: Props) {
   }, [dispatch])
 
   const importPubKeyMutation = useMutation({
-    mutationFn: (data: { public_key: string; wallet_address: string }) =>
-      userService.importUserPubkey(data),
+    mutationFn: (data: { public_key: string; wallet_address: string }) => userService.importUserPubkey(data),
   })
 
   const handleAccountsChanged = useCallback(
@@ -132,45 +129,32 @@ export default function ConnectWalletButton({ mode }: Props) {
   }
 
   return (
-    <div className='flex w-full gap-2'>
-      <div
-        className={`${path === '/' && mode === 'transparent' ? 'border-_white' : 'border-black1 font-medium'} relative flex h-10 flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg border px-3 transition-all`}
+    <div className="flex flex-col w-full gap-2">
+      <button
+        className="h-[48px] w-full rounded-[10px]  border-red-light border-solid border-[1px] flex justify-center items-center p-[8px_16px]"
         onClick={handleClick}
       >
         {!address && (
           <>
-            <div className='relative h-6 w-6 transition-all'>
-              <Image
-                src={wallet}
-                alt=''
-                width={24}
-                height={24}
-                className={`${path === '/' && mode === 'transparent' ? 'opacity-100' : 'opacity-0'} absolute inset-0 transition-opacity`}
-              />
-              <Image
-                src={walletBlack}
-                alt=''
-                width={24}
-                height={24}
-                className={`${path === '/' && mode === 'transparent' ? 'opacity-0' : 'opacity-100'} absolute inset-0 transition-opacity`}
-              />
+            <div className="relative h-6 w-6 transition-all">
+              <Image src={wallet} alt="" width={24} height={24} className={'absolute inset-0 transition-opacity'} />
             </div>
-            <span className='text-nowrap transition-all'>Connect Wallet</span>
+            <span className="text-nowrap transition-all text-red-light text-base font-semibold ml-[18px] font-Roboto">
+              Connect Wallet
+            </span>
           </>
         )}
         {address && <Menu mode={mode} handleDisconnect={handleDisconnect} />}
-      </div>
+      </button>
       {address && (
-        <Image
-          src={disconnect}
-          alt=''
-          width={40}
-          height={40}
+        <button
           onClick={() => {
             handleDisconnect()
           }}
-          className='lg:hidden'
-        />
+          className="lg:hidden w-full text-black1 text-base font-medium leading-[130%] font-Roboto"
+        >
+          Disconnect
+        </button>
       )}
     </div>
   )
