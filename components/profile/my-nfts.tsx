@@ -3,16 +3,15 @@
 import Assets from '@/components/profile/assets'
 import { emptyAsset } from '@/constants/asset.constant'
 import { nftTypes } from '@/constants/nft.constant'
-import lantern from '@/icons/profile/rounded-lantern.svg'
 import { selectAddress, selectedPublicKey } from '@/lib/features/wallet/wallet-slice'
 import { useAppSelector } from '@/lib/hook'
 import axiosClient from '@/services/axios-client'
+import { backend } from '@/services/endpoint/endpoint'
 import { listService } from '@/services/list.service'
 import { userService } from '@/services/user.service'
 import { UserAsset } from '@/types/asset'
 import { NFTDetail } from '@/types/nft'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import Image from 'next/image'
 import { useState, useTransition } from 'react'
 import { toast } from 'react-toastify'
 import Loading from '../Loading'
@@ -20,7 +19,6 @@ import ModalConfirmCancel from './modal/modal-confirm-cancel'
 import ModalListNft from './modal/modal-list-nft'
 import ModalListSuccess from './modal/modal-list-success'
 import ModalNftInfo from './modal/modal-nft-info'
-import { backend } from '@/services/endpoint/endpoint'
 
 export default function MyNFTs() {
   const address = useAppSelector(selectAddress)
@@ -161,12 +159,6 @@ export default function MyNFTs() {
 
   return (
     <div className='pt-11'>
-      <div className='mx-auto mb-[22.5px] flex items-center justify-start gap-4'>
-        <Image src={lantern} alt='' width={40} height={40} />
-        <span className='text-[24px] font-medium leading-10 tracking-[-2%] text-black1 lg:text-[32px]'>
-          My ASSETS
-        </span>
-      </div>
       <div className='space-y-8'>
         <Assets
           key={assets?.user_asset?.length}

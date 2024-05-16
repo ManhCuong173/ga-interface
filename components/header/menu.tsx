@@ -3,11 +3,13 @@
 import chevronDownBlackIcon from '@/icons/header/chevron-down-black.svg'
 import chevronDownIcon from '@/icons/header/chevron-down.svg'
 import disconnect from '@/icons/header/disconnect.svg'
+import farmerWhiteIcon from '@/icons/header/farmer-black.svg'
 import farmerIcon from '@/icons/header/farmer.svg'
 import oldManIcon from '@/icons/header/old-man.svg'
 import { selectAddress } from '@/lib/features/wallet/wallet-slice'
 import { useAppSelector } from '@/lib/hook'
 import { truncate } from '@/lib/truncate'
+import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
@@ -61,12 +63,22 @@ export default function Menu({ mode, handleDisconnect }: Props) {
         }}
       >
         <span className="flex size-6 items-center justify-center">
-          <Image src={farmerIcon} alt="" width={24} height={24} className="fill-red-light" />
+          {mode !== 'transparent' && (
+            <Image src={farmerIcon} alt="" width={24} height={24} className="fill-red-light" />
+          )}
+          {mode === 'transparent' && <Image src={farmerWhiteIcon} alt="" width={24} height={24} />}
         </span>
-        <span className={`text-red-light text-base font-medium`}>{truncate(address, 13, '...')}</span>
+        <span
+          className={cn(
+            ` text-base font-medium leading-[130%] font-Roboto uppercase`,
+            mode === 'transparent' ? 'text-white' : 'text-red-light',
+          )}
+        >
+          {truncate(address, 13, '...')}
+        </span>
         <span className="hidden size-6 items-center justify-center lg:flex">
           {mode === 'transparent' ? (
-            <Image src={chevronDownIcon} alt="" width={12} height={6} />
+            <Image src={chevronDownIcon} alt="" width={12} height={6} className="stroke-red-light fill-red-light" />
           ) : (
             <Image src={chevronDownBlackIcon} alt="" width={12} height={6} />
           )}
@@ -99,3 +111,4 @@ export default function Menu({ mode, handleDisconnect }: Props) {
     </div>
   )
 }
+

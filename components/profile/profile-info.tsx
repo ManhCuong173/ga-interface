@@ -4,6 +4,8 @@ import { baseURL } from '@/constants/base64'
 import useGetPoints from '@/hooks/api/useGetPoints'
 import useLinkSocial from '@/hooks/api/useLinkSocial'
 import pen from '@/icons/profile/profile-info/pen.svg'
+import ic_discord from '@/icons/socials/discord.svg'
+import ic_x from '@/icons/socials/x.svg'
 import { selectAddress, selectedPublicKey } from '@/lib/features/wallet/wallet-slice'
 import { useAppSelector } from '@/lib/hook'
 import { backend } from '@/services/endpoint/endpoint'
@@ -12,6 +14,7 @@ import Image from 'next/image'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { ProfileType } from '../../types/profile'
+import ButtonConnect from './button/btnconnect'
 import ModalEditProfile from './modal/modal-edit-profile'
 
 interface Props {
@@ -87,12 +90,14 @@ export default function ProfileInfo({ profile, refetch }: Props) {
   }
 
   return (
-    <div className="
-    relative hidden h-fit w-[303.305693px]  
-    flex-col items-center px-[40px] 
-    lg:flex lg:pt-10
-    ">
-      <div className="flex w-[250px] flex-col gap-[14px] overflow-hidden">
+    <div
+      className="
+    relative hidden h-fit lg:w-[220px]  
+    flex-col items-center 
+    md:flex md:pt-10
+    "
+    >
+      <div className="flex w-full flex-col gap-[14px] overflow-hidden">
         <div className="mx-auto h-[160px] w-[160px] overflow-hidden rounded-full border-4 border-bgAlt">
           {profile?.avatar ? (
             <Image
@@ -122,16 +127,41 @@ export default function ProfileInfo({ profile, refetch }: Props) {
         </div>
         <button
           onClick={editProfileClicked}
-          className="mx-auto flex h-10 w-fit items-center mt-[19p]"
+          className="mx-auto flex h-10 w-fit items-center mt-[19p] hover:text-[#7E6238] text-text-secondary"
         >
-          <span className="text-sm font-medium leading-5 tracking-[-3%] text-text-secondary font-Roboto">Edit Profile</span>
-          <Image src={pen} alt="" width={16} height={16} className='ml-2'  />
+          <span className="text-sm font-medium leading-5 tracking-[-3%]  font-Roboto">Edit Profile</span>
+          <Image src={pen} alt="" width={16} height={16} className="ml-2 hover:fill-[#7E6238] hover:stroke-[#7E6238]" />
         </button>
       </div>
-      <p className="max-w-[220px] text-wrap break-words text-center text-base leading-[150%] font-light tracking-[-3%] text-black1 mt-[39px] font-Roboto ">
-        {/* {profile?.bio} */}
-        'In a groundbreaking move, BounceBit introduces the mixed DeFi and CeFi yield mechanism, allowing BTC holders to earn yields through native validator staking 💪'
+      <p
+        className="w-full md:max-w-[220px] text-wrap 
+      break-words text-center text-base 
+      leading-[150%] font-light tracking-[-3%] 
+      text-black1 mt-[39px] font-Roboto "
+      >
+        {profile?.bio ||
+          'In a groundbreaking move, BounceBit introduces the mixed DeFi and CeFi yield mechanism, allowing BTC holders to earn yields through native validator staking 💪'}
       </p>
+      {!profile?.twitter_connect && !profile?.discord_connect && (
+        <div className="flex flex-col lg:w-[170px] mt-[120px]">
+          <div className="flex flex-col items-center space-y-4">
+            <ButtonConnect
+              status={profile?.twitter_connect}
+              icon={ic_x}
+              text={profile?.twitter_connect ? profile.twitter_username : 'Connect x'}
+              onClick={connectTwitter}
+              className="border-[1px] border-solid border-bgAlt rounded-[10px] w-[200px] text-text-secondary text-base font-Roboto"
+            />
+            <ButtonConnect
+              status={profile?.discord_connect}
+              icon={ic_discord}
+              text={profile?.discord_connect ? profile.discord_username : 'Connect Discord'}
+              onClick={connectDiscord}
+              className="border-[1px] border-solid border-bgAlt rounded-[10px] w-[200px] text-text-secondary text-base font-Roboto"
+            />
+          </div>
+        </div>
+      )}
       <div className="flex flex-col space-y-3">
         {(profile?.twitter_connect || profile?.discord_connect) && (
           <div className="text-left text-xs font-light leading-[18px] text-text-sub">Connected accounts</div>
@@ -151,3 +181,4 @@ export default function ProfileInfo({ profile, refetch }: Props) {
     </div>
   )
 }
+

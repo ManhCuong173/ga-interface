@@ -1,13 +1,10 @@
 'use client'
 
 import wallet from '@/icons/header/wallet.svg'
-import {
-  selectedPublicKey,
-  setAddress,
-  setPublicKey
-} from '@/lib/features/wallet/wallet-slice'
+import { selectedPublicKey, setAddress, setPublicKey } from '@/lib/features/wallet/wallet-slice'
 import { useAppDispatch, useAppSelector } from '@/lib/hook'
 import { getUnisat } from '@/lib/unisat'
+import { cn } from '@/lib/utils'
 import { userService } from '@/services/user.service'
 import { useMutation } from '@tanstack/react-query'
 import Image from 'next/image'
@@ -131,7 +128,10 @@ export default function ConnectWalletButton({ mode }: Props) {
   return (
     <div className="flex flex-col w-full gap-2">
       <button
-        className="h-[48px] w-full rounded-[10px]  border-red-light border-solid border-[1px] flex justify-center items-center p-[8px_16px]"
+        className={cn(
+          `h-[42px] w-full rounded-[10px]   border-solid border-[1px] flex justify-center items-center p-[8px_16px]`,
+          mode === 'transparent' ? 'border-white' : 'border-red-light',
+        )}
         onClick={handleClick}
       >
         {!address && (
@@ -139,7 +139,7 @@ export default function ConnectWalletButton({ mode }: Props) {
             <div className="relative h-6 w-6 transition-all">
               <Image src={wallet} alt="" width={24} height={24} className={'absolute inset-0 transition-opacity'} />
             </div>
-            <span className="text-nowrap transition-all text-red-light text-base font-semibold ml-[18px] font-Roboto">
+            <span className="text-nowrap transition-all text-red-light text-base font-medium ml-[18px] font-Roboto">
               Connect Wallet
             </span>
           </>
@@ -159,3 +159,4 @@ export default function ConnectWalletButton({ mode }: Props) {
     </div>
   )
 }
+

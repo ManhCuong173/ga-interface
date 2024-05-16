@@ -1,4 +1,6 @@
 import { HeadMarkIcon } from '@/components/ui/icons'
+import { appearAnimation } from '@/constants/animation.constant'
+import { motion } from 'framer-motion'
 
 const Intro = () => {
   return (
@@ -14,10 +16,16 @@ const Intro = () => {
             <HeadMarkIcon />
           </div>
 
-          <div className="mt-[30px] mb-[57px] text-_black text-2xl font-semibold leading-8 -tracking-[0.48px]">
+          <motion.div
+            {...appearAnimation}
+            transition={{ duration: 0.5, delay: 0.5 }}
+            className="mt-[30px] mb-[57px] text-_black text-2xl font-semibold leading-8 -tracking-[0.48px]"
+          >
             About Golden Apple
-          </div>
-          <div
+          </motion.div>
+          <motion.div
+            {...appearAnimation}
+            transition={{ duration: 0.5, delay: 0.75 }}
             className="text-black1 max-w-[315px] 
             lg:max-w-[851px] text-[18px] font-normal leading-[150%] font-Roboto text-center"
           >
@@ -32,7 +40,7 @@ const Intro = () => {
               We want to allocate part of our venture to create a project that can bring users in the hope that this
               community will be the seed of a bigger ecosystem.
             </p>
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>

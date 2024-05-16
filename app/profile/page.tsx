@@ -11,8 +11,8 @@ export default function Profile() {
 
   return (
     <>
-      <div className="mt-[67px] bg-[#FAF5F0] px-[60px]">
-        <div className="flex">
+      <div className="mt-[67px] bg-[#FAF5F0] px-[16px] lg:px-[50px] pb-16 lg;pb-[186px]">
+        <div className="flex flex-col md:flex-row">
           <div
             className="
             w-full
@@ -21,10 +21,20 @@ export default function Profile() {
             <ProfileInfoMobile profile={profile} refetch={refetch} />
             <ProfileInfo profile={profile} refetch={refetch} />
           </div>
-          <div className="flex-grow py-5">
-            <div className="aspect-[1020/108] w-full bg-[url(/images/profile/profile-cover-background.svg)] bg-cover bg-center rounded-[20px] py-10 px-12 flex justify-center flex-col text-secondary">
-              <div className="text-[32px] font-semibold leading-[150%] -tracking-[-0.96px]">My Collection</div>
-              <div className="font-Roboto text-base font-normal leading-[150%] mt-5 max-w-[529px]">
+          <div className="flex-grow py-3 md:py-5">
+            <div
+              className="
+            aspect-[1020/108] w-full bg-[url(/images/profile/profile-cover-background.svg)] 
+            bg-cover bg-center rounded-[20px] py-10 px-12 flex justify-center flex-col text-secondary"
+            >
+              <div
+                className="
+              -tracking-[0.72px] text-[24px] md:text-[32px] 
+              font-semibold leading-[150%] md:-tracking-[-0.96px]"
+              >
+                My Collection
+              </div>
+              <div className="font-Roboto tex-sm  md:text-base font-normal leading-[150%] mt-5 max-w-[529px]">
                 The world’s first and largest digital marketplace for crypto collectibles and non-fungible tokens
                 (NFTs). Buy, sell, and discover exclusive digital items.
               </div>
@@ -37,3 +47,4 @@ export default function Profile() {
     </>
   )
 }
+

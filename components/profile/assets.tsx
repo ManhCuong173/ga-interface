@@ -54,7 +54,7 @@ export default function Assets({ isLoading, assets, onShowInfo, onList: onListin
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full flex-1 border-none bg-transparent text-sm font-semibold outline-none placeholder:text-[#AE9955]"
+            className="w-full flex-1 border-none bg-transparent text-base font-medium leading-[150%] outline-none placeholder:text-[#AE9955]"
             placeholder="Search number"
           />
           {search && (
