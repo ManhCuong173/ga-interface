@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils'
 import React from 'react'
 
-const HeadMark: React.FC<{ className?: string; color?: string }> = ({ className }) => {
+const Icon: React.FC<{ className?: string; color?: string }> = ({ className }) => {
   return (
     <svg
       className={cn('stroke-bgAlt', className)}
@@ -41,5 +41,5 @@ const HeadMark: React.FC<{ className?: string; color?: string }> = ({ className 
   )
 }
 
-export default HeadMark
+export default Icon
 

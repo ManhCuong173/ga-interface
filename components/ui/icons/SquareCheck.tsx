@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils'
 import React from 'react'
 
-const SquareCheck: React.FC<{ className?: string; color?: string; checked?: boolean }> = ({ className, checked }) => {
+const Icon: React.FC<{ className?: string; color?: string; checked?: boolean }> = ({ className, checked }) => {
   return (
     <svg
       className={cn('stroke-text-sub w-5 h-5', className)}
@@ -21,4 +21,5 @@ const SquareCheck: React.FC<{ className?: string; color?: string; checked?: bool
   )
 }
 
-export default SquareCheck
+export default Icon
+

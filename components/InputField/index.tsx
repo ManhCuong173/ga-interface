@@ -1,14 +1,13 @@
-import React, { ChangeEventHandler } from 'react'
 import iconSearch from '@/icons/ic_search.svg'
-import Image from 'next/image'
-import { ReactNode } from 'react'
 import { cn } from '@/lib/utils'
+import Image from 'next/image'
+import React, { ReactNode } from 'react'
 
-export type PropsInputField = {
+export type PropsInputField = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> & {
   className?: string
   classNameInput?: string
   placeholder?: string
-  onChange?: ChangeEventHandler
+
   icon?: any
   type?: string
   children?: ReactNode
@@ -31,7 +30,7 @@ const InputField = ({ className, classNameInput, icon, type, children, hideIcon,
   const preventNegativeValues = (e: any) => ['e', 'E', '+', '-'].includes(e.key) && e.preventDefault()
 
   return (
-    <div className={cn(className, 'h-11 flex items-center space-x-[10px] rounded px-4 font-light text-black1')}>
+    <div className={cn('h-11 flex items-center space-x-[10px] rounded px-4 font-light text-black1', className)}>
       {!hideIcon && (
         <Image src={icon ? icon : iconSearch} alt="icon search" className="h-5 w-5 min-w-5" width={16} height={16} />
       )}
@@ -46,3 +45,4 @@ const InputField = ({ className, classNameInput, icon, type, children, hideIcon,
 }
 
 export default InputField
+

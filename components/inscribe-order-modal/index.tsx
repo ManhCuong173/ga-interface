@@ -26,7 +26,7 @@ export default function InscribeOrderModal({ setOpen, order, open }: any) {
   const dispatch = useAppDispatch()
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1)
   const [unisat, setUnisat] = useState<any>()
-  const [NFT, setNFT] = useState('')
+  const [NFT, setNFT] = useState<number | string>('')
   const [isOpenWallet, setIsOpenWallet] = useState(false)
   const queryClient = useQueryClient()
   const [txidd, setTxidd] = useState('')
@@ -221,7 +221,9 @@ export default function InscribeOrderModal({ setOpen, order, open }: any) {
               nfts={orderDetail?.mint_list}
               isLoading={isLoading}
               // ableView={orderDetail?.status === 'minted'}
-              setNFT={setNFT}
+              onSelectNFT={(nft) => {
+                setNFT(nft.id_nft)
+              }}
             />
             <Stepper step={step} />
             {step === 3 && <StepInscribing />}
@@ -249,3 +251,4 @@ export default function InscribeOrderModal({ setOpen, order, open }: any) {
     </Dialog>
   )
 }
+

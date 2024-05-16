@@ -39,6 +39,7 @@ const config: Config = {
         secondary: '#FAF5F0',
         bgAlt: '#D4C79C',
         mark: '#2D8B6F',
+        mark2: '#12B76A',
 
         'text-primary': '#F4EADE',
         'text-black': '#4E473F',
@@ -78,3 +79,4 @@ const config: Config = {
   plugins: [],
 }
 export default config
+

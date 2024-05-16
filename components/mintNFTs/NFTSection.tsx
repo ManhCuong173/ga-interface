@@ -3,7 +3,7 @@ import { SquareCheckIcon } from '../ui/icons'
 import NFTCard from './NFTCard'
 
 interface INfts {
-  nfts: NFT[]
+  nfts: NFT[] | any
   isLoading?: boolean
   selectedNFTs?: NFT[]
   canPick?: boolean
@@ -23,7 +23,7 @@ const NFTSection: React.FC<INfts> = ({ nfts, isLoading, canPick, selectedNFTs, o
     <div className="relative flex flex-col items-center gap-4 rounded h-[500px] text-center">
       {nfts && nfts.length > 0 ? (
         <div className="nft_list relative grid  w-full grid-cols-2 justify-between gap-3 overflow-y-auto sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-          {nfts?.map((nft, index) => (
+          {nfts?.map((nft: any, index: any) => (
             <div className="relative">
               <NFTCard className="" key={index} nft={nft} onSelectNFT={onSelectNFT} />
               {canPick && (
@@ -46,3 +46,4 @@ const NFTSection: React.FC<INfts> = ({ nfts, isLoading, canPick, selectedNFTs, o
   )
 }
 export default NFTSection
+

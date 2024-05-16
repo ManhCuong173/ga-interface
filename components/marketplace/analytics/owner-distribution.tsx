@@ -60,3 +60,4 @@ export default function OwnerDistribution({ nftId, backgroundColor }: Props) {
     </div>
   )
 }
+

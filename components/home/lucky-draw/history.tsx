@@ -241,3 +241,4 @@ function Row({ item, index, round, refetch }: PropsRow) {
     </div>
   )
 }
+

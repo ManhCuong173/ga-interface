@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils'
 import React from 'react'
 
-const InfoFullCircle: React.FC<{ className?: string; color?: string }> = ({ className }) => {
+const Icon: React.FC<{ className?: string; color?: string }> = ({ className }) => {
   return (
     <svg
       className={cn('w-4 h-4 fill-black1', className)}
@@ -18,4 +18,5 @@ const InfoFullCircle: React.FC<{ className?: string; color?: string }> = ({ clas
   )
 }
 
-export default InfoFullCircle
+export default Icon
+

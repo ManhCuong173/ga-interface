@@ -4,6 +4,7 @@ import { selectAddressReceiver, setAddressReceiver, setProcessState } from '@/li
 import { selectAddress, selectedPublicKey } from '@/lib/features/wallet/wallet-slice'
 import { useAppDispatch, useAppSelector } from '@/lib/hook'
 import { checkInvalidAddress } from '@/lib/truncate'
+import { cn } from '@/lib/utils'
 import { mintService } from '@/services/mint.service'
 import { useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
@@ -11,6 +12,7 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import ReceiveAddress from '../ReceiveAddress'
 import { ButtonImage } from '../button'
+import { ChevronIcon } from '../ui/icons'
 import { SetFee } from './SetFee'
 
 const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrder: (data: any) => void }> = ({
@@ -20,6 +22,7 @@ const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrder: 
   const address = useAppSelector(selectAddress)
   const [dataForm, setDataForm] = useState<any>()
   const addressReceiver = useAppSelector(selectAddressReceiver)
+  const [enabledCustom, setEnableCustom] = useState(false)
 
   const publickey = useAppSelector(selectedPublicKey)
 
@@ -67,16 +70,28 @@ const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrder: 
   }
 
   return (
-    <div>
+    <div className="flex flex-col flex-1">
       <p className="text-base font-semibold leading-tight font-Roboto">Receive Address</p>
-
       <ReceiveAddress
         address={addressReceiver}
         onChange={handleChangeReceiverAddress}
         error={checkInvalidAddress(addressReceiver) ? 'Invalid address' : ''}
       />
+      <div
+        className="flex items-center justify-center cursor-pointer my-3 mx-auto"
+        onClick={() => {
+          setEnableCustom(!enabledCustom)
+        }}
+      >
+        <span className="text-base text-text-secondary font-medium mr-1 font-Roboto">Advanced Settings</span>
+        <span className={cn(enabledCustom ? 'rotate-180' : 'rotate-0', `ml-1 transition-all duration-500`)}>
+          <ChevronIcon className="text-text-secondary" />
+        </span>
+      </div>
 
-      <div className="flex flex-col gap-2 mt-6 text-black1 font-Roboto">
+      <div
+        className={cn('flex flex-col gap-2 text-black1 font-Roboto', enabledCustom ? 'max-h-0 overflow-hidden' : '')}
+      >
         <p className="text-sm font-medium leading-tight tracking-[-0.42px]">Select the network fee you want to pay</p>
         <SetFee
           btcToUsdRate={btnToUsdRateData}
@@ -84,8 +99,7 @@ const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrder: 
           numberOfNft={inscribeData.pickedNfts.length}
         />
       </div>
-
-      <div className="flex flex-col flex-1 justify-end gap-4 uppercase">
+      <div className="flex flex-col flex-1 mt-auto justify-end gap-4 uppercase">
         <ButtonImage
           varirant="primary-asset"
           disabled={Boolean(
@@ -104,3 +118,4 @@ const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrder: 
   )
 }
 export default MintForm
+

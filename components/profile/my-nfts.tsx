@@ -27,9 +27,7 @@ export default function MyNFTs() {
   const [selectedAsset, setSelectedAsset] = useState<UserAsset>(emptyAsset)
   const [price, setPrice] = useState('')
   const queryClient = useQueryClient()
-  const [modalOpen, setModalOpen] = useState<
-    'nft-info' | 'list-nft' | 'list-success' | 'confirm-cancel' | null
-  >(null)
+  const [modalOpen, setModalOpen] = useState<'nft-info' | 'list-nft' | 'list-success' | 'confirm-cancel' | null>(null)
   const [isListing, startListingTransition] = useTransition()
   const [isCancelListing, startCancelListingTransition] = useTransition()
 
@@ -45,12 +43,7 @@ export default function MyNFTs() {
     isLoading: loadingDetail,
     refetch,
   } = useQuery({
-    queryKey: [
-      'nft-detail',
-      selectedAsset.id_create,
-      selectedAsset.number,
-      selectedAsset.inscription_number,
-    ],
+    queryKey: ['nft-detail', selectedAsset.id_create, selectedAsset.number, selectedAsset.inscription_number],
     queryFn: async () =>
       (
         await axiosClient.post<NFTDetail>(`${backend}/inscription/info`, {
@@ -158,8 +151,8 @@ export default function MyNFTs() {
   const matchedType = nftTypes.find((item) => item.id.toString() === selectedAsset.nft_id)
 
   return (
-    <div className='pt-11'>
-      <div className='space-y-8'>
+    <div className="pt-11">
+      <div className="space-y-8">
         <Assets
           key={assets?.user_asset?.length}
           isLoading={loadingAssets}
@@ -226,3 +219,4 @@ export default function MyNFTs() {
     </div>
   )
 }
+

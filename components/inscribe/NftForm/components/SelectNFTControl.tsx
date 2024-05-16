@@ -1,3 +1,4 @@
+import { SquareCheckIcon } from '@/components/ui/icons'
 import { useInscribeContext } from '@/context/InscribeContext'
 import { cn } from '@/lib/utils'
 import { NFT } from '@/types/nft'
@@ -36,15 +37,10 @@ const SelectControl: React.FC<{ nfts: NFT[] }> = ({ nfts }) => {
     <section className="flex items-center justify-between font-Roboto">
       <div className="flex items-center gap-2">
         <div className="flex items-center gap-3">
-          <input
-            checked={isChecked}
-            onChange={handleSelectChange}
-            className={cn(
-              'w-5 rounded-md h-5 border border-solid border-mark checked:text-white text-xs',
-              isChecked ? 'accent-mark ' : '',
-            )}
-            type="checkbox"
-          />
+          <div className="cursor-pointer" onClick={handleSelectChange}>
+            <SquareCheckIcon checked={isChecked} />
+          </div>
+
           <span className="text-black text-base leading-5 tracking-[-3%] font-medium">Select all</span>
         </div>
         <div className="flex items-center text-mark sm:text-base text-sm leading-5 tracking-[-3%] font-medium">
@@ -64,3 +60,4 @@ const SelectControl: React.FC<{ nfts: NFT[] }> = ({ nfts }) => {
 }
 
 export default memo(SelectControl)
+

@@ -1,7 +1,8 @@
 import { cn } from '@/lib/utils'
 import { NetworkFeeType } from '@/types/fee'
 import { toast } from 'react-toastify'
-import ProgressBar from '../progress-bar'
+import { ButtonImage } from '../button'
+import Customsize from './Customsize'
 
 type Props = {
   networkFee: {
@@ -32,11 +33,12 @@ export default function ChooseNetworkFee({
     <>
       <div className="mx-auto flex w-full gap-2 max-sm:flex-col">
         {(['normal', 'high', 'custom'] as NetworkFeeType[]).map((network) => (
-          <div
+          <ButtonImage
+            varirant="outline"
             key={network}
             className={cn(
               network === selected ? 'bg-[#ef232c1a] border-red-light' : 'border-bgAlt',
-              `w-full cursor-pointer rounded-lg py-2 pl-[14px] pr-8 text-xs border-2 `,
+              `flex flex-col justify-start items-start w-full cursor-pointer py-2 pl-[14px] pr-8 text-xs`,
             )}
             onClick={() => {
               setSelected(network)
@@ -57,7 +59,7 @@ export default function ChooseNetworkFee({
                 'empty'
               )}
             </div>
-          </div>
+          </ButtonImage>
         ))}
       </div>
       {selected === 'custom' && (
@@ -88,61 +90,26 @@ export default function ChooseNetworkFee({
             </div>
           </div>} */}
           <div className="flex w-full flex-col gap-3">
-            <div className="flex items-center justify-between">
-              <p className="font-medium uppercase leading-5 tracking-[-0.42px]">Custom fee</p>
-              <div className="w-[86px] rounded-[4px] bg-[linear-gradient(180deg,#FF6634_-36.94%,#FFEF5F_136.07%)] p-[2px]">
-                <div className="h-full w-full rounded bg-white px-2 py-[6px]">
-                  <input
-                    className="w-full border-none text-end font-light leading-5 tracking-[-0.42px] text-[#383F4A] outline-none"
-                    value={customNetworkFee}
-                    type="number"
-                    onChange={(e) => setCustomNetworkFee(Number.parseInt(e.target.value))}
-                    onBlur={(e) => {
-                      const value = Number.parseInt(e.target.value)
-
-                      if (value < min || value > 500) {
-                        toast.error(`Please enter a value between ${min} and 500`)
-                        setCustomNetworkFee(min)
-                      } else {
-                      }
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className={` flex h-4 origin-top items-center transition-all`}>
-              <div className="relative w-full">
-                <div className="relative z-[1]">
-                  <ProgressBar value={customNetworkFee - min} total={500 - min} bulletSize={20}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                      <circle cx="10" cy="10" r="9" fill="white" stroke="#FF6634" strokeWidth="2" />
-                    </svg>
-                  </ProgressBar>
-                </div>
-                <input
-                  type="range"
-                  className="absolute inset-0 z-[2] w-full cursor-pointer opacity-0"
-                  min={min}
-                  max={500}
-                  step={1}
-                  value={customNetworkFee}
-                  onChange={(e) => {
-                    const value = Number.parseInt(e.target.value)
-                    if (value >= 1) {
-                      setCustomNetworkFee(value)
-                    }
-                  }}
-                />
-              </div>
-            </div>
-            <p
-              className={`text-xs font-light leading-[18px] tracking-[-0.36px] text-[#66605B] ${!isDisplayTime && 'text-left'}`}
+            <Customsize
+              min={min}
+              max={500}
+              showSlider
+              onChange={(value) => {
+                if (value < min || value > 500) {
+                  toast.error(`Please enter a value between ${min} and 500`)
+                  setCustomNetworkFee(min)
+                } else {
+                  setCustomNetworkFee(value)
+                }
+              }}
+              value={customNetworkFee}
             >
-              Time show are not guaranteed. USD values are estimates only.
-            </p>
+              <p className="flex flex-1 items-end font-medium leading-5 h-full tracking-[-0.42px]">Custom fee</p>
+            </Customsize>
           </div>
         </div>
       )}
     </>
   )
 }
+
