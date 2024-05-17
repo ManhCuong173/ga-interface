@@ -8,6 +8,7 @@ import cornerbr from '@/icons/button/corner-br.svg'
 import cornertl from '@/icons/button/corner-tl.svg'
 import cornertr from '@/icons/button/corner-tr.svg'
 import { cn } from '@/lib/utils'
+import { CopyIcon } from './ui/icons'
 
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   children?: ReactNode
@@ -47,11 +48,13 @@ export default function Button({ children, className, ...atributes }: Props) {
   )
 }
 
-export const IconCopy = ({ text, customIcon }: any) => {
+export const IconCopy = ({ text, customIcon }: { text?: string | number; customIcon?: any }) => {
   const [statusCopy, setStatusCopy] = useState('')
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(text)
+    if (!text) return
+
+    navigator.clipboard.writeText(text?.toString())
     setStatusCopy('Copied')
     setTimeout(() => {
       setStatusCopy('')
@@ -65,7 +68,7 @@ export const IconCopy = ({ text, customIcon }: any) => {
         className="flex size-4 cursor-pointer items-center justify-center"
         onClick={handleCopy}
       >
-        {customIcon ? customIcon : <Image src={iconCopy} alt="" width={16} height={16} />}
+        {customIcon ? customIcon : <CopyIcon className="min-w-5 min-h-5" />}
       </span>
       <ReactTooltip id="icon-copy" place="top" content={statusCopy} />
     </button>
@@ -113,4 +116,3 @@ export const ButtonImage: React.FC<
     </div>
   )
 }
-

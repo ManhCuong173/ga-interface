@@ -123,7 +123,7 @@ const SelectElement = ({ className, elements, onSelectElements }: PropsSelect) =
                 <span>{element.title}</span>
               </div>
 
-              {elements.includes(element.id) && <MarkIcon />}
+              {elements.includes(element.id) && <MarkIcon className="fill-transparent" />}
             </li>
           )
         })}
@@ -133,4 +133,3 @@ const SelectElement = ({ className, elements, onSelectElements }: PropsSelect) =
 }
 
 export default memo(SelectElement)
-

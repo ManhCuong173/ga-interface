@@ -13,7 +13,7 @@ import { toast } from 'react-toastify'
 import ReceiveAddress from '../ReceiveAddress'
 import { ButtonImage } from '../button'
 import { ChevronIcon } from '../ui/icons'
-import { SetFee } from './SetFee'
+import SetFee from './NetworkFees'
 
 const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrder: (data: any) => void }> = ({
   onUpdateOrder,
@@ -118,4 +118,3 @@ const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrder: 
   )
 }
 export default MintForm
-

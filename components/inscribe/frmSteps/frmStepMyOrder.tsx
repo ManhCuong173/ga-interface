@@ -1,7 +1,7 @@
 'use client'
 
 import CustomButton from '@/components/CustomButton'
-import NFTSection from '@/components/mintNFTs/NFTSection'
+import NFTList from '@/components/mintNFTs/NFTList'
 import ProgressBar from '@/components/progress-bar'
 import ReceiveAddress from '@/components/receiver'
 import { useInscribeContext } from '@/context/InscribeContext'
@@ -184,7 +184,7 @@ const FrmStepMyOrder = ({ setStep }: FrmStepMyOrderProps) => {
           <span className="text-[20px] font-medium leading-[32px] tracking-[-2%] text-[#4E473F]">{MAX_PAGE_SIZE}</span>
         </div>
 
-        {<NFTSection nfts={listNft?.data} isLoading={isLoading} canPick={true} />}
+        <NFTList nfts={listNft?.data || []} onSelectNFT={() => {}} selectedNFTs={[]} isLoading={isLoading} />
       </div>
 
       <ReceiveAddress
@@ -225,4 +225,3 @@ const FrmStepMyOrder = ({ setStep }: FrmStepMyOrderProps) => {
 }
 
 export default FrmStepMyOrder
-

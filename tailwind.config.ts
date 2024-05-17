@@ -38,6 +38,8 @@ const config: Config = {
         stroke: '#E5E4E3',
         secondary: '#FAF5F0',
         bgAlt: '#D4C79C',
+        bgAlt4d: '#D4C79C4D',
+        bgAlt2: '#F2F1F1',
         mark: '#2D8B6F',
         mark2: '#12B76A',
 
@@ -51,8 +53,8 @@ const config: Config = {
         'red-light': '#EF232C',
         'red-darker': '#9F232D',
         yellow1: '#FFDFAC',
-        orange: '#FF6634',
-
+        orange: '#FF9B25',
+        orange2: '#FF6634',
         subtle: '#ADADAD',
       },
       fontFamily: {
@@ -79,4 +81,3 @@ const config: Config = {
   plugins: [],
 }
 export default config
-

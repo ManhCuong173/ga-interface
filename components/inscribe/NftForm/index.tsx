@@ -1,6 +1,6 @@
 'use client'
 
-import NFTSection from '@/components/mintNFTs/NFTSection'
+import NFTSection from '@/components/mintNFTs/NFTList'
 import InputInfoHelp from '@/components/ReceiveAddress/InputInfoHelp'
 import { useInscribeContext } from '@/context/InscribeContext'
 import search from '@/images/marketplace/search.svg'
@@ -103,7 +103,6 @@ const NFTForm: React.FC = () => {
         <SlideProgress amount={filter.size} onAmountChange={onChangePageSize} />
 
         <NFTSection
-          canPick
           nfts={nfts}
           isLoading={isLoading}
           selectedNFTs={inscribeData.pickedNfts}

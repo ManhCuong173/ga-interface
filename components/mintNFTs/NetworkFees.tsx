@@ -32,7 +32,7 @@ const RowInfo: React.FC<{ title: string | ReactNode; amount: number; lineThrough
   )
 }
 
-export const SetFee = ({ setDataForm }: any) => {
+const NetworkFees = ({ setDataForm }: any) => {
   const [satsInscription, setSatsInscription] = useState(600)
   const [satsInscriptionDebounce] = useDebounce(satsInscription, 1000)
 
@@ -180,3 +180,4 @@ export const SetFee = ({ setDataForm }: any) => {
   )
 }
 
+export default NetworkFees

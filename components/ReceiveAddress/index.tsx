@@ -32,7 +32,7 @@ const ReceiveAddress = ({
         <p className="text-red-600 text-xs font-light mt-2">{error}</p>
       </div>
 
-      <p className="flex text-xs font-light p-2 space-x-3 rounded-md bg-[rgba(212,199,156,0.30)]">
+      <p className="flex text-xs font-light p-2 space-x-3 rounded-md bg-bgAlt4d">
         <InfoFullCircleIcon className="min-w-4" />
         <span>Please note the inscribing transaction delivers the inscription to the receiving address directly.</span>
       </p>
