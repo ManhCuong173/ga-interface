@@ -40,7 +40,7 @@ const Stepper: React.FC<Props> = ({ step: _step }) => {
         const isLast = step.id < _step
         return (
           <>
-            <div className="relative">
+            <div key={`stepper-step-${step.id}`} className="relative">
               <div key={step.id} className={cn(`flex flex-col items-center gap-2 w-max`)}>
                 <Box isActive={isActive} isLast={isLast}>
                   0{step.id}
@@ -56,7 +56,12 @@ const Stepper: React.FC<Props> = ({ step: _step }) => {
                 </span>
               </div>
             </div>
-            {index < steps.length - 1 && <div className={`h-[2px] lg:w-[60px] scale-125 bg-stroke mt-4`}></div>}
+            {index < steps.length - 1 && (
+              <div
+                key={`stepper-step-stroke-${step.id}`}
+                className={`h-[2px] lg:w-[60px] scale-125 bg-stroke mt-4`}
+              ></div>
+            )}
           </>
         )
       })}

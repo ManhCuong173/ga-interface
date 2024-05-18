@@ -12,7 +12,7 @@ import { MutableRefObject, Suspense, useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
 
-export default function InscribePage() {
+const InscribePage = () => {
   const ref: MutableRefObject<any> = useRef()
   const mintProcessStep = useSelector(selectMintProcess)
 
@@ -48,3 +48,4 @@ export default function InscribePage() {
     </Suspense>
   )
 }
+export default InscribePage

@@ -34,12 +34,7 @@ interface ListOrderProps {
   status: string
 }
 
-const ListOrders = ({
-  debounceValue,
-  setOrder,
-  setShowInscribeOrderModal,
-  status,
-}: ListOrderProps) => {
+const ListOrders = ({ debounceValue, setOrder, setShowInscribeOrderModal, status }: ListOrderProps) => {
   const publicKey = useAppSelector(selectedPublicKey)
   const [page, setPage] = useState(1)
 
@@ -65,24 +60,24 @@ const ListOrders = ({
 
   return (
     <div>
-      <div className='flex items-center justify-between gap-4 rounded border border-[#D1BFC94D] py-2 text-sm font-medium sm:px-4'>
-        <div className='w-[100px] px-4 text-start sm:w-[120px]'>STATUS</div>
-        <div className='grow '>ORDER ID</div>
-        <div className='w-[113px] px-4 text-end sm:w-[180px]'>Date</div>
+      <div className="flex items-center justify-between gap-4 rounded border border-[#D1BFC94D] py-2 text-sm font-medium sm:px-4">
+        <div className="w-[100px] px-4 text-start sm:w-[120px]">STATUS</div>
+        <div className="grow ">ORDER ID</div>
+        <div className="w-[113px] px-4 text-end sm:w-[180px]">Date</div>
       </div>
 
-      <div className='nft_list h-[300px] overflow-y-auto overflow-x-hidden'>
+      <div className="nft_list h-[300px] overflow-y-auto overflow-x-hidden">
         {isLoading ? (
-          <p className='text-center'>Loading my orders ...</p>
+          <p className="text-center">Loading my orders ...</p>
         ) : (
           <>
-            {orders?.data.data.length > 0 ? (
+            {orders?.data?.data?.length > 0 ? (
               <>
-                {orders?.data.data.map((order: any, index: number) => {
+                {orders?.data?.data.map((order: any, index: number) => {
                   return (
                     <div
                       key={index}
-                      className='mt-4 flex items-center cursor-pointer justify-between gap-8 rounded bg-[#D1C3BF24] px-4 py-3 text-xs font-medium sm:items-center sm:py-2'
+                      className="mt-4 flex items-center cursor-pointer justify-between gap-8 rounded bg-[#D1C3BF24] px-4 py-3 text-xs font-medium sm:items-center sm:py-2"
                       onClick={() => {
                         setOrder(order)
                         setShowInscribeOrderModal(true)
@@ -92,14 +87,18 @@ const ListOrders = ({
                         style={{
                           color: color[order.status as keyof typeof color],
                         }}
-                        className='w-[100px] font-light text-[#FDB022] sm:w-[120px]'
+                        className="w-[100px] font-light text-[#FDB022] sm:w-[120px]"
                       >
                         {order.status}
                       </div>
-                      <div className='grow font-light text-[#66605B] max-sm:hidden'>{order.id_create}</div>
-                      <div className='grow font-light text-[#66605B] sm:hidden'>{order.id_create.slice(0,5)}{'...'}{order.id_create.slice(-5)}</div>
-                      {/* <div className='w-[180px] text-[#66605B]'>Nov 09,2023-01:24:52</div> */}
-                      <div className='w-[113px] text-xs font-light text-[#66605B] sm:w-[180px]'>
+                      <div className="grow font-light text-line max-sm:hidden">{order.id_create}</div>
+                      <div className="grow font-light text-line sm:hidden">
+                        {order.id_create.slice(0, 5)}
+                        {'...'}
+                        {order.id_create.slice(-5)}
+                      </div>
+                      {/* <div className='w-[180px] text-line'>Nov 09,2023-01:24:52</div> */}
+                      <div className="w-[113px] text-xs font-light text-line sm:w-[180px]">
                         {formatTimeCreate(order.time_create)}
                       </div>
                     </div>
@@ -107,13 +106,13 @@ const ListOrders = ({
                 })}
               </>
             ) : (
-              <p className='mt-4 text-center'>no orders</p>
+              <p className="mt-4 text-center">no orders</p>
             )}
           </>
         )}
       </div>
 
-      {orders?.data.data.length > 0 && (
+      {orders?.data?.data?.length > 0 && (
         <Pagination itemsPerPage={10} pageCount={orders?.data.totalPages} setPage={setPage} />
       )}
     </div>

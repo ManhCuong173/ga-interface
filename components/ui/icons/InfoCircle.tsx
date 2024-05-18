@@ -13,8 +13,8 @@ const Icon: React.FC<{ className?: string; color?: string }> = ({ className }) =
         <path
           id="Icon"
           d="M7.99992 10.6666V7.99992M7.99992 5.33325H8.00659M14.6666 7.99992C14.6666 11.6818 11.6818 14.6666 7.99992 14.6666C4.31802 14.6666 1.33325 11.6818 1.33325 7.99992C1.33325 4.31802 4.31802 1.33325 7.99992 1.33325C11.6818 1.33325 14.6666 4.31802 14.6666 7.99992Z"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </g>
       <defs>

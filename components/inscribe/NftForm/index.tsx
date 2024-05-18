@@ -1,7 +1,7 @@
 'use client'
 
 import InputInfoHelp from '@/components/ReceiveAddress/InputInfoHelp'
-import NFTSection from '@/components/mintNFTs/NFTList'
+import NFTList from '@/components/mintNFTs/NFTList'
 import { useInscribeContext } from '@/context/InscribeContext'
 import search from '@/images/marketplace/search.svg'
 import { setAddressReceiver } from '@/lib/features/wallet/mintProcess'
@@ -98,7 +98,7 @@ const NFTForm: React.FC = () => {
 
         <SlideProgress amount={filter.size} onAmountChange={onChangePageSize} />
 
-        <NFTSection
+        <NFTList
           nfts={nfts}
           isLoading={isFetching}
           selectedNFTs={inscribeData.pickedNfts}

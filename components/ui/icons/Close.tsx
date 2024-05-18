@@ -12,16 +12,16 @@ const Icon: React.FC<{ className?: string; color?: string }> = ({ className }) =
       <path
         d="M30.376 13.624L13.624 30.376"
         stroke="#AE9955"
-        stroke-width="3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M13.624 13.624L30.376 30.376"
         stroke="#AE9955"
-        stroke-width="3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   )

@@ -67,10 +67,10 @@ const SelectElement = ({ className, elements, onSelectElements }: PropsSelect) =
       <div onClick={handleShow} className="flex w-[120px] cursor-pointer items-center justify-center gap-1 ">
         <div className="flex w-[76px] translate-x-[15px] justify-center">
           {allElement.map((element, index) => {
-            if (element.id === allId) return <></>
+            if (element.id === allId) return null
             return (
               <Image
-                key={element.id}
+                key={`select-elment-${element.id}`}
                 src={element.icon}
                 alt={element.title}
                 title={element.title}
@@ -92,8 +92,8 @@ const SelectElement = ({ className, elements, onSelectElements }: PropsSelect) =
             fill="none"
           >
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M3.69247 7.09327C3.91711 6.83119 4.31167 6.80084 4.57375 7.02548L10.0003 11.6768L15.4269 7.02548C15.689 6.80084 16.0836 6.83119 16.3082 7.09327C16.5328 7.35535 16.5025 7.74991 16.2404 7.97455L10.4071 12.9745C10.173 13.1752 9.82765 13.1752 9.59359 12.9745L3.76026 7.97455C3.49818 7.74991 3.46783 7.35535 3.69247 7.09327Z"
             />
           </svg>
@@ -111,6 +111,7 @@ const SelectElement = ({ className, elements, onSelectElements }: PropsSelect) =
         {allElement.map((element) => {
           return (
             <li
+              key={`element-${element.id}`}
               onClick={() => {
                 handleSetSelecteds(element)
               }}
