@@ -196,20 +196,20 @@ const InscribeOrderModal = ({ setOpen, order, open }: any) => {
   }, [limitTime, order, payBTC, open, setOpen, confirmPayment, orderDetail, txidd])
 
   const renderStep = useMemo(() => {
-    if (orderDetail?.status.includes('closed')) return <></>
-
     switch (step) {
       case 1:
         return (
-          <QRBox
-            selectedPayMethod={selectedPayMethod}
-            onSelectPayMethod={(method) => {
-              setPayMethod(selectedPayMethod === method ? null : method)
-            }}
-            isSiging={isOpenWallet}
-            orderDetail={orderDetail}
-            onPayWallet={handlePayWithWallet}
-          />
+          !orderDetail?.status.includes('closed') && (
+            <QRBox
+              selectedPayMethod={selectedPayMethod}
+              onSelectPayMethod={(method) => {
+                setPayMethod(selectedPayMethod === method ? null : method)
+              }}
+              isSiging={isOpenWallet}
+              orderDetail={orderDetail}
+              onPayWallet={handlePayWithWallet}
+            />
+          )
         )
       case 2:
         return <PaymentReceived />
