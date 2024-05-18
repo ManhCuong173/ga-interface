@@ -7,7 +7,7 @@ import search from '@/images/marketplace/search.svg'
 import { setAddressReceiver } from '@/lib/features/wallet/mintProcess'
 import { selectAddress } from '@/lib/features/wallet/wallet-slice'
 import { useAppDispatch, useAppSelector } from '@/lib/hook'
-import { nftService } from '@/services/nft.service'
+import nftService from '@/services/nft.service'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useMemo, useState } from 'react'
 import { useDebounce } from 'use-debounce'
@@ -33,26 +33,29 @@ const NFTForm: React.FC = () => {
 
   const { data: listNft, isLoading } = useQuery({
     queryKey: ['nfts', debounceValue, elements, filter.size],
-    queryFn: () => {
-      return nftService.filterNft({
+    queryFn: async () => {
+      const result = await nftService.filterNft({
         number: debounceValue,
-        nft: JSON.stringify(elements),
-        page_size: filter.size,
+        elements: elements.filter((e) => e > 0),
+        size: filter.size,
       })
+
+      if (result.data && result.data?.nfts?.length > 0) {
+        setInscribeData({
+          type: 'PICK_ALL_NFT',
+          nfts: result.data?.nfts,
+        })
+      }
+      return result?.data
     },
     enabled: !!elements.length,
     initialData: {
-      data: [],
-      nft_collection: [],
+      current: 0,
+      total: 0,
+      nfts: [],
     },
   })
-
-  useEffect(() => {
-    setInscribeData({
-      type: 'PICK_ALL_NFT',
-      nfts: listNft?.data,
-    })
-  }, [listNft?.data, setInscribeData])
+  const nfts = useMemo(() => listNft?.nfts || [], [listNft])
 
   useEffect(() => {
     if (address) dispatch(setAddressReceiver(address))
@@ -70,8 +73,6 @@ const NFTForm: React.FC = () => {
       number: Number(e.target.value),
     }))
   }
-
-  const nfts = useMemo(() => listNft?.data || [], [listNft])
 
   return (
     <div>
