@@ -1,26 +1,31 @@
 import { useInscribeContext } from '@/context/InscribeContext'
-import { selectBtnToUsdRateData } from '@/lib/features/wallet/fee-slice'
 import { selectAddressReceiver, setAddressReceiver, setProcessState } from '@/lib/features/wallet/mintProcess'
 import { selectAddress, selectedPublicKey } from '@/lib/features/wallet/wallet-slice'
 import { useAppDispatch, useAppSelector } from '@/lib/hook'
 import { checkInvalidAddress } from '@/lib/truncate'
 import { cn } from '@/lib/utils'
 import { mintService } from '@/services/mint.service'
+import { FeeMintOrder } from '@/types/orders'
 import { useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import ReceiveAddress from '../ReceiveAddress'
 import { ButtonImage } from '../button'
 import { ChevronIcon } from '../ui/icons'
-import SetFee from './NetworkFees'
+import NetworkFees from './NetworkFees'
 
 const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrder: (data: any) => void }> = ({
   onUpdateOrder,
   onShowInscribeOrderModal,
 }) => {
   const address = useAppSelector(selectAddress)
-  const [dataForm, setDataForm] = useState<any>()
+  const [dataForm, setDataForm] = useState<FeeMintOrder>({
+    rateFee: 0,
+    totalFee: 0,
+    satsInscription: 0,
+    networkFee: 0,
+  })
+
   const addressReceiver = useAppSelector(selectAddressReceiver)
   const [enabledCustom, setEnableCustom] = useState(false)
 
@@ -29,7 +34,6 @@ const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrder: 
   const queryClient = useQueryClient()
 
   const { inscribeData } = useInscribeContext()
-  const btnToUsdRateData = useSelector(selectBtnToUsdRateData)
   const dispatch = useAppDispatch()
 
   const handleSubmitPayInvoice = async () => {
@@ -48,7 +52,7 @@ const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrder: 
         wallet_address: addressReceiver,
         gas_fee: dataForm?.totalFee / Math.pow(10, 8),
         mint_list: inscribeData.pickedNfts.map((item) => ({
-          nft_id: item.id_nft,
+          nft_id: item.id,
           number: item.number,
         })),
         public_key: publickey,
@@ -93,11 +97,7 @@ const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrder: 
         className={cn('flex flex-col gap-2 text-black1 font-Roboto', enabledCustom ? 'max-h-0 overflow-hidden' : '')}
       >
         <p className="text-sm font-medium leading-tight tracking-[-0.42px]">Select the network fee you want to pay</p>
-        <SetFee
-          btcToUsdRate={btnToUsdRateData}
-          setDataForm={setDataForm}
-          numberOfNft={inscribeData.pickedNfts.length}
-        />
+        <NetworkFees onChangeDataForm={setDataForm} />
       </div>
       <div className="flex flex-col flex-1 mt-auto justify-end gap-4 uppercase">
         <ButtonImage

@@ -33,6 +33,7 @@ const nfts = [
     price: 1231,
   },
 ]
+
 const InscribeOrderModal = ({ setOpen, order, open }: any) => {
   const [payBTC, setPayBTC] = useState(true)
   const [limitTime, setLimitTime] = useState(180)

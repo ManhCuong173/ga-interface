@@ -17,8 +17,8 @@ const NFTCard: React.FC<{ onSelectNFT: () => void; nft: NFT; selected: boolean }
   return (
     <div onClick={onSelectNFT} className="nft-card relative cursor-pointer w-full h-full overflow-hidden rounded-lg">
       <Image
-        src={nft.nft_link}
-        loader={() => nft.nft_link}
+        src={nft.url}
+        loader={() => nft.url}
         width={0}
         height={0}
         sizes="100vw"

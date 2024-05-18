@@ -1,7 +1,7 @@
 'use client'
 
-import NFTSection from '@/components/mintNFTs/NFTList'
 import InputInfoHelp from '@/components/ReceiveAddress/InputInfoHelp'
+import NFTSection from '@/components/mintNFTs/NFTList'
 import { useInscribeContext } from '@/context/InscribeContext'
 import search from '@/images/marketplace/search.svg'
 import { setAddressReceiver } from '@/lib/features/wallet/mintProcess'
@@ -14,6 +14,7 @@ import { useDebounce } from 'use-debounce'
 import SelectElement from '../../SelectElement'
 import SelectNFTControl from './components/SelectNFTControl'
 import SlideProgress from './components/SlideProgress'
+import SearchInfoHelper from './components/SearchInfo'
 
 const NFTForm: React.FC = () => {
   const [elements, setElements] = useState<number[]>([-1, 1, 2, 3, 4, 5])
@@ -29,15 +30,16 @@ const NFTForm: React.FC = () => {
   const dispatch = useAppDispatch()
   const address = useAppSelector(selectAddress)
 
-  const [debounceValue] = useDebounce(filter.number, 500)
+  const [debounceId] = useDebounce(filter.number, 500)
+  const [debouncePageSize] = useDebounce(filter.size, 1000)
 
-  const { data: listNft, isLoading } = useQuery({
-    queryKey: ['nfts', debounceValue, elements, filter.size],
+  const { data: nfts, isFetching } = useQuery({
+    queryKey: ['nfts', elements, debounceId, debouncePageSize],
     queryFn: async () => {
       const result = await nftService.filterNft({
-        number: debounceValue,
+        number: debounceId,
         elements: elements.filter((e) => e > 0),
-        size: filter.size,
+        size: debouncePageSize,
       })
 
       if (result.data && result.data?.nfts?.length > 0) {
@@ -45,17 +47,14 @@ const NFTForm: React.FC = () => {
           type: 'PICK_ALL_NFT',
           nfts: result.data?.nfts,
         })
+
+        return result.data.nfts
       }
-      return result?.data
+
+      return []
     },
-    enabled: !!elements.length,
-    initialData: {
-      current: 0,
-      total: 0,
-      nfts: [],
-    },
+    initialData: [],
   })
-  const nfts = useMemo(() => listNft?.nfts || [], [listNft])
 
   useEffect(() => {
     if (address) dispatch(setAddressReceiver(address))
@@ -67,6 +66,7 @@ const NFTForm: React.FC = () => {
       size: size,
     }))
   }
+
   const onSearchNumner = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFilter((preState) => ({
       ...preState,
@@ -90,12 +90,7 @@ const NFTForm: React.FC = () => {
           placeholder="SEARCH NUMBER"
           onChange={onSearchNumner}
         >
-          <span>{`Enter the NFT ID here. Use "X" to represent unspecified digits.`}</span> <br />
-          For example:
-          <ul className="list-disc pl-10">
-            <li>{`To find an NFT starting with "123", enter "123X".`}</li>
-            <li>{`To find an NFT ending with "456", enter "X456".`}</li>
-          </ul>
+          <SearchInfoHelper />
         </InputInfoHelp>
       </div>
       <div className="flex flex-col gap-4 mt-5">
@@ -105,7 +100,7 @@ const NFTForm: React.FC = () => {
 
         <NFTSection
           nfts={nfts}
-          isLoading={isLoading}
+          isLoading={isFetching}
           selectedNFTs={inscribeData.pickedNfts}
           onSelectNFT={(nft) => {
             setInscribeData({

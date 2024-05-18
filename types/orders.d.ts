@@ -11,3 +11,9 @@ export type OrderDetail = {
   link_qr_code_image?: string
   address_transfer_fee?: string
 }
+export type FeeMintOrder = {
+  rateFee: number
+  totalFee: number
+  satsInscription: number
+  networkFee: number
+}
