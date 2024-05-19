@@ -1,25 +1,12 @@
 export type NFT = {
   nft_link?: string
   price?: number
-  format?: string
   number?: string
 
   id?: number
   url?: string
   natural?: string
-  isMint?: boolean
   round?: number
-}
-
-export type NFTMarketPlace = NFT & {
-  idCreate: string
-  idInscription: string
-  inscriptionNumber: string
-  listUnspentLock: any // TODO
-  price: number
-  psbt: string
-  pubkey: string
-  status: any // TODO
 }
 
 export type NFTCollectionResponse = {

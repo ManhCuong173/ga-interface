@@ -1,7 +1,7 @@
 import { feeDefault, feeMintDefault, satsInInscriptionDefault } from '@/constants/fee'
 import { useInscribeContext } from '@/context/InscribeContext'
 import { cn } from '@/lib/utils'
-import feeService from '@/services/public.service'
+import publicService from '@/services/public.service'
 import { NetworkFee, NetworkFeeEnum, NetworkFeeMint, NetworkFeeType } from '@/types/fee'
 import { FeeMintOrder } from '@/types/orders'
 import { useQuery } from '@tanstack/react-query'
@@ -54,7 +54,7 @@ const NetworkFees: React.FC<{
   const { data: feeData, isFetching: loadingNetworkFee } = useQuery<NetworkFee>({
     queryKey: ['fee'],
     queryFn: async () => {
-      const result = await feeService.getNetworkFee()
+      const result = await publicService.getNetworkFee()
       if (result.data) {
         setCustomNetworkFee(result.data.custom)
         return result.data
@@ -67,7 +67,7 @@ const NetworkFees: React.FC<{
   const { data: feeMintData, isFetching: loadingNetworkFeeMint } = useQuery<NetworkFeeMint>({
     queryKey: ['fee-mint', satsInscriptionDebounce, customNetworkFeeDebounce],
     queryFn: async () => {
-      const result = await feeService
+      const result = await publicService
         .getNetworkFeeMint({
           satsInInscription: satsInscription,
           fee: getFee(selectedNetworkFee, feeData, customNetworkFee),

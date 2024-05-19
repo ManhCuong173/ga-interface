@@ -29,12 +29,12 @@ const color = {
 
 interface ListOrderProps {
   debounceValue: string
-  setOrder: any
+  onSelectOrderId: (orderId: string) => void
   setShowInscribeOrderModal: any
   status: string
 }
 
-const ListOrders = ({ debounceValue, setOrder, setShowInscribeOrderModal, status }: ListOrderProps) => {
+const ListOrders = ({ debounceValue, onSelectOrderId, setShowInscribeOrderModal, status }: ListOrderProps) => {
   const publicKey = useAppSelector(selectedPublicKey)
   const [page, setPage] = useState(1)
 
@@ -43,7 +43,7 @@ const ListOrders = ({ debounceValue, setOrder, setShowInscribeOrderModal, status
 
     const data = await orderService.filterOrderInfo({
       public_key: publicKey,
-      order_id: debounceValue,
+      // order_id: debounceValue,
       status: status !== 'all' ? status : '',
       page_size: 10,
       page: page,
@@ -79,7 +79,7 @@ const ListOrders = ({ debounceValue, setOrder, setShowInscribeOrderModal, status
                       key={index}
                       className="mt-4 flex items-center cursor-pointer justify-between gap-8 rounded bg-[#D1C3BF24] px-4 py-3 text-xs font-medium sm:items-center sm:py-2"
                       onClick={() => {
-                        setOrder(order)
+                        onSelectOrderId(order.id_create)
                         setShowInscribeOrderModal(true)
                       }}
                     >

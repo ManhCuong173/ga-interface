@@ -7,16 +7,14 @@ import ListOrders from './list'
 import SelectStatus from './status'
 
 const MyOrders = () => {
-  const [orderID, setOrderID] = useState('')
-  const debounceValue = useDebounce(orderID, 500)
+  const [orderId, setOrderId] = useState('')
+  const debounceValue = useDebounce(orderId, 500)
   const [statusValue, setStatusValue] = useState('all')
+  const [showInscribeOrderModal, setShowInscribeOrderModal] = useState(false)
 
   const handleSearchOrderID = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setOrderID(e.target.value)
+    setOrderId(e.target.value)
   }
-
-  const [order, setOrder] = useState('')
-  const [showInscribeOrderModal, setShowInscribeOrderModal] = useState(false)
 
   return (
     <>
@@ -35,21 +33,21 @@ const MyOrders = () => {
           <ListOrders
             debounceValue={debounceValue}
             status={statusValue}
-            setOrder={setOrder}
+            onSelectOrderId={setOrderId}
             setShowInscribeOrderModal={setShowInscribeOrderModal}
           />
         </main>
       </MintModalLayout>
-      <InscribeOrderModal
-        open={showInscribeOrderModal}
-        setOpen={setShowInscribeOrderModal}
-        order={order}
-        // orderId={order}
-        setOrderID={setOrderID}
-      />
+
+      {showInscribeOrderModal && orderId && (
+        <InscribeOrderModal
+          isOpen={showInscribeOrderModal}
+          orderId={orderId}
+          onClose={() => setShowInscribeOrderModal(false)}
+        />
+      )}
     </>
   )
 }
 
 export default MyOrders
-

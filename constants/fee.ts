@@ -11,4 +11,5 @@ export const feeMintDefault = {
   platFormFees: 0,
 }
 
+export const FEE_DECIMALS =  8
 export const satsInInscriptionDefault = 600

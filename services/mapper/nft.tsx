@@ -1,13 +1,6 @@
-import { NFT, NFTFilterResponse } from '@/types/nft'
+import { NFTFilterResponse } from '@/types/nft'
 import { BaseResponse } from '../core/BaseRequest'
-
-const parseNFT = (data: any): NFT => ({
-  id: data.id_nft,
-  isMint: data.is_mint,
-  natural: data.natural_number,
-  url: data.nft_link,
-  round: data.round,
-})
+import { parseNFT } from './utils'
 
 export const NFTFilterMapper = (rawResponse: string): BaseResponse<NFTFilterResponse> => {
   const response = JSON.parse(rawResponse)

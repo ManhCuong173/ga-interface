@@ -1,10 +1,12 @@
+import { FEE_DECIMALS } from '@/constants/fee'
 import { useInscribeContext } from '@/context/InscribeContext'
 import { selectAddressReceiver, setAddressReceiver, setProcessState } from '@/lib/features/wallet/mintProcess'
 import { selectAddress, selectedPublicKey } from '@/lib/features/wallet/wallet-slice'
+import { getBalanceAmount } from '@/lib/formatNumber'
 import { useAppDispatch, useAppSelector } from '@/lib/hook'
 import { checkInvalidAddress } from '@/lib/truncate'
 import { cn } from '@/lib/utils'
-import { mintService } from '@/services/mint.service'
+import mintService from '@/services/mint.service'
 import { FeeMintOrder } from '@/types/orders'
 import { useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
@@ -14,10 +16,11 @@ import { ButtonImage } from '../button'
 import { ChevronIcon } from '../ui/icons'
 import NetworkFees from './NetworkFees'
 
-const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrder: (data: any) => void }> = ({
-  onUpdateOrder,
+const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrderId: (orderId: string) => void }> = ({
+  onUpdateOrderId,
   onShowInscribeOrderModal,
 }) => {
+  const [isLoading, setLoading] = useState(false)
   const address = useAppSelector(selectAddress)
   const [dataForm, setDataForm] = useState<FeeMintOrder>({
     rateFee: 0,
@@ -36,40 +39,38 @@ const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrder: 
   const { inscribeData } = useInscribeContext()
   const dispatch = useAppDispatch()
 
-  const handleSubmitPayInvoice = async () => {
-    handleCreateMintOrder()
-    onShowInscribeOrderModal()
-  }
-
   const handleChangeReceiverAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setAddressReceiver(e.target.value.trim()))
   }
 
   const handleCreateMintOrder = async () => {
     try {
-      const res: any = await mintService.createMintOrder({
-        fee_rate: dataForm?.rateFee,
-        wallet_address: addressReceiver,
-        gas_fee: dataForm?.totalFee / Math.pow(10, 8),
-        mint_list: inscribeData.pickedNfts.map((item) => ({
-          nft_id: item.id,
-          number: item.number,
-        })),
-        public_key: publickey,
-        sats_in_inscription: dataForm?.satsInscription,
-      })
-      if (res) {
-        onUpdateOrder(res.data)
+      setLoading(true)
+      const res = await mintService
+        .createMintOrder({
+          feeRate: dataForm?.rateFee,
+          walletAddress: addressReceiver,
+          gasFee: getBalanceAmount(dataForm?.totalFee, FEE_DECIMALS),
+          nfts: inscribeData.pickedNfts,
+          publickey: publickey,
+          satsInInscription: dataForm?.satsInscription,
+        })
+        .call()
+
+      if (res.data) {
+        onUpdateOrderId(res.data.orderId)
         queryClient.invalidateQueries({ queryKey: ['orders'] })
+        onShowInscribeOrderModal()
       }
     } catch (e) {
-      console.log('err: ', e)
       toast.error('NFT already have owner', {
         position: 'bottom-right',
       })
       setTimeout(() => {
         dispatch(setProcessState(1))
       }, 2000)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -103,13 +104,20 @@ const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrder: 
         <ButtonImage
           varirant="primary-asset"
           disabled={Boolean(
-            !addressReceiver ||
+            isLoading ||
+              !addressReceiver ||
               !address ||
+              !(
+                dataForm.rateFee > 0 ||
+                dataForm.totalFee > 0 ||
+                dataForm.networkFee > 0 ||
+                dataForm.satsInscription > 0
+              ) ||
               inscribeData.pickedNfts.length === 0 ||
               checkInvalidAddress(addressReceiver),
           )}
           className="w-full px-12 py-4 mt-10 whitespace-nowrap"
-          onClick={handleSubmitPayInvoice}
+          onClick={handleCreateMintOrder}
         >
           Submit & Pay Invoice
         </ButtonImage>

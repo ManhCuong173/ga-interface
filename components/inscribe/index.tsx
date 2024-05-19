@@ -8,7 +8,7 @@ import NFTForm from './NftForm'
 
 const Inscribe = () => {
   const [showInscribeOrderModal, setShowInscribeOrderModal] = useState(false)
-  const [order, setOrder] = useState<any>()
+  const [orderId, setOrderId] = useState<string>('')
 
   return (
     <InscribeContextProvider>
@@ -23,12 +23,18 @@ const Inscribe = () => {
               onShowInscribeOrderModal={() => {
                 setShowInscribeOrderModal(true)
               }}
-              onUpdateOrder={setOrder}
+              onUpdateOrderId={setOrderId}
             />
           </div>
         </div>
 
-        <InscribeOrderModal open={showInscribeOrderModal} order={order} setOpen={setShowInscribeOrderModal} />
+        {showInscribeOrderModal && orderId && (
+          <InscribeOrderModal
+            isOpen={showInscribeOrderModal}
+            orderId={orderId}
+            onClose={() => setShowInscribeOrderModal(false)}
+          />
+        )}
       </div>
     </InscribeContextProvider>
   )

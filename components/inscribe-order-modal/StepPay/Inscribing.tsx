@@ -1,15 +1,15 @@
 import { ButtonImage } from '@/components/button'
 import { BoostIcon, HourGlassIcon } from '@/components/ui/icons'
 
-const Inscribing = () => {
+const Inscribing: React.FC<{ unconfirmed: number; confirmed: number }> = ({ confirmed, unconfirmed }) => {
   return (
     <div className="relative flex flex-col items-center gap-4 px-4 py-6 font-Roboto">
       <div className="flex gap-7 text-sm  bg-bgAlt2 px-4 py-1 rounded-lg">
         <p>
-          <span className="text-orange2 font-ProtoMono">1 </span>Unconfirmed
+          <span className="text-orange2 font-ProtoMono mr-1">{unconfirmed}</span>Unconfirmed
         </p>
         <p>
-          <span className="text-orange2 font-ProtoMono">1 </span>Confirmed
+          <span className="text-orange2 font-ProtoMono mr-1">{confirmed}</span>Confirmed
         </p>
       </div>
       <HourGlassIcon className="mt-4" />

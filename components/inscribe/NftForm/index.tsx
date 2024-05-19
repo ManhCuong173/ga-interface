@@ -45,7 +45,7 @@ const NFTForm: React.FC = () => {
       if (result.data && result.data?.nfts?.length > 0) {
         setInscribeData({
           type: 'PICK_ALL_NFT',
-          nfts: result.data?.nfts,
+          nfts: [],
         })
 
         return result.data.nfts
