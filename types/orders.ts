@@ -1,5 +1,10 @@
 import { NFT } from './nft'
 
+export type Order = {
+  id_create: string
+  time_create: number
+}
+
 export enum OrderStatus {
   All = 'all',
   Ready = 'ready',
