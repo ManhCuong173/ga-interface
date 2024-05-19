@@ -18,10 +18,10 @@ const Inscribing: React.FC<{ unconfirmed: number; confirmed: number }> = ({ conf
         <span className="text-base font-bold text-red-light">Inscribing...</span>{' '}
         <span className="text-sm  font-medium text-black1">Waiting for Confirmation</span>
       </p>
-      <ButtonImage varirant="outline" className="border-red-light">
+      {/* <ButtonImage varirant="outline" className="border-red-light">
         <BoostIcon />
         <span className="text-red-light font-semibold ml-3">Boots</span>
-      </ButtonImage>
+      </ButtonImage> */}
     </div>
   )
 }
