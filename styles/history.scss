@@ -1,0 +1,13 @@
+.history{
+    &::-webkit-scrollbar{
+        width: 10px;
+    }
+    &::-webkit-scrollbar-track{
+        background-color: #FAF5F0 !important;
+        border-radius: 100px;
+    }
+    &::-webkit-scrollbar-thumb{
+        background-color: #F4E6D2 !important;
+        border-radius: 100px;
+    }
+}
