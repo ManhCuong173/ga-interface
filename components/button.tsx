@@ -1,4 +1,3 @@
-import iconCopy from '@/icons/profile/profile-info/copy.svg'
 import Image from 'next/image'
 import { ButtonHTMLAttributes, DetailedHTMLProps, HTMLAttributes, ReactNode, useState } from 'react'
 import { Tooltip as ReactTooltip } from 'react-tooltip'
@@ -116,3 +115,4 @@ export const ButtonImage: React.FC<
     </div>
   )
 }
+

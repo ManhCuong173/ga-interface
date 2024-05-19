@@ -17,3 +17,4 @@ const Icon: React.FC<{ className?: string; color?: string }> = ({ className }) =
 }
 
 export default Icon
+

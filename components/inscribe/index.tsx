@@ -34,3 +34,4 @@ const Inscribe = () => {
   )
 }
 export default Inscribe
+

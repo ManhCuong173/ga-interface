@@ -18,3 +18,4 @@ const FormatPrice: React.FC<{ satValue: number | string; lineThrough?: boolean }
   )
 }
 export default FormatPrice
+

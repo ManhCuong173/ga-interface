@@ -5,20 +5,20 @@ import { selectedPublicKey } from '@/lib/features/wallet/wallet-slice'
 import { useAppDispatch, useAppSelector } from '@/lib/hook'
 import { mintService } from '@/services/mint.service'
 import { nftService } from '@/services/nft.service'
+import { OrderDetail } from '@/types/orders'
 import { Dialog } from '@headlessui/react'
 import { useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { ButtonImage } from '../button'
 import NFTDetail from '../mintNFTs/NFTDetail'
 import { CloseIcon } from '../ui/icons'
+import FeeDetails from './FeeDetails'
 import StepInscribing from './StepPay/Inscribing'
+import PaymentReceived from './StepPay/PaymentReceived'
 import OrderListNFT from './components/OrderListNFT'
 import QRBox from './components/PayMethod'
-import FeeDetails from './FeeDetails'
 import Stepper from './stepper'
 import { PayMethodEnum } from './types'
-import PaymentReceived from './StepPay/PaymentReceived'
-import { ButtonImage } from '../button'
-import { OrderDetail } from '@/types/orders'
 
 const nfts = [
   {
@@ -290,3 +290,4 @@ const InscribeOrderModal = ({ setOpen, order, open }: any) => {
   )
 }
 export default InscribeOrderModal
+

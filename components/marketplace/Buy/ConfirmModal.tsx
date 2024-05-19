@@ -14,7 +14,7 @@ import { publicService } from '@/services/public.service'
 import { NetworkFeeType } from '@/types/fee'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import Image from 'next/image'
-import { MutableRefObject, memo, useEffect, useRef, useState, useTransition } from 'react'
+import { MutableRefObject, memo, useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { useDebounce } from 'use-debounce'
@@ -40,7 +40,6 @@ const ConfirmModal = ({
   number,
   order_by,
 }: any) => {
-  const [isListing, startListingTransition] = useTransition()
   const address = useAppSelector(selectAddress)
   const [customNetworkFee, setCustomNetworkFee] = useState(1)
   const [customNetworkFeeDebounce] = useDebounce(customNetworkFee, 300)

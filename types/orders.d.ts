@@ -11,3 +11,4 @@ export type OrderDetail = {
   link_qr_code_image?: string
   address_transfer_fee?: string
 }
+

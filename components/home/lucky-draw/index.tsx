@@ -15,10 +15,10 @@ import { cn } from '@/lib/utils'
 import { nftService } from '@/services/nft.service'
 import { roundService } from '@/services/round.service'
 import { useQuery } from '@tanstack/react-query'
-import { motion } from 'framer-motion'
+import { motion, useInView } from 'framer-motion'
 import Image, { StaticImageData } from 'next/image'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import WrapperHero from '../WrapperHero'
 import History from './history'
 import YouPrize from './your-prize'
@@ -33,7 +33,7 @@ const CardPrize: React.FC<{
     <motion.div
       {...flyInAnimation}
       transition={{ duration: 0.4, delay: 1.7 }}
-      className="flex flex-col items-center justify-center gap-1 lg:gap-2"
+      className="flex flex-col items-center justify-center gap-1 lg:gap-1.5"
     >
       <div className="relative mx-auto w-10 h-10 rounded-full lg:h-[78px] lg:w-[78px] mb-[2px]">
         <Image src={prizeAsset} alt="Prize Asset" fill />
@@ -41,7 +41,7 @@ const CardPrize: React.FC<{
       <span className="text-center text-[3.2vw] sm:text-base font-medium  text-red-light lg:text-lg">
         {isLoading ? 'loading' : data ? data : 'No Data'}
       </span>
-      <span className="text-center text-[2.8vw] sm:text-xs leading-tight font-normal tracking-[-0.3px] text-black1 font-Roboto">
+      <span className="text-center text-[16px] sm:text-xs leading-tight font-thin tracking-[-0.3px] text-black1 font-Roboto">
         {title}
       </span>
     </motion.div>
@@ -86,6 +86,31 @@ export default function LuckyDraw() {
 
   const [showHistory, setShowHistory] = useState(false)
   const [showYourPrize, setShowYourPrize] = useState(false)
+  const ref = useRef(null)
+  const isInView = useInView(ref)
+
+  useEffect(() => {
+    const scroll = (event: any) => {
+      console.log(
+        '%cMyProject%cline:93%cevent',
+        'color:#fff;background:#ee6f57;padding:3px;border-radius:2px',
+        'color:#fff;background:#1f3c88;padding:3px;border-radius:2px',
+        'color:#fff;background:rgb(20, 68, 106);padding:3px;border-radius:2px',
+        event,
+      )
+      console.log(
+        '%cMyProject%cline:98%cevent',
+        'color:#fff;background:#ee6f57;padding:3px;border-radius:2px',
+        'color:#fff;background:#1f3c88;padding:3px;border-radius:2px',
+        'color:#fff;background:rgb(161, 23, 21);padding:3px;border-radius:2px',
+        window,
+      )
+    }
+    if (isInView) {
+      window.addEventListener('scroll', scroll, true)
+      ;() => window.removeEventListener('scroll', scroll, true)
+    }
+  }, [isInView])
 
   const { data: nftSoldData, isLoading: isLoadingNftSold } = useQuery({
     queryKey: ['nft-sold'],
@@ -106,6 +131,7 @@ export default function LuckyDraw() {
         e.preventDefault()
         setShowYourPrize(true)
       }}
+      ref={ref}
     >
       <WrapperHero src="/images/home/bg-lucky-draw.svg">
         <div className="flex h-14 w-[65vw] md:h-16 md:w-[58vw] absolute top-[-1px] right-0">
@@ -134,7 +160,7 @@ export default function LuckyDraw() {
                   transition={{ duration: 0.3, delay: 1.25 }}
                   className="flex flex-col items-center lg:items-start "
                 >
-                  <div className="text-lg mb-[2px]  font-semibold leading-[100%] tracking-[-0.54px] text-black1 lg:text-lg lg:leading-7 font-Roboto">
+                  <div className="text-lg mb-[2px]  font-medium leading-[100%] tracking-[-0.54px] text-black1 lg:text-md lg:leading-7 font-Roboto">
                     Total NFT sold this round:
                   </div>
                   <div className="text-[21px] font-medium text-red-light tracking-tighter">
@@ -176,21 +202,21 @@ export default function LuckyDraw() {
                   prizeAsset={firstPrice}
                   isLoading={isLoadingNftSold}
                   data={roundActivatedData?.reward?.Top1}
-                  title={'1ST Prize'}
+                  title={'1st Prize'}
                 />
 
                 <CardPrize
                   prizeAsset={secondPrice}
                   isLoading={isLoadingNftSold}
                   data={roundActivatedData?.reward?.Top2}
-                  title={'2ND Prize'}
+                  title={'2nd Prize'}
                 />
 
                 <CardPrize
                   prizeAsset={thirdPrice}
                   isLoading={isLoadingNftSold}
                   data={roundActivatedData?.reward?.Top3}
-                  title={'3RD Prize'}
+                  title={'3rd Prize'}
                 />
 
                 <CardPrize
@@ -212,7 +238,7 @@ export default function LuckyDraw() {
                       }
                     }}
                     varirant="light-double-asset"
-                    className="text-[3vw] sm:text-base whitespace-nowrap lg:text-lg  font-medium text-red-light w-full h-full"
+                    className="text-[3vw] sm:text-base whitespace-nowrap lg:text-lg  font-medium text-red-light w-full h-full font-Roboto"
                   >
                     {address ? 'Check Your Prize' : 'Connect Wallet'}
                   </ButtonImage>
@@ -228,7 +254,7 @@ export default function LuckyDraw() {
                         }
                       }}
                       varirant="primary-asset"
-                      className="text-[3vw] sm:text-base whitespace-nowrap lg:text-lg  font-medium text-secondary w-full h-full"
+                      className="text-[3vw] sm:text-base whitespace-nowrap lg:text-lg  font-medium text-secondary w-full h-full font-Roboto"
                     >
                       Try Now
                     </ButtonImage>

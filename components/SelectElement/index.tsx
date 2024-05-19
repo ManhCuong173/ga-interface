@@ -133,3 +133,4 @@ const SelectElement = ({ className, elements, onSelectElements }: PropsSelect) =
 }
 
 export default memo(SelectElement)
+

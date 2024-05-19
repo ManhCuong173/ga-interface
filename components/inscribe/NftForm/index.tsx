@@ -1,7 +1,7 @@
 'use client'
 
-import NFTSection from '@/components/mintNFTs/NFTList'
 import InputInfoHelp from '@/components/ReceiveAddress/InputInfoHelp'
+import NFTSection from '@/components/mintNFTs/NFTList'
 import { useInscribeContext } from '@/context/InscribeContext'
 import search from '@/images/marketplace/search.svg'
 import { setAddressReceiver } from '@/lib/features/wallet/mintProcess'
@@ -118,3 +118,4 @@ const NFTForm: React.FC = () => {
   )
 }
 export default NFTForm
+
