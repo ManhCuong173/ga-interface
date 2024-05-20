@@ -56,9 +56,9 @@ const ListOrders = ({ orderId, onSelectOrderId, status }: ListOrderProps) => {
       <Table className="min-w-[576px]">
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[30%]  text-[#9F232D]">Status</TableHead>
-            <TableHead className="w-[50%]  text-[#9F232D]">Order ID</TableHead>
-            <TableHead className="w-[20%]  text-[#9F232D]">Date</TableHead>
+            <TableHead className="w-[30%]">Status</TableHead>
+            <TableHead className="w-[50%]">Order ID</TableHead>
+            <TableHead className="w-[20%]">Date</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
