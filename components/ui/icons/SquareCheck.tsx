@@ -12,7 +12,7 @@ const Icon: React.FC<{ className?: string; color?: string; checked?: boolean }> 
       {checked ? (
         <>
           <rect x="0.5" y="0.5" width="19" height="19" rx="3.5" fill="#2D8B6F" stroke="#2D8B6F" />
-          <path d="M5 9.5L9 13.5L15.5 7" stroke="#FAF5F0" stroke-width="2" />
+          <path d="M5 9.5L9 13.5L15.5 7" stroke="#FAF5F0" strokeWidth="2" />
         </>
       ) : (
         <rect x="0.5" y="0.5" width="19" height="19" rx="3.5" fill="white" stroke="#2D8B6F" />

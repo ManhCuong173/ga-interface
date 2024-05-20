@@ -13,8 +13,10 @@ const QRCode: React.FC<{ url: string; addressTransferFee: string }> = ({ url, ad
         <div className="flex flex-col gap-2">
           <span className="text-sm font-Roboto font-medium text-black1">Or pay to the address below:</span>
           <div className="flex w-full rounded-lg border border-bgAlt ">
-            <div className="flex-1 flex h-10 w-full items-center px-3 truncate">
-              <span className="text-xs text-black font-light">{addressTransferFee}</span>
+            <div className="flex-1 flex min-h-10 w-full items-center px-3 truncate  ">
+              <span className="text-xs text-black font-light break-all whitespace-normal max-w-[300px] overflow-hidden">
+                {addressTransferFee}
+              </span>
             </div>
             <div className="flex h-10 w-10 min-w-10 items-center justify-center">
               <IconCopy text={addressTransferFee} />

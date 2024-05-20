@@ -1,26 +1,34 @@
+import { FEE_DECIMALS } from '@/constants/fee'
 import { useInscribeContext } from '@/context/InscribeContext'
-import { selectBtnToUsdRateData } from '@/lib/features/wallet/fee-slice'
 import { selectAddressReceiver, setAddressReceiver, setProcessState } from '@/lib/features/wallet/mintProcess'
 import { selectAddress, selectedPublicKey } from '@/lib/features/wallet/wallet-slice'
+import { getBalanceAmount } from '@/lib/formatNumber'
 import { useAppDispatch, useAppSelector } from '@/lib/hook'
 import { checkInvalidAddress } from '@/lib/truncate'
 import { cn } from '@/lib/utils'
-import { mintService } from '@/services/mint.service'
+import mintService from '@/services/mint.service'
+import { FeeMintOrder } from '@/types/orders'
 import { useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import ReceiveAddress from '../ReceiveAddress'
 import { ButtonImage } from '../button'
 import { ChevronIcon } from '../ui/icons'
-import SetFee from './NetworkFees'
+import NetworkFees from './NetworkFees'
 
-const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrder: (data: any) => void }> = ({
-  onUpdateOrder,
+const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrderId: (orderId: string) => void }> = ({
+  onUpdateOrderId,
   onShowInscribeOrderModal,
 }) => {
+  const [isLoading, setLoading] = useState(false)
   const address = useAppSelector(selectAddress)
-  const [dataForm, setDataForm] = useState<any>()
+  const [dataForm, setDataForm] = useState<FeeMintOrder>({
+    rateFee: 0,
+    totalFee: 0,
+    satsInscription: 0,
+    networkFee: 0,
+  })
+
   const addressReceiver = useAppSelector(selectAddressReceiver)
   const [enabledCustom, setEnableCustom] = useState(false)
 
@@ -29,13 +37,7 @@ const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrder: 
   const queryClient = useQueryClient()
 
   const { inscribeData } = useInscribeContext()
-  const btnToUsdRateData = useSelector(selectBtnToUsdRateData)
   const dispatch = useAppDispatch()
-
-  const handleSubmitPayInvoice = async () => {
-    handleCreateMintOrder()
-    onShowInscribeOrderModal()
-  }
 
   const handleChangeReceiverAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setAddressReceiver(e.target.value.trim()))
@@ -43,29 +45,36 @@ const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrder: 
 
   const handleCreateMintOrder = async () => {
     try {
-      const res: any = await mintService.createMintOrder({
-        fee_rate: dataForm?.rateFee,
-        wallet_address: addressReceiver,
-        gas_fee: dataForm?.totalFee / Math.pow(10, 8),
-        mint_list: inscribeData.pickedNfts.map((item) => ({
-          nft_id: item.id_nft,
-          number: item.number,
-        })),
-        public_key: publickey,
-        sats_in_inscription: dataForm?.satsInscription,
-      })
-      if (res) {
-        onUpdateOrder(res.data)
+      setLoading(true)
+      const res = await mintService
+        .createMintOrder({
+          feeRate: dataForm?.rateFee,
+          walletAddress: addressReceiver,
+          gasFee: getBalanceAmount(dataForm?.totalFee, FEE_DECIMALS),
+          nfts: inscribeData.pickedNfts,
+          publickey: publickey,
+          satsInInscription: dataForm?.satsInscription,
+        })
+        .call()
+
+      if (res.data) {
+        onUpdateOrderId(res.data.orderId)
         queryClient.invalidateQueries({ queryKey: ['orders'] })
+        onShowInscribeOrderModal()
+      } else if (res.message) {
+        toast.error(res.message, {
+          position: 'top-right',
+        })
       }
     } catch (e) {
-      console.log('err: ', e)
       toast.error('NFT already have owner', {
         position: 'bottom-right',
       })
       setTimeout(() => {
         dispatch(setProcessState(1))
       }, 2000)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -93,23 +102,26 @@ const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrder: 
         className={cn('flex flex-col gap-2 text-black1 font-Roboto', enabledCustom ? 'max-h-0 overflow-hidden' : '')}
       >
         <p className="text-sm font-medium leading-tight tracking-[-0.42px]">Select the network fee you want to pay</p>
-        <SetFee
-          btcToUsdRate={btnToUsdRateData}
-          setDataForm={setDataForm}
-          numberOfNft={inscribeData.pickedNfts.length}
-        />
+        <NetworkFees onChangeDataForm={setDataForm} />
       </div>
       <div className="flex flex-col flex-1 mt-auto justify-end gap-4 uppercase">
         <ButtonImage
           varirant="primary-asset"
           disabled={Boolean(
-            !addressReceiver ||
+            isLoading ||
+              !addressReceiver ||
               !address ||
+              !(
+                dataForm.rateFee > 0 ||
+                dataForm.totalFee > 0 ||
+                dataForm.networkFee > 0 ||
+                dataForm.satsInscription > 0
+              ) ||
               inscribeData.pickedNfts.length === 0 ||
               checkInvalidAddress(addressReceiver),
           )}
           className="w-full px-12 py-4 mt-10 whitespace-nowrap"
-          onClick={handleSubmitPayInvoice}
+          onClick={handleCreateMintOrder}
         >
           Submit & Pay Invoice
         </ButtonImage>
@@ -118,4 +130,3 @@ const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrder: 
   )
 }
 export default MintForm
-

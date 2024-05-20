@@ -12,11 +12,11 @@ const OrderListNFT: React.FC<{
     <div>
       <div className="flex flex-col items-start max-sm:gap-2 mb-5">
         <p className="text-sm font-medium mb-1">
-          <span className="font-Roboto text-text-secondary">Order ID:</span> {orderDetail?.id_create}
+          <span className="font-Roboto text-text-secondary">Order ID:</span> {orderDetail?.orderId}
         </p>
         <div className="flex gap-8">
           <p className="text-sm font-light">
-            <span className="font-Roboto text-text-secondary">Quantity:</span> {orderDetail?.mint_list?.length}
+            <span className="font-Roboto text-text-secondary">Quantity:</span> {orderDetail?.nfts?.length}
           </p>
           <p className="text-sm font-medium text-orange">
             <span className="font-Roboto text-text-secondary mr-1">Status:</span>
@@ -24,7 +24,7 @@ const OrderListNFT: React.FC<{
           </p>
         </div>
       </div>
-      <NFTList nfts={orderDetail?.mint_list} isLoading={isLoading} onSelectNFT={onSelectNFT} />
+      <NFTList nfts={orderDetail?.nfts} isLoading={isLoading} onSelectNFT={onSelectNFT} />
     </div>
   )
 }

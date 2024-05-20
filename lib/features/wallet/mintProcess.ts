@@ -33,4 +33,3 @@ export const selectAddressReceiver = (state: RootState) => state.mintingProcess.
 
 export const { setProcessState, setAddressReceiver } = MintProcessSlice.actions
 export default MintProcessSlice.reducer
-

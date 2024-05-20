@@ -2,35 +2,23 @@ import { SquareCheckIcon } from '@/components/ui/icons'
 import { useInscribeContext } from '@/context/InscribeContext'
 import { cn } from '@/lib/utils'
 import { NFT } from '@/types/nft'
-import { memo, useEffect, useState } from 'react'
+import { memo } from 'react'
 
 const SelectControl: React.FC<{ nfts: NFT[] }> = ({ nfts }) => {
-  const [isChecked, setChecked] = useState(true)
   const { inscribeData, setInscribeData } = useInscribeContext()
 
   const handleSelectChange = () => {
-    const newCheckedState = !isChecked
-    setChecked(newCheckedState)
     setInscribeData({
       type: 'PICK_ALL_NFT',
-      nfts: newCheckedState ? nfts : [],
+      nfts: nfts?.length === inscribeData.pickedNfts.length ? [] : nfts,
     })
   }
-
-  useEffect(() => {
-    if (nfts?.length !== inscribeData.pickedNfts.length) {
-      setChecked(false)
-    } else {
-      setChecked(true)
-    }
-  }, [inscribeData.pickedNfts.length, nfts?.length])
 
   const handleClearAllNFT = () => {
     setInscribeData({
       type: 'PICK_ALL_NFT',
       nfts: [],
     })
-    setChecked(false)
   }
 
   return (
@@ -38,7 +26,7 @@ const SelectControl: React.FC<{ nfts: NFT[] }> = ({ nfts }) => {
       <div className="flex items-center gap-2">
         <div className="flex items-center gap-3">
           <div className="cursor-pointer" onClick={handleSelectChange}>
-            <SquareCheckIcon checked={isChecked} />
+            <SquareCheckIcon checked={nfts?.length === inscribeData.pickedNfts.length} />
           </div>
 
           <span className="text-black text-base leading-5 tracking-[-3%] font-medium">Select all</span>
@@ -60,4 +48,3 @@ const SelectControl: React.FC<{ nfts: NFT[] }> = ({ nfts }) => {
 }
 
 export default memo(SelectControl)
-

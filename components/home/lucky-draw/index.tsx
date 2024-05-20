@@ -3,7 +3,7 @@
 import { appearAnimation, flyInAnimation } from '@/constants/animation.constant'
 
 import { ButtonImage } from '@/components/button'
-import { urlRoute } from '@/constants/endpoints'
+import { urlRoute } from '@/constants/routes'
 import fourthPrice from '@/images/home/consolation-prize.png'
 import firstPrice from '@/images/home/first-prize.png'
 import secondPrice from '@/images/home/second-prize.png'
@@ -271,4 +271,3 @@ export default function LuckyDraw() {
     </div>
   )
 }
-

@@ -22,7 +22,7 @@ const Progress: React.FC<{
           viewBox="0 0 20 20"
           fill="none"
         >
-          <circle cx="10" cy="10" r="9" fill="white" stroke-width="2" />
+          <circle cx="10" cy="10" r="9" fill="white" strokeWidth="2" />
         </svg>
       </ProgressBar>
       <input
