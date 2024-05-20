@@ -10,7 +10,10 @@ interface INfts {
 
 const NFTCard: React.FC<{ nft: NFT; onSelect: () => void }> = ({ nft, onSelect }) => {
   return (
-    <div onClick={onSelect} className={cn('nft-card relative cursor-pointer w-full h-full overflow-hidden rounded-lg')}>
+    <div
+      // onClick={onSelect}
+      className={cn('nft-card relative w-full h-full overflow-hidden rounded-lg')}
+    >
       <Image
         src={nft.url || ''} // TODO typescript
         loader={() => nft.url || ''} // TODO typescript
