@@ -61,7 +61,7 @@ const FilterMarketPlace = ({ nftIds, setFilter, filter, setNftIds }: PropFilterM
     const sortType = useMemo(() => types.find((item) => item.value === filter.order_by), [filter.order_by])
 
     return (
-      <div ref={ref} className="relative z-10 w-full md:w-[295px]">
+      <div ref={ref} className="relative z-10 w-full md:w-[295px] font-Roboto">
         <div
           onClick={handleShow}
           className="flex h-11 cursor-pointer items-center justify-between gap-4 rounded border border-[#AE9955] px-4 py-2"
@@ -126,7 +126,14 @@ const FilterMarketPlace = ({ nftIds, setFilter, filter, setNftIds }: PropFilterM
             type="text"
           >
             <div
-              className={`${show ? 'opacity-1 h-[156px] border border-[#E5E4E3] bg-[#fff] px-4 py-2' : 'pointer-events-none opacity-0'} absolute right-0 top-[50px] z-[11] w-[341px] translate-x-1/2 rounded-lg font-ProtoMono text-sm font-light lowercase text-[#4E473F] transition-all duration-150 ease-linear lg:translate-x-0`}
+              className={`${
+                show
+                  ? 'opacity-1 h-[156px] border border-[#E5E4E3] bg-[#fff] px-4 py-2'
+                  : 'pointer-events-none opacity-0'
+              } 
+                absolute right-0 top-[50px] z-[11] w-[341px] translate-x-1/2 
+                rounded-lg text-sm font-light 
+               text-[#4E473F] transition-all duration-150 ease-linear lg:translate-x-0 font-Roboto`}
             >
               <span>{`Enter the NFT ID here. Use "X" to represent unspecified digits.`}</span> <br />
               For example:
@@ -149,7 +156,7 @@ const FilterMarketPlace = ({ nftIds, setFilter, filter, setNftIds }: PropFilterM
             <SelectElement
               elements={nftIds}
               onSelectElements={setNftIds}
-              className="relative flex h-[44px] cursor-pointer items-center rounded border border-[#AE9955] py-2"
+              className="relative flex h-[44px] cursor-pointer items-center rounded border border-[#AE9955] py-2 font-Roboto"
             />
             <SortFilter />
           </div>
@@ -160,3 +167,4 @@ const FilterMarketPlace = ({ nftIds, setFilter, filter, setNftIds }: PropFilterM
 }
 
 export default memo(FilterMarketPlace)
+

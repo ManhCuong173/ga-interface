@@ -120,7 +120,7 @@ const SelectElement = ({ className, elements, onSelectElements }: PropsSelect) =
                 {element.icon && (
                   <Image src={element.icon} alt={element.title} title={element.title} width={20} height={20} />
                 )}
-                <span>{element.title}</span>
+                <span className="font-Roboto">{element.title}</span>
               </div>
 
               {elements.includes(element.id) && <MarkIcon className="fill-transparent" />}

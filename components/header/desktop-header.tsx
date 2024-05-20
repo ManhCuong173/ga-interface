@@ -46,7 +46,13 @@ export default function DesktopHeader() {
 
   return (
     <header
-      className={`${!show && isHomePage ? '!-translate-y-full' : mode === 'transparent' ? '] border border-[#FFF4DD] border-opacity-40 !text-_white' : 'border-[#D4C79C] bg-[#FAF5F0] text-black1'} fixed top-0 z-50 hidden h-[67px] w-full origin-top translate-y-0 border-b text-black1 transition-all duration-500 lg:flex`}
+      className={`${
+        !show && isHomePage
+          ? '!-translate-y-full'
+          : mode === 'transparent'
+            ? 'border border-[#FFF4DD] border-opacity-40 !text-_white'
+            : 'border-[#D4C79C] bg-[#FAF5F0] text-black1'
+      } fixed top-0 z-50 hidden h-[67px] w-full origin-top translate-y-0 border-b text-black1 transition-all duration-500 lg:flex`}
     >
       <div className="mx-auto flex h-full w-full max-w-container translate-y-[1px] items-center justify-between px-10">
         <div className="flex h-full items-center gap-8">

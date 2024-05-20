@@ -1,6 +1,7 @@
 'use client'
 
-import wallet from '@/icons/header/wallet.svg'
+import { default as walletWhite } from '@/icons/header/wallet-white.svg'
+import { default as wallet } from '@/icons/header/wallet.svg'
 import { selectedPublicKey, setAddress, setPublicKey } from '@/lib/features/wallet/wallet-slice'
 import { useAppDispatch, useAppSelector } from '@/lib/hook'
 import { getUnisat } from '@/lib/unisat'
@@ -129,15 +130,31 @@ export default function ConnectWalletButton({ mode }: Props) {
     <div className="flex flex-col w-full gap-2">
       <button
         className={cn(
-          `h-[42px] w-full rounded-[10px]   border-solid border-[1px] flex justify-center items-center p-[8px_16px]`,
+          `h-[42px] w-full rounded-[10px]   border-solid border-[1px] flex justify-center items-center p-[8px_16px] cursor-pointer`,
           mode === 'transparent' ? 'border-white' : 'border-red-light',
         )}
         onClick={handleClick}
       >
         {!address && (
           <>
-            <div className="relative h-6 w-6 transition-all">
-              <Image src={wallet} alt="" width={24} height={24} className={'absolute inset-0 transition-opacity'} />
+            <div
+              className={cn(
+                'relative h-6 w-6 transition-all',
+                mode === 'transparent' ? 'fill-white' : 'fill-red-light',
+              )}
+            >
+              {mode === 'transparent' && (
+                <Image
+                  src={walletWhite}
+                  alt=""
+                  width={24}
+                  height={24}
+                  className={'absolute inset-0 transition-opacity'}
+                />
+              )}
+              {mode === 'solid' && (
+                <Image src={wallet} alt="" width={24} height={24} className={'absolute inset-0 transition-opacity'} />
+              )}
             </div>
             <span
               className={cn(

@@ -1,15 +1,50 @@
 import { ButtonImage } from '@/components/button'
 import { HeadMarkIcon } from '@/components/ui/icons'
+import { useMediaQuery } from '@/hooks/custom/useMediaQuery'
+import { useInView } from 'framer-motion'
 import Link from 'next/link'
+import { useEffect, useRef, useState } from 'react'
 import WrapperHero from '../WrapperHero'
 
 const Slogin = () => {
+  const ref = useRef(null)
+  const isInView = useInView(ref)
+  const [ratioDimension, setRatioDimension] = useState(0)
+  const isTablet = useMediaQuery('(min-width: 768px)')
+  const ratio = !isTablet
+    ? `calc(0px + ${(ratioDimension / 100) * 10}px)`
+    : `calc(0px + ${(ratioDimension / 100) * 50}px)`
+
+  useEffect(() => {
+    const scroll = (event: any) => {
+      const rootDiv = document.getElementById('root-div')
+      const crm = document.getElementById('section-crm')
+      const crmOffsetTop = Number(crm?.offsetTop)
+      console.log(
+        '%cMyProject%cline:22%ccrmOffsetTop',
+        'color:#fff;background:#ee6f57;padding:3px;border-radius:2px',
+        'color:#fff;background:#1f3c88;padding:3px;border-radius:2px',
+        'color:#fff;background:rgb(254, 67, 101);padding:3px;border-radius:2px',
+        crmOffsetTop,
+      )
+      const rootScrollTop = Number(rootDiv?.scrollTop)
+
+      if (rootScrollTop - crmOffsetTop >= 0) {
+        setRatioDimension(rootScrollTop - crmOffsetTop)
+      }
+    }
+    if (isInView) {
+      window.addEventListener('scroll', scroll, true)
+    }
+    ;() => window.removeEventListener('scroll', scroll, true)
+  }, [isInView, ref])
+
   return (
-    <div id="section-slogan" className="snap-start">
+    <div id="section-slogan" className="snap-start" ref={ref}>
       <WrapperHero src="/images/home/bg-slogan.svg">
-        <div className="flex h-14 w-[70vw] md:h-16 md:w-[80vw] absolute top-[-1px] left-0">
-          <div className="w-[75%] md:w-[90%] bg-secondary" />
-          <div className="w-[25%] md:w-[10%] bg-secondary opacity-[0.3]" />
+        <div className="flex justify-start h-14 md:h-16 md:w-full absolute top-[-1px] left-0">
+          <div className=" bg-secondary" style={{ width: ratio }} />
+          <div className=" bg-secondary opacity-[0.3]" style={{ width: ratio }} />
         </div>
 
         <div className="flex flex-col flex-1 items-center justify-center w-full h-full px-4">

@@ -1,9 +1,8 @@
 'use client'
 
-import { appearAnimation, flyInAnimation } from '@/constants/animation.constant'
-
 import { ButtonImage } from '@/components/button'
 import { urlRoute } from '@/constants/endpoints'
+import { useMediaQuery } from '@/hooks/custom/useMediaQuery'
 import fourthPrice from '@/images/home/consolation-prize.png'
 import firstPrice from '@/images/home/first-prize.png'
 import secondPrice from '@/images/home/second-prize.png'
@@ -15,7 +14,7 @@ import { cn } from '@/lib/utils'
 import { nftService } from '@/services/nft.service'
 import { roundService } from '@/services/round.service'
 import { useQuery } from '@tanstack/react-query'
-import { motion, useInView } from 'framer-motion'
+import { useInView } from 'framer-motion'
 import Image, { StaticImageData } from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useRef, useState } from 'react'
@@ -30,11 +29,7 @@ const CardPrize: React.FC<{
   title: string
 }> = ({ prizeAsset, data, isLoading, title }) => {
   return (
-    <motion.div
-      {...flyInAnimation}
-      transition={{ duration: 0.4, delay: 1.7 }}
-      className="flex flex-col items-center justify-center gap-1 lg:gap-1.5"
-    >
+    <div className="flex flex-col items-center justify-center gap-1 lg:gap-1.5">
       <div className="relative mx-auto w-10 h-10 rounded-full lg:h-[78px] lg:w-[78px] mb-[2px]">
         <Image src={prizeAsset} alt="Prize Asset" fill />
       </div>
@@ -44,7 +39,7 @@ const CardPrize: React.FC<{
       <span className="text-center text-[16px] sm:text-xs leading-tight font-thin tracking-[-0.3px] text-black1 font-Roboto">
         {title}
       </span>
-    </motion.div>
+    </div>
   )
 }
 
@@ -64,20 +59,12 @@ const Progress: React.FC<{ progress: number; className?: string }> = ({ progress
 const CoupleButton: React.FC<{ className?: string }> = ({ className }) => {
   return (
     <div className={cn('flex flex-row justify-center gap-2 text-red-light', className)}>
-      <motion.button
-        {...flyInAnimation}
-        transition={{ duration: 0.4, delay: 1 }}
-        className="flex items-center justify-center h-[32px] w-[62px] rounded-[8px]  font-normal leading-[150%] tracking-[-0.54px] font-Roboto border-red-light border-[1px] py-[1px] px-[14px]"
-      >
+      <div className="flex items-center justify-center h-[32px] w-[62px] rounded-[8px]  font-normal leading-[150%] tracking-[-0.54px] font-Roboto border-red-light border-[1px] py-[1px] px-[14px]">
         Prize
-      </motion.button>
-      <motion.button
-        {...flyInAnimation}
-        transition={{ duration: 0.4, delay: 1 }}
-        className="flex items-center justify-center h-[32px] w-[73px] rounded-[8px]  font-normal leading-[150%] tracking-[-0.54px] font-Roboto bg-[rgba(212,199,156,0.3)] text-text-secondary py-[1px] px-[14px]"
-      >
+      </div>
+      <div className="flex items-center justify-center h-[32px] w-[73px] rounded-[8px]  font-normal leading-[150%] tracking-[-0.54px] font-Roboto bg-[rgba(212,199,156,0.3)] text-text-secondary py-[1px] px-[14px]">
         History
-      </motion.button>
+      </div>
     </div>
   )
 }
@@ -88,29 +75,28 @@ export default function LuckyDraw() {
   const [showYourPrize, setShowYourPrize] = useState(false)
   const ref = useRef(null)
   const isInView = useInView(ref)
+  const [ratioDimension, setRatioDimension] = useState(0)
+  const isTablet = useMediaQuery('(min-width: 768px)')
+  const ratio = !isTablet
+    ? `calc(0px + ${(ratioDimension / 100) * 10}px)`
+    : `calc(0px + ${(ratioDimension / 100) * 50}px)`
 
   useEffect(() => {
     const scroll = (event: any) => {
-      console.log(
-        '%cMyProject%cline:93%cevent',
-        'color:#fff;background:#ee6f57;padding:3px;border-radius:2px',
-        'color:#fff;background:#1f3c88;padding:3px;border-radius:2px',
-        'color:#fff;background:rgb(20, 68, 106);padding:3px;border-radius:2px',
-        event,
-      )
-      console.log(
-        '%cMyProject%cline:98%cevent',
-        'color:#fff;background:#ee6f57;padding:3px;border-radius:2px',
-        'color:#fff;background:#1f3c88;padding:3px;border-radius:2px',
-        'color:#fff;background:rgb(161, 23, 21);padding:3px;border-radius:2px',
-        window,
-      )
+      const rootDiv = document.getElementById('root-div')
+      const nftGallery = document.getElementById('section-nft-gallery')
+      const nftGalleryOffsetHeight = Number(nftGallery?.offsetTop)
+      const rootScrollTop = Number(rootDiv?.scrollTop)
+
+      if (rootScrollTop - nftGalleryOffsetHeight >= 0) {
+        setRatioDimension(rootScrollTop - nftGalleryOffsetHeight)
+      }
     }
     if (isInView) {
       window.addEventListener('scroll', scroll, true)
-      ;() => window.removeEventListener('scroll', scroll, true)
     }
-  }, [isInView])
+    ;() => window.removeEventListener('scroll', scroll, true)
+  }, [isInView, ref])
 
   const { data: nftSoldData, isLoading: isLoadingNftSold } = useQuery({
     queryKey: ['nft-sold'],
@@ -125,7 +111,7 @@ export default function LuckyDraw() {
   return (
     <div
       id="section-lucky-draw"
-      className="snap-start text-_white"
+      className="snap-center text-_white"
       onClick={(e) => {
         e.stopPropagation()
         e.preventDefault()
@@ -134,61 +120,41 @@ export default function LuckyDraw() {
       ref={ref}
     >
       <WrapperHero src="/images/home/bg-lucky-draw.svg">
-        <div className="flex h-14 w-[65vw] md:h-16 md:w-[58vw] absolute top-[-1px] right-0">
-          <div className="w-[40%] md:w-[30%] bg-secondary opacity-[0.3]" />
-          <div className="w-[60%] md:w-[70%] bg-secondary" />
+        <div className="flex justify-end h-14 md:h-16 md:w-full absolute top-[-1px] right-0">
+          <div className={cn('bg-secondary opacity-[0.3]')} style={{ width: ratio }} />
+          <div className="bg-secondary" style={{ width: ratio }} />
         </div>
 
         <div className="flex flex-1 items-center justify-center px-4">
           <div className="bg-secondary border-[1.852px] rounded-lg lg:backdrop-blur-[5px] lg:max-w-[765px] w-full px-4 py-8 lg:px-10">
             <div className="relative flex max-h-full  flex-col gap-4 bg-full">
               <div className="flex flex-col">
-                <motion.div
-                  {...appearAnimation}
-                  transition={{ duration: 0.3, delay: 0.5 }}
-                  className="flex h-9 items-center justify-center gap-2 lg:h-fit"
-                >
+                <div className="flex h-9 items-center justify-center gap-2 lg:h-fit">
                   <span className="text-2xl lg:text-[40px] font-semibold tracking-[-0.96px] text-red-light lg:text-5xl">
                     Lucky draw
                   </span>
-                </motion.div>
+                </div>
                 <CoupleButton className="flex lg:hidden mt-2" />
               </div>
               <div className="flex flex-col lg:flex-row w-full lg:justify-between mt-5 lg:mt-10">
-                <motion.div
-                  {...appearAnimation}
-                  transition={{ duration: 0.3, delay: 1.25 }}
-                  className="flex flex-col items-center lg:items-start "
-                >
+                <div className="flex flex-col items-center lg:items-start ">
                   <div className="text-lg mb-[2px]  font-medium leading-[100%] tracking-[-0.54px] text-black1 lg:text-md lg:leading-7 font-Roboto">
                     Total NFT sold this round:
                   </div>
                   <div className="text-[21px] font-medium text-red-light tracking-tighter">
                     <span>50</span>/<span className="text-subtle">100</span>
                   </div>
-
-                  {/* <div className='text-xs font-medium tracking-[-0.54px] text-[#9F232D] lg:text-lg'>
-                    {isLoadingNftSold ? (
-                      'is loading ...'
-                    ) : nftSoldData ? (
-                      <>
-                        <Counter value={nftSoldData.mint_count} />/{nftSoldData.total_sold}
-                      </>
-                    ) : (
-                      ''
-                    )}
-                  </div> */}
-                </motion.div>
+                </div>
 
                 <CoupleButton className="hidden lg:flex" />
               </div>
 
-              <motion.div {...appearAnimation} transition={{ duration: 0.3, delay: 0.5 }}>
+              <div>
                 <Progress
                   progress={nftSoldData ? (nftSoldData.mint_count / nftSoldData.total_sold) * 100 : 10}
                   className="mb-4 lg:mb-8"
                 />
-              </motion.div>
+              </div>
 
               <div className="grid grid-cols-5 gap-4  -mx-2 items-start lg:mx-0 lg:px-10">
                 <CardPrize
@@ -228,7 +194,7 @@ export default function LuckyDraw() {
               </div>
 
               <div className="flex gap-2 justify-center items-center lg:gap-4 relative mt-4 lg:mt-10 mx-auto  w-full h-auto max-w-[450px] sm:h-12">
-                <motion.div {...appearAnimation} transition={{ duration: 0.4, delay: 3 }} className="w-full h-full">
+                <div className="w-full h-full">
                   <ButtonImage
                     onClick={() => {
                       if (address) {
@@ -242,8 +208,8 @@ export default function LuckyDraw() {
                   >
                     {address ? 'Check Your Prize' : 'Connect Wallet'}
                   </ButtonImage>
-                </motion.div>
-                <motion.div {...appearAnimation} transition={{ duration: 0.4, delay: 4 }} className="w-full h-full">
+                </div>
+                <div className="w-full h-full">
                   <Link href={urlRoute.inscribe}>
                     <ButtonImage
                       onClick={() => {
@@ -259,7 +225,7 @@ export default function LuckyDraw() {
                       Try Now
                     </ButtonImage>
                   </Link>
-                </motion.div>
+                </div>
               </div>
             </div>
           </div>

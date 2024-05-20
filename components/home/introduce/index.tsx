@@ -1,15 +1,22 @@
 import { ButtonImage } from '@/components/button'
+import Counter from '@/components/counter'
+import { appearAnimation } from '@/constants/animation.constant'
 import ArtWorkIcon from '@/icons/home/artwork.svg'
 import Auction from '@/icons/home/auction.svg'
 import CreatorIcon from '@/icons/home/creator.svg'
 import NFTIconMobile from '@/icons/home/home-introduce-nft-mobile.svg'
 import NFTIcon from '@/icons/home/home-introduce-nft.svg'
+import { motion, useInView } from 'framer-motion'
 import Image from 'next/image'
+import { useRef } from 'react'
 import WrapperHero from '../WrapperHero'
 
 export default function Introduce() {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { margin: '-120px' })
+
   return (
-    <div id="section-introduce" className="snap-start">
+    <div id="section-introduce" className="snap-start" ref={ref}>
       <div className="mx-auto flex flex-col lg:flex-row  max-w-full items-center pt-[50px] lg:pt-0  bg-secondary relative">
         <div className="flex w-full justify-center items-center lg:w-[62%] order-2 lg:order-1 mt-[60px] lg:mt-0 z-10">
           <div className="justify-center flex flex-col items-center lg:items-start p-5 lg:max-w-[400px] w-full lg:w-fit">
@@ -45,10 +52,46 @@ export default function Introduce() {
         </div>
 
         <div className="lg:order-2 flex-grow hidden lg:block">
-          <WrapperHero src="/images/home/bg-home.svg" />
+          <motion.div
+            className="relative"
+            initial={'start'}
+            whileInView={isInView ? 'end' : ''}
+            transition={{ delay: 0.3, duration: 0.3 }}
+            viewport={{
+              once: true,
+            }}
+            variants={{
+              start: {
+                right: '-100%',
+                opacity: 0,
+              },
+              end: {
+                right: '0',
+                opacity: 1,
+              },
+            }}
+          >
+            <WrapperHero src="/images/home/background-introduce.svg" />
+          </motion.div>
         </div>
 
-        <div
+        <motion.div
+          initial={'start'}
+          whileInView={isInView ? 'end' : ''}
+          transition={{ delay: 0.85, duration: 0.5 }}
+          viewport={{
+            once: true,
+          }}
+          variants={{
+            start: {
+              left: '100%',
+              opacity: 0.35,
+            },
+            end: {
+              left: '50%',
+              opacity: 1,
+            },
+          }}
           className="
           z-10
           static lg:absolute lg:top-1/2 lg:-translate-y-1/2 
@@ -62,7 +105,9 @@ export default function Introduce() {
               <Image src={NFTIcon} className="hidden lg:block" alt="" />
               <Image src={NFTIconMobile} className="lg:hidden block" alt="" />
             </div>
-            <div
+            <motion.div
+              {...appearAnimation}
+              transition={{ duration: 0.3, delay: 1.2 }}
               className="absolute py-[3px] pl-[6px] pr-[19px] bg-white rounded-[200px] flex justify-center items-center  
                 h-fit w-fit top-[9%] left-[-11%] lg:max-h-unset lg:left-[-19%] 
                 lg:w-[243px] lg:h-[82px] shadow-[3px_6px_30px_0px_rgba(0, 0, 0, 0.24)]
@@ -81,13 +126,15 @@ export default function Introduce() {
                   flex items-center justify-center
                   "
                 >
-                  110K <span className="relative">+</span>
+                  <Counter value={110} />K <span className="relative">+</span>
                 </div>
                 <div className="text-xs lg:text-[18px] leading-[110%] lg:leading-[110%]">Artworks</div>
               </div>
-            </div>
+            </motion.div>
 
-            <div
+            <motion.div
+              {...appearAnimation}
+              transition={{ duration: 0.3, delay: 1.2 }}
               className="absolute py-[4px] pl-[12px] pr-[19px] bg-white rounded-[200px] flex justify-center items-center  
                w-[129px] h-[50px] top-[61%] lg:left-[81%] sm:right-[-23%] right-[-6%]
                lg:max-h-unset 
@@ -107,14 +154,16 @@ export default function Introduce() {
                   font-medium leading-[110%] lg:leading-[110%] tracking-[-0.25px]
                   "
                 >
-                  2K <span className="relative left-[-2px]">+</span>
+                  <Counter value={2} />K <span className="relative left-[-2px]">+</span>
                 </div>
                 <div className="text-xs lg:text-[18px] leading-[110%] lg:leading-[110%]">Creators</div>
               </div>
               <Image src={CreatorIcon} className="w-[38px] lg:w-[58px] h-[38px] lg:h-[58px]" alt="" />
-            </div>
+            </motion.div>
 
-            <div
+            <motion.div
+              {...appearAnimation}
+              transition={{ duration: 0.3, delay: 1.2 }}
               className="
               absolute 
               lg:py-[9px] lg:pl-[12px] lg:pr-[29px] py-[5px] pl-[5px] pr-[15px]
@@ -135,10 +184,11 @@ export default function Introduce() {
                 </div>
                 <div className="text-xs lg:text-[14px] leading-[100%] lg:leading-[130%]">is coming soon</div>
               </div>
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   )
 }
+

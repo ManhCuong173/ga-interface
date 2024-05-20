@@ -46,7 +46,7 @@ export default function Assets({ isLoading, assets, onShowInfo, onList: onListin
   }
 
   return (
-    <div className="">
+    <>
       <div className="flex items-center gap-4">
         <div className="flex h-11 flex-1 items-center justify-center gap-2.5 rounded border border-[#D4C79C]  px-4">
           <Image src={iconSearch} alt="icon search" className="h-5 w-5 min-w-5" />
@@ -72,7 +72,7 @@ export default function Assets({ isLoading, assets, onShowInfo, onList: onListin
       {isLoading ? (
         <div className="flex min-h-[420px] items-center justify-center">loading...</div>
       ) : filteredAssets?.length ? (
-        <div className="my-6 grid grid-cols-2 gap-4 rounded md:grid-cols-3 lg:grid-cols-4">
+        <div className="my-6 grid grid-cols-2 gap-2 rounded md:grid-cols-3 lg:grid-cols-4">
           {filteredAssets.map((asset) => (
             <Asset
               key={asset.id_inscription}
@@ -86,7 +86,7 @@ export default function Assets({ isLoading, assets, onShowInfo, onList: onListin
       ) : (
         <div className="flex min-h-[420px] items-center justify-center font-light">No NFTs</div>
       )}
-    </div>
+    </>
   )
 }
 
