@@ -160,21 +160,21 @@ const InscribeOrderModal: React.FC<{ onClose: () => void; orderId: string; isOpe
   }
 
   const renderStep = useMemo(() => {
+    if (orderDetail?.status.includes(OrderStatus.Closed)) return <></>
+
     switch (step) {
       case 1:
         return (
-          !orderDetail?.status.includes(OrderStatus.Closed) && (
-            // !orderDetail?.lockNFT &&
-            <PayMethod
-              selectedPayMethod={selectedPayMethod}
-              onSelectPayMethod={(method) => {
-                setPayMethod(selectedPayMethod === method ? null : method)
-              }}
-              isSiging={isSigning}
-              orderDetail={orderDetail}
-              onPayWallet={handlePayWithWallet}
-            />
-          )
+          // !orderDetail?.lockNFT &&
+          <PayMethod
+            selectedPayMethod={selectedPayMethod}
+            onSelectPayMethod={(method) => {
+              setPayMethod(selectedPayMethod === method ? null : method)
+            }}
+            isSiging={isSigning}
+            orderDetail={orderDetail}
+            onPayWallet={handlePayWithWallet}
+          />
         )
       case 2:
         return <PaymentReceived />
