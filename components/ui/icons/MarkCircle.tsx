@@ -15,7 +15,7 @@ const Icon: React.FC<{ className?: string; checkedColor?: string; markColor?: st
       xmlns="http://www.w3.org/2000/svg"
     >
       <circle cx="10.3" cy="10.3" r="10" />
-      <path d="M5 9.5L9 13.5L15.5 7" stroke={markColor} stroke-width="2" />
+      <path d="M5 9.5L9 13.5L15.5 7" stroke={markColor} strokeWidth="2" />
     </svg>
   )
 }

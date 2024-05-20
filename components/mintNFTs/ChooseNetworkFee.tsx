@@ -1,31 +1,28 @@
 import { cn } from '@/lib/utils'
-import { NetworkFeeType } from '@/types/fee'
+import { NetworkFee, NetworkFeeEnum, NetworkFeeType } from '@/types/fee'
 import { toast } from 'react-toastify'
 import { ButtonImage } from '../button'
 import Customsize from './Customsize'
 
 type Props = {
-  networkFee: {
-    normal: number
-    high: number
-    customer: number
-  }
+  networkFee: NetworkFee
+
   customNetworkFee: number
-  setCustomNetworkFee: any
-  selected: NetworkFeeType
-  setSelected: any
-  loading: boolean
+  onCustomFee: (fee: number) => void
+  selectedNetworkFeeType: NetworkFeeType
+  onSelectFeeType: (fee: NetworkFeeType) => void
+  isLoading: boolean
   isDisplayTime?: boolean
   min: number
 }
 
 export default function ChooseNetworkFee({
   networkFee,
-  selected,
-  setSelected,
-  loading,
+  selectedNetworkFeeType,
+  onSelectFeeType,
+  isLoading,
   customNetworkFee,
-  setCustomNetworkFee,
+  onCustomFee,
   min,
 }: Props) {
   return (
@@ -36,16 +33,16 @@ export default function ChooseNetworkFee({
             varirant="outline"
             key={network}
             className={cn(
-              network === selected ? 'bg-[#ef232c1a] border-red-light' : 'border-bgAlt',
+              network === selectedNetworkFeeType ? 'bg-[#ef232c1a] border-red-light' : 'border-bgAlt',
               `flex flex-col justify-start items-start w-full cursor-pointer py-2 pl-[14px] pr-8 text-xs`,
             )}
             onClick={() => {
-              setSelected(network)
+              onSelectFeeType(network)
             }}
           >
             <div className="mb-1 capitalize font-bold">{network}</div>
             <div>
-              {loading ? (
+              {isLoading ? (
                 'loading'
               ) : networkFee ? (
                 <p className="flex flex-col font-ProtoMono  gap-1">
@@ -61,7 +58,7 @@ export default function ChooseNetworkFee({
           </ButtonImage>
         ))}
       </div>
-      {selected === 'custom' && (
+      {selectedNetworkFeeType === NetworkFeeEnum.Custom && (
         <div className="flex items-center gap-8">
           {/* {isDisplayTime && <div className='p-3 max-sm:hidden'>
             <div className='relative h-[80px] w-[80px]'>
@@ -96,9 +93,9 @@ export default function ChooseNetworkFee({
               onChange={(value) => {
                 if (value < min || value > 500) {
                   toast.error(`Please enter a value between ${min} and 500`)
-                  setCustomNetworkFee(min)
+                  onCustomFee(min)
                 } else {
-                  setCustomNetworkFee(value)
+                  onCustomFee(value)
                 }
               }}
               value={customNetworkFee}
@@ -111,4 +108,3 @@ export default function ChooseNetworkFee({
     </>
   )
 }
-

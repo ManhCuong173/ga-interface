@@ -9,10 +9,10 @@ const Icon: React.FC<{ className?: string; color?: string }> = ({ className }) =
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g stroke-width="0"></g>
-      <g stroke-linecap="round" stroke-linejoin="round"></g>
+      <g strokeWidth="0"></g>
+      <g strokeLinecap="round" strokeLinejoin="round"></g>
       <g>
-        <path d="M6 9L12 15L18 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>{' '}
+        <path d="M6 9L12 15L18 9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>{' '}
       </g>
     </svg>
   )

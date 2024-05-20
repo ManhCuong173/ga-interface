@@ -1,7 +1,7 @@
 'use client'
 
 import { ButtonImage } from '@/components/button'
-import { urlRoute } from '@/constants/endpoints'
+import { urlRoute } from '@/constants/routes'
 import { useMediaQuery } from '@/hooks/custom/useMediaQuery'
 import fourthPrice from '@/images/home/consolation-prize.png'
 import firstPrice from '@/images/home/first-prize.png'

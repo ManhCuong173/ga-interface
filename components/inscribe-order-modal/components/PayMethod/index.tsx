@@ -1,6 +1,6 @@
 import { ButtonImage } from '@/components/button'
 import { OrderDetail } from '@/types/orders'
-import React, { ReactNode, useState } from 'react'
+import React, { ReactNode, useRef, useState } from 'react'
 import { MarkCircleIcon } from '../../../ui/icons'
 import { PayMethodEnum } from '../../types'
 import QRCode from './QRCode'
@@ -16,9 +16,9 @@ const CardSelect: React.FC<{
   const isActive = selectedPayMethod === method
 
   return (
-    <div className="cursor-pointer flex w-full flex-col gap-4 rounded-lg border border-bgAlt">
+    <div className="flex w-full flex-col gap-4 rounded-lg border border-bgAlt">
       <div
-        className={cn('flex w-full items-center justify-start gap-2  p-5', isActive ? 'pb-0' : '')}
+        className={cn('flex w-full items-center justify-start gap-2  p-5 cursor-pointer ', isActive ? 'pb-0' : '')}
         onClick={() => onSelectPayMethod(method)}
       >
         <MarkCircleIcon checked={isActive} />
@@ -41,7 +41,7 @@ const PayMethod: React.FC<PayMethodProps> = ({
   orderDetail,
   onPayWallet,
   isSiging,
-}: any) => {
+}) => {
   return (
     <div className="flex flex-col font-Roboto items-center gap-3">
       <CardSelect
@@ -50,7 +50,7 @@ const PayMethod: React.FC<PayMethodProps> = ({
         selectedPayMethod={selectedPayMethod}
         onSelectPayMethod={onSelectPayMethod}
       >
-        <QRCode url={orderDetail?.link_qr_code_image} addressTransferFee={orderDetail?.address_transfer_fee} />
+        <QRCode url={orderDetail?.qrCodeUrl} addressTransferFee={orderDetail?.collectorFeeAddress} />
       </CardSelect>
       <CardSelect
         title="Pay with Wallet"

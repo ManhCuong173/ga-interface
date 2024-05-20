@@ -17,8 +17,8 @@ const NFTCard: React.FC<{ onSelectNFT: () => void; nft: NFT; selected: boolean }
   return (
     <div onClick={onSelectNFT} className="nft-card relative cursor-pointer w-full h-full overflow-hidden rounded-lg">
       <Image
-        src={nft.nft_link}
-        loader={() => nft.nft_link}
+        src={nft.url || ''}
+        loader={() => nft.url || ''}
         width={0}
         height={0}
         sizes="100vw"
@@ -47,9 +47,9 @@ const NFTList: React.FC<INfts> = ({ nfts, isLoading, selectedNFTs, onSelectNFT }
       {nfts && nfts.length > 0 ? (
         <div className="nft_list relative grid  w-full grid-cols-2 justify-between gap-3 overflow-y-auto sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
           {nfts?.map((nft: NFT, index: number) => (
-            <div className="relative">
+            <div className="relative" key={`list-nft-mint-nft-${index}`}>
               <NFTCard
-                key={index}
+                key={`mint-nft-${nft.id}`}
                 nft={nft}
                 selected={Boolean(selectedNFTs?.includes(nft))}
                 onSelectNFT={() => {

@@ -1,4 +1,4 @@
-import { urlRoute } from '@/constants/endpoints'
+import { urlRoute } from '@/constants/routes'
 import discord from '@/icons/home/discord.svg'
 import twitter from '@/icons/home/twitter.svg'
 import logo from '@/images/commons/logo.svg'
@@ -74,4 +74,3 @@ const Footer = () => {
   )
 }
 export default Footer
-

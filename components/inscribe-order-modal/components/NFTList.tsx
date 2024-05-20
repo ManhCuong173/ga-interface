@@ -12,8 +12,8 @@ const NFTCard: React.FC<{ nft: NFT; onSelect: () => void }> = ({ nft, onSelect }
   return (
     <div onClick={onSelect} className={cn('nft-card relative cursor-pointer w-full h-full overflow-hidden rounded-lg')}>
       <Image
-        src={nft.nft_link}
-        loader={() => nft.nft_link}
+        src={nft.url || ''} // TODO typescript
+        loader={() => nft.url || ''} // TODO typescript
         width={0}
         height={0}
         sizes="100vw"
@@ -38,9 +38,8 @@ const NFTList: React.FC<INfts> = ({ nfts, isLoading, onSelectNFT }) => {
       {nfts && nfts.length > 0 ? (
         <div className="nft_list relative grid  w-full grid-cols-2 justify-between gap-3 overflow-y-auto sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
           {nfts?.map((nft: NFT, index: number) => (
-            <div className="relative">
+            <div className="relative" key={`list-nft-inscribe-modal-${index}`}>
               <NFTCard
-                key={index}
                 nft={nft}
                 onSelect={() => {
                   onSelectNFT(nft)

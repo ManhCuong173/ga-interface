@@ -87,4 +87,3 @@ const BuySuccessModal = ({ open, nftName, setOpen }: any) => {
 }
 
 export default BuySuccessModal
-

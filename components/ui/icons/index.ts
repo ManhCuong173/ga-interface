@@ -11,4 +11,3 @@ export { default as MarkIcon } from './Mark'
 export { default as MarkCircleIcon } from './MarkCircle'
 export { default as SquareCheckIcon } from './SquareCheck'
 export { default as SquareCloseIcon } from './SquareClose'
-

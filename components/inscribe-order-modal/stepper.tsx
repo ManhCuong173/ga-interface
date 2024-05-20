@@ -34,34 +34,40 @@ const Box: React.FC<{ children?: any; isLast: boolean; isActive: boolean }> = ({
 }
 const Stepper: React.FC<Props> = ({ step: _step }) => {
   return (
-    <div className="mx-auto flex justify-between min-w-[300px]">
-      {steps.map((step, index) => {
-        const isActive = step.id === _step
-        const isLast = step.id < _step
-        return (
-          <>
-            <div className="relative">
-              <div key={step.id} className={cn(`flex flex-col items-center gap-2 w-max`)}>
-                <Box isActive={isActive} isLast={isLast}>
-                  0{step.id}
-                </Box>
+    <div className="mx-auto flex justify-between">
+      <div className="grid grid-cols-[max-content_1fr_max-content_1fr_max-content] w-full">
+        {steps.map((step, index) => {
+          const isActive = step.id === _step
+          const isLast = step.id < _step
+          return (
+            <>
+              <div key={`stepper-step-${step.id}`} className="relative">
+                <div key={step.id} className={cn(`flex flex-col items-center gap-2 w-max`)}>
+                  <Box isActive={isActive} isLast={isLast}>
+                    0{step.id}
+                  </Box>
 
-                <span
-                  className={cn(
-                    isActive ? 'text-orange' : isLast ? 'text-black1/50' : '',
-                    ' font-Roboto text-center text-sm',
-                  )}
-                >
-                  {step?.label}
-                </span>
+                  <span
+                    className={cn(
+                      isActive ? 'text-orange' : isLast ? 'text-black1/50' : '',
+                      ' font-Roboto text-center text-sm',
+                    )}
+                  >
+                    {step?.label}
+                  </span>
+                </div>
               </div>
-            </div>
-            {index < steps.length - 1 && <div className={`h-[2px] lg:w-[60px] scale-125 bg-stroke mt-4`}></div>}
-          </>
-        )
-      })}
+              {index < steps.length - 1 && (
+                <div
+                  key={`stepper-step-stroke-${step.id}`}
+                  className={`h-[2px] lg:w-[40px] mx-auto translate-x-[10%] scale-x-150 bg-stroke mt-4`}
+                ></div>
+              )}
+            </>
+          )
+        })}
+      </div>
     </div>
   )
 }
 export default Stepper
-

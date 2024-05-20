@@ -8,7 +8,7 @@ type Props = {
   networkFee: {
     normal: number
     high: number
-    customer: number
+    custome: number
   }
   customNetworkFee: number
   setCustomNetworkFee: any
@@ -113,4 +113,3 @@ export default function ChooseNetworkFee({
     </>
   )
 }
-

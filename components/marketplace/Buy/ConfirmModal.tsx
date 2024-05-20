@@ -10,8 +10,9 @@ import { selectAddress } from '@/lib/features/wallet/wallet-slice'
 import { useAppDispatch, useAppSelector } from '@/lib/hook'
 import { cn } from '@/lib/utils'
 import { marketPlaceService } from '@/services/market.service'
-import { publicService } from '@/services/public.service'
-import { NetworkFeeType } from '@/types/fee'
+import publicService from '@/services/public.service'
+
+import { NetworkFee, NetworkFeeEnum, NetworkFeeType } from '@/types/fee'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import Image from 'next/image'
 import { MutableRefObject, memo, useEffect, useRef, useState } from 'react'
@@ -19,8 +20,8 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { useDebounce } from 'use-debounce'
 import { handleReturnIconType } from '../Item'
-import ChooseNetworkFee from './ChooseNetworkFee'
 import { ModalLayout } from './ModalLayout'
+import ChooseNetworkFee from '@/components/mintNFTs/ChooseNetworkFee'
 
 type Params = {
   fee_rate: number
@@ -43,7 +44,7 @@ const ConfirmModal = ({
   const address = useAppSelector(selectAddress)
   const [customNetworkFee, setCustomNetworkFee] = useState(1)
   const [customNetworkFeeDebounce] = useDebounce(customNetworkFee, 300)
-  const [selectedNetworkFee, setSelectedNetworkFee] = useState<NetworkFeeType>('normal')
+  const [selectedNetworkFee, setSelectedNetworkFee] = useState<NetworkFeeType>(NetworkFeeEnum.Normal)
   const btcToUsdRate: string = useSelector(selectBtnToUsdRateData)
   const ref: MutableRefObject<any> = useRef()
   const dispatch = useAppDispatch()
@@ -52,13 +53,21 @@ const ConfirmModal = ({
   const matchedType = nftTypes.find((type) => type.id.toString() === item.nft_id)
   const [enabledCustom, setEnableCustom] = useState(false)
 
-  const { data: feeData, isLoading: loadingNetworkFee } = useQuery({
+  const { data: feeData, isLoading: loadingNetworkFee } = useQuery<NetworkFee>({
     queryKey: ['fee'],
-    queryFn: publicService.getNetworkFee,
+    queryFn: async () => {
+      const result = await publicService.getNetworkFee()
+      return result.data as NetworkFee
+    },
     enabled: !!open,
+    initialData: {
+      custom: 0,
+      high: 0,
+      normal: 0,
+    },
   })
 
-  const feeRate = selectedNetworkFee !== 'custom' ? feeData?.fee[selectedNetworkFee] || 0 : customNetworkFee
+  const feeRate = selectedNetworkFee !== 'custom' ? feeData[selectedNetworkFee] || 0 : customNetworkFee
 
   const { data } = useQuery({
     queryKey: ['fee_buy_nft', feeRate, id_sell, customNetworkFeeDebounce],
@@ -202,13 +211,13 @@ const ConfirmModal = ({
             <div className={cn('flex w-full flex-col space-y-3', enabledCustom ? 'max-h-0 overflow-hidden' : '')}>
               <p className="text-left text-[14px] font-medium text-[#383F4A]">Select the network fee you want to pay</p>
               <ChooseNetworkFee
-                loading={loadingNetworkFee}
-                networkFee={feeData?.fee as any}
+                isLoading={loadingNetworkFee}
+                networkFee={feeData}
                 customNetworkFee={customNetworkFee}
-                setCustomNetworkFee={setCustomNetworkFee}
-                selected={selectedNetworkFee}
-                setSelected={setSelectedNetworkFee}
-                min={feeData?.fee.normal || 1}
+                onCustomFee={setCustomNetworkFee}
+                selectedNetworkFeeType={selectedNetworkFee}
+                onSelectFeeType={setSelectedNetworkFee}
+                min={feeData.normal || 1}
               />
             </div>
             <div className="w-full   border-bgAlt border-[1px] rounded-[8px] p-4 text-[#66605B] mt-[20px]">
@@ -295,4 +304,3 @@ const ConfirmModal = ({
 }
 
 export default memo(ConfirmModal)
-
