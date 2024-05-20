@@ -94,7 +94,7 @@ const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrderId
       >
         <span className="text-base text-text-secondary font-medium mr-1 font-Roboto">Advanced Settings</span>
         <span className={cn(enabledCustom ? 'rotate-180' : 'rotate-0', `ml-1 transition-all duration-500`)}>
-          <ChevronIcon className="text-text-secondary" />
+          <ChevronIcon className="stroke-text-secondary" />
         </span>
       </div>
 

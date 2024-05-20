@@ -26,7 +26,7 @@ const NFTCard: React.FC<{ onSelectNFT: () => void; nft: NFT; selected: boolean }
         className="h-full w-full object-cover"
       />
 
-      <div className="absolute cursor-pointer right-2 top-2">
+      <div className="absolute cursor-pointer right-1 top-2">
         <SquareCheckIcon checked={selected} />
       </div>
     </div>
@@ -45,9 +45,9 @@ const NFTList: React.FC<INfts> = ({ nfts, isLoading, selectedNFTs, onSelectNFT }
   return (
     <div className="relative flex flex-col items-center gap-4 rounded h-[500px] text-center">
       {nfts && nfts.length > 0 ? (
-        <div className="nft_list relative grid  w-full grid-cols-2 justify-between gap-3 overflow-y-auto sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+        <div className="nft_list pr-4 -mr-4 w-[calc(100%+24px)] rounded-lg relative grid grid-cols-2 justify-between gap-3 overflow-y-auto sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
           {nfts?.map((nft: NFT, index: number) => (
-            <div className="relative" key={`list-nft-mint-nft-${index}`}>
+            <div className="relative w-full" key={`list-nft-mint-nft-${index}`}>
               <NFTCard
                 key={`mint-nft-${nft.id}`}
                 nft={nft}

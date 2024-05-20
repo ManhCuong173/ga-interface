@@ -28,16 +28,20 @@ const MyOrders = () => {
           <HeadMarkIcon className="hidden lg:block" />
         </div>
 
-        <div className="flex items-center justify-between w-full space-x-2 my-20">
+        <div className="flex items-center justify-between w-full space-x-2 my-10 lg:my-20">
           <InputInfoHelp
             hideEndIcon
-            className="w-full max-w-[400px]"
+            className="w-full md:max-w-[400px]"
             classNameInput="placeholder:text-base font-bold"
             placeholder="SEARCH NUMBER"
             onChange={handleSearchOrderID}
           />
 
-          <SelectStatusOrder selectedOrderStatus={selectedOrderStatus} onSelectOrderStatus={onSelectOrderStatus} />
+          <SelectStatusOrder
+            className="max-w-[130px] md:max-w-[200px]"
+            selectedOrderStatus={selectedOrderStatus}
+            onSelectOrderStatus={onSelectOrderStatus}
+          />
         </div>
 
         <ListOrders orderId={debounceSearchOrderId} status={selectedOrderStatus} onSelectOrderId={setSelectedOrderId} />

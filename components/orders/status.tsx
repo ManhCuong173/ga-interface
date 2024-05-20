@@ -55,7 +55,7 @@ const SelectStatus = ({ className, onSelectOrderStatus, selectedOrderStatus }: S
     <div
       ref={ref}
       className={cn(
-        'rounded border border-bgAlt py-2 px-4 relative flex items-center w-full font-Roboto',
+        'rounded border z-10 border-bgAlt py-2 px-4 relative flex items-center w-full font-Roboto',
         'max-w-[200px] h-11',
         className,
       )}
