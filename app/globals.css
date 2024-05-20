@@ -243,3 +243,34 @@ input[type='range'] {
   @apply accent-red-light;
 }
 
+@layer utilities {
+  .desktop-menu-container:hover .address-item {
+    @apply text-red-500; /* Adjust the color as needed */
+    @apply fill-red-light;
+  }
+  .desktop-menu-container:hover .address-item-white {
+    @apply text-white; /* Adjust the color as needed */
+    @apply fill-white;
+  }
+
+  .desktop-menu-container:hover .farmer-white-icon {
+    @apply bg-[url(/icons/header/farmer.svg)];
+  }
+  .desktop-menu-container:hover .farmer-icon {
+    @apply bg-[url(/icons/header/farmer-black.svg)];
+  }
+
+  .desktop-menu-container:hover .chevron-white-down {
+    @apply bg-[url(/icons/header/chevron-down-black.svg)];
+  }
+  .desktop-menu-container:hover .chevron-down {
+    @apply bg-[url(/icons/header/chevron-down.svg)];
+  }
+  .desktop-menu-container:hover .wallet-white-icon {
+    @apply bg-[url(/icons/header/wallet.svg)];
+  }
+  .desktop-menu-container:hover .wallet-icon {
+    @apply bg-[url(/icons/header/wallet-white.svg)];
+  }
+}
+

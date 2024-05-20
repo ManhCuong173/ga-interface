@@ -1,4 +1,4 @@
-import { OrderDetail } from '../types/orders'
+import { Order } from '../types/orders'
 
 export const handleAddItem = <T>(array: T[], item: T): T[] => {
   if (!array.includes(item)) {
@@ -11,7 +11,7 @@ export const handleAddItem = <T>(array: T[], item: T): T[] => {
   return array
 }
 
-export const filterSearchItem = <T extends OrderDetail>(array: T[], searchValue: string): T[] => {
+export const filterSearchItem = <T extends Order>(array: T[], searchValue: string): T[] => {
   return array.filter((item) => item.id_create.includes(searchValue))
 }
 

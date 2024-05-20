@@ -1,10 +1,6 @@
 'use client'
 
-import chevronDownBlackIcon from '@/icons/header/chevron-down-black.svg'
-import chevronDownIcon from '@/icons/header/chevron-down.svg'
 import disconnect from '@/icons/header/disconnect.svg'
-import farmerWhiteIcon from '@/icons/header/farmer-black.svg'
-import farmerIcon from '@/icons/header/farmer.svg'
 import oldManIcon from '@/icons/header/old-man.svg'
 import { selectAddress } from '@/lib/features/wallet/wallet-slice'
 import { useAppSelector } from '@/lib/hook'
@@ -54,7 +50,7 @@ export default function Menu({ mode, handleDisconnect }: Props) {
   }, [setShow])
 
   return (
-    <div className="relative">
+    <div className={cn('relative')}>
       <div
         className="flex items-center gap-2"
         ref={selfRef}
@@ -62,27 +58,32 @@ export default function Menu({ mode, handleDisconnect }: Props) {
           setShow((prev) => !prev)
         }}
       >
-        <span className="flex size-6 items-center justify-center">
-          {mode !== 'transparent' && (
-            <Image src={farmerIcon} alt="" width={24} height={24} className="fill-red-light" />
-          )}
-          {mode === 'transparent' && <Image src={farmerWhiteIcon} alt="" width={24} height={24} />}
-        </span>
-        <span
+        <div
           className={cn(
-            ` text-base font-medium leading-[130%] font-Roboto uppercase`,
-            mode === 'transparent' ? 'text-white' : 'text-red-light',
+            'flex size-6 items-center justify-center',
+            mode === 'transparent'
+              ? 'bg-[url(/icons/header/farmer-black.svg)] farmer-white-icon'
+              : 'bg-[url(/icons/header/farmer.svg)] farmer-icon',
+          )}
+        />
+        <span
+          id="connect-wallet-address"
+          className={cn(
+            ` text-base font-medium leading-[130%] font-Roboto uppercase `,
+            mode === 'transparent' ? 'text-white address-item' : 'text-red-light address-item-white',
           )}
         >
           {truncate(address, 13, '...')}
         </span>
-        <span className="hidden size-6 items-center justify-center lg:flex">
-          {mode === 'transparent' ? (
-            <Image src={chevronDownIcon} alt="" width={12} height={6} className="stroke-red-light fill-red-light" />
-          ) : (
-            <Image src={chevronDownBlackIcon} alt="" width={12} height={6} />
+        <div
+          className={cn(
+            'hidden size-6 items-center justify-center lg:flex ',
+            mode === 'transparent'
+              ? 'bg-[url(/icons/header/chevron-down.svg)] chevron-white-down'
+              : 'bg-[url(/icons/header/chevron-down-black.svg)] chevron-down',
+            'bg-center bg-no-repeat bg-cover w-3 h-[6px]',
           )}
-        </span>
+        />
       </div>
       <div
         className={`${show ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-50'} absolute -inset-x-3 top-full mt-3 hidden origin-top overflow-hidden rounded-lg border border-text-black_3 text-black1 transition-all duration-300 lg:block`}

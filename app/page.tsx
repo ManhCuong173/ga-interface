@@ -7,7 +7,6 @@ import Introduce from '@/components/home/introduce'
 import LuckyDraw from '@/components/home/lucky-draw'
 import NFTGallery from '@/components/home/nft-gallery'
 import Slogan from '@/components/home/slogan'
-import Sidebar from '@/components/sidebar'
 import { selectActiveSection } from '@/lib/features/home-section/home-section-slice'
 import { useAppDispatch, useAppSelector } from '@/lib/hook'
 import { cn } from '@/lib/utils'
@@ -28,7 +27,6 @@ export default function Home() {
           isSnapMode ? 'snap-y snap-mandatory' : '',
         )}
       >
-        <Sidebar />
         <Banner />
         <Introduce />
         <NFTGallery />

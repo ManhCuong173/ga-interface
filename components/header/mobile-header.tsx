@@ -40,17 +40,17 @@ export default function MobileHeader() {
       <header
         className={`${isHomePage ? (show ? 'scale-y-100' : 'scale-y-0') : ''} fixed inset-x-0 top-0 z-[100] origin-top transition-all lg:hidden`}
       >
-        <div className='flex h-[72px] w-full items-center justify-between bg-[#FAF5F0] px-4'>
-          <Link href='/' className='flex items-center gap-[7.74px]'>
-            <Image src={logo} alt='' className='h-9 w-[123.14217px]' />
+        <div className="flex h-[72px] w-full items-center justify-between bg-[#FAF5F0] px-4">
+          <Link href="/" className="flex items-center gap-[7.74px]">
+            <Image src={logo} alt="" className="h-9 w-[123.14217px]" />
           </Link>
           <button
-            className='inline-block size-10 p-2'
+            className="inline-block size-10 p-2"
             onClick={() => {
               setSidebarOpen((prev) => !prev)
             }}
           >
-            <Image src={menuIcon} alt='' className='size-6' />
+            <Image src={menuIcon} alt="" className="size-6" />
           </button>
         </div>
       </header>
@@ -63,3 +63,4 @@ export default function MobileHeader() {
     </>
   )
 }
+

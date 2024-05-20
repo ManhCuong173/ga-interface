@@ -77,7 +77,7 @@ export default function Introduce() {
 
         <motion.div
           initial={'start'}
-          whileInView={isInView ? 'end' : ''}
+          whileInView={'end'}
           transition={{ delay: 0.85, duration: 0.5 }}
           viewport={{
             once: true,

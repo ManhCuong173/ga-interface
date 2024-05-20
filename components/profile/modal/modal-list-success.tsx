@@ -1,8 +1,9 @@
 import { handleReturnIconType } from '@/components/marketplace/Item'
 import ModalContainer from '@/components/ui/modal-container'
-import decor from '@/images/profile/profile-info/decor.png'
+import button_frame from '@/images/marketplace/buy/button-frame.png'
 import { NFTDetail } from '@/types/nft'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 type Props = {
   open: boolean
@@ -18,7 +19,7 @@ type Props = {
   handleSubmit: () => void
 }
 
-export default function ModalListSuccess({
+const ListNFTSuccessModal: React.FC<Props> = ({
   open,
   nftName,
   price,
@@ -28,59 +29,83 @@ export default function ModalListSuccess({
   number,
   handleClose,
   handleSubmit,
-}: Props) {
+}) => {
+  const router = useRouter()
+
+  const handleRouterAsset = () => {
+    router.push('/profile')
+  }
+
   return (
-    <ModalContainer open={open} handleClose={handleClose}>
-      <div className='relative my-8 min-h-full w-[733px] bg-white bg-[url(/images/profile/modal/background-success.png)] bg-full px-10 py-[75px] text-text-black lg:min-h-[unset]'>
-        <div className='relative z-[1] w-full space-y-8'>
-          <div className='mx-auto space-y-6'>
-            <Image src={decor} alt='' className='mx-auto w-[360.21px] max-w-full' />
-            <div className='flex w-full items-center justify-center gap-2 text-[40px] font-medium leading-8 tracking-[-2%] text-text-black'>
-              <span className='-scale-x-100'>🎉</span>
-              <span>Success!</span>
-              <span>🎉</span>
+    <ModalContainer open={open} handleClose={handleClose} backdropClassname="bg-black/10">
+      <div className="relative my-8 min-h-[488px] w-full lg:w-[378px] bg-white px-10 pb-[82.15px] pt-[75px] text-text-black font-Roboto">
+        <div className="relative z-[1] flex w-full flex-col items-center gap-6 lg:gap-8">
+          <div className="mx-auto lg:space-y-6">
+            <p className="flex items-center gap-2 text-[24px] lg:text-[21px] font-medium leading-8 tracking-[-0.8px] text-red-light">
+              <span>Congratulations! </span>
+            </p>
+          </div>
+
+          <p className="text-lg font-medium leading-6 tracking-[-0.6px]">Your NFT Purchase is Complete!</p>
+
+          <div className="relative h-[160px] w-[160px] p-4">
+            <div className="flex items-center justify-center lg:h-[160px] lg:w-[160px]">
+              <Image
+                src={nftImage || ''}
+                sizes="100vw"
+                className="h-full w-full"
+                width={0}
+                height={0}
+                loader={() => String(nftImage)}
+                alt=""
+              />
+            </div>
+            <div className="flex items-center gap-2 rounded px-2 py-1">
+              <div className="flex h-5 w-5 items-center justify-center rounded-full ">
+                <Image src={handleReturnIconType(nftId)} alt="" width={20} height={20} />
+              </div>
+              <span className="left-6 text-xs font-light tracking-[-0.48px]">#{inscriptionNumber}</span>
             </div>
           </div>
-          <p className='mx-auto max-w-full text-center text-[20px] font-medium leading-6 tracking-[-3%]'>
-            Your NFT has been officially listed after <br /> you set the selling price.
-          </p>
-          <div className='space-y-6'>
-            <div className='relative mx-auto flex size-[350px] items-center justify-center bg-[url(/images/profile/modal/nft-frame.png)] bg-full'>
-              <span className='absolute left-[31px] top-[31px] z-10 flex h-7 items-center gap-1 rounded bg-[#FFF4DD]/50 px-2'>
-                <span className='flex h-5 w-5 items-center justify-center rounded-full bg-[#fff4dd]'>
-                  <Image src={handleReturnIconType(nftId)} alt='' width={20} height={20} />
-                </span>
-                <span className='text-xs font-light tracking-[-0.36px] text-black1'>
-                  #{inscriptionNumber}
-                </span>
-              </span>
-              <figure className='relative size-[320px]'>
-                <Image
-                  loader={() => nftImage}
-                  src={nftImage}
-                  alt=''
-                  width={320}
-                  height={320}
-                  className='size-[320px] min-w-[320px]'
+          <div className="text-center text-[20px] font-medium leading-8 text-text-black">
+            {nftName} APPLE #{number}
+          </div>
+          <div
+            className="
+          flex items-center gap-2 text-2xl 
+          font-semibold leading-5 tracking-[-3%]"
+          >
+            <span>Price:</span>
+            <span>{price} BTC</span>
+          </div>
+
+          <button className="relative" onClick={() => handleRouterAsset()}>
+            <Image src={button_frame} alt="" />
+            <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center gap-2">
+              <span className="text-xl font-medium leading-6 tracking-[-0.6px] text-[#FFDFAC]">view my assets</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
+                <path
+                  d="M5.2041 12.0889H19.2041"
+                  stroke="#FFDFAC"
+                  stroke-width="2.88462"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
                 />
-              </figure>
+                <path
+                  d="M12.2041 5.08887L19.2041 12.0889L12.2041 19.0889"
+                  stroke="#FFDFAC"
+                  stroke-width="2.88462"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
             </div>
-            <div className='flex flex-col items-center gap-4 '>
-              <div className='text-[20px] font-medium leading-8 tracking-[-2%]'>
-                {nftName} APPLE #{number}
-              </div>
-              <div className='flex items-center gap-2 text-2xl font-semibold leading-5 tracking-[-3%]'>
-                <span className='text-line'>Price:</span>
-                <span className='text-text-black'>{price} BTC</span>
-              </div>
-            </div>
-          </div>
-          <button
-            className='h-[58px] w-[300px] bg-[url(/images/profile/modal/button-close.png)] bg-full'
-            onClick={handleSubmit}
-          ></button>
+          </button>
         </div>
       </div>
     </ModalContainer>
   )
 }
+
+export default ListNFTSuccessModal
+
