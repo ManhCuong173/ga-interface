@@ -16,9 +16,9 @@ const CardSelect: React.FC<{
   const isActive = selectedPayMethod === method
 
   return (
-    <div className="cursor-pointer flex w-full flex-col gap-4 rounded-lg border border-bgAlt">
+    <div className="flex w-full flex-col gap-4 rounded-lg border border-bgAlt">
       <div
-        className={cn('flex w-full items-center justify-start gap-2  p-5', isActive ? 'pb-0' : '')}
+        className={cn('flex w-full items-center justify-start gap-2  p-5 cursor-pointer ', isActive ? 'pb-0' : '')}
         onClick={() => onSelectPayMethod(method)}
       >
         <MarkCircleIcon checked={isActive} />

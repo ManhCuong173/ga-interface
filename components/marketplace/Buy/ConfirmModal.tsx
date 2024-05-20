@@ -194,8 +194,8 @@ const ConfirmModal = ({
                 networkFee={feeData}
                 customNetworkFee={customNetworkFee}
                 onCustomFee={setCustomNetworkFee}
-                selectedFee={selectedNetworkFee}
-                onSelectFee={setSelectedNetworkFee}
+                selectedNetworkFeeType={selectedNetworkFee}
+                onSelectFeeType={setSelectedNetworkFee}
                 min={feeData.normal || 1}
               />
             </div>

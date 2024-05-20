@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils'
-import { NetworkFee, NetworkFeeType } from '@/types/fee'
+import { NetworkFee, NetworkFeeEnum, NetworkFeeType } from '@/types/fee'
 import { toast } from 'react-toastify'
 import { ButtonImage } from '../button'
 import Customsize from './Customsize'
@@ -9,8 +9,8 @@ type Props = {
 
   customNetworkFee: number
   onCustomFee: (fee: number) => void
-  selectedFee: NetworkFeeType
-  onSelectFee: (fee: NetworkFeeType) => void
+  selectedNetworkFeeType: NetworkFeeType
+  onSelectFeeType: (fee: NetworkFeeType) => void
   isLoading: boolean
   isDisplayTime?: boolean
   min: number
@@ -18,8 +18,8 @@ type Props = {
 
 export default function ChooseNetworkFee({
   networkFee,
-  selectedFee,
-  onSelectFee,
+  selectedNetworkFeeType,
+  onSelectFeeType,
   isLoading,
   customNetworkFee,
   onCustomFee,
@@ -33,11 +33,11 @@ export default function ChooseNetworkFee({
             varirant="outline"
             key={network}
             className={cn(
-              network === selectedFee ? 'bg-[#ef232c1a] border-red-light' : 'border-bgAlt',
+              network === selectedNetworkFeeType ? 'bg-[#ef232c1a] border-red-light' : 'border-bgAlt',
               `flex flex-col justify-start items-start w-full cursor-pointer py-2 pl-[14px] pr-8 text-xs`,
             )}
             onClick={() => {
-              onSelectFee(network)
+              onSelectFeeType(network)
             }}
           >
             <div className="mb-1 capitalize font-bold">{network}</div>
@@ -58,7 +58,7 @@ export default function ChooseNetworkFee({
           </ButtonImage>
         ))}
       </div>
-      {selectedFee === 'custom' && (
+      {selectedNetworkFeeType === NetworkFeeEnum.Custom && (
         <div className="flex items-center gap-8">
           {/* {isDisplayTime && <div className='p-3 max-sm:hidden'>
             <div className='relative h-[80px] w-[80px]'>

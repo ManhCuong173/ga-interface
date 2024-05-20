@@ -6,10 +6,6 @@ import { APIEndpointEnum } from './core/endpoints'
 import { backend } from './endpoint/endpoint'
 
 export const nftService = {
-  filterNft: async <T>(params?: T) =>
-    (await axiosClient.get<NFTCollectionResponse>(`${backend}/filter/nft`, { params })).data,
-  getNFTDetail: async (data: any) =>
-    (await axiosClient.post<NFTCollectionResponse>(`${backend}/inscription/info`, data)).data,
   getSold: async () => (await axiosClient.get<NFTSoldResponse>(`${backend}/nft/sold`)).data,
 }
 

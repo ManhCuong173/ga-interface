@@ -119,7 +119,7 @@ const InscribeOrderModal: React.FC<{ onClose: () => void; orderId: string; isOpe
     queryFn: async () => {
       await confirmPayment(orderDetail?.orderId)
     },
-    refetchInterval: 10_000,
+    refetchInterval: selectedPayMethod === PayMethodEnum.QRCode || txnID ? 10_000 : 30_000,
     enabled: Boolean(isOpen && orderDetail?.status === OrderStatus.Pending),
   })
 
@@ -239,7 +239,7 @@ const InscribeOrderModal: React.FC<{ onClose: () => void; orderId: string; isOpe
                 </div>
               </div>
 
-              <div className="my-5">
+              <div className="my-5 min-w-[380px]">
                 <Stepper step={step} />
               </div>
 

@@ -9,12 +9,12 @@ import { selectAddress } from '@/lib/features/wallet/wallet-slice'
 import { useAppDispatch, useAppSelector } from '@/lib/hook'
 import nftService from '@/services/nft.service'
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDebounce } from 'use-debounce'
 import SelectElement from '../../SelectElement'
+import SearchInfoHelper from './components/SearchInfo'
 import SelectNFTControl from './components/SelectNFTControl'
 import SlideProgress from './components/SlideProgress'
-import SearchInfoHelper from './components/SearchInfo'
 
 const NFTForm: React.FC = () => {
   const [elements, setElements] = useState<number[]>([-1, 1, 2, 3, 4, 5])

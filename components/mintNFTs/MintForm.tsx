@@ -61,6 +61,10 @@ const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrderId
         onUpdateOrderId(res.data.orderId)
         queryClient.invalidateQueries({ queryKey: ['orders'] })
         onShowInscribeOrderModal()
+      } else if (res.message) {
+        toast.error(res.message, {
+          position: 'top-right',
+        })
       }
     } catch (e) {
       toast.error('NFT already have owner', {

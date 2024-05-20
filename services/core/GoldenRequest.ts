@@ -4,20 +4,20 @@ import Mapper from '../mapper'
 import axiosClient, { baseUrl } from '../axios-client'
 
 export abstract class GoldenRequest extends BaseService {
-  protected async _get(url: string, params?: any, config?: AxiosRequestConfig, mapperKey?: string): Promise<any> {
+  protected async _get(url: string, params?: any, config: AxiosRequestConfig = {}, mapperKey?: string): Promise<any> {
     try {
-      let _config = { ...config }
       const mapper = Mapper.getMapper(mapperKey || url)
-
-      if (mapper) {
-        _config = { ..._config, transformResponse: mapper }
-      }
+      const _config = this.buildConfig(config, mapper)
 
       const result = await axiosClient.get(url, { params, ..._config })
 
       return result.data
-    } catch (e) {
-      return null
+    } catch (e: any) {
+      return {
+        message: e?.response?.data?.message || '',
+        code: null,
+        data: null,
+      }
     }
   }
 
@@ -63,18 +63,13 @@ export abstract class GoldenRequest extends BaseService {
       const _config = this.buildConfig(axiosConfig, mapper)
 
       const result: AxiosResponse<BaseResponse<any>> = await this.callRequest(url, _config, payload)
-      if (result?.data?.code === 'success') return result.data
-
-      if (result?.data?.code === 'error_country_banned') {
-        return result.data
-      }
-
       return result.data
-    } catch (e) {
+    } catch (e: any) {
       if (!axios.isCancel(e)) {
         console.error(e)
       }
       return {
+        message: e?.response?.data?.message || '',
         code: null,
         data: null,
       }

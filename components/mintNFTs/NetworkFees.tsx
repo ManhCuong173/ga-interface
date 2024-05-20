@@ -47,7 +47,7 @@ const NetworkFees: React.FC<{
   const [customNetworkFee, setCustomNetworkFee] = useState<number>(0)
   const [customNetworkFeeDebounce] = useDebounce(customNetworkFee, 1000)
 
-  const [selectedNetworkFee, setSelectedNetworkFee] = useState<NetworkFeeType>(NetworkFeeEnum.Normal)
+  const [selectedNetworkFeeType, setSelectedNetworkFeeType] = useState<NetworkFeeType>(NetworkFeeEnum.Normal)
 
   const { inscribeData } = useInscribeContext()
 
@@ -65,12 +65,12 @@ const NetworkFees: React.FC<{
   })
 
   const { data: feeMintData, isFetching: loadingNetworkFeeMint } = useQuery<NetworkFeeMint>({
-    queryKey: ['fee-mint', satsInscriptionDebounce, customNetworkFeeDebounce],
+    queryKey: ['fee-mint', satsInscriptionDebounce, selectedNetworkFeeType, customNetworkFeeDebounce],
     queryFn: async () => {
       const result = await publicService
         .getNetworkFeeMint({
           satsInInscription: satsInscription,
-          fee: getFee(selectedNetworkFee, feeData, customNetworkFee),
+          fee: getFee(selectedNetworkFeeType, feeData, customNetworkFeeDebounce),
           mintList: inscribeData.pickedNfts,
         })
         .call()
@@ -95,14 +95,14 @@ const NetworkFees: React.FC<{
     onChangeDataForm({
       totalFee: feeMintData?.total,
       satsInscription: satsInscription,
-      rateFee: getFee(selectedNetworkFee, feeData, customNetworkFee),
-      networkFee: getFee(selectedNetworkFee, feeData, customNetworkFee),
+      rateFee: getFee(selectedNetworkFeeType, feeData, customNetworkFee),
+      networkFee: getFee(selectedNetworkFeeType, feeData, customNetworkFee),
     })
   }, 1000)
 
   useEffect(() => {
     if (feeData && feeMintData) debounceOnChangeData()
-  }, [feeData, feeMintData])
+  }, [feeData, feeMintData, selectedNetworkFeeType, customNetworkFeeDebounce])
 
   return (
     <div className="text-black1 flex flex-col gap-6">
@@ -111,8 +111,8 @@ const NetworkFees: React.FC<{
         networkFee={feeData}
         customNetworkFee={customNetworkFee}
         onCustomFee={setCustomNetworkFee}
-        selectedFee={selectedNetworkFee}
-        onSelectFee={setSelectedNetworkFee}
+        selectedNetworkFeeType={selectedNetworkFeeType}
+        onSelectFeeType={setSelectedNetworkFeeType}
         isDisplayTime
         min={feeData.normal || 1}
       />
