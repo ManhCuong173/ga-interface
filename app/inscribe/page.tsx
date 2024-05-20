@@ -38,10 +38,12 @@ const InscribePage = () => {
       <div ref={ref} className="relative pb-[170px] pt-[72px] sm:pt-[66px]">
         <div className="relative z-10">
           <Introduce />
-          <div className="-mt-[14vh] lg:-mt-[12%] px-4 overflow-hidden">
-            <Inscribe />
+          <div className="mx-auto lg:max-w-[1380px] px-4 ">
+            <div className="-mt-[14vh] lg:-mt-[12%] overflow-hidden mb-20">
+              <Inscribe />
+            </div>
+            <MyOrders />
           </div>
-          <MyOrders />
         </div>
       </div>
       <Footer />

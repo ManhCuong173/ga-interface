@@ -112,9 +112,9 @@ const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrderId
               !addressReceiver ||
               !address ||
               !(
-                dataForm.rateFee > 0 ||
-                dataForm.totalFee > 0 ||
-                dataForm.networkFee > 0 ||
+                dataForm.rateFee > 0 &&
+                dataForm.totalFee > 0 &&
+                dataForm.networkFee > 0 &&
                 dataForm.satsInscription > 0
               ) ||
               inscribeData.pickedNfts.length === 0 ||

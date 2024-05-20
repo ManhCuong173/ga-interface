@@ -23,6 +23,7 @@ import PayMethod from './components/PayMethod'
 import Stepper from './stepper'
 import { PayMethodEnum } from './types'
 import { NFT } from '@/types/nft'
+import { orderInfoDetail } from '@/constants/order'
 
 const LIMIT_TIME = 360 // => 10s per request. that will request it within 1 hour.
 
@@ -78,22 +79,7 @@ const InscribeOrderModal: React.FC<{ onClose: () => void; orderId: string; isOpe
       return result.data as OrderDetail
     },
     enabled: !!orderId,
-    initialData: {
-      orderId: '',
-      collectorFeeAddress: '',
-      paymentWallet: '',
-      feeMint: 0,
-      feeRate: 0,
-      gasFee: 0,
-      round: 0,
-      satsInInscription: 0,
-      lockNFT: false,
-
-      nfts: [],
-      qrCodeUrl: '',
-      status: OrderStatus.Ready,
-      createdAt: Date.now(),
-    },
+    initialData: orderInfoDetail,
   })
 
   const confirmPayment = useCallback(
@@ -195,7 +181,7 @@ const InscribeOrderModal: React.FC<{ onClose: () => void; orderId: string; isOpe
       onClose={handleCloseModal}
       className={'fixed inset-0 z-20 flex w-full justify-center overflow-auto bg-black/70 pt-[120px]'}
     >
-      <Dialog.Panel className="h-fit w-full">
+      <Dialog.Panel>
         <div className="relative rounded-xl bg-white mx-auto lg:max-w-[1080px] w-full md:w-[calc(100%-24px)] lg:w-full">
           <div
             className="cursor-pointer absolute right-[2%] top-[2%]  lg:hidden"
@@ -211,13 +197,7 @@ const InscribeOrderModal: React.FC<{ onClose: () => void; orderId: string; isOpe
               <div className="flex justify-center lg:justify-between w-full mb-5">
                 <p className="text-2xl text-red-light font-bold sm:text-[32px]">Inscribing Order!</p>
               </div>
-              <OrderListNFT
-                isLoading={isLoading}
-                onSelectNFT={(nft) => {
-                  setSelectNFT(nft)
-                }}
-                orderDetail={orderDetail}
-              />
+              <OrderListNFT isLoading={isLoading} onSelectNFT={setSelectNFT} orderDetail={orderDetail} />
             </div>
 
             <div className="px-4 py-6 xl:p-[40px] ">

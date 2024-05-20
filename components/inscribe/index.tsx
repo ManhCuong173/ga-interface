@@ -12,7 +12,7 @@ const Inscribe = () => {
 
   return (
     <InscribeContextProvider>
-      <div className="relative rounded-xl bg-white mx-auto lg:max-w-[1380px] w-full">
+      <div className="relative bg-white w-full">
         <div className="grid grid-cols-1 lg:grid-cols-[2fr_450px]">
           <div className="px-4 py-6 xl:p-[40px] border-r-2 border-solid border-bgAlt">
             <p className="text_heading mb-4">Your NFT</p>

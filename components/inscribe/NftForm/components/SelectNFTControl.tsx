@@ -1,10 +1,15 @@
+import InputField from '@/components/InputField'
 import { SquareCheckIcon } from '@/components/ui/icons'
 import { useInscribeContext } from '@/context/InscribeContext'
 import { cn } from '@/lib/utils'
 import { NFT } from '@/types/nft'
 import { memo } from 'react'
 
-const SelectControl: React.FC<{ nfts: NFT[] }> = ({ nfts }) => {
+const SelectNFTControl: React.FC<{ nfts: NFT[]; amount: number; onAmountChange: (e: number) => void }> = ({
+  nfts,
+  amount,
+  onAmountChange,
+}) => {
   const { inscribeData, setInscribeData } = useInscribeContext()
 
   const handleSelectChange = () => {
@@ -21,30 +26,49 @@ const SelectControl: React.FC<{ nfts: NFT[] }> = ({ nfts }) => {
     })
   }
 
-  return (
-    <section className="flex items-center justify-between font-Roboto">
-      <div className="flex items-center gap-2">
-        <div className="flex items-center gap-3">
-          <div className="cursor-pointer" onClick={handleSelectChange}>
-            <SquareCheckIcon checked={nfts?.length === inscribeData.pickedNfts.length} />
-          </div>
+  const handleChangePageSize = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onAmountChange(Number.parseInt(e.target.value))
+  }
 
-          <span className="text-black text-base leading-5 tracking-[-3%] font-medium">Select all</span>
-        </div>
-        <div className="flex items-center text-mark sm:text-base text-sm leading-5 tracking-[-3%] font-medium">
-          {inscribeData.pickedNfts.length} selected
+  return (
+    <section className="flex items-center justify-between font-Roboto sm:text-sm text-base">
+      <div className="flex flex-col gap-1 sm:gap-[2px]">
+        <div className="flex items-center text-black1 font-medium">Quantity</div>
+        <div>
+          <InputField
+            placeholder=""
+            type="number"
+            hideIcon
+            value={amount}
+            onChange={handleChangePageSize}
+            className={cn(
+              'relative border max-w-[140px] border-red-light rounded-lg text-sm max-h-9 font-ProtoMono text-black1',
+            )}
+          />
         </div>
       </div>
 
-      <button
-        onClick={handleClearAllNFT}
-        disabled={inscribeData.pickedNfts.length === 0}
-        className={cn(inscribeData.pickedNfts.length === 0 ? 'opacity-50' : '', 'text-red-light text-base font-medium')}
-      >
-        Clear all
-      </button>
+      <div className="flex items-end sm:items-center flex-col sm:flex-row sm:gap-5">
+        <div className="flex items-center">
+          <div className="flex items-center gap-1 cursor-pointer" onClick={handleSelectChange}>
+            <SquareCheckIcon checked={nfts?.length === inscribeData.pickedNfts.length} />
+            <span className="text-black font-medium">Select all</span>
+          </div>
+          <div className="flex items-end justify-end text-mark font-medium text-right ml-2">
+            {inscribeData.pickedNfts.length} selected
+          </div>
+        </div>
+
+        <button
+          onClick={handleClearAllNFT}
+          disabled={inscribeData.pickedNfts.length === 0}
+          className={cn(inscribeData.pickedNfts.length === 0 ? 'opacity-50' : '', 'text-red-light font-medium')}
+        >
+          Clear all
+        </button>
+      </div>
     </section>
   )
 }
 
-export default memo(SelectControl)
+export default memo(SelectNFTControl)

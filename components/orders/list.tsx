@@ -2,118 +2,103 @@
 import { selectedPublicKey } from '@/lib/features/wallet/wallet-slice'
 import { useAppSelector } from '@/lib/hook'
 import { formatTimeCreate } from '@/lib/time'
-import { orderService } from '@/services/order.service'
+import { cn } from '@/lib/utils'
+import { Paging } from '@/services/core/BaseRequest'
+import orderService from '@/services/order.service'
+import { OrderDetail, OrderStatus } from '@/types/orders'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
-import { useState } from 'react'
+import React, { HTMLAttributes, useState } from 'react'
 import Pagination from '../pagination'
 
-const heads = [
-  {
-    title: 'STATUS',
-  },
-  {
-    title: 'ORDER ID',
-  },
-  {
-    title: 'DATE',
-  },
-]
-
-const color = {
-  pending: '#FDB022',
-  inscribing: '#12B76A',
-  minted: '#2E90FA',
-  closed: '#DC6803',
-  error: '#EF232C',
-}
+const colors = {
+  [OrderStatus.Pending]: '#FDB022',
+  [OrderStatus.Inscribing]: '#303FB7',
+  [OrderStatus.Minted]: '#2E90FA',
+  [OrderStatus.Closed]: '#DC6803',
+  [OrderStatus.Error]: '#EF232C',
+} as const
 
 interface ListOrderProps {
-  debounceValue: string
+  orderId: string
   onSelectOrderId: (orderId: string) => void
-  setShowInscribeOrderModal: any
-  status: string
+  status: OrderStatus
 }
 
-const ListOrders = ({ debounceValue, onSelectOrderId, setShowInscribeOrderModal, status }: ListOrderProps) => {
+const limitPageSize = 10
+
+const WrapperRow: React.FC<React.PropsWithChildren<HTMLAttributes<HTMLDivElement>>> = ({ className, ...props }) => {
+  return <div className={cn('grid grid-cols-[1fr_3fr_200px] gap-10', className)} {...props} />
+}
+
+const ListOrders = ({ orderId, onSelectOrderId, status }: ListOrderProps) => {
   const publicKey = useAppSelector(selectedPublicKey)
   const [page, setPage] = useState(1)
 
   const getListOrdersInfo = async () => {
-    if (!publicKey) return
-
-    const data = await orderService.filterOrderInfo({
-      public_key: publicKey,
-      // order_id: debounceValue,
-      status: status !== 'all' ? status : '',
-      page_size: 10,
+    const result = await orderService.getOrders({
+      publicKey: publicKey,
+      orderId: orderId,
+      status: status,
+      size: limitPageSize,
       page: page,
     })
-    return data
+
+    return result.data as Paging<OrderDetail>
   }
 
-  const { data: orders, isLoading } = useQuery({
-    queryKey: ['orders', publicKey, debounceValue, status, page],
+  const { data: orders = null, isLoading } = useQuery<Paging<OrderDetail>>({
+    queryKey: ['orders', publicKey, orderId, status, page],
     queryFn: getListOrdersInfo,
     placeholderData: keepPreviousData,
-    refetchIntervalInBackground: true,
+    enabled: Boolean(publicKey),
   })
 
   return (
-    <div>
-      <div className="flex items-center justify-between gap-4 rounded border border-[#D1BFC94D] py-2 text-sm font-medium sm:px-4">
-        <div className="w-[100px] px-4 text-start sm:w-[120px]">STATUS</div>
-        <div className="grow ">ORDER ID</div>
-        <div className="w-[113px] px-4 text-end sm:w-[180px]">Date</div>
-      </div>
+    <div className="flex flex-col border rounded-xl border-bgAlt">
+      <table>
+        <thead className="text-[#9F232D] text-xs font-Roboto py-4 px-10">
+          <tr>
+            <span>Status</span>
+            <span>Order ID</span>
+            <span className="text-right">Date</span>
+          </tr>
+        </thead>
 
-      <div className="nft_list h-[300px] overflow-y-auto overflow-x-hidden">
-        {isLoading ? (
-          <p className="text-center">Loading my orders ...</p>
-        ) : (
-          <>
-            {orders?.data?.data?.length > 0 ? (
-              <>
-                {orders?.data?.data.map((order: any, index: number) => {
-                  return (
+        <div className="nft_list h-[300px] overflow-y-auto overflow-x-hidden">
+          {isLoading ? (
+            <p className="flex flex-1 h-full items-center justify-center text-center">Loading my orders ...</p>
+          ) : orders && orders?.items?.length > 0 ? (
+            orders.items.map((order: OrderDetail, index: number) => {
+              return (
+                <div className="px-7 cursor-pointer" onClick={() => onSelectOrderId(order.orderId)}>
+                  <WrapperRow key={index} className="border-t-[1px] border-t-bgAlt py-6">
                     <div
-                      key={index}
-                      className="mt-4 flex items-center cursor-pointer justify-between gap-8 rounded bg-[#D1C3BF24] px-4 py-3 text-xs font-medium sm:items-center sm:py-2"
-                      onClick={() => {
-                        onSelectOrderId(order.id_create)
-                        setShowInscribeOrderModal(true)
+                      style={{
+                        color: colors[order.status as keyof typeof colors],
                       }}
+                      className="font-medium"
                     >
-                      <div
-                        style={{
-                          color: color[order.status as keyof typeof color],
-                        }}
-                        className="w-[100px] font-light text-[#FDB022] sm:w-[120px]"
-                      >
-                        {order.status}
-                      </div>
-                      <div className="grow font-light text-line max-sm:hidden">{order.id_create}</div>
-                      <div className="grow font-light text-line sm:hidden">
-                        {order.id_create.slice(0, 5)}
-                        {'...'}
-                        {order.id_create.slice(-5)}
-                      </div>
-                      {/* <div className='w-[180px] text-line'>Nov 09,2023-01:24:52</div> */}
-                      <div className="w-[113px] text-xs font-light text-line sm:w-[180px]">
-                        {formatTimeCreate(order.time_create)}
-                      </div>
+                      {order.status}
                     </div>
-                  )
-                })}
-              </>
-            ) : (
-              <p className="mt-4 text-center">no orders</p>
-            )}
-          </>
-        )}
-      </div>
+                    <div className="grow font-light text-sm leading-none text-line max-sm:hidden">{order.orderId}</div>
+                    <div className="grow font-light text-sm leading-none text-line sm:hidden">
+                      {order.orderId.slice(0, 5)}
+                      {'...'}
+                      {order.orderId.slice(-5)}
+                    </div>
+                    <div className="text-sm  text-black1">{formatTimeCreate(order.createdAt)}</div>
+                  </WrapperRow>
+                </div>
+              )
+            })
+          ) : (
+            <p className="flex flex-1 h-full items-center justify-center text-center">no orders</p>
+          )}
+        </div>
+      </table>
 
-      {orders?.data?.data?.length > 0 && (
-        <Pagination itemsPerPage={10} pageCount={orders?.data.totalPages} setPage={setPage} />
+      {orders && orders?.items.length > 0 && (
+        <Pagination itemsPerPage={10} pageCount={orders.paging?.total || 0} setPage={setPage} />
       )}
     </div>
   )

@@ -20,6 +20,7 @@ const config: Config = {
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       boxShadow: {
+        dropdown: '3px 6px 30px 0px rgba(0, 0, 0, 0.12)',
         search: '1px 1px 8px 0px #D0AA5870 inset',
         btn: '2.857142925262451px 2.857142925262451px 0px 0px #2C0B0BB0',
         'btn-lg': '4px 4px 0px 0px #2C0B0BB0',

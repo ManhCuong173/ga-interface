@@ -1,6 +1,6 @@
-import { OrderDetail, OrderStatus } from '@/types/orders'
-import { BaseResponse } from '../core/BaseRequest'
-import { parseNFT } from './utils'
+import { OrderDetail } from '@/types/orders'
+import { BaseResponse, Paging } from '../core/BaseRequest'
+import { parseOrderInfoDetail } from './utils'
 
 export const OrderMintInfoMapper = (rawResponse: string): BaseResponse<OrderDetail> => {
   const response = JSON.parse(rawResponse)
@@ -15,21 +15,28 @@ export const OrderMintInfoMapper = (rawResponse: string): BaseResponse<OrderDeta
   return {
     code: response.code,
     message: response.message,
-    data: {
-      orderId: response.id_create,
-      status: response.status as OrderStatus,
-      collectorFeeAddress: response.address_transfer_fee,
-      paymentWallet: response.payment_wallet,
-      feeRate: response.fee_rate,
-      feeMint: response.fee_mint,
-      gasFee: response.gas_fee,
-      round: response.round,
-      satsInInscription: response.sats_in_inscription,
+    data: parseOrderInfoDetail(response),
+  }
+}
 
-      lockNFT: response.lock_nft,
-      nfts: response.mint_list.map((item: any) => parseNFT(item)),
-      qrCodeUrl: response.link_qr_code_image,
-      createdAt: Number(response.time_create) * 1000,
+export const OrdersInfoMapper = (rawResponse: string): BaseResponse<Paging<OrderDetail>> => {
+  const response = JSON.parse(rawResponse)
+  if (!response) {
+    return {
+      code: 'error',
+      data: null,
+    }
+  }
+
+  return {
+    code: response.code,
+    message: response.message,
+    data: {
+      paging: {
+        total: response.totalPages,
+        page: response.currentPage,
+      },
+      items: response.data.map((item: any) => parseOrderInfoDetail(item)),
     },
   }
 }

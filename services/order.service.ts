@@ -1,21 +1,25 @@
-import { NFTCollectionResponse, NFTFilterResponse } from '@/types/nft'
-import { OrderDetail } from '@/types/orders'
-import axiosClient from './axios-client'
-import { BaseResponse, BaseRequest } from './core/BaseRequest'
+import { OrderDetail, OrderStatus } from '@/types/orders'
+import { BaseRequest, BaseResponse, Paging } from './core/BaseRequest'
 import { GoldenRequest } from './core/GoldenRequest'
 import { APIEndpointEnum } from './core/endpoints'
-import { backend } from './endpoint/endpoint'
-
-export const orderService = {
-  filterOrderInfo: (params?: any) => {
-    return axiosClient.get(`${backend}/filter/list/order/info`, { params })
-  },
-  listOrderInfo: (params?: any) => {
-    return axiosClient.post(`${backend}/list/order/info`, params)
-  },
-}
 
 class OrderService extends GoldenRequest {
+  public getOrders(data: {
+    orderId?: string
+    publicKey?: string
+    status?: OrderStatus
+    size?: number
+    page?: number
+  }): Promise<BaseResponse<Paging<OrderDetail>>> {
+    const result = this._get(APIEndpointEnum.orders, {
+      public_key: data.publicKey,
+      order_id: data.orderId,
+      status: data.status === OrderStatus.All ? '' : data.status,
+      page_size: data.size,
+      page: data.page,
+    })
+    return result
+  }
   public getOrderMintInfo(data: { id: string; publicKey: string }): BaseRequest<BaseResponse<OrderDetail>> {
     const result = this._post(APIEndpointEnum.orderMintInfo, {
       id_create: data.id,

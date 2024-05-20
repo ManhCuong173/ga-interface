@@ -5,6 +5,7 @@ export enum APIEndpointEnum {
   nftDetail = 'api/backend/inscription/info',
 
   // order
+  orders = 'api/backend/filter/list/order/info',
   orderMintInfo = 'api/backend/order/info',
 
   // fee
