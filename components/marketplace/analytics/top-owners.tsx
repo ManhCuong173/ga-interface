@@ -1,5 +1,5 @@
 import Pagination from '@/components/pagination'
-import TableComponent from '@/components/ui/table'
+import TableComponent from '@/components/ui/table/index'
 import avt from '@/images/analytics/avatar.png'
 import bgChart from '@/images/analytics/bgChart.png'
 import decor from '@/images/marketplace/analytics/decor.png'
