@@ -3,10 +3,10 @@ import { flyInAnimation } from '@/constants/animation.constant'
 
 export const cards: CardProps[] = [
   {
-    front: '/images/home/nft-gallery/cards/red/front.png',
-    back: '/images/home/nft-gallery/cards/red/back.png',
-    frontMobile: '/images/home/nft-gallery/cards/red/front-mobile.png',
-    backMobile: '/images/home/nft-gallery/cards/red/back-mobile.png',
+    front: '/icons/nft-gallery/red-front.svg',
+    back: '/icons/nft-gallery/red-back.svg',
+    frontMobile: '/icons/nft-gallery/red-front-mobile.svg',
+    backMobile: '/icons/nft-gallery/red-back-mobile.svg',
 
     icon: '/images/five-elements/fire.svg',
     title: '/Fire',
@@ -17,10 +17,10 @@ export const cards: CardProps[] = [
     },
   },
   {
-    front: '/images/home/nft-gallery/cards/brown/front.png',
-    back: '/images/home/nft-gallery/cards/brown/back.png',
-    frontMobile: '/images/home/nft-gallery/cards/brown/front-mobile.png',
-    backMobile: '/images/home/nft-gallery/cards/brown/back-mobile.png',
+    front: '/icons/nft-gallery/brown-front.svg',
+    back: '/icons/nft-gallery/brown-back.svg',
+    frontMobile: '/icons/nft-gallery/brown-front-mobile.svg',
+    backMobile: '/icons/nft-gallery/brown-back-mobile.svg',
 
     icon: '/images/five-elements/earth.svg',
     title: '/Earth',
@@ -31,10 +31,10 @@ export const cards: CardProps[] = [
     },
   },
   {
-    front: '/images/home/nft-gallery/cards/yellow/front.png',
-    back: '/images/home/nft-gallery/cards/yellow/back.png',
-    frontMobile: '/images/home/nft-gallery/cards/yellow/front-mobile.png',
-    backMobile: '/images/home/nft-gallery/cards/yellow/back-mobile.png',
+    front: '/icons/nft-gallery/yellow-front.svg',
+    back: '/icons/nft-gallery/yellow-back.svg',
+    frontMobile: '/icons/nft-gallery/yellow-front-mobile.svg',
+    backMobile: '/icons/nft-gallery/yellow-back-mobile.svg',
 
     icon: '/images/five-elements/mental.svg',
     title: '/Metal',
@@ -45,10 +45,10 @@ export const cards: CardProps[] = [
     },
   },
   {
-    front: '/images/home/nft-gallery/cards/green/front.png',
-    back: '/images/home/nft-gallery/cards/green/back.png',
-    frontMobile: '/images/home/nft-gallery/cards/green/front-mobile.png',
-    backMobile: '/images/home/nft-gallery/cards/green/back-mobile.png',
+    front: '/icons/nft-gallery/green-front.svg',
+    back: '/icons/nft-gallery/green-back.svg',
+    frontMobile: '/icons/nft-gallery/green-front-mobile.svg',
+    backMobile: '/icons/nft-gallery/green-back-mobile.svg',
 
     icon: '/images/five-elements/wood.svg',
     title: '/Wood',
@@ -59,10 +59,10 @@ export const cards: CardProps[] = [
     },
   },
   {
-    front: '/images/home/nft-gallery/cards/blue/front.png',
-    back: '/images/home/nft-gallery/cards/blue/back.png',
-    frontMobile: '/images/home/nft-gallery/cards/blue/front-mobile.png',
-    backMobile: '/images/home/nft-gallery/cards/blue/back-mobile.png',
+    front: '/icons/nft-gallery/blue-front.svg',
+    back: '/icons/nft-gallery/blue-back.svg',
+    frontMobile: '/icons/nft-gallery/blue-front-mobile.svg',
+    backMobile: '/icons/nft-gallery/blue-back-mobile.svg',
 
     icon: '/images/five-elements/water.svg',
     title: '/Water',
