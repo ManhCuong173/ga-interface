@@ -10,7 +10,6 @@ import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { MutableRefObject, Suspense, useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
-import 'react-toastify/dist/ReactToastify.css'
 
 const InscribePage = () => {
   const ref: MutableRefObject<any> = useRef()
@@ -18,13 +17,15 @@ const InscribePage = () => {
 
   const dispatch = useAppDispatch()
 
-  const { data: btnToUsdRateData } = useQuery({
+  useQuery({
     queryKey: ['btcPrice'],
-    queryFn: async () =>
-      (await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd')).data.bitcoin.usd,
+    queryFn: async () => {
+      const result = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd')
+      if (result?.data?.bitcoin?.usd > 0) {
+        dispatch(setBtnToUsdRateData(result?.data?.bitcoin?.usd))
+      }
+    },
   })
-
-  dispatch(setBtnToUsdRateData(btnToUsdRateData))
 
   useEffect(() => {
     ref.current?.scrollIntoView({
@@ -38,10 +39,12 @@ const InscribePage = () => {
       <div ref={ref} className="relative pb-[170px] pt-[72px] sm:pt-[66px]">
         <div className="relative z-10">
           <Introduce />
-          <div className="-mt-[14vh] lg:-mt-[12%] px-4 overflow-hidden">
-            <Inscribe />
+          <div className="mx-auto lg:max-w-[1380px] px-4 ">
+            <div className="-mt-[14vh] lg:-mt-[12%] overflow-hidden mb-20 lg:mb-40">
+              <Inscribe />
+            </div>
+            <MyOrders />
           </div>
-          <MyOrders />
         </div>
       </div>
       <Footer />

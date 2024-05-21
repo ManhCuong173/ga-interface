@@ -17,8 +17,7 @@ import { useAppDispatch } from '@/lib/hook'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useCallback, useEffect } from 'react'
-import 'react-toastify/dist/ReactToastify.css'
+import { useMemo } from 'react'
 
 const tabs = [
   {
@@ -40,28 +39,27 @@ const tabs = [
     title: 'activity',
   },
 ]
-
-const ENUM_TABS = {
-  1: <ItemsFC />,
-  2: <AnalyticsFC />,
-  3: <ActivityFC />,
-}
+const isComingSoonMode = true
 
 const Marketplace = () => {
-  // Change this to show/hide aut
-  const isComingSoonMode = true
-
   const dispatch = useAppDispatch()
+  const params = useSearchParams()
   const router = useRouter()
-  const param = useSearchParams().get('tab') || tabs[0].title
 
-  const { data: btnToUsdRateData } = useQuery({
+  const tab = useMemo(() => {
+    const tabQuery = params.get('tab')
+    return tabs.find((t) => t.title.toLowerCase() === tabQuery?.toLowerCase())?.id || tabs[0].id
+  }, [params])
+
+  useQuery({
     queryKey: ['btcPrice'],
-    queryFn: async () =>
-      (await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd')).data.bitcoin.usd,
+    queryFn: async () => {
+      const result = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd')
+      if (result?.data?.bitcoin?.usd > 0) {
+        dispatch(setBtnToUsdRateData(result?.data?.bitcoin?.usd))
+      }
+    },
   })
-
-  dispatch(setBtnToUsdRateData(btnToUsdRateData))
 
   const handleSetTab = (id: number) => {
     router.push(`?tab=${tabs[id - 1].title}`, {
@@ -69,15 +67,16 @@ const Marketplace = () => {
     })
   }
 
-  const handleRenderContent = useCallback(() => {
-    const index = tabs.findIndex((item) => item.title === param)
-    if (index === -1) return ENUM_TABS[1]
-    return ENUM_TABS[(index + 1) as keyof typeof ENUM_TABS]
-  }, [param])
-
-  useEffect(() => {
-    handleRenderContent()
-  }, [param, handleRenderContent])
+  const renderContentByTab = useMemo(() => {
+    switch (tab) {
+      case 2:
+        return <AnalyticsFC />
+      case 3:
+        return <ActivityFC />
+      default:
+        return <ItemsFC />
+    }
+  }, [tab])
 
   return (
     <div className="w-full">
@@ -85,26 +84,25 @@ const Marketplace = () => {
 
       <div className="relative">
         {isComingSoonMode && <ComingSoon />}
+
         <div className="relative z-10 mx-auto px-4 sm:py-10 lg:px-[60px]">
-          <div className="mx-auto flex w-full items-center gap-[10px] border-b border-[#D4C79C] max-sm:my-4 lg:max-w-[1440px]">
-            {tabs.map((tab, index) => {
+          <div className="mx-auto flex w-full items-center gap-[10px] border-b border-bgAlt max-sm:my-4 lg:max-w-[1440px]">
+            {tabs.map((_tab, index) => {
               return (
                 <TabIndicator
                   key={index}
-                  isActive={tab.title === param}
-                  icon={tab.icon}
-                  iconActive={tab.icon_active}
-                  onClick={() => {
-                    handleSetTab(tab.id)
-                  }}
+                  isActive={_tab.id === tab}
+                  icon={_tab.icon}
+                  iconActive={_tab.icon_active}
+                  onClick={() => handleSetTab(_tab.id)}
                 >
-                  {tab.title}
+                  {_tab.title}
                 </TabIndicator>
               )
             })}
           </div>
 
-          <div className="min-h-[800px] ">{handleRenderContent()}</div>
+          <div className="min-h-[800px] ">{renderContentByTab}</div>
         </div>
       </div>
       <Footer />

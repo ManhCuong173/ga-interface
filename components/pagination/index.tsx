@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils'
 import React, { SetStateAction } from 'react'
 import ReactPaginate from 'react-paginate'
 
@@ -6,27 +7,32 @@ const Pagination = ({
   itemsPerPage,
   pageCount,
   setPage,
+  pageRangeDisplayed = 3,
+  marginPagesDisplayed = undefined,
 }: {
   className?: string
   itemsPerPage: number
   pageCount: number
   setPage: React.Dispatch<SetStateAction<number>>
+  pageRangeDisplayed?: number
+  marginPagesDisplayed?: number
 }) => {
   const handlePageClick = (event: any) => {
     setPage?.(event.selected + 1)
   }
 
   return (
-    <div className={`${className} relative mx-auto mt-[48px] flex h-[58px] min-w-fit justify-center`}>
+    <div className={cn('relative mx-auto mt-[48px] px-5 flex h-[58px] min-w-fit justify-center', className)}>
       <ReactPaginate
         breakLabel="..."
         nextLabel=">"
         onPageChange={handlePageClick}
-        pageRangeDisplayed={3}
+        pageRangeDisplayed={pageRangeDisplayed}
+        marginPagesDisplayed={marginPagesDisplayed}
         pageCount={pageCount}
         previousLabel="<"
         pageLinkClassName="w-8 h-8 flex items-center justify-center"
-        className="relative flex items-center px-5"
+        className="relative flex items-center"
         pageClassName="text-[12px] font-semibold text-[#66605B]"
         activeClassName="text-[#fff] bg-[#EF232C] rounded"
         previousClassName={`mr-2 rounded border border-[#D4C79C] ${pageCount < 0 ? 'hidden' : ''}`}

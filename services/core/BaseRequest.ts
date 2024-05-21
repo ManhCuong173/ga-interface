@@ -6,6 +6,16 @@ export type BaseResponse<T> = {
   message?: string
   data?: T | null
 }
+export type Paging<T> = {
+  paging?: PagingInfo
+  items: T[]
+}
+
+export type PagingInfo = {
+  limit?: number
+  page?: number
+  total?: number
+}
 
 export type BaseRequest<T = any> = {
   call: () => Promise<T>

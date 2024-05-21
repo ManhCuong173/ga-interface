@@ -1,4 +1,4 @@
-import iconSearch from '@/icons/ic_search.svg'
+import iconSearch from '@/icons/activity/ic-search.svg'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import React, { ReactNode } from 'react'
@@ -45,4 +45,3 @@ const InputField = ({ className, classNameInput, icon, type, children, hideIcon,
 }
 
 export default InputField
-

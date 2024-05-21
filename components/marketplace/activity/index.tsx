@@ -1,6 +1,6 @@
 import { IconCopy } from '@/components/button'
 import Pagination from '@/components/pagination'
-import TableComponent from '@/components/ui/table'
+import TableComponent from '@/components/ui/table/index'
 import { nftTypes } from '@/constants/nft.constant'
 import { useDebounce } from '@/hooks/custom/useDebouce'
 import iconApple from '@/images/activity/img.png'

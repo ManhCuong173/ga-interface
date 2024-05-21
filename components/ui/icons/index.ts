@@ -9,5 +9,7 @@ export { default as InfoCircleIcon } from './InfoCircle'
 export { default as InfoFullCircleIcon } from './InfoFullCircle'
 export { default as MarkIcon } from './Mark'
 export { default as MarkCircleIcon } from './MarkCircle'
+export { default as SearchBitIcon } from './SearchBit'
 export { default as SquareCheckIcon } from './SquareCheck'
 export { default as SquareCloseIcon } from './SquareClose'
+

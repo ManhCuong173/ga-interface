@@ -14,7 +14,6 @@ import { useDebounce } from 'use-debounce'
 import SelectElement from '../../SelectElement'
 import SearchInfoHelper from './components/SearchInfo'
 import SelectNFTControl from './components/SelectNFTControl'
-import SlideProgress from './components/SlideProgress'
 
 const NFTForm: React.FC = () => {
   const [elements, setElements] = useState<number[]>([-1, 1, 2, 3, 4, 5])
@@ -93,10 +92,8 @@ const NFTForm: React.FC = () => {
           <SearchInfoHelper />
         </InputInfoHelp>
       </div>
-      <div className="flex flex-col gap-4 mt-5">
-        <SelectNFTControl nfts={nfts} />
-
-        <SlideProgress amount={filter.size} onAmountChange={onChangePageSize} />
+      <div className="flex flex-col gap-6 mt-5">
+        <SelectNFTControl amount={filter.size} onAmountChange={onChangePageSize} nfts={nfts} />
 
         <NFTList
           nfts={nfts}

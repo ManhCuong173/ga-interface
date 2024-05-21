@@ -12,6 +12,7 @@ export enum OrderStatus {
   Inscribing = 'inscribing',
   Minted = 'minted',
   Closed = 'closed',
+  Error = 'error',
 }
 
 export type OrderDetail = {
