@@ -3,8 +3,8 @@ import Footer from '@/components/footer'
 import BannerMarketPlace from '@/components/marketplace/Banner'
 import ComingSoon from '@/components/marketplace/ComingSoon'
 import TabIndicator from '@/components/marketplace/TabIndicator'
-import ActivityFC from '@/components/marketplace/activity'
-import AnalyticsFC from '@/components/marketplace/analytics'
+import Activity from '@/components/marketplace/activity'
+import Analytic from '@/components/marketplace/analytics'
 import ItemsFC from '@/components/marketplace/items'
 import tab1_active from '@/images/marketplace/tab1-active.svg'
 import tab1 from '@/images/marketplace/tab1.svg'
@@ -70,9 +70,9 @@ const Marketplace = () => {
   const renderContentByTab = useMemo(() => {
     switch (tab) {
       case 2:
-        return <AnalyticsFC />
+        return <Analytic />
       case 3:
-        return <ActivityFC />
+        return <Activity />
       default:
         return <ItemsFC />
     }
@@ -85,8 +85,8 @@ const Marketplace = () => {
       <div className="relative">
         {isComingSoonMode && <ComingSoon />}
 
-        <div className="relative z-10 mx-auto px-4 sm:py-10 lg:px-[60px]">
-          <div className="mx-auto flex w-full items-center gap-[10px] border-b border-bgAlt max-sm:my-4 lg:max-w-[1440px]">
+        <div className="relative z-10 mx-auto px-4 sm:py-10 lg:px-[60px] w-full  lg:max-w-[calc(1280px+120px)]">
+          <div className="mx-auto flex w-full items-center gap-[10px] border-b border-bgAlt max-sm:my-4">
             {tabs.map((_tab, index) => {
               return (
                 <TabIndicator

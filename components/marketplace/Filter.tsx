@@ -34,7 +34,6 @@ const FilterMarketPlace = ({ nftIds, setFilter, filter, setNftIds }: PropFilterM
   const [show, setShow] = useState(false)
   const ref: any = useRef()
   const handleChangeNumberFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // setNumberFilter(e.currentTarget.value)
     setFilter({ ...filter, number: e.currentTarget.value })
   }
 
@@ -117,7 +116,7 @@ const FilterMarketPlace = ({ nftIds, setFilter, filter, setNftIds }: PropFilterM
   return (
     <div className="relative z-10 sm:mt-8">
       <div className="sticky top-0 flex w-full items-center justify-between gap-y-4 max-sm:flex-col">
-        <div className="relative flex flex-wrap items-center justify-between gap-4 w-full">
+        <div className="relative flex flex-wrap items-start justify-between gap-4 w-full">
           <InputField
             onChange={handleChangeNumberFilter}
             className="relative w-[200px] border border-[#AE9955] text-[#AE9955] placeholder:text-xs placeholder:text-[#AE9955] lg:w-[304px]"
@@ -145,7 +144,7 @@ const FilterMarketPlace = ({ nftIds, setFilter, filter, setNftIds }: PropFilterM
               className="h-6 w-6 min-w-6 cursor-pointer"
             />
           </InputField>
-          <div className="flex items-center justify-center gap-4">
+          <div className=" flex flex-col sm:flex-row sm:items-center justify-center gap-4">
             <SelectElement
               elements={nftIds}
               onSelectElements={setNftIds}

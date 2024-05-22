@@ -15,4 +15,7 @@ export enum APIEndpointEnum {
   // mint
   createMintOrder = 'api/backend/create/mint/order',
   checkOrder = 'api/backend/mint/check',
+
+  // activity
+  activity = 'api/backend/activity/history',
 }
