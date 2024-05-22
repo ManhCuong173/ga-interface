@@ -8,12 +8,19 @@ import NFTIconMobile from '@/icons/home/home-introduce-nft-mobile.svg'
 import NFTIcon from '@/icons/home/home-introduce-nft.svg'
 import { motion, useInView } from 'framer-motion'
 import Image from 'next/image'
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import WrapperHero from '../WrapperHero'
 
 export default function Introduce() {
   const ref = useRef(null)
   const isInView = useInView(ref, { margin: '-120px' })
+  const [isDisplay, setIsDisplay] = useState(false)
+
+  useEffect(() => {
+    if (isInView && !isDisplay) {
+      setIsDisplay(true)
+    }
+  }, [isInView])
 
   return (
     <div id="section-introduce" className="snap-start" ref={ref}>
@@ -55,7 +62,7 @@ export default function Introduce() {
           <motion.div
             className="relative"
             initial={'start'}
-            whileInView={isInView ? 'end' : ''}
+            whileInView={isDisplay ? 'end' : ''}
             transition={{ delay: 0.3, duration: 0.3 }}
             viewport={{
               once: true,
