@@ -15,8 +15,8 @@ const NFTCard: React.FC<{ nft: NFT; onSelect: () => void }> = ({ nft, onSelect }
       className={cn('nft-card relative w-full h-full overflow-hidden rounded-lg')}
     >
       <Image
-        src={nft.url || ''} // TODO typescript
-        loader={() => nft.url || ''} // TODO typescript
+        src={nft.url || ''}
+        loader={() => nft.url || ''}
         width={0}
         height={0}
         sizes="100vw"

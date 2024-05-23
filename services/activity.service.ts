@@ -1,10 +1,22 @@
-import { AxiosNetworkResponse } from "@/types/axios"
-import axiosClient from "./axios-client"
-import { Activity } from "@/types/activity"
-import { backend } from "./endpoint/endpoint"
+import { Activity } from '@/types/activity'
+import { BaseResponse, Paging } from './core/BaseRequest'
+import { GoldenRequest } from './core/GoldenRequest'
+import { APIEndpointEnum } from './core/endpoints'
 
-export const activityService = {
-    getActivity: async <T>(params:T) => {
-        return await axiosClient.get<AxiosNetworkResponse<Activity>>(`${backend}/activity/history`,{params})
-    }
+class ActivityService extends GoldenRequest {
+  public getActivities(data: {
+    size?: number
+    page?: number
+    address?: string
+  }): Promise<BaseResponse<Paging<Activity>>> {
+    const result = this._get(APIEndpointEnum.activity, {
+      page_size: data.size,
+      page: data.page,
+      address: data.address,
+    })
+    return result
+  }
 }
+
+const instance = new ActivityService()
+export default instance

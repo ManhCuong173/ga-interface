@@ -134,7 +134,7 @@ const NFTDetail: React.FC<{
         <Image src={frame_NFT} alt="" />
         <div className="absolute inset-0 flex justify-center items-center w-full h-full">
           {inscription ? (
-            // TODO
+            // TODO nft_link
             <Image src={(inscription as any)?.nft_link} width={320} height={320} alt="" />
           ) : (
             <SkeletonTheme baseColor="#ebebeb" highlightColor="#f5f5f5">

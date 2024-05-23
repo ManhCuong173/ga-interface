@@ -6,7 +6,7 @@ import OwnerDistribution from './owner-distribution'
 import PriceAndVolumn from './price-and-volume'
 import TopOwners from './top-owners'
 
-export default function AnalyticsFC() {
+const Analytic = () => {
   const [selectedElemental, setSelectedElemental] = useState(nftTypes[0])
 
   return (
@@ -37,4 +37,4 @@ export default function AnalyticsFC() {
     </div>
   )
 }
-
+export default Analytic

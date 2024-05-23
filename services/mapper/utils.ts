@@ -1,5 +1,12 @@
 import { NFT } from '@/types/nft'
 import { OrderStatus } from '@/types/orders'
+import { PagingInfo } from '../core/BaseRequest'
+
+export const parsePaging = (data: any): PagingInfo => ({
+  limit: 1000, // TODO
+  page: data.currentPage,
+  total: data.totalPages,
+})
 
 export const parseNFT = (data: any): NFT => ({
   id: data.nft_id || data.id_nft,

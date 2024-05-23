@@ -52,8 +52,8 @@ const ListOrders = ({ orderId, onSelectOrderId, status }: ListOrderProps) => {
   const isAvaliableData = orders && orders?.items?.length
 
   return (
-    <div className="flex flex-col border rounded-xl border-bgAlt px-7 overflow-hidden">
-      <Table className="min-w-[576px]">
+    <div className="flex flex-col overflow-hidden">
+      <Table>
         <TableHeader>
           <TableRow>
             <TableHead className="w-[30%]">Status</TableHead>
