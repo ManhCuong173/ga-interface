@@ -129,7 +129,7 @@ export default function ConnectWalletButton({ mode }: Props) {
         className={cn(
           'desktop-menu-container',
           `h-[42px] w-full rounded-[10px]   border-solid border-[1px] flex justify-center items-center p-[8px_16px] cursor-pointer`,
-          mode === 'transparent' ? 'border-white hover:border-red-light' : 'border-red-light hover:bg-red-light',
+          mode === 'transparent' ? 'border-white hover:bg-white' : 'border-red-light hover:bg-red-light',
         )}
         onClick={handleClick}
       >
@@ -152,7 +152,7 @@ export default function ConnectWalletButton({ mode }: Props) {
             </div>
             <span
               className={cn(
-                'text-nowrap transition-all text-base font-medium ml-[18px] font-Roboto',
+                'text-nowrap transition-all text-base font-medium ml-[12px] font-Roboto',
                 mode === 'transparent' ? 'text-white address-item' : 'text-red-light address-item-white',
               )}
             >
