@@ -20,13 +20,6 @@ const Slogin = () => {
       const rootDiv = document.getElementById('root-div')
       const crm = document.getElementById('section-crm')
       const crmOffsetTop = Number(crm?.offsetTop)
-      console.log(
-        '%cMyProject%cline:22%ccrmOffsetTop',
-        'color:#fff;background:#ee6f57;padding:3px;border-radius:2px',
-        'color:#fff;background:#1f3c88;padding:3px;border-radius:2px',
-        'color:#fff;background:rgb(254, 67, 101);padding:3px;border-radius:2px',
-        crmOffsetTop,
-      )
       const rootScrollTop = Number(rootDiv?.scrollTop)
 
       if (rootScrollTop - crmOffsetTop >= 0) {

@@ -49,13 +49,13 @@ const BannerMarketPlace = () => {
                     </motion.div>
                   </div>
 
-                  <div className="flex flex-col pt-8 pb-12 px-2 lg:px-10 max-w-[460px] mx-auto">
+                  <div className="flex flex-col pt-8 pb-12 px-2 lg:px-2 max-w-[460px] mx-auto">
                     <motion.div
                       {...appearAnimation}
                       transition={{ duration: 0.3, delay: 0.5 }}
                       className="flex items-center justify-center gap-2"
                     >
-                      <span className="text-sm font-Roboto font-medium text-black1 lg:text-base text-center">
+                      <span className="text-sm font-Roboto font-normal text-black1 lg:text-base text-center leading-3/2">
                         The world’s first and largest digital marketplace for crypto collectibles and non-fungible
                         tokens (NFTs). Buy, sell, and discover exclusive digital items.
                       </span>

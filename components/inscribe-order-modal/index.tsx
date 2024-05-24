@@ -7,7 +7,9 @@ import mintService from '@/services/mint.service'
 import orderService from '@/services/order.service'
 
 import { FEE_DECIMALS } from '@/constants/fee'
+import { orderInfoDetail } from '@/constants/order'
 import { getDecimalAmount } from '@/lib/formatNumber'
+import { NFT } from '@/types/nft'
 import { OrderDetail, OrderStatus } from '@/types/orders'
 import { Dialog } from '@headlessui/react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
@@ -22,8 +24,6 @@ import OrderListNFT from './components/OrderListNFT'
 import PayMethod from './components/PayMethod'
 import Stepper from './stepper'
 import { PayMethodEnum } from './types'
-import { NFT } from '@/types/nft'
-import { orderInfoDetail } from '@/constants/order'
 
 const LIMIT_TIME = 360 // => 10s per request. that will request it within 1 hour.
 
@@ -175,7 +175,6 @@ const InscribeOrderModal: React.FC<{ onClose: () => void; orderId: string; isOpe
     }
   }, [step, selectedPayMethod, isSigning, orderDetail, setPayMethod, handlePayWithWallet])
 
-
   return (
     <Dialog
       open={isOpen}
@@ -245,40 +244,3 @@ const InscribeOrderModal: React.FC<{ onClose: () => void; orderId: string; isOpe
 }
 export default InscribeOrderModal
 
-// useQuery({
-//   queryKey: ['interval-confirm-payment-countdown', orderDetail?.orderId, txnID],
-//   queryFn: async () => {
-//     console.log('fetch countdown')
-//     await confirmPayment(orderDetail?.orderId)
-//     refCountdown.current -= 1
-//   },
-//   refetchInterval: 10_000,
-//   enabled: Boolean(
-//     isOpen &&
-//       refCountdown.current > 0 &&
-//       // (
-//       txnID &&
-//       //  || orderDetail?.lockNFT
-//       // )
-
-//       orderDetail?.status === OrderStatus.Pending,
-//   ),
-// })
-
-// useQuery({
-//   queryKey: ['interval-confirm-payment-limit-time', orderDetail?.orderId, txnID],
-//   queryFn: async () => {
-//     console.log('fetch limit')
-
-//     await confirmPayment(orderDetail?.orderId)
-//     refLimitTime.current -= 1
-//   },
-//   refetchInterval: 10_000,
-//   enabled: Boolean(
-//     isOpen &&
-//       refLimitTime.current > 0 &&
-//       orderDetail?.status === OrderStatus.Pending
-//        &&
-//       selectedPayMethod === PayMethodEnum.QRCode,
-//   ),
-// })

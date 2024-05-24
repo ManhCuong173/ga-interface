@@ -7,7 +7,6 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Fragment, useEffect, useState } from 'react'
 import ConnectWalletButton from './connect-wallet-button'
-import LanguageSelect from './language-select'
 
 export default function DesktopHeader() {
   const path = usePathname()
@@ -15,6 +14,7 @@ export default function DesktopHeader() {
   const activeSection = useAppSelector(selectActiveSection)
   const [show, setShow] = useState(false)
   const [prevScrollPos, setPrevScrollPos] = useState(0)
+  const [isScrollOverSidebarHeight, setIsScrollOverSidebarHeight] = useState(false)
 
   useEffect(() => {
     setShow(true)
@@ -25,6 +25,12 @@ export default function DesktopHeader() {
     if (rootDiv) {
       const handleScroll = () => {
         const currentScrollPos = rootDiv.scrollTop
+        const homeBannerSection = document.getElementById('banner')
+
+        if (homeBannerSection && currentScrollPos > homeBannerSection?.clientHeight) {
+          setIsScrollOverSidebarHeight(true)
+        } else setIsScrollOverSidebarHeight(false)
+
         if (prevScrollPos > currentScrollPos) {
           setShow(true)
         } else if (prevScrollPos < currentScrollPos) {
@@ -49,10 +55,10 @@ export default function DesktopHeader() {
       className={`${
         !show && isHomePage
           ? '!-translate-y-full'
-          : mode === 'transparent'
+          : mode === 'transparent' && !isScrollOverSidebarHeight
             ? 'border border-[#FFF4DD] border-opacity-40 !text-_white'
             : 'border-[#D4C79C] bg-[#FAF5F0] text-black1'
-      } fixed top-0 z-50 hidden h-[67px] w-full origin-top translate-y-0 border-b text-black1 transition-all duration-500 lg:flex`}
+      } fixed top-0 z-50 hidden h-[67px] w-full origin-top translate-y-0 border-b text-black1 transition-all duration-500 lg:flex lg:h-[67px]`}
     >
       <div className="mx-auto flex h-full w-full max-w-container translate-y-[1px] items-center justify-between px-10">
         <div className="flex h-full items-center gap-8">
@@ -75,7 +81,6 @@ export default function DesktopHeader() {
           </div>
         </div>
         <div className="flex items-center gap-8">
-          <LanguageSelect mode={isHomePage ? mode : 'solid'} />
           <ConnectWalletButton mode={mode} />
         </div>
       </div>

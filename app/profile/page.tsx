@@ -8,13 +8,6 @@ import useGetProfile from '@/hooks/api/useGetProfile'
 
 export default function Profile() {
   const { data: profile, refetch } = useGetProfile()
-  console.log(
-    '%cMyProject%cline:10%cprofile',
-    'color:#fff;background:#ee6f57;padding:3px;border-radius:2px',
-    'color:#fff;background:#1f3c88;padding:3px;border-radius:2px',
-    'color:#fff;background:rgb(17, 63, 61);padding:3px;border-radius:2px',
-    profile,
-  )
 
   return (
     <>

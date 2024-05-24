@@ -130,8 +130,8 @@ export default function YouPrize({ open, onClose }: Props) {
             </div>
             <div className="max-w-full overflow-x-auto">
               <div className="min-w-[500px] space-y-4">
-                <div className="flex h-11 rounded border border-[#EEE0E0] text-center text-sm font-light leading-5 text-red-darker font-Roboto ">
-                  <div className="flex h-full w-10 items-center pl-3">#</div>
+                <div className="flex h-11 rounded border border-[#EEE0E0] text-center text-sm font-normal leading-5 text-red-darker font-Roboto ">
+                  <div className="flex h-full w-10 items-center pl-3">No</div>
                   <div className="flex h-full w-[200px] items-center pl-3 lg:w-[250px]">Prize</div>
                   <div className="flex h-full w-[192px] items-center whitespace-nowrap pl-3">Index number</div>
                   <div className="flex h-full w-[200px] items-center justify-end whitespace-nowrap pr-10 lg:flex-1">

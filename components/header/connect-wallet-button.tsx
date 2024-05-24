@@ -128,7 +128,7 @@ export default function ConnectWalletButton({ mode }: Props) {
       <button
         className={cn(
           'desktop-menu-container',
-          `h-[42px] w-full rounded-[10px]   border-solid border-[1px] flex justify-center items-center p-[8px_16px] cursor-pointer`,
+          `h-[42px] w-full rounded-[10px]  border-solid border-[1px] flex justify-center items-center p-[8px_16px] cursor-pointer`,
           mode === 'transparent' ? 'border-white hover:bg-white' : 'border-red-light hover:bg-red-light',
         )}
         onClick={handleClick}

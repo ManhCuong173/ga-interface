@@ -36,7 +36,7 @@ const CardPrize: React.FC<{
       <span className="text-center text-[3.2vw] sm:text-base font-medium  text-red-light lg:text-lg">
         {isLoading ? 'loading' : data ? data : 'No Data'}
       </span>
-      <span className="text-center text-[16px] sm:text-xs leading-tight font-thin tracking-[-0.3px] text-black1 font-Roboto">
+      <span className="text-center text-[16px] sm:text-xs leading-tight font-normal tracking-[-0.3px] text-black1 font-Roboto">
         {title}
       </span>
     </div>

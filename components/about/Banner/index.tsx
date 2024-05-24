@@ -11,12 +11,12 @@ export default function Banner() {
     <div id="banner" className="snap-center">
       <WrapperHero src="/images/about/banner-bg.svg" className="pt-[71px] sm:pt-0">
         <div className="flex flex-col w-screen h-screen sm:flex-row  md:justify-between">
-          <div className="w-full flex relative sm:flex-grow justify-end order-1 sm:order-2">
-            <Image src={BannerDecor} className="w-[300px] sm:w-[471px] sm:h-[416px[" alt="" />
+          <div className="w-full flex relative sm:flex-grow  order-1 sm:order-2 mt-[calc(3rem_+120px)]">
+            <Image src={BannerDecor} className="w-[627px] sm:w-[627px] sm:h-[469px]" alt="" />
           </div>
           <div
             className="w-full px-[30px]  flex mt-12 order-2 flex-col items-center
-            sm:pl-[18%] sm:w-[70%] sm:mt-[223px] sm:order-1 sm:items-start"
+            sm:pl-[10%] sm:w-[70%] sm:mt-[223px] sm:order-1 sm:items-start"
           >
             <div className="flex justify-center">
               <motion.div

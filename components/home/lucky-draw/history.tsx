@@ -162,8 +162,8 @@ export default function History({ open, onClose }: Props) {
 
             <div className="max-w-full overflow-x-auto">
               <div className="min-w-[500px] space-y-4 ">
-                <div className="flex h-11 rounded border border-[#EEE0E0] text-center text-sm font-light leading-5 text-red-darker lg:mx-[18px] font-Roboto">
-                  <div className="flex h-full w-10 items-center pl-3">#</div>
+                <div className="flex h-11 rounded border border-[#EEE0E0] text-center text-sm font-normal leading-5 text-red-darker lg:mx-[18px] font-Roboto">
+                  <div className="flex h-full w-10 items-center pl-3">No</div>
                   <div className="flex h-full w-[150px] items-center pl-3 lg:w-[200px]">Prize</div>
                   <div className="flex h-full flex-1 items-center pl-3">Wallet Address</div>
                   <div className="flex h-full w-[192px] items-center pl-3">Index number</div>

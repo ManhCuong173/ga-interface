@@ -85,11 +85,12 @@ type Variant = (typeof variants)[keyof typeof variants]
 const buttonTheme: {
   [key in Variant]: HTMLAttributes<HTMLDivElement>['className']
 } = {
-  [variants.LIGHT_ASSET]: cn(
-    'bg-[url(/icons/button/button-light.svg)]',
-  ),
+  [variants.LIGHT_ASSET]: cn('bg-[url(/icons/button/button-light.svg)]'),
   [variants.LIGHT_DOUBLE_ASSET]: cn('bg-[url(/icons/button/button-light-2.svg)]'),
-  [variants.PRIMARY_ASSET]: cn('bg-[url(/icons/button/button-primary.svg)] hover:bg-[url(/icons/button/button-primary-hover.svg)]', 'text-secondary'),
+  [variants.PRIMARY_ASSET]: cn(
+    'bg-[url(/icons/button/button-primary.svg)] hover:bg-[url(/icons/button/button-primary-hover.svg)]',
+    'text-secondary',
+  ),
   [variants.OUTLINE]: cn('border border-secondary'),
 }
 
@@ -117,3 +118,4 @@ export const ButtonImage: React.FC<
     </div>
   )
 }
+

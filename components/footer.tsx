@@ -27,7 +27,7 @@ const Footer = () => {
       className="flex h-fit snap-center flex-col bg-full lg:bg-none bg-secondary border-t-bgAlt border-t-[1px]"
     >
       <div className="py-7 px-5 lg:py-14 lg:px-20 relative flex h-fit w-full flex-col items-center">
-        <div className="w-full grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] lg:gap-10">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-[1.5fr_1fr]  xl:grid-cols-[1.5fr_1fr_0.5fr] lg:gap-10">
           <div className="grid grid-cols-1 lg:grid-cols-[400px_1fr] items-start">
             <div className="flex justify-between mb-5 lg:mb-0">
               <Link href="/" className="flex items-center text-base font-semibold lg:text-[24px] lg:leading-[24px]">
@@ -59,7 +59,7 @@ const Footer = () => {
             </Link>
           </div>
 
-          <LanguageSelect className="border border-bgAlt rounded-md w-max lg:hidden" mode="solid" />
+          <LanguageSelect className="border border-bgAlt rounded-md w-max h-10" mode="solid" />
         </div>
       </div>
       <div className="py-4 px-5 lg:py-6 lg:px-20 flex flex-col-reverse gap-4 lg:flex-row justify-between border-t-[1px] border-solid border-bgAlt">
@@ -74,3 +74,4 @@ const Footer = () => {
   )
 }
 export default Footer
+
