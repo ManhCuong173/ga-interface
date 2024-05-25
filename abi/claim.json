@@ -1,0 +1,397 @@
+{
+  "version": "0.1.0",
+  "name": "random",
+  "instructions": [
+    {
+      "name": "initConfig",
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "configAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "signer",
+          "type": {
+            "array": [
+              "u8",
+              64
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "requestRandomness",
+      "accounts": [
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "payerWallet",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "vrf",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "oracleQueue",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "queueAuthority",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "dataBuffer",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "permission",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardEscrow",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "programState",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "switchboardProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "recentBlockhashes",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "roundState",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "roundId",
+          "type": "string"
+        },
+        {
+          "name": "params",
+          "type": {
+            "defined": "RequestRandomnessParams"
+          }
+        }
+      ]
+    },
+    {
+      "name": "consumeRandomness",
+      "accounts": [
+        {
+          "name": "roundState",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "vrf",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "drawRandomNumber",
+      "accounts": [
+        {
+          "name": "roundState",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "numPrize",
+          "type": "u16"
+        }
+      ]
+    },
+    {
+      "name": "sendReward",
+      "accounts": [
+        {
+          "name": "to",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "configAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "checkClaimAccount",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "round",
+          "type": "u16"
+        },
+        {
+          "name": "luckyNumber",
+          "type": "u32"
+        },
+        {
+          "name": "signature",
+          "type": {
+            "array": [
+              "u8",
+              64
+            ]
+          }
+        },
+        {
+          "name": "recoveryId",
+          "type": "u8"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "authorityBump",
+          "type": "u8"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Config",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "signer",
+            "type": {
+              "array": [
+                "u8",
+                64
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "CheckClaim",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
+      "name": "RoundState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "merkleRoot",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "nftCount",
+            "type": "u32"
+          },
+          {
+            "name": "prizeCount",
+            "type": "u32"
+          },
+          {
+            "name": "prizeRemaining",
+            "type": "u32"
+          },
+          {
+            "name": "originResultBuffer",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "castedResultBuffer",
+            "type": {
+              "vec": "u32"
+            }
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "vrf",
+            "type": "publicKey"
+          },
+          {
+            "name": "winnerIndexes",
+            "type": {
+              "vec": "u32"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "RequestRandomnessParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "permissionBump",
+            "type": "u8"
+          },
+          {
+            "name": "switchboardStateBump",
+            "type": "u8"
+          },
+          {
+            "name": "roundBump",
+            "type": "u8"
+          },
+          {
+            "name": "merkleRoot",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "nftCount",
+            "type": "u32"
+          },
+          {
+            "name": "prizeCount",
+            "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ErrorCode",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "NotEnoughMoney"
+          },
+          {
+            "name": "WrongSignature"
+          },
+          {
+            "name": "HighSValue"
+          },
+          {
+            "name": "WrongFeeWallet"
+          },
+          {
+            "name": "WrongAdmin"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "InvalidSwitchboardAccount",
+      "msg": "Not a valid Switchboard account"
+    },
+    {
+      "code": 6001,
+      "name": "StaleFeed",
+      "msg": "Switchboard feed has not been updated in 5 minutes"
+    },
+    {
+      "code": 6002,
+      "name": "ConfidenceIntervalExceeded",
+      "msg": "Switchboard feed exceeded provided confidence interval"
+    },
+    {
+      "code": 6003,
+      "name": "SolPriceAboveUnlockPrice",
+      "msg": "Current SOL price is not above Escrow unlock price."
+    },
+    {
+      "code": 6004,
+      "name": "InvalidVrfAuthorityError",
+      "msg": "Switchboard VRF Account's authority should be set to the client's state pubkey"
+    }
+  ],
+  "metadata": {
+    "address": "13JKmVdB1kviKCqXiKs4UjAQUkxukwBsPZ4uwQNPHech"
+  }
+}
