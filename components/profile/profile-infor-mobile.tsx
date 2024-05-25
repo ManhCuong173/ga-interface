@@ -53,14 +53,14 @@ const ProfileInfoMobile = ({ profile, refetch }: PropsProfile) => {
       removeX()
       return
     }
-    router.push(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/authentication/twitter`)
+    router.push(`${process.env.NEXT_PUBLIC_API_URL}/authentication/twitter`)
   }
   const connectDiscord = () => {
     if (profile?.discord_connect) {
       removeDiscord()
       return
     }
-    router.push(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/authentication/discord`)
+    router.push(`${process.env.NEXT_PUBLIC_API_URL}/authentication/discord`)
   }
 
   useEffect(() => {

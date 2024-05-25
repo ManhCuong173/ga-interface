@@ -6,7 +6,7 @@ const defaultHeader = {
   Accept: 'application/json',
 }
 
-export const baseUrl: string = String(process.env.NEXT_PUBLIC_API_ENDPOINT)
+export const baseUrl: string = String(process.env.NEXT_PUBLIC_API_URL)
 
 const axiosClient = axios.create({
   baseURL: baseUrl,
@@ -31,3 +31,4 @@ axiosClient.interceptors.response.use(
 )
 
 export default axiosClient
+
