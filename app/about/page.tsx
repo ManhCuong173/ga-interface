@@ -8,7 +8,7 @@ import NFTGallery from '@/components/home/nft-gallery'
 
 export default function About() {
   return (
-    <div>
+    <div className="lg:pt-[67px]">
       <Banner />
       <Intro />
       <NFTGallery />

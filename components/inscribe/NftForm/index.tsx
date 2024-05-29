@@ -85,7 +85,7 @@ const NFTForm: React.FC = () => {
         <InputInfoHelp
           icon={search}
           className="w-full"
-          classNameInput="placeholder:text-base font-bold"
+          classNameInput="lg:placeholder:text-base placeholder:text-[14px] font-bold"
           placeholder="SEARCH NUMBER"
           onChange={onSearchNumner}
         >

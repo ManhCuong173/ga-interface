@@ -22,13 +22,13 @@ interface PropsProfile {
 
 const ProfileInfoMobile = ({ profile, refetch }: PropsProfile) => {
   const router = useRouter()
+  const pathname = usePathname()
   const address = useAppSelector(selectAddress)
   const publicKey = useAppSelector(selectedPublicKey)
-  const searchParams = useSearchParams()
-  const pathname = usePathname()
   const [editFlag, setEditFlag] = useState(false)
   const queryClient = useQueryClient()
   const dispatch = useAppDispatch()
+  const searchParams = useSearchParams()
   const oauth_token = searchParams.get('oauth_token')
   const oauth_verifier = searchParams.get('oauth_verifier')
   const code = searchParams.get('code')

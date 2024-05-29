@@ -40,7 +40,7 @@ const InscribePage = () => {
         <div className="relative z-10">
           <Introduce />
           <div className="mx-auto lg:max-w-[1380px] px-4 ">
-            <div className="-mt-[14vh] lg:-mt-[12%] overflow-hidden mb-20 lg:mb-40">
+            <div className="-mt-[160px] sm:relative sm:right-[-2px] lg:static lg:right-0 lg:-mt-[12%] overflow-hidden mb-20 lg:mb-40">
               <Inscribe />
             </div>
             <MyOrders />
@@ -52,3 +52,4 @@ const InscribePage = () => {
   )
 }
 export default InscribePage
+
