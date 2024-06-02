@@ -1,8 +1,9 @@
 import { MarkIcon } from '@/components/ui/icons'
 import useClickOutside from '@/hooks/custom/useClickOutside'
 import { cn } from '@/lib/utils'
-import { FiveElements } from '@/types/fiveElements'
-import { fiveElements } from '@/utils/const'
+import { ElementType as Type } from '@/types/element'
+import { ElementType } from '@/utils/const'
+
 import Image from 'next/image'
 import { memo, useCallback, useRef, useState } from 'react'
 
@@ -13,14 +14,14 @@ interface PropsSelect {
 }
 
 const allId = -1
-const allElement = [
+export const nftElementInfoes = [
   {
     id: allId,
     title: 'All Element',
     icon: '',
     type: '',
   },
-  ...fiveElements,
+  ...ElementType,
 ]
 
 const SelectElement = ({ className, elements, onSelectElements }: PropsSelect) => {
@@ -30,7 +31,7 @@ const SelectElement = ({ className, elements, onSelectElements }: PropsSelect) =
   const handleShow = () => setShow(!show)
 
   const handleSetSelecteds = useCallback(
-    (element: FiveElements) => {
+    (element: Type) => {
       const _elements = [...elements]
 
       let clearExistElements = _elements.filter((item) => item !== element.id)
@@ -39,7 +40,7 @@ const SelectElement = ({ className, elements, onSelectElements }: PropsSelect) =
         if (_elements.includes(allId)) {
           clearExistElements = []
         } else {
-          clearExistElements = allElement.map((e) => e.id)
+          clearExistElements = nftElementInfoes.map((e) => e.id)
         }
       } else {
         if (_elements.includes(allId)) {
@@ -51,7 +52,7 @@ const SelectElement = ({ className, elements, onSelectElements }: PropsSelect) =
         clearExistElements.unshift(element.id)
       }
 
-      if (clearExistElements.length === allElement.length - 1 && !clearExistElements.includes(allId)) {
+      if (clearExistElements.length === nftElementInfoes.length - 1 && !clearExistElements.includes(allId)) {
         clearExistElements.unshift(allId)
       }
 
@@ -65,22 +66,24 @@ const SelectElement = ({ className, elements, onSelectElements }: PropsSelect) =
   return (
     <div ref={ref} className={className}>
       <div onClick={handleShow} className="flex w-[120px] cursor-pointer items-center justify-center gap-1 ">
-        <div className="flex w-[76px] translate-x-[15px] justify-center">
-          {allElement.map((element, index) => {
-            if (element.id === allId) return null
-            return (
-              <Image
-                key={`select-elment-${element.id}`}
-                src={element.icon}
-                alt={element.title}
-                title={element.title}
-                width={20}
-                style={{
-                  transform: `translateX(-${index * 6}px)`,
-                }}
-              />
-            )
-          })}
+        <div className="flex w-[76px] justify-start">
+          {nftElementInfoes
+            .filter((element) => elements.includes(element.id))
+            .map((element, index) => {
+              if (element.id === allId) return null
+              return (
+                <Image
+                  key={`select-elment-${element.id}`}
+                  src={element.icon}
+                  alt={element.title}
+                  title={element.title}
+                  width={20}
+                  style={{
+                    transform: `translateX(-${index * 6}px)`,
+                  }}
+                />
+              )
+            })}
         </div>
         <div className={cn(show ? 'rotate-180' : '', 'transition-all duration-150 ease-linear')}>
           <svg
@@ -108,7 +111,7 @@ const SelectElement = ({ className, elements, onSelectElements }: PropsSelect) =
           'text-sm font-Roboto',
         )}
       >
-        {allElement.map((element) => {
+        {nftElementInfoes.map((element) => {
           return (
             <li
               key={`element-${element.id}`}
@@ -134,3 +137,4 @@ const SelectElement = ({ className, elements, onSelectElements }: PropsSelect) =
 }
 
 export default memo(SelectElement)
+

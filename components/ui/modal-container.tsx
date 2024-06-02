@@ -27,10 +27,16 @@ export default function ModalContainer({ ...props }: Props) {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className={`${props.backdropClassname} fixed inset-0 bg-black/80`} />
+          <div className={`${props.backdropClassname} fixed inset-0 bg-black/80 z-10`} />
         </Transition.Child>
 
-        <div className="fixed inset-0 overflow-y-auto">
+        <div
+          className="fixed inset-0 overflow-y-auto flex items-center justify-center z-20"
+          onClick={(e) => {
+            props.handleClose()
+            e.stopPropagation()
+          }}
+        >
           <div className="flex min-h-[500px] justify-center px-4 text-center font-ProtoMono text-text-primary lg:px-0">
             <Transition.Child
               as={Fragment}

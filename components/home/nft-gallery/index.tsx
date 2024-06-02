@@ -2,7 +2,7 @@
 
 import { HeadMarkIcon } from '@/components/ui/icons'
 import { appearAnimation } from '@/constants/animation.constant'
-import { cards } from '@/constants/gallery-card.constant'
+import { NFTGalleryList } from '@/constants/gallery-card.constant'
 import { motion } from 'framer-motion'
 import Card from './card'
 
@@ -21,8 +21,8 @@ export default function NFTGallery() {
             </div>
           </motion.div>
           <div className="grid gap-4 items-center lg:grid-cols-5">
-            {cards.map((card, index) => (
-              <Card key={index} {...card} />
+            {NFTGalleryList.map((nftGallery, index) => (
+              <Card key={index} {...nftGallery} />
             ))}
           </div>
         </div>

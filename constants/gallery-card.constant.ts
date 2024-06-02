@@ -1,7 +1,8 @@
 import { Props as CardProps } from '@/components/home/nft-gallery/card'
 import { flyInAnimation } from '@/constants/animation.constant'
+import { ElementType } from '@/utils/const'
 
-export const cards: CardProps[] = [
+export const NFTGalleryList: CardProps[] = [
   {
     icon: '/images/home/nft-gallery/cards/fire/fire-icon.png',
     bgMobile: '/images/home/nft-gallery/cards/fire/fire-bg-mobile.png',
@@ -14,6 +15,7 @@ export const cards: CardProps[] = [
       transition: { duration: 0.5, delay: 1 },
       ...flyInAnimation,
     },
+    element: ElementType[0],
   },
   {
     icon: '/images/home/nft-gallery/cards/earth/earth-icon.png',
@@ -26,6 +28,7 @@ export const cards: CardProps[] = [
       transition: { duration: 0.5, delay: 1.3 },
       ...flyInAnimation,
     },
+    element: ElementType[1],
   },
   {
     icon: '/images/home/nft-gallery/cards/mental/mental-icon.png',
@@ -39,6 +42,7 @@ export const cards: CardProps[] = [
       transition: { duration: 0.5, delay: 1.6 },
       ...flyInAnimation,
     },
+    element: ElementType[2],
   },
   {
     icon: '/images/home/nft-gallery/cards/wood/wood-icon.png',
@@ -52,6 +56,7 @@ export const cards: CardProps[] = [
       transition: { duration: 0.5, delay: 1.9 },
       ...flyInAnimation,
     },
+    element: ElementType[3],
   },
   {
     icon: '/images/home/nft-gallery/cards/water/water-icon.png',
@@ -65,6 +70,7 @@ export const cards: CardProps[] = [
       transition: { duration: 0.5, delay: 2.1 },
       ...flyInAnimation,
     },
+    element: ElementType[4],
   },
 ]
 

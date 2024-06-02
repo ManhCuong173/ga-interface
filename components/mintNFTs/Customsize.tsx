@@ -1,6 +1,5 @@
 import { cn } from '@/lib/utils'
 import React, { ChangeEventHandler, ReactElement, ReactNode, useState } from 'react'
-import { toast } from 'react-toastify'
 import InputField from '../InputField'
 import ProgressBar from '../progress-bar'
 
@@ -96,3 +95,4 @@ const Customsize: React.FC<{
   )
 }
 export default Customsize
+

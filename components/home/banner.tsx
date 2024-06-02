@@ -29,10 +29,12 @@ export default function Banner() {
               }}
             >
               <h1 className="hidden lg:inline-block w-fit text-4xl font-semibold tracking-[0.96px] lg:tracking-[-2.1px]  lg:text-[70px] lg:leading-[84.01px] ">
-                <span className="bg-[#FF7E35] p-2  rounded-xl">NFT</span> Dream Gallery
+                <span className="background-banner-home-highlight-text p-2  rounded-xl text-red-light">NFT</span> Dream
+                Gallery
               </h1>
               <h1 className="w-fit text-[32px]  font-semibold tracking-[0.96px] lg:tracking-[-2.1px] inline-block lg:hidden">
-                Own <span className="bg-[#FF7E35] p-2  rounded-xl">NFT</span> Dream
+                Own <span className="background-banner-home-highlight-text p-2  rounded-xl  text-red-light">NFT</span>{' '}
+                Dream
               </h1>
             </motion.div>
             <motion.div

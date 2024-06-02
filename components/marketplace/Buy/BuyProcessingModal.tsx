@@ -1,16 +1,22 @@
 import { ButtonImage } from '@/components/button'
 import ModalContainer from '@/components/ui/modal-container'
 import { nftTypes } from '@/constants/nft.constant'
-import { selectItemBought } from '@/lib/features/marketplace/marketplace-slice'
-import { useAppSelector } from '@/lib/hook'
+import { ItemMarket } from '@/types/market'
 import { ElementType } from '@/utils/const'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { handleReturnIconType } from '../Item'
 
-const BuyResultModal = ({ open, setOpen }: any) => {
+const BuyProcessingModal = ({
+  open,
+  setOpen,
+  item,
+}: {
+  open: boolean
+  setOpen: (isOpened: boolean) => void
+  item: ItemMarket
+}) => {
   const router = useRouter()
-  const item = useAppSelector(selectItemBought)
   const NFTDetail = item && nftTypes.find((type) => type.id.toString() === item.nft_id)
 
   const handleRouterAsset = () => {
@@ -29,7 +35,10 @@ const BuyResultModal = ({ open, setOpen }: any) => {
         <div className="relative z-[1] flex w-full flex-col items-center">
           <div className="mx-auto lg:space-y-6">
             <p className="flex items-center gap-2 text-[32px] font-medium leading-8 tracking-[-0.8px] text-red-light font-ProtoMono">
-              Congratulations!
+              Processing
+              <span className="animate-bounce [animation-delay:-0.3s] tracking-[-14px]">.</span>
+              <span className="animate-bounce [animation-delay:-0.15s] tracking-[-14px]">.</span>
+              <span className="animate-bounce [animation-delay:-0.05s] tracking-[-14px]">.</span>
             </p>
           </div>
 
@@ -70,8 +79,8 @@ const BuyResultModal = ({ open, setOpen }: any) => {
 
           <ButtonImage
             varirant="primary-asset"
-            onClick={() => handleRouterAsset()}
-            className="w-[221px] h-[48px] mt-[53px] cursor-pointer"
+            className="w-[221px] h-[48px] mt-[53px] cursor-pointer grayscale-[.5]"
+            disabled
           >
             <div className="left-0 top-0 flex h-full w-full items-center justify-center gap-2">
               <span className="text-md font-medium leading-3/2 tracking-[-0.6px] text-white">View My Assets</span>
@@ -83,5 +92,5 @@ const BuyResultModal = ({ open, setOpen }: any) => {
   )
 }
 
-export default BuyResultModal
+export default BuyProcessingModal
 

@@ -6,7 +6,7 @@ import { useAppSelector } from '@/lib/hook'
 import { compareAddress } from '@/lib/item'
 import { marketPlaceService } from '@/services/market.service'
 import { ItemMarket } from '@/types/market'
-import { fiveElements } from '@/utils/const'
+import { ElementType } from '@/utils/const'
 import { useQueryClient } from '@tanstack/react-query'
 import Image from 'next/image'
 import { useState } from 'react'
@@ -14,12 +14,13 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { ButtonImage } from '../button'
 import ModalConfirmCancel from '../profile/modal/modal-confirm-cancel'
+import BuyProcessingModal from './Buy/BuyProcessingModal'
 import BuyResultModal from './Buy/BuyResultModal'
 import ConfirmModal from './Buy/ConfirmModal'
 
 export const handleReturnIconType = (nft_id: string) => {
   if (!nft_id) return ''
-  return fiveElements.find((item) => item.id === Number(nft_id))?.icon || ''
+  return ElementType.find((item) => item.id === Number(nft_id))?.icon || ''
 }
 
 const Item = ({
@@ -42,6 +43,8 @@ const Item = ({
   const btcPrice = useSelector(selectBtnToUsdRateData)
   const [showConfirmModal, setShowConfirmModal] = useState(false)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [showProcessingModal, setShowProcessingModal] = useState(false)
+
   const [listing, setListing] = useState(false)
   const matchedType = nftTypes.find((type) => type.id.toString() === item.nft_id)
 
@@ -139,6 +142,7 @@ const Item = ({
             open={showConfirmModal}
             setOpen={setShowConfirmModal}
             setShowSuccessModal={setShowSuccessModal}
+            onExchangeNFTProcessing={setShowProcessingModal}
             id_sell={item.id_create}
             feeRate={1}
             nft_image={item.nft_link}
@@ -149,6 +153,9 @@ const Item = ({
             nftIds={nftIds}
             order_by={order_by}
           />
+        )}
+        {showProcessingModal && (
+          <BuyProcessingModal open={showProcessingModal} setOpen={setShowProcessingModal} item={item} />
         )}
         {showSuccessModal && (
           <BuyResultModal open={showSuccessModal} setOpen={setShowSuccessModal} name={matchedType?.label} />

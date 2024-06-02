@@ -1,21 +1,21 @@
-import { FiveElements } from '@/types/fiveElements'
-import ic_mental from '@/images/five-elements/mental.svg'
-import ic_wood from '@/images/five-elements/wood.svg'
-import ic_water from '@/images/five-elements/water.svg'
-import ic_fire from '@/images/five-elements/fire.svg'
 import ic_earth from '@/images/five-elements/earth.svg'
-import type_mental from '@/images/five-elements/type_metal.svg'
-import type_fire from '@/images/five-elements/type_fire.svg'
-import type_water from '@/images/five-elements/type_water.svg'
-import type_wood from '@/images/five-elements/type_tree.svg'
+import ic_fire from '@/images/five-elements/fire.svg'
+import ic_mental from '@/images/five-elements/mental.svg'
 import type_earth from '@/images/five-elements/type_earth.svg'
+import type_fire from '@/images/five-elements/type_fire.svg'
+import type_mental from '@/images/five-elements/type_metal.svg'
+import type_wood from '@/images/five-elements/type_tree.svg'
+import type_water from '@/images/five-elements/type_water.svg'
+import ic_water from '@/images/five-elements/water.svg'
+import ic_wood from '@/images/five-elements/wood.svg'
+import { ElementType as Type } from '@/types/element'
 
 export const TypeSelectNFT = {
   pick_nft: 'PICK_NFT',
   pick_all_nft: 'PICK_ALL_NFT',
 }
 
-export const fiveElements: FiveElements[] = [
+export const ElementType: Type[] = [
   {
     id: 1,
     title: 'Fire',
@@ -28,7 +28,7 @@ export const fiveElements: FiveElements[] = [
     icon: ic_earth,
     type: type_earth,
   },
- 
+
   {
     id: 5,
     title: 'Mental',
@@ -47,5 +47,5 @@ export const fiveElements: FiveElements[] = [
     icon: ic_water,
     type: type_water,
   },
- 
 ]
+

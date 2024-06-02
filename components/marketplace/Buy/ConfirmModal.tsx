@@ -11,22 +11,85 @@ import { useAppDispatch, useAppSelector } from '@/lib/hook'
 import { cn } from '@/lib/utils'
 import { marketPlaceService } from '@/services/market.service'
 import publicService from '@/services/public.service'
-
 import { NetworkFee, NetworkFeeEnum, NetworkFeeType } from '@/types/fee'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import Image from 'next/image'
-import { MutableRefObject, memo, useEffect, useRef, useState } from 'react'
+import React, { MutableRefObject, memo, useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { useDebounce } from 'use-debounce'
 import { handleReturnIconType } from '../Item'
+import ChooseNetworkFee from './ChooseNetworkFee'
 import { ModalLayout } from './ModalLayout'
-import ChooseNetworkFee from '@/components/mintNFTs/ChooseNetworkFee'
 
 type Params = {
   fee_rate: number
   id_sell: string
 }
+
+const FeeData = React.memo(({ data, feeRate }: { data: any; feeRate: number }) => {
+  const btcToUsdRate: string = useSelector(selectBtnToUsdRateData)
+
+  return (
+    <div className="w-full   border-bgAlt border-[1px] rounded-[8px] p-4 text-[#66605B] mt-[20px]">
+      <div className="flex py-[9px] items-center justify-between border-b border-[#E5E4E3]">
+        <span className="text-sm font-light leading-5 tracking-[-0.42px]">Price:</span>
+        <div className="font-ProtoMono">
+          <FormatPrice satValue={data?.value} />
+        </div>
+      </div>
+      <div className="flex py-[9px] items-center justify-between border-b border-[#E5E4E3]">
+        <span className="text-sm font-light leading-5 tracking-[-0.42px]">Platform Fee</span>
+        <div className="font-ProtoMono">
+          <FormatPrice satValue={data?.platform_fees} />
+        </div>
+      </div>
+      <div className="border-b border-[#E5E4E3] py-2">
+        <div className="flex  items-center justify-between">
+          <span className="text-sm font-light leading-5 tracking-[-0.42px]">Transaction Fee Rate:</span>
+          <div className="font-ProtoMono text-sm">
+            <span className="text-[#FF6634]  ">{feeRate}</span> SATS/VB
+          </div>
+        </div>
+        <div className="flex mt-3  items-center justify-between">
+          <span className="text-sm font-light leading-5 tracking-[-0.42px]">
+            {data?.sats_in_inscription} VB * <span className="text-[#FF6634]">{feeRate}</span> SATS/VB
+          </span>
+          <div className="font-ProtoMono">
+            <FormatPrice satValue={Number(data?.sats_in_inscription) ? data?.sats_in_inscription * feeRate : ''} />
+          </div>
+        </div>
+      </div>
+      <div className="flex items-center justify-between py-3">
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-light leading-5 tracking-[-0.42px]">Total:</span>
+          <div className="cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
+              <path
+                d="M8.49967 11.1666V8.49992M8.49967 5.83325H8.50634M15.1663 8.49992C15.1663 12.1818 12.1816 15.1666 8.49967 15.1666C4.81778 15.1666 1.83301 12.1818 1.83301 8.49992C1.83301 4.81802 4.81778 1.83325 8.49967 1.83325C12.1816 1.83325 15.1663 4.81802 15.1663 8.49992Z"
+                stroke="#B3B0AD"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+        </div>
+        <div className="flex flex-col items-center gap-1 font-ProtoMono">
+          <div className="flex items-center gap-2 text-sm font-medium leading-6">
+            <span className="text-[#FF6634]">~{data?.total}</span>
+            <span>sats</span>
+            <span className="text-[#12B76A]">
+              ~$ {Number(data?.total) ? ((data?.total / Math.pow(10, 8)) * Number(btcToUsdRate)).toFixed(4) : ''}
+            </span>
+          </div>
+        </div>
+      </div>
+      <p className="text-end font-ProtoMono text-sm">
+        {Number(data?.total) ? (data?.total / Math.pow(10, 8)).toFixed(8) : 0}BTC
+      </p>
+    </div>
+  )
+})
 
 const ConfirmModal = ({
   open,
@@ -34,6 +97,7 @@ const ConfirmModal = ({
   id_sell,
   nft_image,
   setShowSuccessModal,
+  onExchangeNFTProcessing,
   item,
   page,
   page_size,
@@ -45,7 +109,6 @@ const ConfirmModal = ({
   const [customNetworkFee, setCustomNetworkFee] = useState(1)
   const [customNetworkFeeDebounce] = useDebounce(customNetworkFee, 300)
   const [selectedNetworkFee, setSelectedNetworkFee] = useState<NetworkFeeType>(NetworkFeeEnum.Normal)
-  const btcToUsdRate: string = useSelector(selectBtnToUsdRateData)
   const ref: MutableRefObject<any> = useRef()
   const dispatch = useAppDispatch()
   const queryClient = useQueryClient()
@@ -53,7 +116,11 @@ const ConfirmModal = ({
   const matchedType = nftTypes.find((type) => type.id.toString() === item.nft_id)
   const [enabledCustom, setEnableCustom] = useState(false)
 
-  const { data: feeData, isLoading: loadingNetworkFee } = useQuery<NetworkFee>({
+  const {
+    data: feeData,
+    isLoading: loadingNetworkFee,
+    isSuccess,
+  } = useQuery<NetworkFee>({
     queryKey: ['fee'],
     queryFn: async () => {
       const result = await publicService.getNetworkFee()
@@ -66,6 +133,12 @@ const ConfirmModal = ({
       normal: 0,
     },
   })
+
+  useEffect(() => {
+    if (isSuccess && feeData) {
+      setCustomNetworkFee(feeData.custom)
+    }
+  }, [isSuccess, feeData])
 
   const feeRate = selectedNetworkFee !== 'custom' ? feeData[selectedNetworkFee] || 0 : customNetworkFee
 
@@ -109,48 +182,54 @@ const ConfirmModal = ({
   }
 
   const handleConfirm = async () => {
-    try {
-      const balance = await getBalance()
-      if (balance < data?.total) {
-        toast.error('Insufficient balance')
-        return
-      }
+    if (feeRate < feeData.normal || feeRate > 500) toast.error(`Please enter a value between ${feeData.normal} and 500`)
+    else {
+      try {
+        const balance = await getBalance()
+        if (balance < data?.total) {
+          toast.error('Insufficient balance')
+          return
+        }
 
-      setShowSuccessModal(true)
+        setBuying(true)
+        onExchangeNFTProcessing(true)
 
-      setBuying(true)
-      const listTxIdInscription = await getListTxidInscription()
-      const res = await marketPlaceService.getPsBTNft({
-        fee_rate: feeRate,
-        list_txid_inscrtiption: listTxIdInscription,
-        id_sell: id_sell,
-        wallet_address: address,
-      })
+        const listTxIdInscription = await getListTxidInscription()
+        const res = await marketPlaceService.getPsBTNft({
+          fee_rate: feeRate,
+          list_txid_inscrtiption: listTxIdInscription,
+          id_sell: id_sell,
+          wallet_address: address,
+        })
 
-      const signedPsbt: string = await (window as any).unisat.signPsbt(res.psbt)
-      const psbtBase64 = Buffer.from(signedPsbt, 'hex').toString('base64')
-      const resExchange: any = await marketPlaceService.exChangeNft({
-        address_buyer: address,
-        id_sell: id_sell,
-        psbt_buyer: psbtBase64,
-      })
+        const signedPsbt: string = await (window as any).unisat.signPsbt(res.psbt)
+        const psbtBase64 = Buffer.from(signedPsbt, 'hex').toString('base64')
+        const resExchange: any = await marketPlaceService.exChangeNft({
+          address_buyer: address,
+          id_sell: id_sell,
+          psbt_buyer: psbtBase64,
+          fee_rate: feeRate,
+        })
 
-      if (resExchange.status === 200) {
-        setOpen(false)
-        setShowSuccessModal(true)
-        dispatch(setItemBought(item))
-        setTimeout(() => {
-          queryClient.invalidateQueries({
-            queryKey: ['market', page, page_size, nftIds, number, order_by],
-          })
-        }, 500)
+        if (resExchange.status === 200) {
+          setOpen(false)
+          setShowSuccessModal(true)
+          dispatch(setItemBought(item))
+          setTimeout(() => {
+            queryClient.invalidateQueries({
+              queryKey: ['market', page, page_size, nftIds, number, order_by],
+            })
+          }, 500)
+          setBuying(false)
+          onExchangeNFTProcessing(false)
+        } else {
+          toast.error(resExchange.data.message)
+        }
+      } catch (err: any) {
         setBuying(false)
-      } else {
-        toast.error(resExchange.data.message)
+        onExchangeNFTProcessing(false)
+        toast.error(err.response.data.message)
       }
-    } catch (err: any) {
-      setBuying(false)
-      toast.error(err.response.data.message)
     }
   }
 
@@ -165,8 +244,8 @@ const ConfirmModal = ({
     <div>
       <ModalContainer open={open} handleClose={closeModal}>
         <ModalLayout>
-          <>
-            <div ref={ref} className="flex flex-col items-center mb-[25px]">
+          <div className="overflow-hidden">
+            <div ref={ref} className="flex flex-col items-center mb-[25px] ">
               <p className="text-[32px] font-semibold leading-[50px] tracking-[-0.96px] text-red-light font-ProtoMono ">
                 Confirmation
               </p>
@@ -209,7 +288,7 @@ const ConfirmModal = ({
               </span>
             </div>
             <div className={cn('flex w-full flex-col space-y-3', enabledCustom ? 'max-h-0 overflow-hidden' : '')}>
-              <p className="text-left text-[14px] font-medium text-[#383F4A]">Select the network fee you want to pay</p>
+              <p className="text-left text-[14px] font-light text-[#383F4A]">Select the network fee you want to pay</p>
               <ChooseNetworkFee
                 isLoading={loadingNetworkFee}
                 networkFee={feeData}
@@ -220,66 +299,8 @@ const ConfirmModal = ({
                 min={feeData.normal || 1}
               />
             </div>
-            <div className="w-full   border-bgAlt border-[1px] rounded-[8px] p-4 text-[#66605B] mt-[20px]">
-              <div className="flex py-[9px] items-center justify-between border-b border-[#E5E4E3]">
-                <span className="text-sm font-light leading-5 tracking-[-0.42px]">Price:</span>
-                <div className="font-ProtoMono">
-                  <FormatPrice satValue={data?.value} />
-                </div>
-              </div>
-              <div className="flex py-[9px] items-center justify-between border-b border-[#E5E4E3]">
-                <span className="text-sm font-light leading-5 tracking-[-0.42px]">Platform Fee</span>
-                <div className="font-ProtoMono">
-                  <FormatPrice satValue={data?.platform_fees} />
-                </div>
-              </div>
-              <div className="border-b border-[#E5E4E3] py-2">
-                <div className="flex  items-center justify-between">
-                  <span className="text-sm font-light leading-5 tracking-[-0.42px]">Transaction Fee Rate:</span>
-                  <div>
-                    <span className="text-[#FF6634] font-ProtoMono">{feeRate}</span> SATS/VB
-                  </div>
-                </div>
-                <div className="flex mt-3  items-center justify-between">
-                  <span className="text-sm font-light leading-5 tracking-[-0.42px]">
-                    {data?.sats_in_inscription} VB * <span className="text-[#FF6634]">{feeRate}</span> SATS/VB
-                  </span>
-                  <div className="font-ProtoMono">
-                    <FormatPrice
-                      satValue={Number(data?.sats_in_inscription) ? data?.sats_in_inscription * feeRate : ''}
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="flex items-center justify-between py-3">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-light leading-5 tracking-[-0.42px]">Total:</span>
-                  <div className="cursor-pointer">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
-                      <path
-                        d="M8.49967 11.1666V8.49992M8.49967 5.83325H8.50634M15.1663 8.49992C15.1663 12.1818 12.1816 15.1666 8.49967 15.1666C4.81778 15.1666 1.83301 12.1818 1.83301 8.49992C1.83301 4.81802 4.81778 1.83325 8.49967 1.83325C12.1816 1.83325 15.1663 4.81802 15.1663 8.49992Z"
-                        stroke="#B3B0AD"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
-                  </div>
-                </div>
-                <div className="flex flex-col items-center gap-1 font-ProtoMono">
-                  <div className="flex items-center gap-2 text-base font-medium leading-6">
-                    <span className="text-[#FF6634]">~{data?.total}</span>
-                    <span>sats</span>
-                    <span className="text-[#12B76A]">
-                      ~${' '}
-                      {Number(data?.total) ? ((data?.total / Math.pow(10, 8)) * Number(btcToUsdRate)).toFixed(4) : ''}
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <p className="text-end font-ProtoMono">
-                {Number(data?.total) ? (data?.total / Math.pow(10, 8)).toFixed(8) : 0}BTC
-              </p>
-            </div>
+            <FeeData data={data} feeRate={feeRate} />
+
             <div className="flex justify-center gap-0 mt-8">
               <ButtonImage
                 varirant="primary-asset"
@@ -296,7 +317,7 @@ const ConfirmModal = ({
               </button>
             </div>
             {isBuying && <Loading />}
-          </>
+          </div>
         </ModalLayout>
       </ModalContainer>
     </div>
@@ -304,3 +325,4 @@ const ConfirmModal = ({
 }
 
 export default memo(ConfirmModal)
+

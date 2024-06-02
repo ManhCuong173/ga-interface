@@ -4,9 +4,10 @@ import ic_down from '@/icons/chervon-down.svg'
 import search from '@/images/marketplace/search.svg'
 import ic_tooltip from '@/images/marketplace/tooltip.svg'
 import Image from 'next/image'
-import { SetStateAction, memo, useMemo, useRef, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { SetStateAction, memo, useEffect, useMemo, useRef, useState } from 'react'
 import InputField from '../InputField'
-import SelectElement from '../SelectElement'
+import SelectElement, { nftElementInfoes } from '../SelectElement'
 
 interface PropFilterMarketPlace {
   nftIds: number[]
@@ -36,6 +37,12 @@ const FilterMarketPlace = ({ nftIds, setFilter, filter, setNftIds }: PropFilterM
   const handleChangeNumberFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFilter({ ...filter, number: e.currentTarget.value })
   }
+
+  const selectedElementId = useSearchParams().get('elementId')
+  useEffect(() => {
+    const defaultSelectedElement = nftElementInfoes.find((item) => Number(selectedElementId) === item.id)
+    if (defaultSelectedElement) setNftIds([defaultSelectedElement.id])
+  }, [])
 
   useClickOutside({ ref, show, setShow })
 

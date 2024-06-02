@@ -159,6 +159,10 @@
   scrollbar-width: none; /* Firefox */
 }
 
+.background-banner-home-highlight-text {
+  background: linear-gradient(154deg, #e5b039 14.1%, #ffebbd 47.86%, #e5b039 84.47%);
+}
+
 input::-webkit-outer-spin-.glyph-text,
 input::-webkit-inner-spin-.glyph-text {
   -webkit-appearance: none;

@@ -103,11 +103,15 @@ export default function Introduce() {
           z-10
           static lg:absolute lg:top-1/2 lg:-translate-y-1/2 
           lg:left-[50%] w-[275px] h-[296px] lg:w-[36%] 
-          lg:h-auto aspect-[514/552] rounded-[30px] lg:rounded-[55px] 
-          border-[#D4C79C] border-[1px] order-1 "
+          lg:h-auto aspect-[514/552] rounded-[30px] lg:rounded-[33px] 
+           order-1 "
         >
-          <div className="p-[6px] w-full h-full bg-[rgba(255, 255, 255, 0.50)] backdrop-blur-[4.69px] relative rounded-[30px] lg:rounded-[55px] lg:p-4">
-            <div className="bg-[url(/images/commons/app-logo-fade.png)] w-full h-full bg-center bg-cover rounded-[30px] lg:rounded-[55px]" />
+          <div
+            className="p-[8px] w-full h-full bg-[rgba(255,255,255,0.70)] backdrop-blur-[10px] relative rounded-[30px] lg:rounded-[40px] lg:p-4
+          border-[#D4C79C] border-[1px]
+          "
+          >
+            <div className="bg-[url(/images/home/bg-introduce-desktop-banner-bg.png)] w-full h-full bg-center bg-cover rounded-[30px] lg:rounded-[35px]" />
             <div className="absolute left-1/2 top-[calc(50%_-_15px)] -translate-x-1/2 -translate-y-1/2 w-[193px] h-[180px] lg:w-[369px] lg:h-[343px] flex items-center justify-center">
               <Image src={NFTIcon} className="hidden lg:block" alt="" />
               <Image src={NFTIconMobile} className="lg:hidden block" alt="" />
