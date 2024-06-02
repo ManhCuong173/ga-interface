@@ -68,7 +68,7 @@ export default function ProfileInfo({ profile, refetch }: Props) {
     }
     // router.push(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/authentication/twitter`);
     if (typeof window !== 'undefined') {
-      router.push(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/${backend}/authentication/twitter`)
+      router.push(`${process.env.NEXT_PUBLIC_API_URL}/${backend}/authentication/twitter`)
       window.localStorage.setItem('address', address)
     }
   }
@@ -79,7 +79,7 @@ export default function ProfileInfo({ profile, refetch }: Props) {
       return
     }
     if (typeof window !== 'undefined') {
-      router.push(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/${backend}/authentication/discord`)
+      router.push(`${process.env.NEXT_PUBLIC_API_URL}/${backend}/authentication/discord`)
       window.localStorage.setItem('address', address)
     }
   }

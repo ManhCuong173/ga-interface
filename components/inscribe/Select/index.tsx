@@ -1,6 +1,7 @@
 import useClickOutside from '@/hooks/custom/useClickOutside'
 import tickChecked from '@/icons/profile/tick-checked.svg'
 import tickUncheck from '@/icons/profile/tick-uncheck.svg'
+import { ElementType as Type } from '@/types/element'
 import { ElementType } from '@/utils/const'
 import Image from 'next/image'
 import React, { SetStateAction, memo, useRef, useState } from 'react'
@@ -30,7 +31,7 @@ const SelectField = ({ className, nftIds, setNftIds, ...props }: PropsSelect) =>
     }
   }
 
-  const handleSetSelecteds = (type: ElementType) => {
+  const handleSetSelecteds = (type: Type) => {
     setNftIds((prev) => {
       if (prev.find((item) => item === type.id)) {
         return prev.filter((item) => item !== type.id)

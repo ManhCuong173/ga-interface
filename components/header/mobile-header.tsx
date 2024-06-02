@@ -42,7 +42,7 @@ export default function MobileHeader() {
           `fixed inset-x-0 top-0 z-[100] origin-top transition-all lg:hidden`,
         )}
       >
-        <div className="flex h-[72px] w-full items-center justify-between bg-secondary px-4">
+        <div className="flex h-[72px] w-screen overflow-hidden items-center justify-between bg-secondary px-4">
           <Link href="/" className="flex items-center gap-[7.74px]">
             <Image src={logo} alt="" className="h-9 w-[123.14217px]" />
           </Link>

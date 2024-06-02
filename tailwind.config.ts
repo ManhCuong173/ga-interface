@@ -8,6 +8,15 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      keyframes: {
+        fadeOutKeyframe: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+      },
+      animation: {
+        fadeOut: 'fadeOutKeyframe 0.5s linear',
+      },
       aspectRatio: {
         home: '1114/725',
       },
