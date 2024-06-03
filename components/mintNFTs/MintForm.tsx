@@ -59,6 +59,7 @@ const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrderId
 
       if (res.data) {
         onUpdateOrderId(res.data.orderId)
+        queryClient.invalidateQueries({ queryKey: ['nfts'] })
         queryClient.invalidateQueries({ queryKey: ['orders'] })
         onShowInscribeOrderModal()
       } else if (res.message) {
