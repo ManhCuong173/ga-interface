@@ -64,9 +64,29 @@ const NetworkFees: React.FC<{
     initialData: feeDefault,
   })
 
+  const mapIdNftSelected = useMemo(
+    () =>
+      inscribeData.pickedNfts
+        .map((nft) => {
+          return nft.number
+        })
+        .join('-'),
+    [inscribeData],
+  )
+
+  const [debounceSelectNFTIdSelected] = useDebounce(mapIdNftSelected, 500)
+
   const { data: feeMintData, isFetching: loadingNetworkFeeMint } = useQuery<NetworkFeeMint>({
-    queryKey: ['fee-mint', satsInscriptionDebounce, selectedNetworkFeeType, customNetworkFeeDebounce],
+    queryKey: [
+      'fee-mint',
+      satsInscriptionDebounce,
+      selectedNetworkFeeType,
+      customNetworkFeeDebounce,
+      debounceSelectNFTIdSelected,
+    ],
     queryFn: async () => {
+      if (!debounceSelectNFTIdSelected) return feeMintDefault
+
       const result = await publicService
         .getNetworkFeeMint({
           satsInInscription: satsInscription,
@@ -77,7 +97,7 @@ const NetworkFees: React.FC<{
       if (result.data) return result.data
       return feeMintDefault
     },
-    enabled: feeData !== feeDefault && inscribeData.pickedNfts.length > 0,
+    enabled: Boolean(feeData !== feeDefault && inscribeData.pickedNfts.length > 0),
     initialData: feeMintDefault,
   })
 
