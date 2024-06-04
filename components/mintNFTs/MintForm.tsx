@@ -59,8 +59,6 @@ const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrderId
 
       if (res.data) {
         onUpdateOrderId(res.data.orderId)
-        queryClient.invalidateQueries({ queryKey: ['nfts'] })
-        queryClient.invalidateQueries({ queryKey: ['orders'] })
         onShowInscribeOrderModal()
       } else if (res.message) {
         toast.error(res.message, {
@@ -68,13 +66,15 @@ const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrderId
         })
       }
     } catch (e) {
-      toast.error('NFT already have owner', {
+      toast.error('one or some of selected NFTs has already minted', {
         position: 'bottom-right',
       })
       setTimeout(() => {
         dispatch(setProcessState(1))
       }, 2000)
     } finally {
+      queryClient.invalidateQueries({ queryKey: ['nfts'] })
+      queryClient.invalidateQueries({ queryKey: ['orders'] })
       setLoading(false)
     }
   }
