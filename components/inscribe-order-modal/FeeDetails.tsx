@@ -16,7 +16,6 @@ const FeeDetails: React.FC<Props> = ({ orderDetail }) => {
   const serviceFee = getDecimalAmount(feeMint, FEE_DECIMALS)
   const totalAmount = feeMint
   const totalAmountUSD = (feeMint * Number(btnToUsdRateData)).toFixed(4).replace(/\.?0+$/, '')
-  console.log(btnToUsdRateData)
   return (
     <div className="py-3 px-5 border font-semibold  text-sm border-bgAlt rounded-lg flex flex-col gap-2">
       <div className="flex justify-between leading-5 tracking-[-0.42px]">
@@ -51,3 +50,4 @@ const FeeDetails: React.FC<Props> = ({ orderDetail }) => {
   )
 }
 export default FeeDetails
+

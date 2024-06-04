@@ -15,7 +15,8 @@ export default function Profile() {
         <div className="flex flex-col md:flex-row">
           <div
             className="
-            w-full
+            sm:w-full
+            md:w-1/2
             lg:w-[23%] flex flex-col items-center"
           >
             <ProfileInfoMobile profile={profile} refetch={refetch} />

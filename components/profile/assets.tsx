@@ -72,7 +72,7 @@ export default function Assets({ isLoading, assets, onShowInfo, onList: onListin
       {isLoading ? (
         <div className="flex min-h-[420px] items-center justify-center">loading...</div>
       ) : filteredAssets?.length ? (
-        <div className="my-6 grid grid-cols-2 gap-2 rounded md:grid-cols-3 lg:grid-cols-4">
+        <div className="my-6 grid grid-cols-1 sm:grid-cols-2 gap-2 rounded md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {filteredAssets.map((asset) => (
             <Asset
               key={asset.id_inscription}

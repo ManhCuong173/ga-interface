@@ -44,7 +44,7 @@ const BannerMarketPlace = () => {
                       className="flex items-center justify-center gap-2"
                     >
                       <span className="text-2xl lg:text-[45px] leading-tight tracking-[-1.35px] font-bold text-red-light text-center ">
-                        Discover, Collect and Sell Rare NFTs
+                        DISCOVER, COLLECT, AND TRADE RARE NFTS
                       </span>
                     </motion.div>
                   </div>
@@ -56,8 +56,7 @@ const BannerMarketPlace = () => {
                       className="flex items-center justify-center gap-2"
                     >
                       <span className="text-sm font-Roboto font-normal text-black1 lg:text-base text-center leading-3/2">
-                        The world’s first and largest digital marketplace for crypto collectibles and non-fungible
-                        tokens (NFTs). Buy, sell, and discover exclusive digital items.
+                        Every NFT in the Golden Apple collection is unique, each with its own series number.
                       </span>
                     </motion.div>
                   </div>

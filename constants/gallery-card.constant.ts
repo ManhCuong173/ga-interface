@@ -9,8 +9,9 @@ export const NFTGalleryList: CardProps[] = [
     bgDesktop: '/images/home/nft-gallery/cards/fire/fire-bg.png',
     color: '#56090B',
 
+    title: 'The Ignition Your Fortune',
     description:
-      '“Uncover the unparalleled allure of Flame NFTs, where each piece ignites with its own distinct essence.”',
+      '"Embrace its transformative energy and light your path to wealth with a Fire NFT. Let the flames guide you to unparalleled abundance.”',
     motionProps: {
       transition: { duration: 0.5, delay: 1 },
       ...flyInAnimation,
@@ -23,7 +24,9 @@ export const NFTGalleryList: CardProps[] = [
     bgDesktop: '/images/home/nft-gallery/cards/earth/earth-bg.png',
     color: '#6B3C02',
 
-    description: '“Discover the unmatched charm of Earth NFTs, where each piece reflects the essence of the land”',
+    title: 'The Root of Success',
+    description:
+      '"Ground your investments with the Earth NFT Collection. Embrace the stability, growth, and nurturing power of the earth, providing a solid foundation for your prosperity. Discover the root of success and let your wealth flourish."',
     motionProps: {
       transition: { duration: 0.5, delay: 1.3 },
       ...flyInAnimation,
@@ -36,8 +39,8 @@ export const NFTGalleryList: CardProps[] = [
     bgDesktop: '/images/home/nft-gallery/cards/mental/mental-bg.png',
     color: '#A17015',
 
-    description:
-      '“Explore the captivating allure of Metal NFTs, each piece embodying the strength and brilliance of precious metals.” ',
+    title: 'The Magnet of Affluence',
+    description: 'Embrace the strength, clarity, and allure of metal, drawing wealth and success towards you.” ',
     motionProps: {
       transition: { duration: 0.5, delay: 1.6 },
       ...flyInAnimation,
@@ -50,8 +53,9 @@ export const NFTGalleryList: CardProps[] = [
     bgDesktop: '/images/home/nft-gallery/cards/wood/wood-bg.png',
     color: '#023129',
 
+    title: 'The Catalyst of Prosperity',
     description:
-      '“Dive into the rustic charm of Wood NFTs, where each artwork reflects the natural beauty and resilience of timber.”',
+      'Harness the growth and vitality of the Wood NFT colelction. Embrace its natural strength, adaptability, and the endless possibilities it brings. Watch your prosperity flourish and grow.”',
     motionProps: {
       transition: { duration: 0.5, delay: 1.9 },
       ...flyInAnimation,
@@ -64,8 +68,9 @@ export const NFTGalleryList: CardProps[] = [
     bgDesktop: '/images/home/nft-gallery/cards/water/water-bg.png',
     color: '#11184C',
 
+    title: 'The Flow of Wealth',
     description:
-      '“Delve into the fluid elegance of Water NFTs, each piece capturing the essence of fluidity and serenity."',
+      'Experience fluidity and abundance with our Water NFT Collection. Embrace flexibility, adapt to change, and let your prosperity flow effortlessly."',
     motionProps: {
       transition: { duration: 0.5, delay: 2.1 },
       ...flyInAnimation,

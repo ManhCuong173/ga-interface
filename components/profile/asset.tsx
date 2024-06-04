@@ -46,7 +46,7 @@ export default function Asset({ onShowInfo, onList, onCancel, ...props }: Props)
         }}
       />
       <div className="relative w-full">
-        <div className="flex w-full mt-[18px] mb-[20px]">
+        <div className="flex w-full mt-[18px] mb-[20px] justify-center md:justify-start">
           <span className="text-sm font-medium text-[#4E473F] lg:text-lg">{matchedType?.label} Apple</span>
         </div>
         <button
@@ -58,7 +58,7 @@ export default function Asset({ onShowInfo, onList, onCancel, ...props }: Props)
         >
           <Image
             src={ButtonListNFT}
-            className="w-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+            className="w-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-h-[46px] md:max-h-[57px]"
             alt=""
           />
           <span

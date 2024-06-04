@@ -50,8 +50,13 @@ const Slogin = () => {
           </div>
 
           <Link href="/inscribe">
-            <ButtonImage varirant="light-asset" className="text-lg font-medium text-red-light w-64 h-14 ">
-              Explore Now
+            <ButtonImage
+              varirant="light-asset"
+              className="text-sm lg:text-base font-medium text-red-light w-[105%] h-[100px] md:h-[80px] lg:w-[420px] text-center"
+            >
+              Grab your golden ticket today
+              <br />
+              Mint your NFT now!
             </ButtonImage>
           </Link>
         </div>

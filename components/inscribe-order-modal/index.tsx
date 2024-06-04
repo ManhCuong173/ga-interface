@@ -27,11 +27,11 @@ import { PayMethodEnum } from './types'
 
 const LIMIT_TIME = 360 // => 10s per request. that will request it within 1 hour.
 
-const InscribeOrderModal: React.FC<{ onClose: () => void; orderId: string; isOpen: boolean }> = ({
-  onClose,
-  orderId,
-  isOpen,
-}: any) => {
+const InscribeOrderModal: React.FC<{
+  onClose: () => void
+  orderId: string
+  isOpen: boolean
+}> = ({ onClose, orderId, isOpen }: any) => {
   const queryClient = useQueryClient()
   const dispatch = useAppDispatch()
   const publicKey = useAppSelector(selectedPublicKey)
@@ -139,9 +139,14 @@ const InscribeOrderModal: React.FC<{ onClose: () => void; orderId: string; isOpe
     }
   }, [])
 
-  const handleCloseModal = () => {
+  const handleCloseAndRefeshMintList = () => {
+    queryClient.invalidateQueries({ queryKey: ['nfts'] })
     onClose()
+  }
+
+  const handleCloseModal = () => {
     dispatch(setProcessState(1))
+    handleCloseAndRefeshMintList()
     queryClient.invalidateQueries({ queryKey: ['orders'] })
   }
 
@@ -186,7 +191,7 @@ const InscribeOrderModal: React.FC<{ onClose: () => void; orderId: string; isOpe
           <div
             className="cursor-pointer absolute right-[2%] top-[2%]  lg:hidden"
             onClick={() => {
-              onClose()
+              handleCloseAndRefeshMintList()
             }}
           >
             <CloseIcon className="w-11 h-11" />
@@ -212,7 +217,7 @@ const InscribeOrderModal: React.FC<{ onClose: () => void; orderId: string; isOpe
                 <div
                   className="cursor-pointer hidden lg:block"
                   onClick={() => {
-                    onClose()
+                    handleCloseAndRefeshMintList()
                   }}
                 >
                   <CloseIcon className="w-11 h-11" />

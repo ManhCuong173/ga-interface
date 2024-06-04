@@ -142,7 +142,8 @@ export default function LuckyDraw() {
                     Total NFT sold this round:
                   </div>
                   <div className="text-[21px] font-medium text-red-light tracking-tighter">
-                    <span>50</span>/<span className="text-subtle">100</span>
+                    <span>{nftSoldData?.mint_count || 0}</span>/
+                    <span className="text-subtle">{nftSoldData?.total_sold || 0}</span>
                   </div>
                 </div>
 
