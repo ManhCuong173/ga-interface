@@ -38,7 +38,7 @@ export default function Banner() {
                 className="text-[24px] font-semibold leading-[130%] -tracking-[1.35px] text-red-light mt-8 max-w-[312px] text-center
                   sm:text-[30px] lg:text-[45px] sm:min-w-[320px] lg:min-w-[526px] lg:text-left "
               >
-                Earn Yield from Your Idle BTC with Golden apple BTC Restaking
+                Earn you golden ticket to win at least 1 BTC and more
               </motion.div>
             </div>
           </div>

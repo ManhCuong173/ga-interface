@@ -27,7 +27,7 @@ export default function Asset({ onShowInfo, onList, onCancel, ...props }: Props)
   return (
     <div
       className="relative flex cursor-pointer flex-col  items-center
-     rounded border-bgAlt border-[1px]  p-3 pb-3 min-w-[180px] lg:min-w-[237px] font-Roboto"
+     rounded border-bgAlt border-[1px] mx-auto md:mx-0  w-fit p-3 pb-3 md:min-w-[180px] lg:w-[237px] lg:min-h-[246px] font-Roboto"
       onClick={handleShowNFtInfo}
     >
       <span
@@ -46,8 +46,8 @@ export default function Asset({ onShowInfo, onList, onCancel, ...props }: Props)
         }}
       />
       <div className="relative w-full">
-        <div className="flex w-full mt-[18px] mb-[20px] justify-center md:justify-start">
-          <span className="text-sm font-medium text-[#4E473F] lg:text-lg">{matchedType?.label} Apple</span>
+        <div className="flex w-full mt-[16px] mb-[18px] justify-center md:justify-start">
+          <span className="text-sm font-medium text-[#4E473F] lg:text-base">{matchedType?.label} Apple</span>
         </div>
         <button
           className={`group mt-4 flex h-11 w-full  bg-full px-[13.82px] transition-all relative`}

@@ -36,8 +36,8 @@ const Slogin = () => {
     <div id="section-slogan" className="snap-start" ref={ref}>
       <WrapperHero src="/images/home/bg-slogan.svg">
         <div className="flex justify-start h-14 md:h-16 md:w-full absolute top-[-1px] left-0">
-          <div className=" bg-secondary" style={{ width: ratio }} />
-          <div className=" bg-secondary opacity-[0.3]" style={{ width: ratio }} />
+          <div className=" bg-secondary will-change-auto" style={{ width: ratio }} />
+          <div className=" bg-secondary opacity-[0.3] will-change-auto" style={{ width: ratio }} />
         </div>
 
         <div className="flex flex-col flex-1 items-center justify-center w-full h-full px-4">

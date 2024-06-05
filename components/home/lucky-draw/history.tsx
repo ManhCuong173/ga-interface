@@ -60,7 +60,6 @@ const PAGE_SIZE = 5000
 export default function History({ open, onClose }: Props) {
   const [rounds, setRounds] = useState<Option[]>([{ label: 'No Data', value: '' }])
   const addressOwner = useAppSelector(selectAddress)
-
   const [selectedRound, setSelectedRound] = useState('')
   const [selectedPrize, setSelectedPrize] = useState(prizeOptions[0].value)
   const [page, setPage] = useState(1)
@@ -74,6 +73,8 @@ export default function History({ open, onClose }: Props) {
       prize: prizeParams?.toLocaleLowerCase() === 'all' ? '' : prizeParams?.toLocaleLowerCase(),
       round: selectedRound.toLowerCase(),
     })
+
+    console.log(data)
 
     return data.data
   }
@@ -117,7 +118,7 @@ export default function History({ open, onClose }: Props) {
       lg:overflow-x-[unset] relative mx-auto my-8 h-[1070px] 
       w-full max-w-[calc(100vw-32px)] overflow-x-auto rounded 
       bg-white p-5 md:w-[536px] md:px-[22px] 
-      md:py-10 lg:h-[1032px] lg:w-[872px]"
+      md:py-10 lg:h-[90vh] lg:w-[872px]"
       >
         <button
           onClick={onClose}
@@ -190,14 +191,6 @@ export default function History({ open, onClose }: Props) {
                     </>
                   )}
                 </div>
-                {/* {data && data.totalPages > 1 && (
-                  <Pagination
-                    itemsPerPage={10}
-                    pageCount={data?.totalPages}
-                    setPage={setPage}
-                    className='mt-0'
-                  />
-                )} */}
               </div>
             </div>
           </div>

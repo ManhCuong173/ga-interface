@@ -43,7 +43,7 @@ const BuyProcessingModal = ({
           </div>
 
           <p className="text-sm font-light leading-6 tracking-[-0.6px] text-black1 mt-[25px]">
-            Your NFT Purchase is Complete!
+            Your purchase is being processed!
           </p>
 
           <div className="relative mt-[50px] border-red-light border-[1px] rounded-lg p-2">
@@ -59,9 +59,12 @@ const BuyProcessingModal = ({
               />
             </div>
           </div>
+          <div className="text-sm text-black1 leading-3/2 font-light my-3">
+            It should be confirmed on the blockchain shortly. Please do not exit while the transaction is processing.
+          </div>
           <div
             className="text-center text-[18px] font-medium leading-3/2
-           text-text-black mt-5"
+           text-text-black mt-2"
           >
             {NFTDetail?.label || ''} Apple
           </div>
@@ -74,7 +77,7 @@ const BuyProcessingModal = ({
                 height={20}
               />
             </div>
-            <span className="text-sm font-light font-ProtoMono tracking-tighter">#{item?.inscription_number}</span>
+            <span className="text-sm font-light font-ProtoMono tracking-tighter">#{item?.number}</span>
           </div>
 
           <ButtonImage

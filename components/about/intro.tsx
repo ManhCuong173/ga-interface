@@ -30,16 +30,13 @@ const Intro = () => {
             lg:max-w-[851px] text-[18px] font-normal leading-[150%] font-Roboto text-center"
           >
             <p>
-              Although the history of NFT on Bitcoin has started even before the existence of the Ethereum blockchain,
+              At Golden Apple, we are all about possibilities and providing equal opportunities for everyone to
+              transform their lives.
             </p>
             <p className="mt-8 mb-6">
-              It is still relatively subdued compared to its counterpart. As we believe in the overall development of
-              the Bitcoin blockchain,
+              Our mission is to foster a thriving community where everyone has a shot at winning.
             </p>
-            <p>
-              We want to allocate part of our venture to create a project that can bring users in the hope that this
-              community will be the seed of a bigger ecosystem.
-            </p>
+            <p>Golden Apple is your golden to potentially pocket 1 BTC or even more!</p>
           </motion.div>
         </div>
       </div>

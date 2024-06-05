@@ -37,8 +37,9 @@ export default function Profile() {
                 My Collection
               </div>
               <div className="font-Roboto tex-sm  md:text-base font-normal leading-[150%] mt-5 max-w-[529px]">
-                The world’s first and largest digital marketplace for crypto collectibles and non-fungible tokens
-                (NFTs). Buy, sell, and discover exclusive digital items.
+                Dive into my unique collection of lucky and rare NFTs. Explore the distinctive pieces that bring fortune
+                and exclusivity, all part of the Golden Apple series. Each NFT is the golden ticket for you to win at
+                least 1 BTC and more.
               </div>
             </div>
             <MyNFTs />

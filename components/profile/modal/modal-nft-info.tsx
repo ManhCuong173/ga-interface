@@ -1,7 +1,7 @@
+import { ButtonImage } from '@/components/button'
 import { handleReturnIconType } from '@/components/marketplace/Item'
 import ModalContainer from '@/components/ui/modal-container'
 import closeModalButton from '@/icons/profile/modal/close-button.svg'
-import decor from '@/images/profile/profile-info/decor.png'
 import { NFTDetail } from '@/types/nft'
 import Image from 'next/image'
 
@@ -79,63 +79,64 @@ export default function ModalNftInfo({
 
   return (
     <ModalContainer open={open} handleClose={handleClose}>
-      <div className='my-8 w-screen space-y-6 bg-white p-4 text-_black lg:w-[664px] lg:space-y-12 lg:px-10 lg:py-8'>
-        <div className='flex items-center justify-end'>
-          <button onClick={handleClose} className='outline-none'>
-            <Image src={closeModalButton} alt='' width={44} height={44} />
+      <div className="w-screen  bg-full lg:p-[30px] text-text-black lg:w-[540px] h-[90vh] overflow-auto bg-white font-Roboto relative p-[10px]">
+        <div className="flex items-center justify-end absolute top-[10px] right-[10px] lg:right-[30px] lg:top-[30px]">
+          <button onClick={handleClose} className="outline-none">
+            <Image src={closeModalButton} alt="" width={44} height={44} />
           </button>
         </div>
-        <div className='relative mx-auto flex size-[350px] items-center justify-center bg-[url(/images/profile/modal/nft-frame.png)] bg-full'>
-          <span className='absolute left-[31px] top-[31px] z-10 flex h-7 items-center gap-1 rounded bg-[#FFF4DD]/50 px-2'>
-            <span className='flex h-5 w-5 items-center justify-center rounded-full bg-[#fff4dd]'>
-              <Image src={handleReturnIconType(nftId)} alt='' width={20} height={20} />
-            </span>
-            <span className='text-xs font-light tracking-[-0.36px] text-black1'>
-              #{inscriptionNumber}
-            </span>
-          </span>
-          <figure className='size-[320px]'>
-            <Image loader={() => nftImage} src={nftImage} alt='' width={320} height={320} />
-          </figure>
-        </div>
-        <div className='space-y-11 lg:space-y-12'>
-          <div className='mx-auto w-[350px] space-y-6'>
-            <Image src={decor} alt='' className='w-full' />
-            <h2 className='mx-auto whitespace-nowrap text-2xl font-semibold leading-8 tracking-[-0.64px] text-text-black lg:text-[32px]'>
-              {nftName} APPLE #{number}
-            </h2>
+
+        <div className="mx-auto flex items-center justify-center w-fit h-fit pt-[20px]">
+          <div className="relative p-3 border-bgAlt border-[1px] rounded-lg">
+            <figure className="size-[204px] ">
+              <Image loader={() => nftImage} src={nftImage} alt="" width={204} height={204} />
+            </figure>
           </div>
-          <div className='space-y-4'>
-            {loadingDetail && (
-              <div className='flex h-[400px] items-center justify-center'>loading...</div>
-            )}
-            {!rows.length && (
-              <div className='flex h-[400px] items-center justify-center'>empty!</div>
-            )}
-            {rows.map((row, index) => (
-              <div key={index} className='space-y-2'>
-                <label className='tracking-[-0.36px inline-block w-full text-left text-xs font-light leading-[18px] text-text-black'>
-                  {row.title}
-                </label>
-                <div className='flex h-11 items-center rounded border border-text-black_3 px-4'>
-                  <input
-                    type='text'
-                    readOnly
-                    className='w-full truncate border-none text-sm font-light text-text-black outline-none'
-                    value={row.value}
-                  />
+        </div>
+
+        <div className="w-full mt-5">
+          <h2 className="mx-auto whitespace-nowrap text-[18px] font-medium leading-8 tracking-[-0.64px] text-text-black">
+            {nftName} Apple
+          </h2>
+          <div className="flex justify-center items-center gap-1 px-2 bg-white">
+            <span className="flex h-5 w-5 items-center justify-center">
+              <Image src={handleReturnIconType(nftId)} alt="" width={20} height={20} />
+            </span>
+            <span className="text-xs font-light tracking-[-0.36px] text-black1">#{inscriptionNumber}</span>
+          </div>
+        </div>
+
+        <div className="space-y-11 lg:space-y-12">
+          <div className="space-y-4">
+            {loadingDetail && <div className="flex h-[400px] items-center justify-center">loading...</div>}
+            {!rows.length && <div className="flex h-[400px] items-center justify-center">empty!</div>}
+
+            <div className="mt-6">
+              {rows.map((row, index) => (
+                <div key={index} className="space-y-2">
+                  <label className="tracking-[-0.36px inline-block w-full text-left text-xs font-light leading-[18px] text-text-secondary">
+                    {row.title}
+                  </label>
+                  <div className="flex h-11 items-center rounded border border-text-secondary px-4">
+                    <input
+                      type="text"
+                      readOnly
+                      className="w-full truncate border-none text-sm font-light text-text-black outline-none font-ProtoMono"
+                      value={row.value}
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
         {canList && (
-          <button
-            className='h-[60px] w-[280px] bg-[url(/images/profile/modal/button-list-mobile.png)] bg-full lg:h-[75px] lg:w-full lg:bg-[url(/images/profile/modal/button-list.png)]'
-            onClick={handleSubmit}
-          />
+          <ButtonImage varirant="primary-asset" onClick={handleSubmit} className="w-[58%] h-fit mx-auto mt-4">
+            List
+          </ButtonImage>
         )}
       </div>
     </ModalContainer>
   )
 }
+

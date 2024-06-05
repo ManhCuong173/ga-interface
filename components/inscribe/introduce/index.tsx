@@ -19,8 +19,8 @@ const Banner = () => {
               text-base lg:text-xl leadig-[150%] font-[400] 
               font-Roboto text-center max-w-[70%] sm:max-w-[540px] lg:max-w-[800px]"
               >
-                Golden Apple only charges the service fee for the first 25 inscriptionsins a single inscribing batch
-                order, up to a maximum of 1000 inscriptions.
+                The service fee for inscribing applies only to the first 25 inscriptions. In a single batch order, you
+                can inscribe up to a maximum of 1000 items.
               </div>
 
               <ButtonImage varirant="outline" className="rounded-xl text-base lg:text-xl font-Roboto border-secondary">

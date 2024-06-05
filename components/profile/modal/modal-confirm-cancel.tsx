@@ -25,7 +25,6 @@ export default function ModalConfirmCancel({
   nftImage,
   nftName,
   inscriptionNumber,
-  backdropClassname,
   handleClose,
   handleSubmit,
 }: Props) {
@@ -41,15 +40,15 @@ export default function ModalConfirmCancel({
         <div className="flex w-full flex-col items-center gap-3">
           <div className="space-y-6 font-ProtoMono">
             <div className="relative mx-auto items-center justify-center text-[24px] font-medium leading-[39px] tracking-tighter">
-              Are you sure to cancel <br /> listing
+              Are you sure you want to cancel <br /> listing
               <span className="text-red-light ml-1">
                 {nftName} APPLE #{number}?
               </span>
             </div>
           </div>
           <p className="w-full text-center text-sm font-light leading-6 text-black1 lg-w-[523px]">
-            Cancelling this NFT listing will remove it from the marketplace and any associated transactions or bids will
-            be lost. If you proceed, you'll need to relist the NFT.
+            Cancelling this NFT listing will remove it from the marketplace. Keep your NFTs listed if you still want to
+            sell them.
           </p>
         </div>
 

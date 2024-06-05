@@ -115,14 +115,14 @@ export default function LuckyDraw() {
       onClick={(e) => {
         e.stopPropagation()
         e.preventDefault()
-        setShowYourPrize(true)
+        setShowHistory(true)
       }}
       ref={ref}
     >
       <WrapperHero src="/images/home/bg-lucky-draw.svg">
         <div className="flex justify-end h-14 md:h-16 md:w-full absolute top-[-1px] right-0">
-          <div className={cn('bg-secondary opacity-[0.3]')} style={{ width: ratio }} />
-          <div className="bg-secondary" style={{ width: ratio }} />
+          <div className={cn('bg-secondary opacity-[0.3] will-change-auto')} style={{ width: ratio }} />
+          <div className="bg-secondary  will-change-auto " style={{ width: ratio }} />
         </div>
 
         <div className="flex flex-1 items-center justify-center px-4">

@@ -105,7 +105,11 @@ export default function YouPrize({ open, onClose }: Props) {
         onClose()
       }}
     >
-      <div className="lg:overflow-x-[unset] relative mx-auto my-8 h-fit w-full max-w-[calc(100vw-32px)] overflow-x-auto rounded bg-white p-4 md:w-[536px] md:p-10 lg:w-[872px]">
+      <div
+        className="lg:overflow-x-[unset] relative mx-auto my-8 
+      w-full max-w-[calc(100vw-32px)] overflow-x-auto 
+      rounded bg-white p-4 md:h-[90vh] md:w-[536px] md:p-10 lg:w-[872px]"
+      >
         <button
           onClick={() => {
             onClose()
