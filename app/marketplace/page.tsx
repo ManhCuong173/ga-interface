@@ -83,8 +83,6 @@ const Marketplace = () => {
       <BannerMarketPlace />
 
       <div className="relative">
-        {isComingSoonMode && <ComingSoon />}
-
         <div className="relative z-10 mx-auto px-4 sm:py-10 lg:px-[60px] w-full  lg:max-w-[calc(1280px+120px)]">
           <div className="mx-auto flex w-full items-center gap-[10px] border-b border-bgAlt max-sm:my-4">
             {tabs.map((_tab, index) => {
@@ -104,6 +102,7 @@ const Marketplace = () => {
 
           <div className="min-h-[800px] ">{renderContentByTab}</div>
         </div>
+        {isComingSoonMode && <ComingSoon />}
       </div>
       <Footer />
     </div>
@@ -111,3 +110,4 @@ const Marketplace = () => {
 }
 
 export default Marketplace
+

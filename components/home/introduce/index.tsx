@@ -1,6 +1,7 @@
 import { ButtonImage } from '@/components/button'
 import Counter from '@/components/counter'
 import { appearAnimation } from '@/constants/animation.constant'
+import { urlRoute } from '@/constants/routes'
 import ArtWorkIcon from '@/icons/home/artwork.svg'
 import Auction from '@/icons/home/auction.svg'
 import CreatorIcon from '@/icons/home/creator.svg'
@@ -8,6 +9,7 @@ import NFTIconMobile from '@/icons/home/home-introduce-nft-mobile.svg'
 import NFTIcon from '@/icons/home/home-introduce-nft.svg'
 import { motion, useInView } from 'framer-motion'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import WrapperHero from '../WrapperHero'
 
@@ -49,12 +51,14 @@ export default function Introduce() {
               Ordinals NFT and others) to Ethereum (and other Layer2) networks.
             </div>
 
-            <ButtonImage
-              varirant="primary-asset"
-              className="text-lg font-medium text-red-light w-64 h-14 mt-10 lg:mt-[50px] p-0"
-            >
-              <div className="text-white font-Roboto text-base font-medium leading-[150%]">Mint NFT Now</div>
-            </ButtonImage>
+            <Link href={urlRoute.mint}>
+              <ButtonImage
+                varirant="primary-asset"
+                className="text-lg font-medium text-red-light w-64 h-14 mt-10 lg:mt-[50px] p-0"
+              >
+                <div className="text-white font-Roboto text-base font-medium leading-[150%]">Mint NFT Now</div>
+              </ButtonImage>
+            </Link>
           </div>
         </div>
 

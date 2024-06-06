@@ -54,7 +54,7 @@ export default function Dropdown({ label, options, className, value, setValue }:
           setShow((prev) => !prev)
         }}
       >
-        <div className="flex item-centers justify-center">
+        <div className="flex item-centers justify-center text-xs lg:text-base font-Roboto text-nowrap">
           {label || ' ' + ''}
           {!label && (
             <span className={`${label && 'text-red-light'}`}>

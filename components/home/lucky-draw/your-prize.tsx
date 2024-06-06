@@ -87,7 +87,7 @@ export default function YouPrize({ open, onClose }: Props) {
       const _rounds = [
         ...roundsData.map((round) => {
           return {
-            label: `ROUNDED ${round.round} (${new Date(round.timecreate * 1000).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' })})`,
+            label: `Rounded ${round.round} (${new Date(round.timecreate * 1000).toLocaleDateString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' })})`,
             value: round.round.toString(),
           }
         }),
@@ -106,24 +106,31 @@ export default function YouPrize({ open, onClose }: Props) {
       }}
     >
       <div
-        className="lg:overflow-x-[unset] relative mx-auto my-8 
-      w-full max-w-[calc(100vw-32px)] overflow-x-auto 
-      rounded bg-white p-4 md:h-[90vh] md:w-[536px] md:p-10 lg:w-[872px]"
+        className="lg:overflow-x-[unset] relative mx-auto my-8 lg:h-[800px] 
+        w-screen  overflow-x-auto rounded 
+        bg-white p-5 md:w-[536px] md:px-[22px] 
+        md:py-10 h-[85vh] lg:w-[872px]"
       >
         <button
           onClick={() => {
             onClose()
           }}
-          className="absolute right-6 top-6 z-10 outline-none md:right-10 md:top-10 hover:bg-[rgba(212,199,156,0.30)] hover:rounded-md"
+          className="absolute right-3 top-3 z-10 outline-none md:right-10 md:top-10 hover:bg-[rgba(212,199,156,0.30)] hover:rounded-md"
         >
-          <Image src={closeModalButton} alt="" width={44} height={44} />
+          <Image
+            src={closeModalButton}
+            alt=""
+            width={44}
+            height={44}
+            className="w-[38px] h-[38px] lg:w-[44px] lg:h-[44px]"
+          />
         </button>
 
-        <div className="size-full space-y-10">
-          <div className="space-y-4">
-            <h2 className="text-[32px] font-medium leading-10 text-red-light">YOUR PRIZE</h2>
+        <div className="size-full space-y-2 lg:space-y-10">
+          <div className="lg:px-[18px]">
+            <h2 className="text-[21px] lg:text-[32px] font-medium leading-10 text-red-light">Your prize</h2>
           </div>
-          <div className="space-y-4">
+          <div className="my-2 space-y-4 lg:space-y-8 pb-4">
             <div className="flex flex-col justify-end gap-4 lg:flex-row">
               <Dropdown
                 options={rounds}
@@ -134,7 +141,7 @@ export default function YouPrize({ open, onClose }: Props) {
             </div>
             <div className="max-w-full overflow-x-auto">
               <div className="min-w-[500px] space-y-4">
-                <div className="flex h-11 rounded border border-[#EEE0E0] text-center text-sm font-normal leading-5 text-red-darker font-Roboto ">
+                <div className="flex h-11 rounded border border-[#EEE0E0] text-center text-xs lg:text-sm font-normal leading-5 text-red-darker lg:mx-[18px] font-Roboto space-x-3 text-nowrap">
                   <div className="flex h-full w-10 items-center pl-3">No</div>
                   <div className="flex h-full w-[200px] items-center pl-3 lg:w-[250px]">Prize</div>
                   <div className="flex h-full w-[192px] items-center whitespace-nowrap pl-3">Index number</div>
@@ -182,7 +189,7 @@ interface PropsRow {
 
 function Row({ item, index, round, refetch }: PropsRow) {
   return (
-    <div className="flex h-12 rounded bg-[#FAF6F6] text-center text-sm font-light leading-5 text-[#9F232D]">
+    <div className="flex h-12 rounded bg-[#FAF6F6] text-center text-xs lg:text-sm font-light leading-5 text-[#9F232D]">
       <div className="flex h-full w-10 items-center pl-3">{index}</div>
       <div className="flex h-full w-[200px] items-center gap-2.5 pl-3 lg:w-[250px]">
         {item?.top === 'special' && <Image src={specialPrize} alt="" className="size-4 min-w-4" />}
@@ -197,7 +204,7 @@ function Row({ item, index, round, refetch }: PropsRow) {
           {item.index_number}
         </Link>
       </div>
-      <div className="flex h-full w-[200px] items-center justify-end pr-10 text-base font-medium leading-6 lg:flex-1">
+      <div className="flex h-full w-[200px] items-center justify-end pr-10 font-medium leading-6 lg:flex-1">
         {item.lucky_number}
       </div>
       <div className="flex h-full w-[200px] items-center justify-end pr-4 text-base font-medium leading-6">

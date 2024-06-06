@@ -56,7 +56,25 @@ const BannerMarketPlace = () => {
                       className="flex items-center justify-center gap-2"
                     >
                       <span className="text-sm font-Roboto font-normal text-black1 lg:text-base text-center leading-3/2">
-                        Every NFT in the Golden Apple collection is unique, each with its own series number.
+                        Search for the NFT art that resonates with you
+                      </span>
+                    </motion.div>
+                    <motion.div
+                      {...appearAnimation}
+                      transition={{ duration: 0.3, delay: 0.5 }}
+                      className="flex items-center justify-center gap-2"
+                    >
+                      <span className="text-sm font-Roboto font-normal text-black1 lg:text-base text-center leading-3/2">
+                        Gather the NFTs that match your style
+                      </span>
+                    </motion.div>
+                    <motion.div
+                      {...appearAnimation}
+                      transition={{ duration: 0.3, delay: 0.5 }}
+                      className="flex items-center justify-center gap-2"
+                    >
+                      <span className="text-sm font-Roboto font-normal text-black1 lg:text-base text-center leading-3/2">
+                        Trade NFTs effortlessly and securely in our marketplace
                       </span>
                     </motion.div>
                   </div>

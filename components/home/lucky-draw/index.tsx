@@ -62,7 +62,13 @@ const CoupleButton: React.FC<{ className?: string }> = ({ className }) => {
       <div className="flex items-center justify-center h-[32px] w-[62px] rounded-[8px]  font-normal leading-[150%] tracking-[-0.54px] font-Roboto border-red-light border-[1px] py-[1px] px-[14px]">
         Prize
       </div>
-      <div className="flex items-center justify-center h-[32px] w-[73px] rounded-[8px]  font-normal leading-[150%] tracking-[-0.54px] font-Roboto bg-[rgba(212,199,156,0.3)] text-text-secondary py-[1px] px-[14px]">
+      <div
+        className="flex items-center justify-center h-[32px] w-[73px] 
+      rounded-[8px]  font-normal leading-[150%] tracking-[-0.54px] 
+      font-Roboto  text-text-secondary py-[1px] px-[14px]
+      cursor-pointer
+      "
+      >
         History
       </div>
     </div>
@@ -113,8 +119,6 @@ export default function LuckyDraw() {
       id="section-lucky-draw"
       className="snap-center text-_white"
       onClick={(e) => {
-        e.stopPropagation()
-        e.preventDefault()
         setShowHistory(true)
       }}
       ref={ref}
@@ -213,15 +217,11 @@ export default function LuckyDraw() {
                 <div className="w-full h-full">
                   <Link href={urlRoute.inscribe}>
                     <ButtonImage
-                      onClick={() => {
-                        if (address) {
-                          setShowYourPrize(true)
-                        } else {
-                          typeof window !== 'undefined' && (window as any).unisat.requestAccounts()
-                        }
-                      }}
                       varirant="primary-asset"
                       className="text-[3vw] sm:text-base whitespace-nowrap lg:text-lg  font-medium text-secondary w-full h-full font-Roboto"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                      }}
                     >
                       Try Now
                     </ButtonImage>

@@ -14,7 +14,7 @@ export default function Banner() {
               <h1 className="w-fit  font-semibold tracking-[0.96px] lg:tracking-[-2.1px]  lg:text-[70px] lg:leading-[84.01px]  hidden lg:inline-block">
                 Create your own
               </h1>
-              <h1 className="w-fit text-[32px]  font-semibold tracking-[0.96px] lg:tracking-[-2.1px] inline-block lg:hidden">
+              <h1 className="w-fit text-[32px] md:text-[50px] font-semibold tracking-[0.96px] lg:tracking-[-2.1px] inline-block lg:hidden">
                 Create your
               </h1>
             </motion.div>
@@ -32,7 +32,7 @@ export default function Banner() {
                 <span className="background-banner-home-highlight-text p-2  rounded-xl text-red-light">NFT</span> Dream
                 Gallery
               </h1>
-              <h1 className="w-fit text-[32px]  font-semibold tracking-[0.96px] lg:tracking-[-2.1px] inline-block lg:hidden">
+              <h1 className="w-fit text-[32px] md:text-[50px] font-semibold tracking-[0.96px] lg:tracking-[-2.1px] inline-block lg:hidden">
                 Own <span className="background-banner-home-highlight-text p-2  rounded-xl  text-red-light">NFT</span>{' '}
                 Dream
               </h1>
@@ -47,7 +47,7 @@ export default function Banner() {
                 end: { opacity: 1 },
               }}
             >
-              <h1 className="w-fit text-[32px]  font-semibold tracking-[0.96px] lg:tracking-[-2.1px] inline-block lg:hidden">
+              <h1 className="w-fit text-[32px] md:text-[50px] font-semibold tracking-[0.96px] lg:tracking-[-2.1px] inline-block lg:hidden">
                 Gallery
               </h1>
             </motion.div>
@@ -62,9 +62,11 @@ export default function Banner() {
               start: { opacity: 0 },
               end: { opacity: 1 },
             }}
-            className="max-w-[269px] mt-[53px] text-[21px] leadig-[150%] font-[400] lg:max-w-[383px] font-Roboto text-center"
+            className="max-w-[80vw] mt-[53px] text-[16px] md:text-[18px] lg:text-[19px] leadig-[150%] font-[400] lg:max-w-[720px] font-Roboto text-center"
           >
-            Get started with the easiest and most secure platform to buy and collect NFTs
+            Our Golden Apple BRC-20 NFT collection is more than just a digital asset. It represents the five elements of
+            nature: Fire, Water, Wood, Metal, and Earth. Each NFT carries unique symbolism, which may bring fortune,
+            wealth, and prosperity. Every NFT also serves as a golden ticket, offering a chance to win at least 1 BTC.
           </motion.div>
         </div>
       </WrapperHero>

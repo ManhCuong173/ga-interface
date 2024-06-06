@@ -1,14 +1,6 @@
 'use client'
 
-import {
-  BarElement,
-  CategoryScale,
-  Chart as ChartJS,
-  Legend,
-  LinearScale,
-  Title,
-  Tooltip,
-} from 'chart.js'
+import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js'
 import { Chart } from 'chart.js/auto'
 import { CSSProperties, useEffect, useRef } from 'react'
 
@@ -123,7 +115,7 @@ export default function MixedChart({ ...props }: Props) {
             },
             title: {
               display: true,
-              text: 'AVerage price (btc)',
+              text: 'AVG price (BTC)',
               padding: 10,
               font: {
                 family: 'Proto Mono',
@@ -173,3 +165,4 @@ export default function MixedChart({ ...props }: Props) {
     </div>
   )
 }
+

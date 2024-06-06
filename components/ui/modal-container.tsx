@@ -37,7 +37,7 @@ export default function ModalContainer({ ...props }: Props) {
             e.stopPropagation()
           }}
         >
-          <div className="flex min-h-[500px] justify-center px-4 text-center font-ProtoMono text-text-primary lg:px-0">
+          <div className="flex min-h-[500px] justify-center text-center font-ProtoMono text-text-primary px-0">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
