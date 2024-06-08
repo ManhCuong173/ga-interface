@@ -4,9 +4,9 @@ import { ElementType } from '@/utils/const'
 
 export const NFTGalleryList: CardProps[] = [
   {
-    icon: '/images/home/nft-gallery/cards/fire/fire-icon.png',
-    bgMobile: '/images/home/nft-gallery/cards/fire/fire-bg-mobile.png',
-    bgDesktop: '/images/home/nft-gallery/cards/fire/fire-bg.png',
+    icon: '/images/home/nft-gallery/cards/fire/fire-icon.svg',
+    bgMobile: '/images/home/nft-gallery/cards/fire/fire-bg-mobile.svg',
+    bgDesktop: '/images/home/nft-gallery/cards/fire/fire-bg.svg',
     color: '#56090B',
 
     title: 'The Ignition Your Fortune',
@@ -19,9 +19,9 @@ export const NFTGalleryList: CardProps[] = [
     element: ElementType[0],
   },
   {
-    icon: '/images/home/nft-gallery/cards/earth/earth-icon.png',
-    bgMobile: '/images/home/nft-gallery/cards/earth/earth-bg-mobile.png',
-    bgDesktop: '/images/home/nft-gallery/cards/earth/earth-bg.png',
+    icon: '/images/home/nft-gallery/cards/earth/earth-icon.svg',
+    bgMobile: '/images/home/nft-gallery/cards/earth/earth-bg-mobile.svg',
+    bgDesktop: '/images/home/nft-gallery/cards/earth/earth-bg.svg',
     color: '#6B3C02',
 
     title: 'The Root of Success',
@@ -34,9 +34,9 @@ export const NFTGalleryList: CardProps[] = [
     element: ElementType[1],
   },
   {
-    icon: '/images/home/nft-gallery/cards/mental/mental-icon.png',
-    bgMobile: '/images/home/nft-gallery/cards/mental/mental-bg-mobile.png',
-    bgDesktop: '/images/home/nft-gallery/cards/mental/mental-bg.png',
+    icon: '/images/home/nft-gallery/cards/mental/mental-icon.svg',
+    bgMobile: '/images/home/nft-gallery/cards/mental/mental-bg-mobile.svg',
+    bgDesktop: '/images/home/nft-gallery/cards/mental/mental-bg.svg',
     color: '#A17015',
 
     title: 'The Magnet of Affluence',
@@ -48,9 +48,9 @@ export const NFTGalleryList: CardProps[] = [
     element: ElementType[2],
   },
   {
-    icon: '/images/home/nft-gallery/cards/wood/wood-icon.png',
-    bgMobile: '/images/home/nft-gallery/cards/wood/wood-bg-mobile.png',
-    bgDesktop: '/images/home/nft-gallery/cards/wood/wood-bg.png',
+    icon: '/images/home/nft-gallery/cards/wood/wood-icon.svg',
+    bgMobile: '/images/home/nft-gallery/cards/wood/wood-bg-mobile.svg',
+    bgDesktop: '/images/home/nft-gallery/cards/wood/wood-bg.svg',
     color: '#023129',
 
     title: 'The Catalyst of Prosperity',
@@ -63,9 +63,9 @@ export const NFTGalleryList: CardProps[] = [
     element: ElementType[3],
   },
   {
-    icon: '/images/home/nft-gallery/cards/water/water-icon.png',
-    bgMobile: '/images/home/nft-gallery/cards/water/water-bg-mobile.png',
-    bgDesktop: '/images/home/nft-gallery/cards/water/water-bg.png',
+    icon: '/images/home/nft-gallery/cards/water/water-icon.svg',
+    bgMobile: '/images/home/nft-gallery/cards/water/water-bg-mobile.svg',
+    bgDesktop: '/images/home/nft-gallery/cards/water/water-bg.svg',
     color: '#11184C',
 
     title: 'The Flow of Wealth',

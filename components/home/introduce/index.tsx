@@ -51,10 +51,10 @@ export default function Introduce() {
               Ordinals NFT and others) to Ethereum (and other Layer2) networks.
             </div>
 
-            <Link href={urlRoute.mint}>
+            <Link href={urlRoute.inscribe}>
               <ButtonImage
                 varirant="primary-asset"
-                className="text-lg font-medium text-red-light w-64 h-14 mt-10 lg:mt-[50px] p-0"
+                className="text-lg font-medium text-red-light w-64 h-14 mt-10 lg:mt-[50px] p-0 cursor:pointer"
               >
                 <div className="text-white font-Roboto text-base font-medium leading-[150%]">Mint NFT Now</div>
               </ButtonImage>

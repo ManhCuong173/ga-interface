@@ -101,7 +101,9 @@ export default function YouPrize({ open, onClose }: Props) {
   return (
     <ModalContainer
       open={open}
-      handleClose={() => {
+      handleClose={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
         onClose()
       }}
     >
@@ -112,7 +114,9 @@ export default function YouPrize({ open, onClose }: Props) {
         md:py-10 h-[85vh] lg:w-[872px]"
       >
         <button
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault()
+            e.stopPropagation()
             onClose()
           }}
           className="absolute right-3 top-3 z-10 outline-none md:right-10 md:top-10 hover:bg-[rgba(212,199,156,0.30)] hover:rounded-md"

@@ -2,8 +2,12 @@
 
 import { ButtonImage } from '@/components/button'
 import WrapperHero from '@/components/home/WrapperHero'
+import { useState } from 'react'
+import InscribeGuildModal from './InscribeGuildModal'
 
 const Banner = () => {
+  const [isPresentOpenInscribeGuildModal, setOpenInscribeGuiidModal] = useState(false)
+
   return (
     <div id="banner" className="snap-center">
       <WrapperHero className="min-h-[52vh] md:min-h-[70vh]" src="/images/home/bg-nft.svg">
@@ -23,13 +27,24 @@ const Banner = () => {
                 can inscribe up to a maximum of 1000 items.
               </div>
 
-              <ButtonImage varirant="outline" className="rounded-xl text-base lg:text-xl font-Roboto border-secondary">
+              <ButtonImage
+                varirant="outline"
+                className="rounded-xl text-base lg:text-xl font-Roboto border-secondary"
+                onClick={() => {
+                  setOpenInscribeGuiidModal(true)
+                }}
+              >
                 Guide on Inscribe
               </ButtonImage>
             </div>
           </div>
         </div>
       </WrapperHero>
+      <InscribeGuildModal
+        open={isPresentOpenInscribeGuildModal}
+        handleClose={() => setOpenInscribeGuiidModal(false)}
+        className="w-full h-[80vh]"
+      />
     </div>
   )
 }

@@ -59,7 +59,7 @@ const Progress: React.FC<{ progress: number; className?: string }> = ({ progress
 const CoupleButton: React.FC<{ className?: string }> = ({ className }) => {
   return (
     <div className={cn('flex flex-row justify-center gap-2 text-red-light', className)}>
-      <div className="flex items-center justify-center h-[32px] w-[62px] rounded-[8px]  font-normal leading-[150%] tracking-[-0.54px] font-Roboto border-red-light border-[1px] py-[1px] px-[14px]">
+      <div className="flex items-center justify-center h-[32px] w-[62px] rounded-[8px]  font-normal leading-[150%] tracking-[-0.54px] font-Roboto border-red-light border-[1px] py-[1px] px-[14px] cursor-pointer">
         Prize
       </div>
       <div

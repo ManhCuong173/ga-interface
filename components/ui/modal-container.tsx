@@ -3,7 +3,7 @@ import { Fragment, ReactNode } from 'react'
 
 type Props = {
   open: boolean
-  handleClose: () => void
+  handleClose: (e?: any) => void
   children?: ReactNode
   backdropClassname?: string
 }
@@ -33,7 +33,7 @@ export default function ModalContainer({ ...props }: Props) {
         <div
           className="fixed inset-0 overflow-y-auto flex items-center justify-center z-20"
           onClick={(e) => {
-            props.handleClose()
+            props.handleClose(e)
             e.stopPropagation()
           }}
         >

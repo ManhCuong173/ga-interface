@@ -43,8 +43,6 @@ export default function ProfileInfo({ profile, refetch }: Props) {
     const current = new URLSearchParams(Array.from(searchParams.entries()))
     current.delete(key1)
     current.delete(key2)
-    const search = current.toString()
-    const query = search ? `?${search}` : ''
     router.push(`${pathname}`)
   }
   useEffect(() => {
