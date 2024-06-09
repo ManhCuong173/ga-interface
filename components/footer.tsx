@@ -5,7 +5,6 @@ import logo from '@/images/commons/logo.svg'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import Link from 'next/link'
-import LanguageSelect from './header/language-select'
 
 const Social: React.FC<{ className?: string; size?: string }> = ({ className, size }) => {
   return (
@@ -59,7 +58,7 @@ const Footer = () => {
             </Link>
           </div>
 
-          <LanguageSelect className="border border-bgAlt rounded-md w-max h-10" mode="solid" />
+          {/* <LanguageSelect className="border border-bgAlt rounded-md w-max h-10" mode="solid" /> */}
         </div>
       </div>
       <div className="py-4 px-5 lg:py-6 lg:px-20 flex flex-col-reverse gap-4 lg:flex-row justify-between border-t-[1px] border-solid border-bgAlt">
