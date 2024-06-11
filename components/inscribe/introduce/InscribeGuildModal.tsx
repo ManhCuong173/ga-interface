@@ -13,7 +13,7 @@ const InscribeGuildModal: React.FC<Props> = ({ open, handleClose, className }) =
   return (
     <ModalContainer handleClose={handleClose} open={open}>
       <ModalLayout>
-        <FileViewer src={'/mint-guildline.pdf'} className={cn('w-full h-auto', className)} />
+        <FileViewer src={'/mint-guildline.pdf'} className={cn('w-full h-auto', className)} hideToolbar />
       </ModalLayout>
     </ModalContainer>
   )
