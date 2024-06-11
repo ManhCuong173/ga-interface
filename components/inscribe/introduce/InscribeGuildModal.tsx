@@ -1,7 +1,6 @@
-import FileViewer from '@/components/common/FileViewer'
 import { ModalLayout } from '@/components/marketplace/Buy/ModalLayout'
 import ModalContainer from '@/components/ui/modal-container'
-import { cn } from '@/lib/utils'
+import { EmbedPDF } from '@simplepdf/react-embed-pdf'
 
 interface Props {
   open: boolean
@@ -13,7 +12,7 @@ const InscribeGuildModal: React.FC<Props> = ({ open, handleClose, className }) =
   return (
     <ModalContainer handleClose={handleClose} open={open}>
       <ModalLayout>
-        <FileViewer src={'/mint-guildline.pdf'} className={cn('w-full h-auto', className)} hideToolbar />
+        <EmbedPDF mode="inline" style={{ width: '100%', height: 800 }} documentURL="/mint-guildline.pdf" />
       </ModalLayout>
     </ModalContainer>
   )

@@ -1438,6 +1438,11 @@
     "@noble/hashes" "~1.3.2"
     "@scure/base" "~1.1.4"
 
+"@simplepdf/react-embed-pdf@^1.8.0":
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/@simplepdf/react-embed-pdf/-/react-embed-pdf-1.8.0.tgz#722239af34d6a9273273052e11d98a3532ec6ded"
+  integrity sha512-sLQXPBR5TWNVbIPjHK6KV5L2fzp5ZEfYNWWvPPGmJg72yYFiixaQ7+4m4JddQo7WkhNi3G6Nv6syvtai+2gq2A==
+
 "@sinclair/typebox@^0.31.28":
   version "0.31.28"
   resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.31.28.tgz#b68831e7bc7d09daac26968ea32f42bedc968ede"
@@ -6684,7 +6689,7 @@ pbkdf2@^3.0.3, pbkdf2@^3.1.2:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-pdfjs-dist@*, pdfjs-dist@^4.3.136:
+pdfjs-dist@*:
   version "4.3.136"
   resolved "https://registry.yarnpkg.com/pdfjs-dist/-/pdfjs-dist-4.3.136.tgz#09cd7f73da5bd0eaabc9067f07a6f91b1f0beb95"
   integrity sha512-gzfnt1qc4yA+U46golPGYtU4WM2ssqP2MvFjKga8GEKOrEnzRPrA/9jogLLPYHiA3sGBPJ+p7BdAq+ytmw3jEg==
