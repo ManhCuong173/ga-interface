@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
   images: {
     remotePatterns: [
@@ -16,6 +17,11 @@ const nextConfig = {
       },
     ],
   },
+  // i18n: {
+  //   locales: ['en', 'cn'],
+  //   defaultLocale: 'en',
+  //   localeDetection: false,
+  // },
 }
 
 export default nextConfig

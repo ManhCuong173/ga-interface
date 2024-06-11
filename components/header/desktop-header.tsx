@@ -56,7 +56,7 @@ export default function DesktopHeader() {
         !show && isHomePage
           ? '!-translate-y-full'
           : mode === 'transparent' && !isScrollOverSidebarHeight
-            ? 'border border-[#FFF4DD] border-opacity-40 !text-_white backdrop-blur-sm'
+            ? 'border border-[#FFF4DD] border-opacity-40 !text-_white backdrop-blur-md'
             : 'border-[#D4C79C] bg-[#FAF5F0] text-black1'
       } fixed top-0 z-50 hidden h-[67px] w-full origin-top translate-y-0 border-b text-black1 transition-all duration-500 lg:flex lg:h-[67px]`}
     >

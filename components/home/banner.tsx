@@ -1,8 +1,5 @@
 'use client'
 
-import { appearAnimation } from '@/constants/animation.constant'
-import { motion } from 'framer-motion'
-
 export default function Banner() {
   return (
     <div id="banner" className="snap-center relative h-screen w-full ">
@@ -10,7 +7,7 @@ export default function Banner() {
         <source src="/video/home-banner-video.mp4" type="video/mp4" />
         Sorry, your browser doesn't support embedded videos.
       </video>
-      <div className="absolute top-0 w-full h-full z-20">
+      {/* <div className="absolute top-0 w-full h-full z-20">
         <div className="relative mx-auto flex flex-1 pt-[72px] h-full max-w-container flex-col items-center justify-center text-white lg:items-center lg:justify-center lg:pr-[60px] lg:pt-[98px]">
           <div className="space-y-4 text-center">
             <motion.div {...appearAnimation} transition={{ duration: 0.5, delay: 0.5 }}>
@@ -72,7 +69,7 @@ export default function Banner() {
             wealth, and prosperity. Every NFT also serves as a golden ticket, offering a chance to win at least 1 BTC.
           </motion.div>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }
