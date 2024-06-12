@@ -26,13 +26,6 @@ export default function MyNFTs() {
 
   const [selectedAsset, setSelectedAsset] = useState<UserAsset>(emptyAsset)
   const [price, setPrice] = useState('')
-  console.log(
-    '%cMyProject%cline:28%cprice',
-    'color:#fff;background:#ee6f57;padding:3px;border-radius:2px',
-    'color:#fff;background:#1f3c88;padding:3px;border-radius:2px',
-    'color:#fff;background:rgb(3, 22, 52);padding:3px;border-radius:2px',
-    price,
-  )
   const queryClient = useQueryClient()
   const [modalOpen, setModalOpen] = useState<'nft-info' | 'list-nft' | 'list-success' | 'confirm-cancel' | null>(null)
   const [isListing, startListingTransition] = useTransition()
