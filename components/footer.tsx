@@ -37,7 +37,7 @@ const Footer = () => {
               <Social className=" lg:hidden" size="max-w-[42px]" />
             </div>
             <div className="flex flex-col">
-              <p className="w-[316.85px] text-xs font-medium font-Roboto leading-[1.4] tracking-[0.15px] text-black1  lg:w-[379.57px] lg:text-sm">
+              <p className="w-[316.85px] text-xs font-medium font-Roboto leading-[1.4] tracking-[0.15px] text-black1  lg:w-[379.57px] lg:text-sm cursor:pointer">
                 The world’s first and largest digital marketplace for crypto collectibles and non-fungible tokens
                 (NFTs). Buy, sell, and discover exclusive digital items.
               </p>
@@ -63,7 +63,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="py-4 px-5 lg:py-6 lg:px-20 flex flex-col-reverse gap-4 lg:flex-row justify-between border-t-[1px] border-solid border-bgAlt">
-        <div className="font-Roboto text-base">@ 2023 by golden apple. All rights reserved.</div>
+        <div className="font-Roboto text-base hover">@ 2023 by golden apple. All rights reserved.</div>
 
         <div className="flex items-center font-Roboto gap-6 text-xs lg:text-sm font-medium  text-black1 ">
           <Link href={urlRoute.privacy}>Privacy Policy</Link>

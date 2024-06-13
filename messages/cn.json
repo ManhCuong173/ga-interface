@@ -1,9 +1,11 @@
 {
   "Navigation": {
-    "home": "homee  ",
-    "marketplace": "marketplacee"
+    "Home": "首页",
+    "Marketplace": "市场",
+    "Mint": "铸造",
+    "About": "关于"
   },
   "Home": {
-    "mint": "mintt"
+    "Artworks": "艺术品"
   }
 }

@@ -6,7 +6,7 @@ import ProfileInfo from '@/components/profile/profile-info'
 import ProfileInfoMobile from '@/components/profile/profile-infor-mobile'
 import useGetProfile from '@/hooks/api/useGetProfile'
 
-export default function Profile() {
+export default function Profile({ params: { locale } }: { params: { locale: string } }) {
   const { data: profile, refetch } = useGetProfile()
 
   return (

@@ -1,9 +1,11 @@
 {
   "Navigation": {
-    "home": "home",
-    "marketplace": "marketplace"
+    "Home": "Home",
+    "Marketplace": "Marketplace",
+    "Mint": "Mint",
+    "About": "About"
   },
   "Home": {
-    "mint": "mint"
+    "Artworks": "Artworks"
   }
 }

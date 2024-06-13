@@ -41,7 +41,7 @@ const tabs = [
 ]
 const isComingSoonMode = true
 
-const Marketplace = () => {
+const Marketplace = ({ params: { locale } }: { params: { locale: string } }) => {
   const dispatch = useAppDispatch()
   const params = useSearchParams()
   const router = useRouter()

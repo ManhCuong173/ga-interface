@@ -55,7 +55,7 @@ const PAGE_SIZE = 10000
 
 export default function YouPrize({ open, onClose }: Props) {
   const [rounds, setRounds] = useState<Option[]>([{ label: 'No Data', value: '' }])
-
+  const [userInscriptionIds, setUserInscriptionIds] = useState<string[]>([])
   const [selectedRound, setSelectedRound] = useState('')
   const [selectedPrize, setSelectedPrize] = useState(prizeOptions[0].value)
 
@@ -67,6 +67,7 @@ export default function YouPrize({ open, onClose }: Props) {
       prize: prizeParams?.toLocaleLowerCase() === 'all' ? '' : prizeParams?.toLocaleLowerCase(),
       round: selectedRound.toLowerCase(),
     })
+
     return data.data
   }
   const { data: roundsData } = useQuery({
@@ -81,6 +82,22 @@ export default function YouPrize({ open, onClose }: Props) {
     refetchIntervalInBackground: true,
     enabled: !!open && !!selectedRound,
   })
+
+  const getListTxidInscription = async () => {
+    try {
+      let res = await (window as any).unisat.getInscriptions(0, 10000)
+      if (res?.list?.length > 0) {
+        setUserInscriptionIds(res.list.map((inscription: any) => inscription.inscriptionId))
+      }
+    } catch (e) {
+      console.log('error getting list tx id inscription: ', e)
+      return []
+    }
+  }
+
+  useEffect(() => {
+    if (open) getListTxidInscription()
+  }, [open])
 
   useEffect(() => {
     if (roundsData && roundsData.length) {
@@ -102,8 +119,6 @@ export default function YouPrize({ open, onClose }: Props) {
     <ModalContainer
       open={open}
       handleClose={(e) => {
-        e.preventDefault()
-        e.stopPropagation()
         onClose()
       }}
     >
@@ -160,17 +175,21 @@ export default function YouPrize({ open, onClose }: Props) {
                   ) : (
                     <>
                       {(data || data?.data.prize?.length > 0) &&
-                        data?.data?.prizes?.map((item: HistoryLuckyDraw, index: number) => {
-                          return (
-                            <Row
-                              item={item}
-                              key={index}
-                              round={Number(selectedRound)}
-                              index={index + 1}
-                              refetch={refetch}
-                            />
-                          )
-                        })}
+                        data.data.prizes
+                          ?.filter((item: any) => {
+                            return userInscriptionIds.includes(item.id_inscription)
+                          })
+                          .map((item: HistoryLuckyDraw, index: number) => {
+                            return (
+                              <Row
+                                item={item}
+                                key={index}
+                                round={Number(selectedRound)}
+                                index={index + 1}
+                                refetch={refetch}
+                              />
+                            )
+                          })}
                       {data && !data?.data?.prizes && <p>No data</p>}
                     </>
                   )}

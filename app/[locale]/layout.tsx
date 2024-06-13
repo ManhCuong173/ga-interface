@@ -5,7 +5,7 @@ import SolanaProvider from '@/providers/solana.provider'
 import ReduxStoreProvider from '@/providers/store.provider'
 import TanstackProviders from '@/providers/tanstack.provider'
 import { NextIntlClientProvider } from 'next-intl'
-import { getMessages } from 'next-intl/server'
+import { getMessages, unstable_setRequestLocale } from 'next-intl/server'
 
 import { Suspense } from 'react'
 import { ToastContainer } from 'react-toastify'
@@ -30,6 +30,7 @@ export default async function RootLayout({
   children: React.ReactNode
   params: never
 }>) {
+  unstable_setRequestLocale(locale)
   const messages = await getMessages()
   return (
     <html lang={locale}>

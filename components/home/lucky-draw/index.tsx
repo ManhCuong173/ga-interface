@@ -201,7 +201,9 @@ export default function LuckyDraw() {
               <div className="flex gap-2 justify-center items-center lg:gap-4 relative mt-4 lg:mt-10 mx-auto  w-full h-auto max-w-[450px] sm:h-12">
                 <div className="w-full h-full">
                   <ButtonImage
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.preventDefault()
+                      e.stopPropagation()
                       if (address) {
                         setShowYourPrize(true)
                       } else {

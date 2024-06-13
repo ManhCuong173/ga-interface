@@ -8,6 +8,7 @@ import CreatorIcon from '@/icons/home/creator.svg'
 import NFTIconMobile from '@/icons/home/home-introduce-nft-mobile.svg'
 import NFTIcon from '@/icons/home/home-introduce-nft.svg'
 import { motion, useInView } from 'framer-motion'
+import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
@@ -17,6 +18,7 @@ export default function Introduce() {
   const ref = useRef(null)
   const isInView = useInView(ref, { margin: '-120px' })
   const [isDisplay, setIsDisplay] = useState(false)
+  const t = useTranslations('Home')
 
   useEffect(() => {
     if (isInView && !isDisplay) {
@@ -143,7 +145,7 @@ export default function Introduce() {
                 >
                   <Counter value={110} />K <span className="relative">+</span>
                 </div>
-                <div className="text-xs lg:text-[18px] leading-[110%] lg:leading-[110%]">Artworks</div>
+                <div className="text-xs lg:text-[18px] leading-[110%] lg:leading-[110%]">{t('Artworks')}</div>
               </div>
             </motion.div>
 

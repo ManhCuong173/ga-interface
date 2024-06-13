@@ -44,7 +44,7 @@ const Slogin = () => {
           <div>
             <HeadMarkIcon />
           </div>
-          <div className="max-w-[980px] mt-16 mb-14 lg:mt-24 text-center text-2xl font-semibold leading-[1.4] tracking-[-0.72px] uppercase text-secondary">
+          <div className="max-w-[980px] mt-16 mb-14 lg:mt-24 text-center text-2xl font-semibold leading-[1.4] tracking-[-0.72px] uppercase text-secondary px-5 lg:px-10">
             “Golden Apple is the GameFi platform for the Bitcoin Ecosystem. Through mapping the Bitcoin Assets (BRC20,
             Ordinals NFT and others) to Ethereum (and other Layer2) networks,”
           </div>
