@@ -10,10 +10,10 @@ import LanguageSelect from './header/language-select'
 const Social: React.FC<{ className?: string; size?: string }> = ({ className, size }) => {
   return (
     <div className={cn('grid grid-cols-2 gap-3 w-fit', className)}>
-      <Link href={urlRoute.twitter} className={cn('flex w-full h-full', size)}>
+      <Link href={urlRoute.twitter} className={cn('flex w-full h-full cursor-pointer hover:opacity-90', size)}>
         <Image src={twitter} alt="twitter" width={48} height={48} />
       </Link>
-      <Link href={urlRoute.discord} className={cn('flex w-full h-full', size)}>
+      <Link href={urlRoute.discord} className={cn('flex w-full h-full cursor-pointer hover:opacity-90', size)}>
         <Image src={discord} alt="discord" width={48} height={48} />
       </Link>
     </div>
