@@ -13,6 +13,8 @@ import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { ButtonImage } from '../button'
+import Trans from '../i18n/Trans'
+import { useGATranslation } from '../i18n/hooks'
 import ModalConfirmCancel from '../profile/modal/modal-confirm-cancel'
 import BuyProcessingModal from './Buy/BuyProcessingModal'
 import BuyResultModal from './Buy/BuyResultModal'
@@ -74,7 +76,7 @@ const Item = ({
           queryClient.invalidateQueries({
             queryKey: ['market', page, page_size, nftIds, number, order_by],
           })
-          toast.success('Cancel listing successfully')
+          toast.success(useGATranslation()('Cancel listing successfully'))
         }, 500)
       }
       return res
@@ -109,7 +111,9 @@ const Item = ({
         <div className="relative w-full">
           <div className="flex flex-col items-start">
             <h2 className=" text-center font-medium text-black1 text-[18px]">{matchedType?.label} Apple</h2>
-            <h3 className="text-text-secondary text-xs font-normal leading-[150%]">Price</h3>
+            <h3 className="text-text-secondary text-xs font-normal leading-[150%]">
+              <Trans>Price</Trans>
+            </h3>
             <div className="mt-2 flex items-center justify-between space-x-2 self-stretch">
               <span className="text-sm leading-[150%] font-semibold text-black1">{item.price}BTC</span>
               <span className="text-xs leading-[150%] font-medium text-black1">
@@ -129,7 +133,7 @@ const Item = ({
                   {isCancelled ? (
                     <Image src={loading} width={40} height={40} alt="loading" />
                   ) : (
-                    <>{compareAddress(item.address, address) ? 'Cancel Listing' : 'Buy'}</>
+                    <Trans>{compareAddress(item.address, address) ? 'Cancel Listing' : 'Buy'}</Trans>
                   )}
                 </p>
               </div>

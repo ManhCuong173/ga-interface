@@ -1,6 +1,7 @@
 'use client'
 
 import WrapperHero from '@/components/home/WrapperHero'
+import Trans from '@/components/i18n/Trans'
 import { appearAnimation } from '@/constants/animation.constant'
 import BannerDecor from '@/images/about/banner-nft-decor.svg'
 import { motion } from 'framer-motion'
@@ -38,7 +39,7 @@ export default function Banner() {
                 className="text-[24px] font-semibold leading-[130%] -tracking-[1.35px] text-red-light mt-8 max-w-[312px] text-center
                   sm:text-[30px] lg:text-[45px] sm:min-w-[320px] lg:min-w-[526px] lg:text-left "
               >
-                Earn you golden ticket to win at least 1 BTC and more
+                <Trans>Earn you golden ticket to win at least 1 BTC and more</Trans>
               </motion.div>
             </div>
           </div>

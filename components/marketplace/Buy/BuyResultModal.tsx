@@ -1,4 +1,5 @@
 import { ButtonImage } from '@/components/button'
+import Trans from '@/components/i18n/Trans'
 import ModalContainer from '@/components/ui/modal-container'
 import { nftTypes } from '@/constants/nft.constant'
 import { selectItemBought } from '@/lib/features/marketplace/marketplace-slice'
@@ -29,12 +30,12 @@ const BuyResultModal = ({ open, setOpen }: any) => {
         <div className="relative z-[1] flex w-full flex-col items-center">
           <div className="mx-auto lg:space-y-6">
             <p className="flex items-center gap-2 text-[32px] font-medium leading-8 tracking-[-0.8px] text-red-light font-ProtoMono">
-              Congratulations!
+              <Trans>Congratulation!</Trans>
             </p>
           </div>
 
           <p className="text-sm font-light leading-6 tracking-[-0.6px] text-black1 mt-[25px]">
-            Your NFT Purchase is Complete!
+            <Trans>Your NFT Purchase is Complete!</Trans>
           </p>
 
           <div className="relative mt-[50px] border-red-light border-[1px] rounded-lg p-2">
@@ -74,7 +75,9 @@ const BuyResultModal = ({ open, setOpen }: any) => {
             className="w-[221px] h-[48px] mt-[53px] cursor-pointer"
           >
             <div className="left-0 top-0 flex h-full w-full items-center justify-center gap-2">
-              <span className="text-md font-medium leading-3/2 tracking-[-0.6px] text-white">View My Assets</span>
+              <span className="text-md font-medium leading-3/2 tracking-[-0.6px] text-white">
+                <Trans>View my assets</Trans>
+              </span>
             </div>
           </ButtonImage>
         </div>

@@ -1,6 +1,7 @@
 'use client'
 import useMarket from '@/hooks/api/useMarket'
 import { memo, useState } from 'react'
+import Trans from '../i18n/Trans'
 import Pagination from '../pagination'
 import Item from './Item'
 
@@ -47,7 +48,9 @@ const Markets = ({ nftIds, filter }: PropsMarket) => {
                 )
               })
             ) : (
-              <p className="col-span-2 mt-3 min-h-[500px] w-full text-center md:col-span-3 lg:col-span-5">No NFTs</p>
+              <p className="col-span-2 mt-3 min-h-[500px] w-full text-center md:col-span-3 lg:col-span-5">
+                <Trans>No NFTs</Trans>
+              </p>
             )}
           </>
         )}

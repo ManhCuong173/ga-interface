@@ -1,3 +1,4 @@
+import Trans from '@/components/i18n/Trans'
 import { handleReturnIconType } from '@/components/marketplace/Item'
 import ModalContainer from '@/components/ui/modal-container'
 import closeModalButton from '@/icons/profile/modal/close-button.svg'
@@ -41,12 +42,12 @@ const ListNFTSuccessModal: React.FC<Props> = ({
       <div className="w-screen  bg-full lg:p-[30px] lg:pt-[40px] text-text-black lg:w-[540px] h-[600px] bg-white font-Roboto relative p-[10px]">
         <div className="mx-auto lg:space-y-6">
           <p className="gap-2 text-[32px] font-medium leading-8 tracking-[-0.8px] text-red-light font-ProtoMono text-center w-full">
-            Success!
+            <Trans>Success!</Trans>
           </p>
         </div>
 
         <p className="text-sm font-light leading-6 tracking-[-0.6px] text-black1 mt-[25px] w-[263px] mx-auto">
-          Your NFT has been officially listed after you set the selling price.
+          <Trans>Your NFT has been officially listed after you set the selling price</Trans>.
         </p>
 
         <div className="flex items-center justify-end absolute top-[10px] right-[10px] lg:right-[30px] lg:top-[30px]">
@@ -74,9 +75,9 @@ const ListNFTSuccessModal: React.FC<Props> = ({
 
           <div className="flex justify-center items-center mx-auto border-solid border-[1px] border-red-light rounded-lg lg:w-[226px] py-4 px-6 lg:h-[52px] mt-5">
             <span className="inline-block w-full text-left text-base font-normal leading-6 tracking-[-0.48px] text-black1">
-              Price
+              <Trans>Price</Trans>
             </span>
-            <p className="text-red-light font-base text-[21px] font-ProtoMono font-medium">{price} BTC</p>
+            <p className="text-red-light font-base text-[21px] font-ProtoMono font-medium text-nowrap">{price} BTC</p>
           </div>
         </div>
       </div>

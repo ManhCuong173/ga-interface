@@ -5,6 +5,7 @@ import logo from '@/images/commons/logo.svg'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import Link from 'next/link'
+import LanguageSelect from './header/language-select'
 import Trans from './i18n/Trans'
 
 const Social: React.FC<{ className?: string; size?: string }> = ({ className, size }) => {
@@ -57,14 +58,21 @@ const Footer = () => {
               <Trans>{'About'}</Trans>
             </Link>
           </div>
+          <LanguageSelect className="border border-bgAlt rounded-md w-max h-10" mode="solid" />
         </div>
       </div>
       <div className="py-4 px-5 lg:py-6 lg:px-20 flex flex-col-reverse gap-4 lg:flex-row justify-between border-t-[1px] border-solid border-bgAlt">
-        <div className="font-Roboto text-base hover">@ 2023 by golden apple. All rights reserved.</div>
+        <div className="font-Roboto text-base hover">
+          <Trans>{'@ 2023 by golden apple_All rights reserved'}</Trans>
+        </div>
 
         <div className="flex items-center font-Roboto gap-6 text-xs lg:text-sm font-medium  text-black1 ">
-          <Link href={urlRoute.privacy}>Privacy Policy</Link>
-          <Link href={urlRoute.terms}>Terms of service</Link>
+          <Link href={urlRoute.privacy}>
+            <Trans>Privacy Policy</Trans>
+          </Link>
+          <Link href={urlRoute.terms}>
+            <Trans>Terms of service</Trans>
+          </Link>
         </div>
       </div>
     </footer>

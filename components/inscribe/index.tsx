@@ -2,6 +2,7 @@
 
 import InscribeContextProvider from '@/context/InscribeContext'
 import { useState } from 'react'
+import Trans from '../i18n/Trans'
 import InscribeOrderModal from '../inscribe-order-modal'
 import MintForm from '../mintNFTs/MintForm'
 import NFTForm from './NftForm'
@@ -15,7 +16,9 @@ const Inscribe = () => {
       <div className="relative rounded-lg bg-white w-full">
         <div className="grid grid-cols-1 lg:grid-cols-[2fr_450px]">
           <div className="px-4 py-6 xl:p-[40px] border-r-2 border-solid border-bgAlt">
-            <p className="text_heading mb-4 text-center lg:text-left">Your NFT</p>
+            <p className="text_heading mb-4 text-center lg:text-left">
+              <Trans>Your NFT</Trans>
+            </p>
             <NFTForm />
           </div>
           <div className="px-4 py-6 xl:p-[40px] flex flex-col">

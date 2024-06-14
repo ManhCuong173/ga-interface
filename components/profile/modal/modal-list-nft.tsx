@@ -1,6 +1,7 @@
 'use client'
 
 import { ButtonImage } from '@/components/button'
+import Trans from '@/components/i18n/Trans'
 import { handleReturnIconType } from '@/components/marketplace/Item'
 import ModalContainer from '@/components/ui/modal-container'
 import closeModalButton from '@/icons/profile/modal/close-button.svg'
@@ -62,7 +63,7 @@ export default function ModalListNft({
           </div>
           <div className="flex flex-col justify-center items-center lg:w-[460px]">
             <label className="inline-block w-full text-left text-sm font-normal leading-6 tracking-[-0.48px] text-bgAlt">
-              Price
+              <Trans>Price</Trans>
             </label>
             <div className="flex w-full items-center rounded border-solid border-[1px] border-bgAlt h-[44px] mt-3 px-4 font-ProtoMono">
               <input
@@ -75,7 +76,7 @@ export default function ModalListNft({
               <span className="pl-2 text-base font-light leading-5 tracking-[-0.48px] text-black1 ">BTC</span>
             </div>
             <p className="text-left text-xs text-text-secondary mt-2">
-              <span className="text-red-700">(*)</span> Price must be equal or greater than 0.00001
+              <span className="text-red-700">(*)</span> <Trans>(*) Price must be equal or greater than 0_00001</Trans>
             </p>
           </div>
         </div>
@@ -85,7 +86,9 @@ export default function ModalListNft({
           onClick={Number(price) >= 0.00001 ? handleSubmit : undefined}
           varirant="primary-asset"
         >
-          <span className="text-lg font-medium leading-3/2">Complete Listing</span>
+          <span className="text-lg font-medium leading-3/2">
+            <Trans>Complete Listing</Trans>
+          </span>
         </ButtonImage>
       </div>
     </ModalContainer>

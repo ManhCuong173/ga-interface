@@ -61,7 +61,7 @@ const BannerMarketPlace = () => {
                       className="flex items-center justify-center gap-2"
                     >
                       <span className="text-sm font-Roboto font-normal text-black1 lg:text-base text-center leading-3/2">
-                        Search for the NFT art that resonates with you
+                        <Trans>Search for the NFT art that resonates with you</Trans>
                       </span>
                     </motion.div>
                     <motion.div
@@ -70,7 +70,7 @@ const BannerMarketPlace = () => {
                       className="flex items-center justify-center gap-2"
                     >
                       <span className="text-sm font-Roboto font-normal text-black1 lg:text-base text-center leading-3/2">
-                        Gather the NFTs that match your style
+                        <Trans>Gather the NFTs that match your style</Trans>
                       </span>
                     </motion.div>
                     <motion.div
@@ -79,7 +79,7 @@ const BannerMarketPlace = () => {
                       className="flex items-center justify-center gap-2"
                     >
                       <span className="text-sm font-Roboto font-normal text-black1 lg:text-base text-center leading-3/2">
-                        Trade NFTs effortlessly and securely in our marketplace
+                        <Trans>Trade NFTs effortlessly and securely in our marketplace</Trans>
                       </span>
                     </motion.div>
                   </div>

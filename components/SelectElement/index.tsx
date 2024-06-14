@@ -6,6 +6,7 @@ import { ElementType } from '@/utils/const'
 
 import Image from 'next/image'
 import { memo, useCallback, useRef, useState } from 'react'
+import Trans from '../i18n/Trans'
 
 interface PropsSelect {
   className?: string
@@ -124,7 +125,9 @@ const SelectElement = ({ className, elements, onSelectElements }: PropsSelect) =
                 {element.icon && (
                   <Image src={element.icon} alt={element.title} title={element.title} width={20} height={20} />
                 )}
-                <span className="font-Roboto">{element.title}</span>
+                <span className="font-Roboto">
+                  <Trans>{element.title}</Trans>
+                </span>
               </div>
 
               {elements.includes(element.id) && <MarkIcon className="fill-transparent" />}

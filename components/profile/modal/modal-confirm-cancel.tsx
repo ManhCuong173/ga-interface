@@ -1,6 +1,8 @@
 'use client'
 
 import { ButtonImage } from '@/components/button'
+import Trans from '@/components/i18n/Trans'
+import { useGATranslation } from '@/components/i18n/hooks'
 import { handleReturnIconType } from '@/components/marketplace/Item'
 import ModalContainer from '@/components/ui/modal-container'
 import closeModalButton from '@/icons/profile/modal/close-button.svg'
@@ -40,15 +42,17 @@ export default function ModalConfirmCancel({
         <div className="flex w-full flex-col items-center gap-3">
           <div className="space-y-6 font-ProtoMono">
             <div className="relative mx-auto items-center justify-center text-[24px] font-medium leading-[39px] tracking-tighter">
-              Are you sure you want to cancel <br /> listing
+              {useGATranslation().rich('Are you sure to cancel <br /> listing', { br: () => <br /> })}
               <span className="text-red-light ml-1">
                 {nftName} APPLE #{number}?
               </span>
             </div>
           </div>
           <p className="w-full text-center text-sm font-light leading-6 text-black1 lg-w-[523px]">
-            Cancelling this NFT listing will remove it from the marketplace. Keep your NFTs listed if you still want to
-            sell them.
+            <Trans>
+              Cancelling this NFT listing will remove it from the marketplace_Keep your NFTs listed if you still want to
+              sell them
+            </Trans>
           </p>
         </div>
 
@@ -76,14 +80,18 @@ export default function ModalConfirmCancel({
             onClick={handleClose}
             varirant="light-double-asset"
           >
-            <span className="text-lg font-medium leading-3/2">Keep Listing</span>
+            <span className="text-lg font-medium leading-3/2">
+              <Trans>Keep Listing</Trans>
+            </span>
           </ButtonImage>
           <ButtonImage
             className="h-[57px] w-[280px]  bg-full transition-all lg:w-full mx-auto my-3"
             onClick={handleSubmit}
             varirant="primary-asset"
           >
-            <span className="text-lg font-medium leading-3/2">Yes</span>
+            <span className="text-lg font-medium leading-3/2">
+              <Trans>Yes</Trans>
+            </span>
           </ButtonImage>
         </div>
       </div>

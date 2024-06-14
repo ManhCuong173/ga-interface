@@ -1,4 +1,5 @@
 import { ButtonImage } from '@/components/button'
+import Trans from '@/components/i18n/Trans'
 import Customsize from '@/components/mintNFTs/Customsize'
 import { cn } from '@/lib/utils'
 import { NetworkFee, NetworkFeeEnum, NetworkFeeType } from '@/types/fee'
@@ -39,10 +40,12 @@ export default function ChooseNetworkFee({
               onSelectFeeType(network)
             }}
           >
-            <div className="mb-1 capitalize font-medium text-sm leading-3/2 text-black1">{network}</div>
+            <div className="mb-1 capitalize font-medium text-sm leading-3/2 text-black1">
+              <Trans>{network}</Trans>
+            </div>
             <div>
               {isLoading ? (
-                'loading'
+                'Loading'
               ) : networkFee ? (
                 <p className="flex font-ProtoMono  gap-1">
                   <span className="font-bold text-red-light">
@@ -51,7 +54,7 @@ export default function ChooseNetworkFee({
                   <span className="text-black1">sats/vB</span>
                 </p>
               ) : (
-                'empty'
+                'Empty'
               )}
             </div>
           </ButtonImage>
@@ -73,7 +76,7 @@ export default function ChooseNetworkFee({
               value={customNetworkFee}
             >
               <p className="flex flex-1 items-end font-medium leading-5 h-full tracking-[-0.42px] text-black1">
-                Custom fee
+                <Trans>Custom fee</Trans>
               </p>
             </Customsize>
           </div>

@@ -3,6 +3,7 @@
 import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js'
 import { Chart } from 'chart.js/auto'
 import { CSSProperties, useEffect, useRef } from 'react'
+import { useGATranslation } from '../i18n/hooks'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
@@ -21,6 +22,7 @@ export default function MixedChart({ ...props }: Props) {
   const chartInstance = useRef(null)
 
   const maxVolume = Math.max(...props.barChartDataset)
+  const t = useGATranslation()
 
   useEffect(() => {
     if (chartInstance.current) {
@@ -86,7 +88,7 @@ export default function MixedChart({ ...props }: Props) {
             },
             title: {
               display: true,
-              text: 'Volume(BTC)',
+              text: t('Volume (BTC)'),
               padding: 10,
               font: {
                 family: 'Proto Mono',
@@ -115,7 +117,7 @@ export default function MixedChart({ ...props }: Props) {
             },
             title: {
               display: true,
-              text: 'AVG price (BTC)',
+              text: t('Avg price (BTC)'),
               padding: 10,
               font: {
                 family: 'Proto Mono',

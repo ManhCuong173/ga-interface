@@ -1,6 +1,7 @@
 'use client'
 
 import Footer from '@/components/footer'
+import Trans from '@/components/i18n/Trans'
 import MyNFTs from '@/components/profile/my-nfts'
 import ProfileInfo from '@/components/profile/profile-info'
 import ProfileInfoMobile from '@/components/profile/profile-infor-mobile'
@@ -34,12 +35,14 @@ export default function Profile({ params: { locale } }: { params: { locale: stri
               -tracking-[0.72px] text-[24px] md:text-[32px] 
               font-semibold leading-[150%] md:-tracking-[-0.96px]"
               >
-                My Collection
+                <Trans>My collection</Trans>
               </div>
               <div className="font-Roboto tex-sm  md:text-base font-normal leading-[150%] mt-5 max-w-[529px]">
-                Dive into my unique collection of lucky and rare NFTs. Explore the distinctive pieces that bring fortune
-                and exclusivity, all part of the Golden Apple series. Each NFT is the golden ticket for you to win at
-                least 1 BTC and more.
+                <Trans>
+                  Dive into my unique collection of lucky and rare NFTs_Explore the distinctive pieces that bring
+                  fortune and exclusivity, all part of the Golden Apple series_Each NFT is the golden ticket for you to
+                  win at least 1 BTC and more
+                </Trans>
               </div>
             </div>
             <MyNFTs />

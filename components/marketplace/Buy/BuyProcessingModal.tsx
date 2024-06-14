@@ -1,4 +1,6 @@
 import { ButtonImage } from '@/components/button'
+import Trans from '@/components/i18n/Trans'
+import { useGATranslation } from '@/components/i18n/hooks'
 import ModalContainer from '@/components/ui/modal-container'
 import { nftTypes } from '@/constants/nft.constant'
 import { ItemMarket } from '@/types/market'
@@ -35,7 +37,7 @@ const BuyProcessingModal = ({
         <div className="relative z-[1] flex w-full flex-col items-center">
           <div className="mx-auto lg:space-y-6">
             <p className="flex items-center gap-2 text-[32px] font-medium leading-8 tracking-[-0.8px] text-red-light font-ProtoMono">
-              Processing
+              <Trans>Processing</Trans>
               <span className="animate-bounce [animation-delay:-0.3s] tracking-[-14px]">.</span>
               <span className="animate-bounce [animation-delay:-0.15s] tracking-[-14px]">.</span>
               <span className="animate-bounce [animation-delay:-0.05s] tracking-[-14px]">.</span>
@@ -43,7 +45,7 @@ const BuyProcessingModal = ({
           </div>
 
           <p className="text-sm font-light leading-6 tracking-[-0.6px] text-black1 mt-[25px]">
-            Your purchase is being processed!
+            <Trans>Your purchase is being processed!</Trans>
           </p>
 
           <div className="relative mt-[50px] border-red-light border-[1px] rounded-lg p-2">
@@ -60,7 +62,9 @@ const BuyProcessingModal = ({
             </div>
           </div>
           <div className="text-sm text-black1 leading-3/2 font-light my-3">
-            It should be confirmed on the blockchain shortly. Please do not exit while the transaction is processing.
+            {useGATranslation()(
+              'It should be confirmed on the blockchain shortly_Please do not exit while the transaction is processing',
+            )}
           </div>
           <div
             className="text-center text-[18px] font-medium leading-3/2
@@ -86,7 +90,9 @@ const BuyProcessingModal = ({
             disabled
           >
             <div className="left-0 top-0 flex h-full w-full items-center justify-center gap-2">
-              <span className="text-md font-medium leading-3/2 tracking-[-0.6px] text-white">View My Assets</span>
+              <span className="text-md font-medium leading-3/2 tracking-[-0.6px] text-white capitalize">
+                <Trans>View my assets</Trans>
+              </span>
             </div>
           </ButtonImage>
         </div>

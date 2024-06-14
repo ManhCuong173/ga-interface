@@ -1,5 +1,6 @@
 import { nftTypes } from '@/constants/nft.constant'
 
+import Trans from '@/components/i18n/Trans'
 import Image from 'next/image'
 import { useState } from 'react'
 import OwnerDistribution from './owner-distribution'
@@ -26,7 +27,11 @@ const Analytic = () => {
               }}
             >
               <Image src={type.icon} alt="" width={24} height={24} />
-              {type.id === 0 && <div className="ml-2 font-Roboto">{type.label}</div>}
+              {type.id === 0 && (
+                <div className="ml-2 font-Roboto">
+                  <Trans>{type.label}</Trans>
+                </div>
+              )}
             </button>
           ))}
         </div>
@@ -38,3 +43,4 @@ const Analytic = () => {
   )
 }
 export default Analytic
+

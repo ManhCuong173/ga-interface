@@ -4,6 +4,7 @@ import { NFTType } from '@/types/nft'
 import Image from 'next/image'
 import { useState } from 'react'
 import { ButtonImage } from '../button'
+import Trans from '../i18n/Trans'
 import { FireIcon } from '../ui/icons'
 
 const Title = () => {
@@ -12,10 +13,12 @@ const Title = () => {
       <div className="space-y-2">
         <div className="flex items-center gap-2">
           <FireIcon />
-          <h2 className="text-2xl tracking-[-0.48px] text-red-light font-bold">Limited auction</h2>
+          <h2 className="text-2xl tracking-[-0.48px] text-red-light font-bold">
+            <Trans>Limited Auction</Trans>
+          </h2>
         </div>
         <p className="text-base font-normal font-Roboto tracking-[-0.42px] text-black1">
-          Check out top ranking NFT artists on the NFT Marketplace.
+          <Trans>Check out top ranking NFT artists on the NFT Marketplace</Trans>.
         </p>
       </div>
     </div>
@@ -55,7 +58,7 @@ export default function ComingSoon() {
       </div>
       <div className="flex h-[218px] flex-col items-center justify-end pb-[33px] lg:h-[360px] lg:justify-center lg:pb-0">
         <div className="mt-[3.15px] leading-tight text-[47.1px] font-semibold text-red-light lg:text-[50px] ">
-          COMING SOON
+          <Trans>Coming soon</Trans>
         </div>
       </div>
     </div>

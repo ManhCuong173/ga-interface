@@ -7,6 +7,7 @@ import orderService from '@/services/order.service'
 import { OrderDetail, OrderStatus } from '@/types/orders'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
+import Trans from '../i18n/Trans'
 import Pagination from '../pagination'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
 
@@ -56,9 +57,15 @@ const ListOrders = ({ orderId, onSelectOrderId, status }: ListOrderProps) => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[30%]">Status</TableHead>
-            <TableHead className="w-[50%]">Order ID</TableHead>
-            <TableHead className="w-[20%]">Date</TableHead>
+            <TableHead className="w-[30%]">
+              <Trans>Status</Trans>
+            </TableHead>
+            <TableHead className="w-[50%]">
+              <Trans>Order ID</Trans>
+            </TableHead>
+            <TableHead className="w-[20%]">
+              <Trans>Date</Trans>
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -86,10 +93,14 @@ const ListOrders = ({ orderId, onSelectOrderId, status }: ListOrderProps) => {
         </TableBody>
       </Table>
       {isFetching ? (
-        <p className="flex flex-1 h-full items-center justify-center text-center py-20">Loading my orders ...</p>
+        <p className="flex flex-1 h-full items-center justify-center text-center py-20">
+          <Trans>Loading my orders</Trans> ...
+        </p>
       ) : (
         !isAvaliableData && (
-          <p className="flex flex-1 h-full items-center justify-center text-center py-20">no orders</p>
+          <p className="flex flex-1 h-full items-center justify-center text-center py-20">
+            <Trans>no orders</Trans>
+          </p>
         )
       )}
 

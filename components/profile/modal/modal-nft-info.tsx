@@ -1,4 +1,5 @@
 import { ButtonImage } from '@/components/button'
+import Trans from '@/components/i18n/Trans'
 import { handleReturnIconType } from '@/components/marketplace/Item'
 import ModalContainer from '@/components/ui/modal-container'
 import closeModalButton from '@/icons/profile/modal/close-button.svg'
@@ -115,7 +116,7 @@ export default function ModalNftInfo({
               {rows.map((row, index) => (
                 <div key={index} className="space-y-2">
                   <label className="tracking-[-0.36px inline-block w-full text-left text-xs font-light leading-[18px] text-text-secondary">
-                    {row.title}
+                    <Trans>{row.title}</Trans>
                   </label>
                   <div className="flex h-11 items-center rounded border border-text-secondary px-4">
                     <input
@@ -132,7 +133,7 @@ export default function ModalNftInfo({
         </div>
         {canList && (
           <ButtonImage varirant="primary-asset" onClick={handleSubmit} className="w-[58%] h-fit mx-auto mt-4">
-            List
+            <Trans>List</Trans>
           </ButtonImage>
         )}
       </div>

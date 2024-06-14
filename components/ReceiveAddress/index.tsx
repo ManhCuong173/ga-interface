@@ -1,4 +1,5 @@
 import React from 'react'
+import Trans from '../i18n/Trans'
 import { InfoFullCircleIcon } from '../ui/icons'
 import InputInfoHelp from './InputInfoHelp'
 
@@ -22,7 +23,7 @@ const ReceiveAddress = ({
           onChange={onChange}
         >
           <span>{`Enter the NFT ID here. Use "X" to represent unspecified digits.`}</span> <br />
-          For example:
+          <Trans>For example:</Trans>
           <ul className="list-disc pl-10">
             <li>{`To find an NFT starting with "123", enter "123X".`}</li>
             <li>{`To find an NFT ending with "456", enter "X456".`}</li>
@@ -34,7 +35,11 @@ const ReceiveAddress = ({
 
       <p className="flex text-xs font-light p-2 space-x-3 rounded-md bg-bgAlt4d">
         <InfoFullCircleIcon className="min-w-4" />
-        <span>Please note the inscribing transaction delivers the inscription to the receiving address directly.</span>
+        <span>
+          <Trans>
+            Please note the inscribing transaction delivers the inscription to the receiving address directly
+          </Trans>
+        </span>
       </p>
     </div>
   )

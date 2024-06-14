@@ -1,5 +1,6 @@
 import Loading from '@/components/Loading'
 import { ButtonImage } from '@/components/button'
+import Trans from '@/components/i18n/Trans'
 import FormatPrice from '@/components/mintNFTs/FormatPrice'
 import { ChevronIcon } from '@/components/ui/icons'
 import ModalContainer from '@/components/ui/modal-container'
@@ -33,20 +34,26 @@ const FeeData = React.memo(({ data, feeRate }: { data: any; feeRate: number }) =
   return (
     <div className="w-full   border-bgAlt border-[1px] rounded-[8px] p-4 text-[#66605B] mt-[20px]">
       <div className="flex py-[9px] items-center justify-between border-b border-[#E5E4E3]">
-        <span className="text-sm font-light leading-5 tracking-[-0.42px]">Price:</span>
+        <span className="text-sm font-light leading-5 tracking-[-0.42px]">
+          <Trans>Price</Trans>:
+        </span>
         <div className="font-ProtoMono">
           <FormatPrice satValue={data?.value} />
         </div>
       </div>
       <div className="flex py-[9px] items-center justify-between border-b border-[#E5E4E3]">
-        <span className="text-sm font-light leading-5 tracking-[-0.42px]">Platform Fee</span>
+        <span className="text-sm font-light leading-5 tracking-[-0.42px]">
+          <Trans>Platform Fee:</Trans>
+        </span>
         <div className="font-ProtoMono">
           <FormatPrice satValue={data?.platform_fees} />
         </div>
       </div>
       <div className="border-b border-[#E5E4E3] py-2">
         <div className="flex  items-center justify-between">
-          <span className="text-sm font-light leading-5 tracking-[-0.42px]">Transaction Fee Rate:</span>
+          <span className="text-sm font-light leading-5 tracking-[-0.42px]">
+            <Trans>Transaction Fee Rate:</Trans>
+          </span>
           <div className="font-ProtoMono text-sm">
             <span className="text-[#FF6634]  ">{feeRate}</span> SATS/VB
           </div>
@@ -62,7 +69,9 @@ const FeeData = React.memo(({ data, feeRate }: { data: any; feeRate: number }) =
       </div>
       <div className="flex items-center justify-between py-3">
         <div className="flex items-center gap-2">
-          <span className="text-sm font-light leading-5 tracking-[-0.42px]">Total:</span>
+          <span className="text-sm font-light leading-5 tracking-[-0.42px]">
+            <Trans>Total:</Trans>
+          </span>
           <div className="cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
               <path
@@ -247,7 +256,7 @@ const ConfirmModal = ({
           <div className="overflow-hidden">
             <div ref={ref} className="flex flex-col items-center mb-[25px] ">
               <p className="text-[32px] font-semibold leading-[50px] tracking-[-0.96px] text-red-light font-ProtoMono ">
-                Confirmation
+                <Trans>Confirmation</Trans>
               </p>
             </div>
             <div className="flex lg:self-start gap-[18px]">
@@ -272,7 +281,9 @@ const ConfirmModal = ({
                   </div>
                   <h3 className="left-6 text-xs font-light tracking-[-0.48px] ml-[4px]">#{item.number}</h3>
                 </div>
-                <h3 className="text-text-secondary text-xs font-normal leading-3/2 font-Roboto">Price</h3>
+                <h3 className="text-text-secondary text-xs font-normal leading-3/2 font-Roboto">
+                  <Trans>Price</Trans>
+                </h3>
                 <p className="text-black1 text-sm font-semibold leading-3/2">{item.price} BTC</p>
               </div>
             </div>
@@ -282,13 +293,17 @@ const ConfirmModal = ({
                 setEnableCustom(!enabledCustom)
               }}
             >
-              <span className="text-base text-text-secondary font-medium mr-1 font-Roboto">Advanced Settings</span>
+              <span className="text-base text-text-secondary font-medium mr-1 font-Roboto">
+                <Trans>Advanced Settings</Trans>
+              </span>
               <span className={cn(enabledCustom ? 'rotate-180' : 'rotate-0', `ml-1 transition-all duration-500`)}>
                 <ChevronIcon className="text-text-secondary" />
               </span>
             </div>
             <div className={cn('flex w-full flex-col space-y-3', enabledCustom ? 'max-h-0 overflow-hidden' : '')}>
-              <p className="text-left text-[14px] font-light text-[#383F4A]">Select the network fee you want to pay</p>
+              <p className="text-left text-[14px] font-light text-[#383F4A]">
+                <Trans>Select the network fee you want to pay</Trans>
+              </p>
               <ChooseNetworkFee
                 isLoading={loadingNetworkFee}
                 networkFee={feeData}
@@ -307,13 +322,15 @@ const ConfirmModal = ({
                 className="py-[9px] w-[167px] lg:w-[200px] p-0"
                 onClick={handleConfirm}
               >
-                Confirm
+                <Trans>Confirm</Trans>
               </ButtonImage>
               <button
                 className="flex py-[9px] w-[167px] items-center justify-center  lg:w-[200px] border-0 outline-none"
                 onClick={() => closeModal()}
               >
-                <span className="text-base font-medium leading-6 tracking-[-0.48px] text-[#AE9955]">Cancel</span>
+                <span className="text-base font-medium leading-6 tracking-[-0.48px] text-[#AE9955]">
+                  <Trans>Cancel</Trans>
+                </span>
               </button>
             </div>
             {isBuying && <Loading />}

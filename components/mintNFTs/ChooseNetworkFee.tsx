@@ -2,6 +2,7 @@ import { cn } from '@/lib/utils'
 import { NetworkFee, NetworkFeeEnum, NetworkFeeType } from '@/types/fee'
 import { toast } from 'react-toastify'
 import { ButtonImage } from '../button'
+import Trans from '../i18n/Trans'
 import Customsize from './Customsize'
 
 type Props = {
@@ -40,7 +41,9 @@ export default function ChooseNetworkFee({
               onSelectFeeType(network)
             }}
           >
-            <div className="mb-1 capitalize font-bold">{network}</div>
+            <div className="mb-1 capitalize font-bold">
+              <Trans>{network}</Trans>
+            </div>
             <div>
               {isLoading ? (
                 'loading'
@@ -75,7 +78,9 @@ export default function ChooseNetworkFee({
               }}
               value={customNetworkFee}
             >
-              <p className="flex flex-1 items-end font-medium leading-5 h-full tracking-[-0.42px]">Custom fee</p>
+              <p className="flex flex-1 items-end font-medium leading-5 h-full tracking-[-0.42px]">
+                <Trans>Custom fee</Trans>
+              </p>
             </Customsize>
           </div>
         </div>
@@ -83,3 +88,4 @@ export default function ChooseNetworkFee({
     </>
   )
 }
+

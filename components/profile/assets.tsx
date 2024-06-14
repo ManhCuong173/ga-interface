@@ -7,6 +7,7 @@ import { UserAsset } from '@/types/asset'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import SelectElement from '../SelectElement'
+import { useGATranslation } from '../i18n/hooks'
 
 type Props = {
   isLoading?: boolean
@@ -55,7 +56,7 @@ export default function Assets({ isLoading, assets, onShowInfo, onList: onListin
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full flex-1 border-none bg-transparent text-sm font-semibold outline-none placeholder:text-[#AE9955]"
-            placeholder="Search number"
+            placeholder={useGATranslation()('SEARCH NUMBER')}
           />
           {search && (
             <button className="flex size-6 items-center justify-center" onClick={handleClearSearch}>

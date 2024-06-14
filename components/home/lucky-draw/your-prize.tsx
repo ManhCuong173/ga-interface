@@ -1,3 +1,5 @@
+import Trans from '@/components/i18n/Trans'
+import { useGATranslation } from '@/components/i18n/hooks'
 import BtnClaim from '@/components/ui/button/btnClaim'
 import ModalContainer from '@/components/ui/modal-container'
 import fourthPrice from '@/icons/home/consoliadation-prize.svg'
@@ -58,6 +60,7 @@ export default function YouPrize({ open, onClose }: Props) {
   const [userInscriptionIds, setUserInscriptionIds] = useState<string[]>([])
   const [selectedRound, setSelectedRound] = useState('')
   const [selectedPrize, setSelectedPrize] = useState(prizeOptions[0].value)
+  const t = useGATranslation()
 
   const prizeParams = prizeOptions.find((item) => item.value === selectedPrize)?.label
 
@@ -104,7 +107,7 @@ export default function YouPrize({ open, onClose }: Props) {
       const _rounds = [
         ...roundsData.map((round) => {
           return {
-            label: `Rounded ${round.round} (${new Date(round.timecreate * 1000).toLocaleDateString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' })})`,
+            label: `${round.round} (${new Date(round.timecreate * 1000).toLocaleDateString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' })})`,
             value: round.round.toString(),
           }
         }),
@@ -147,7 +150,9 @@ export default function YouPrize({ open, onClose }: Props) {
 
         <div className="size-full space-y-2 lg:space-y-10">
           <div className="lg:px-[18px]">
-            <h2 className="text-[21px] lg:text-[32px] font-medium leading-10 text-red-light">Your prize</h2>
+            <h2 className="text-[21px] lg:text-[32px] font-medium leading-10 text-red-light">
+              <Trans>Your prize</Trans>
+            </h2>
           </div>
           <div className="my-2 space-y-4 lg:space-y-8 pb-4">
             <div className="flex flex-col justify-end gap-4 lg:flex-row">
@@ -156,18 +161,25 @@ export default function YouPrize({ open, onClose }: Props) {
                 value={selectedRound}
                 setValue={setSelectedRound}
                 className="lg:min-w-[285px] font-Roboto"
+                label={t('Rounded')}
               />
             </div>
             <div className="max-w-full overflow-x-auto">
               <div className="min-w-[500px] space-y-4">
                 <div className="flex h-11 rounded border border-[#EEE0E0] text-center text-xs lg:text-sm font-normal leading-5 text-red-darker lg:mx-[18px] font-Roboto space-x-3 text-nowrap">
                   <div className="flex h-full w-10 items-center pl-3">No</div>
-                  <div className="flex h-full w-[200px] items-center pl-3 lg:w-[250px]">Prize</div>
-                  <div className="flex h-full w-[192px] items-center whitespace-nowrap pl-3">Index number</div>
-                  <div className="flex h-full w-[200px] items-center justify-end whitespace-nowrap pr-10 lg:flex-1">
-                    Apple ID
+                  <div className="flex h-full w-[200px] items-center pl-3 lg:w-[250px]">
+                    <Trans>Prize</Trans>
                   </div>
-                  <div className="flex h-full w-[200px] items-center justify-end pr-4">Claim</div>
+                  <div className="flex h-full w-[192px] items-center whitespace-nowrap pl-3">
+                    <Trans>Index number</Trans>
+                  </div>
+                  <div className="flex h-full w-[200px] items-center justify-end whitespace-nowrap pr-10 lg:flex-1">
+                    <Trans>Apple ID</Trans>
+                  </div>
+                  <div className="flex h-full w-[200px] items-center justify-end pr-4">
+                    <Trans>Claim</Trans>
+                  </div>
                 </div>
                 <div className="h-[552px] max-h-[552px] space-y-2 overflow-y-auto">
                   {isLoading ? (

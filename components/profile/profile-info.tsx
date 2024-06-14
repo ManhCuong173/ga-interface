@@ -14,6 +14,8 @@ import Image from 'next/image'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { ProfileType } from '../../types/profile'
+import Trans from '../i18n/Trans'
+import { useGATranslation } from '../i18n/hooks'
 import ButtonConnect from './button/btnconnect'
 import ModalEditProfile from './modal/modal-edit-profile'
 
@@ -120,14 +122,18 @@ export default function ProfileInfo({ profile, refetch }: Props) {
           </div>
           <div className="flex h-[36px] w-[129px] items-center justify-center gap-2 bg-full border-bgAlt border-[1px] border-solid py-[6px] px-[18px] rounded-[100px]">
             <span className="text-[20px] font-medium leading-6 tracking-[-2%] text-[#EF232C]">{point}</span>
-            <span className="text-base font-medium leading-6 tracking-[-2%] text-text-sub ">Points</span>
+            <span className="text-base font-medium leading-6 tracking-[-2%] text-text-sub ">
+              <Trans>Points</Trans>
+            </span>
           </div>
         </div>
         <button
           onClick={editProfileClicked}
           className="mx-auto flex h-10 w-fit items-center mt-[19p] hover:text-[#7E6238] text-text-secondary"
         >
-          <span className="text-sm font-medium leading-5 tracking-[-3%]  font-Roboto">Edit Profile</span>
+          <span className="text-sm font-medium leading-5 tracking-[-3%]  font-Roboto">
+            <Trans>Edit Profile</Trans>
+          </span>
           <Image src={pen} alt="" width={16} height={16} className="ml-2 hover:fill-[#7E6238] hover:stroke-[#7E6238]" />
         </button>
       </div>
@@ -146,14 +152,14 @@ export default function ProfileInfo({ profile, refetch }: Props) {
             <ButtonConnect
               status={profile?.twitter_connect}
               icon={ic_x}
-              text={profile?.twitter_connect ? profile.twitter_username : 'Connect x'}
+              text={profile?.twitter_connect ? profile.twitter_username : useGATranslation()('Connect X')}
               onClick={connectTwitter}
               className="border-[1px] border-solid border-bgAlt rounded-[10px] w-[200px] text-text-secondary text-base font-Roboto"
             />
             <ButtonConnect
               status={profile?.discord_connect}
               icon={ic_discord}
-              text={profile?.discord_connect ? profile.discord_username : 'Connect Discord'}
+              text={profile?.discord_connect ? profile.discord_username : useGATranslation()('Connect Discord')}
               onClick={connectDiscord}
               className="border-[1px] border-solid border-bgAlt rounded-[10px] w-[200px] text-text-secondary text-base font-Roboto"
             />

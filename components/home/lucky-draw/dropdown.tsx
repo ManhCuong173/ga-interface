@@ -1,3 +1,4 @@
+import Trans from '@/components/i18n/Trans'
 import checkIcon from '@/icons/home/lucky-draw/check.svg'
 import chevronDownIcon from '@/icons/home/lucky-draw/chevron-down.svg'
 import Image from 'next/image'
@@ -81,7 +82,9 @@ export default function Dropdown({ label, options, className, value, setValue }:
             className="flex h-10 cursor-pointer items-center justify-between whitespace-nowrap bg-white px-4 pr-4 text-sm font-light tracking-[-0.2px] transition-all hover:bg-[#FAF5F0]"
             onClick={() => handleSelect(item.value)}
           >
-            <span>{item.label}</span>
+            <span>
+              <Trans>Rounded</Trans> {item.label}
+            </span>
             <span>{item.value === value && <Image src={checkIcon} alt="" width={16} height={11} />}</span>
           </div>
         ))}

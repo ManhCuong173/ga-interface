@@ -1,4 +1,6 @@
 import { IconCopy } from '@/components/button'
+import Trans from '@/components/i18n/Trans'
+import { useGATranslation } from '@/components/i18n/hooks'
 import ModalContainer from '@/components/ui/modal-container'
 import fourthPrice from '@/icons/home/consoliadation-prize.svg'
 import iconCopy from '@/icons/home/lucky-draw/copy.svg'
@@ -63,6 +65,7 @@ export default function History({ open, onClose }: Props) {
   const [selectedRound, setSelectedRound] = useState('')
   const [selectedPrize, setSelectedPrize] = useState(prizeOptions[0].value)
   const [page, setPage] = useState(1)
+  const t = useGATranslation()
 
   const prizeParams = prizeOptions.find((item) => item.value === selectedPrize)?.label
 
@@ -94,7 +97,7 @@ export default function History({ open, onClose }: Props) {
       const _rounds = [
         ...roundsData.map((round) => {
           return {
-            label: `Rounded ${round.round} (${new Date(round.timecreate * 1000).toLocaleDateString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' })})`,
+            label: `${round.round} (${new Date(round.timecreate * 1000).toLocaleDateString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' })})`,
             value: round.round.toString(),
           }
         }),
@@ -132,12 +135,16 @@ export default function History({ open, onClose }: Props) {
         </button>
         <div className="size-full space-y-2 lg:space-y-10">
           <div className="lg:px-[18px]">
-            <h2 className="text-[21px] lg:text-[32px] font-medium leading-10 text-red-light">Lucky draw history</h2>
+            <h2 className="text-[21px] lg:text-[32px] font-medium leading-10 text-red-light">
+              <Trans>Lucky draw history</Trans>
+            </h2>
           </div>
           <div className="my-2 space-y-4 lg:space-y-8 pb-4">
             <div className="flex flex-col items-center  lg:flex-row lg:justify-between  gap-4">
               <div className="lg:px-[18px] flex flex-col justify-center">
-                <h2 className="text-sm text-left font-medium text-red-light font-Roboto">Reward wallet:</h2>
+                <h2 className="text-sm text-left font-medium text-red-light font-Roboto">
+                  <Trans>Reward wallet:</Trans>
+                </h2>
                 {data?.data.reward_wallet && (
                   <div className="flex items-center mt-1">
                     <p className="relative text-[12px] lg:text-sm text-left font-light text-[#4E473F] mr-2">
@@ -150,13 +157,14 @@ export default function History({ open, onClose }: Props) {
 
               <div className="flex  justify-end gap-4 lg:flex-row lg:px-[18px]">
                 <Dropdown
+                  label={t('Rounded')}
                   options={rounds}
                   value={selectedRound}
                   setValue={setSelectedRound}
                   className="w-fit lg:min-w-[240px] h-[32px] lg:h-[37px] font-Roboto border-secondary"
                 />
                 <Dropdown
-                  label="Prize:"
+                  label={`${t('Prize')}:`}
                   options={prizeOptions}
                   value={selectedPrize}
                   setValue={setSelectedPrize}
@@ -168,15 +176,27 @@ export default function History({ open, onClose }: Props) {
             <div className="max-w-full overflow-x-auto">
               <div className="min-w-[500px] space-y-4 ">
                 <div className="flex h-11 rounded border border-[#EEE0E0] text-center text-xs lg:text-sm font-normal leading-5 text-red-darker lg:mx-[18px] font-Roboto space-x-3 text-nowrap">
-                  <div className="flex h-full w-10 items-center ">No</div>
-                  <div className="flex h-full w-[150px] items-center  lg:w-[200px]">Prize</div>
-                  <div className="flex h-full flex-1 items-center ">Wallet Address</div>
-                  <div className="flex h-full w-[192px] items-center ">Index number</div>
-                  <div className="flex h-full w-[100px] items-center justify-center lg:w-[167px]">Apple ID</div>
+                  <div className="flex h-full w-10 items-center ">
+                    <Trans>No</Trans>
+                  </div>
+                  <div className="flex h-full w-[150px] items-center  lg:w-[200px]">
+                    <Trans>Prize</Trans>
+                  </div>
+                  <div className="flex h-full flex-1 items-center ">
+                    <Trans>Wallet address</Trans>
+                  </div>
+                  <div className="flex h-full w-[192px] items-center ">
+                    <Trans>Index number</Trans>
+                  </div>
+                  <div className="flex h-full w-[100px] items-center justify-center lg:w-[167px]">
+                    <Trans>Apple ID</Trans>
+                  </div>
                 </div>
                 <div className="history h-full  space-y-2 overflow-y-auto lg:ml-[18px] lg:pr-2">
                   {isLoading ? (
-                    <p>Loading...</p>
+                    <p>
+                      <Trans>Loading</Trans>...
+                    </p>
                   ) : (
                     <>
                       {(data || data?.data.prize?.length > 0) &&

@@ -13,6 +13,7 @@ import { useState } from 'react'
 import { toast } from 'react-toastify'
 import ReceiveAddress from '../ReceiveAddress'
 import { ButtonImage } from '../button'
+import Trans from '../i18n/Trans'
 import { ChevronIcon } from '../ui/icons'
 import NetworkFees from './NetworkFees'
 
@@ -81,7 +82,9 @@ const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrderId
 
   return (
     <div className="flex flex-col flex-1">
-      <p className="text-base font-semibold leading-tight font-Roboto">Receive Address</p>
+      <p className="text-base font-semibold leading-tight font-Roboto">
+        <Trans>Receive Address</Trans>
+      </p>
       <ReceiveAddress
         address={addressReceiver}
         onChange={handleChangeReceiverAddress}
@@ -93,7 +96,9 @@ const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrderId
           setEnableCustom(!enabledCustom)
         }}
       >
-        <span className="text-base text-text-secondary font-medium mr-1 font-Roboto">Advanced Settings</span>
+        <span className="text-base text-text-secondary font-medium mr-1 font-Roboto">
+          <Trans>Advanced Settings</Trans>
+        </span>
         <span className={cn(enabledCustom ? 'rotate-180' : 'rotate-0', `ml-1 transition-all duration-500`)}>
           <ChevronIcon className="stroke-text-secondary" />
         </span>
@@ -102,7 +107,9 @@ const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrderId
       <div
         className={cn('flex flex-col gap-2 text-black1 font-Roboto', enabledCustom ? 'max-h-0 overflow-hidden' : '')}
       >
-        <p className="text-sm font-medium leading-tight tracking-[-0.42px]">Select the network fee you want to pay</p>
+        <p className="text-sm font-medium leading-tight tracking-[-0.42px]">
+          <Trans>Select the network fee you want to pay</Trans>
+        </p>
         <NetworkFees onChangeDataForm={setDataForm} />
       </div>
       <div className="flex flex-col flex-1 mt-auto justify-end gap-4 uppercase">
@@ -124,10 +131,11 @@ const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrderId
           className="w-full px-12 py-4 mt-10 whitespace-nowrap"
           onClick={handleCreateMintOrder}
         >
-          Submit & Pay Invoice
+          <Trans>Submit & pay invoice</Trans>
         </ButtonImage>
       </div>
     </div>
   )
 }
 export default MintForm
+

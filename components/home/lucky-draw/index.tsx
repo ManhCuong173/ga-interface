@@ -213,9 +213,9 @@ export default function LuckyDraw() {
                       }
                     }}
                     varirant="light-double-asset"
-                    className="text-[3vw] sm:text-base whitespace-nowrap lg:text-lg  font-medium text-red-light w-full h-full font-Roboto"
+                    className="text-[3vw] sm:text-base whitespace-nowrap lg:text-lg  font-medium text-red-light w-full h-full font-Roboto capitalize"
                   >
-                    {address ? 'Check Your Prize' : 'Connect Wallet'}
+                    <Trans>{address ? 'Check your prize' : 'Connect Wallet'}</Trans>
                   </ButtonImage>
                 </div>
                 <div className="w-full h-full">

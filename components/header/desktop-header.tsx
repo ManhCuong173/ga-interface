@@ -8,7 +8,6 @@ import { usePathname } from 'next/navigation'
 import { Fragment, useEffect, useState } from 'react'
 import Trans from '../i18n/Trans'
 import ConnectWalletButton from './connect-wallet-button'
-import LanguageSelect from './language-select'
 
 export default function DesktopHeader() {
   const path = usePathname()
@@ -86,7 +85,6 @@ export default function DesktopHeader() {
         </div>
         <div className="flex items-center gap-8">
           <ConnectWalletButton mode={mode} />
-          <LanguageSelect className="border border-bgAlt rounded-md w-max h-10" mode="solid" />
         </div>
       </div>
     </header>

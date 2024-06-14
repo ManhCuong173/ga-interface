@@ -2,6 +2,7 @@ import { nftTypes } from '@/constants/nft.constant'
 import ButtonListNFT from '@/icons/button/button-list-nft.svg'
 import { UserAsset } from '@/types/asset'
 import Image from 'next/image'
+import Trans from '../i18n/Trans'
 import { handleReturnIconType } from '../marketplace/Item'
 
 type Props = UserAsset & {
@@ -64,7 +65,7 @@ export default function Asset({ onShowInfo, onList, onCancel, ...props }: Props)
           <span
             className={`h-[30.13px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center text-white2`}
           >
-            {props.is_listing ? 'Cancel listing' : 'List'}
+            <Trans>{props.is_listing ? 'Cancel listing' : 'List'}</Trans>
           </span>
         </button>
       </div>
