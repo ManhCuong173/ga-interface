@@ -27,7 +27,7 @@ export default function Profile({ params: { locale } }: { params: { locale: stri
               className="
               aspect-[378/170]
               lg:aspect-[1020/108] w-full bg-[url(/images/profile/profile-cover-background.svg)] 
-              bg-cover bg-center rounded-[20px] py-5 lg:py-10 px-12 flex justify-center flex-col text-secondary"
+              bg-cover bg-center rounded-[20px] py-5 lg:py-10 px-12 flex justify-center flex-col text-secondary lg:max-h-[244px]"
             >
               <div
                 className="
