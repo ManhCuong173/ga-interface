@@ -1,17 +1,18 @@
 'use client'
 
 import LineChart from '@/components/chart/line-chart'
+import Trans from '@/components/i18n/Trans'
+import { flyToAnimation } from '@/constants/animation.constant'
 import {
+  filterVolumeChartDataByWeek,
   filterVolumnChartDataAuto,
   filterVolumnChartDataByMonth,
-  filterVolumeChartDataByWeek,
   filterVolumnChartDataByYear,
 } from '@/lib/crm'
 import { AllChartData, ChartData } from '@/types/chart'
 import { CRMChartData } from '@/types/crm'
-import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { flyToAnimation } from '@/constants/animation.constant'
+import { useEffect, useState } from 'react'
 
 const tabs = [
   {
@@ -116,16 +117,16 @@ export default function Volume({ data }: Props) {
     <motion.div
       {...flyToAnimation}
       transition={{ duration: 0.4, delay: 1 }}
-      className='relative flex h-full flex-col items-center justify-center gap-6 rounded-lg bg-white p-4 pb-12 lg:gap-8 lg:px-8 lg:pb-16 lg:pt-12'
+      className="relative flex h-full flex-col items-center justify-center gap-6 rounded-lg bg-white p-4 pb-12 lg:gap-8 lg:px-8 lg:pb-16 lg:pt-12"
       style={{
         boxShadow: '0px 4px 15px 0px rgba(0, 0, 0, 0.06)',
       }}
     >
-      <div className='racking-[-0.42px] flex w-full flex-col items-start justify-between gap-2 lg:h-[52px] lg:flex-row'>
-        <span className='text-base font-medium tracking-[-0.48px] text-black1 lg:text-2xl'>
-          VOLUME
+      <div className="racking-[-0.42px] flex w-full flex-col items-start justify-between gap-2 lg:h-[52px] lg:flex-row">
+        <span className="text-base font-medium tracking-[-0.48px] text-black1 lg:text-2xl">
+          <Trans>{'Volume'}</Trans>
         </span>
-        <div className='grid w-full cursor-pointer grid-cols-4 bg-[#FDE8C4] bg-opacity-40 p-1 text-sm text-text-secondary lg:flex lg:w-[unset]'>
+        <div className="grid w-full cursor-pointer grid-cols-4 bg-[#FDE8C4] bg-opacity-40 p-1 text-sm text-text-secondary lg:flex lg:w-[unset]">
           {tabs.map((item, index) => (
             <div
               key={item.value}
@@ -139,28 +140,26 @@ export default function Volume({ data }: Props) {
           ))}
         </div>
       </div>
-      <div className='w-full max-w-full overflow-x-auto'>
+      <div className="w-full max-w-full overflow-x-auto">
         <LineChart
           key={activeTab + JSON.stringify(chartData) + JSON.stringify(allChartData)}
           style={chartStyle}
-          className='h-[208.5px]'
+          className="h-[208.5px]"
           {...chartProps}
         />
       </div>
       {activeTab === 'all' && (
-        <div className='absolute inset-x-0 bottom-3 flex items-center justify-center gap-2 text-xl font-semibold lg:bottom-5'>
+        <div className="absolute inset-x-0 bottom-3 flex items-center justify-center gap-2 text-xl font-semibold lg:bottom-5">
           <button
             className={`${activeYearIndex <= 0 ? 'hidden' : ''} text-text-secondary`}
             onClick={() => activeYearIndex > 0 && setActiveYearIndex((prev) => prev - 1)}
           >
             {'<'}
           </button>
-          <span className='text-black1'>{years[activeYearIndex]}</span>
+          <span className="text-black1">{years[activeYearIndex]}</span>
           <button
             className={`${activeYearIndex >= years.length - 1 ? 'hidden' : ''} text-text-secondary`}
-            onClick={() =>
-              activeYearIndex < years.length - 1 && setActiveYearIndex((prev) => prev + 1)
-            }
+            onClick={() => activeYearIndex < years.length - 1 && setActiveYearIndex((prev) => prev + 1)}
           >
             {'>'}
           </button>
@@ -169,3 +168,4 @@ export default function Volume({ data }: Props) {
     </motion.div>
   )
 }
+

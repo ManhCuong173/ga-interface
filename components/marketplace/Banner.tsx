@@ -5,12 +5,17 @@ import { motion } from 'framer-motion'
 import { ButtonImage } from '../button'
 import Counter from '../counter'
 import WrapperHero from '../home/WrapperHero'
+import Trans from '../i18n/Trans'
 
 const CardInfo: React.FC<{ amount: string; title: string }> = ({ amount, title }) => {
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="leading-tight text-[3.6vw] sm:text-[30px] secondary font-medium">{amount}</div>
-      <div className="leading-tight text-[2.6vw] sm:text-lg secondary font-normal font-Roboto">{title}</div>
+      <div className="leading-tight text-[3.6vw] sm:text-[30px] secondary font-medium">
+        <Trans>{amount}</Trans>
+      </div>
+      <div className="leading-tight text-[2.6vw] sm:text-lg secondary font-normal font-Roboto text-nowrap">
+        <Trans>{title}</Trans>
+      </div>
     </div>
   )
 }
@@ -44,7 +49,7 @@ const BannerMarketPlace = () => {
                       className="flex items-center justify-center gap-2"
                     >
                       <span className="text-2xl lg:text-[45px] leading-tight tracking-[-1.35px] font-bold text-red-light text-center ">
-                        DISCOVER, COLLECT, AND TRADE RARE NFTS
+                        <Trans>{'DISCOVER, COLLECT, AND TRADE RARE NFTS'}</Trans>
                       </span>
                     </motion.div>
                   </div>
@@ -92,17 +97,17 @@ const BannerMarketPlace = () => {
                         K+
                       </div>
                       <div className="leading-tight text-[2.6vw] sm:text-lg secondary font-normal font-Roboto">
-                        Artworks
+                        <Trans>{'Artworks'}</Trans>
                       </div>
                     </div>
-                    <CardInfo amount="AUTION" title="Coming soon" />
+                    <CardInfo amount="Auction" title="IsComingSoon" />
                     <div className="flex flex-col items-center justify-center">
                       <div className="leading-tight text-[3.6vw] sm:text-[30px] secondary font-medium">
                         <Counter value={2} />
                         K+
                       </div>
                       <div className="leading-tight text-[2.6vw] sm:text-lg secondary font-normal font-Roboto">
-                        Creator
+                        <Trans>{'Creators'}</Trans>
                       </div>
                     </div>
                   </ButtonImage>

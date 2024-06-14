@@ -1,6 +1,7 @@
 'use client'
 
 import { ButtonImage } from '@/components/button'
+import Trans from '@/components/i18n/Trans'
 import { urlRoute } from '@/constants/routes'
 import { useMediaQuery } from '@/hooks/custom/useMediaQuery'
 import fourthPrice from '@/icons/home/consoliadation-prize.svg'
@@ -60,16 +61,17 @@ const CoupleButton: React.FC<{ className?: string }> = ({ className }) => {
   return (
     <div className={cn('flex flex-row justify-center gap-2 text-red-light', className)}>
       <div className="flex items-center justify-center h-[32px] w-[62px] rounded-[8px]  font-normal leading-[150%] tracking-[-0.54px] font-Roboto border-red-light border-[1px] py-[1px] px-[14px] cursor-pointer">
-        Prize
+        <Trans>{'Prize'}</Trans>
       </div>
       <div
         className="flex items-center justify-center h-[32px] w-[73px] 
       rounded-[8px]  font-normal leading-[150%] tracking-[-0.54px] 
       font-Roboto  text-text-secondary py-[1px] px-[14px]
       cursor-pointer
+      text-nowrap
       "
       >
-        History
+        <Trans>{'History'}</Trans>
       </div>
     </div>
   )
@@ -135,7 +137,7 @@ export default function LuckyDraw() {
               <div className="flex flex-col">
                 <div className="flex h-9 items-center justify-center gap-2 lg:h-fit">
                   <span className="text-2xl lg:text-[40px] font-semibold tracking-[-0.96px] text-red-light lg:text-5xl">
-                    Lucky draw
+                    <Trans>{'LuckyDraw'}</Trans>
                   </span>
                 </div>
                 <CoupleButton className="flex lg:hidden mt-2" />
@@ -143,7 +145,7 @@ export default function LuckyDraw() {
               <div className="flex flex-col lg:flex-row w-full lg:justify-between mt-5 lg:mt-10">
                 <div className="flex flex-col items-center lg:items-start ">
                   <div className="text-lg mb-[2px]  font-medium leading-[100%] tracking-[-0.54px] text-black1 lg:text-md lg:leading-7 font-Roboto">
-                    Total NFT sold this round:
+                    <Trans>{'TotalNFTSoldRound'}</Trans>
                   </div>
                   <div className="text-[21px] font-medium text-red-light tracking-tighter">
                     <span>{nftSoldData?.mint_count || 0}</span>/
@@ -220,12 +222,14 @@ export default function LuckyDraw() {
                   <Link href={urlRoute.inscribe}>
                     <ButtonImage
                       varirant="primary-asset"
-                      className="text-[3vw] sm:text-base whitespace-nowrap lg:text-lg  font-medium text-secondary w-full h-full font-Roboto"
+                      className="text-[3vw] sm:text-base whitespace-nowrap 
+                      lg:text-lg  font-medium text-secondary w-full h-full 
+                      font-Roboto capitalize"
                       onClick={(e) => {
                         e.stopPropagation()
                       }}
                     >
-                      Try Now
+                      <Trans>{'TryNow'}</Trans>
                     </ButtonImage>
                   </Link>
                 </div>

@@ -1,10 +1,10 @@
+import Trans from '@/components/i18n/Trans'
 import { urlRoute } from '@/constants/routes'
 import { cn } from '@/lib/utils'
 import { ElementType } from '@/types/element'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import React from 'react'
 
 export type Props = {
@@ -20,8 +20,6 @@ export type Props = {
 }
 
 const Card: React.FC<Props> = ({ icon, bgDesktop, bgMobile, color, description, title, motionProps, element }) => {
-  const router = useRouter()
-
   return (
     <motion.div
       {...motionProps}
@@ -63,9 +61,11 @@ const Card: React.FC<Props> = ({ icon, bgDesktop, bgMobile, color, description, 
           >
             <div className="flex flex-col items-center justify-center">
               <div className="text-secondary text-sm font-semibold font-Roboto text-left lg:text-center lg:mb-2">
-                {title}
+                <Trans>{title}</Trans>
               </div>
-              <div className="text-secondary text-xs font-Roboto text-left lg:text-center">{description}</div>
+              <div className="text-secondary text-xs font-Roboto text-left lg:text-center">
+                <Trans>{description}</Trans>
+              </div>
             </div>
           </div>
         </div>

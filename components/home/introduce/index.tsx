@@ -1,5 +1,6 @@
 import { ButtonImage } from '@/components/button'
 import Counter from '@/components/counter'
+import Trans from '@/components/i18n/Trans'
 import { appearAnimation } from '@/constants/animation.constant'
 import { urlRoute } from '@/constants/routes'
 import ArtWorkIcon from '@/icons/home/artwork.svg'
@@ -8,7 +9,6 @@ import CreatorIcon from '@/icons/home/creator.svg'
 import NFTIconMobile from '@/icons/home/home-introduce-nft-mobile.svg'
 import NFTIcon from '@/icons/home/home-introduce-nft.svg'
 import { motion, useInView } from 'framer-motion'
-import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
@@ -18,7 +18,6 @@ export default function Introduce() {
   const ref = useRef(null)
   const isInView = useInView(ref, { margin: '-120px' })
   const [isDisplay, setIsDisplay] = useState(false)
-  const t = useTranslations('Home')
 
   useEffect(() => {
     if (isInView && !isDisplay) {
@@ -49,8 +48,7 @@ export default function Introduce() {
               font-Roboto lg:max-w-unset
               "
             >
-              Golden Apple is the GameFi platform for the Bitcoin Ecosystem. Through mapping the Bitcoin Assets (BRC20,
-              Ordinals NFT and others) to Ethereum (and other Layer2) networks.
+              <Trans>{'IntroduceText'}</Trans>
             </div>
 
             <Link href={urlRoute.inscribe}>
@@ -58,7 +56,9 @@ export default function Introduce() {
                 varirant="primary-asset"
                 className="text-lg font-medium text-red-light w-64 h-14 mt-10 lg:mt-[50px] p-0 cursor:pointer"
               >
-                <div className="text-white font-Roboto text-base font-medium leading-[150%]">Mint NFT Now</div>
+                <div className="text-white font-Roboto text-base font-medium leading-[150%]">
+                  <Trans>{'MintNFTNow'}</Trans>
+                </div>
               </ButtonImage>
             </Link>
           </div>
@@ -145,7 +145,9 @@ export default function Introduce() {
                 >
                   <Counter value={110} />K <span className="relative">+</span>
                 </div>
-                <div className="text-xs lg:text-[18px] leading-[110%] lg:leading-[110%]">{t('Artworks')}</div>
+                <div className="text-xs lg:text-[18px] leading-[110%] lg:leading-[110%]">
+                  <Trans>{'Artworks'}</Trans>
+                </div>
               </div>
             </motion.div>
 
@@ -173,7 +175,9 @@ export default function Introduce() {
                 >
                   <Counter value={2} />K <span className="relative left-[-2px]">+</span>
                 </div>
-                <div className="text-xs lg:text-[18px] leading-[110%] lg:leading-[110%]">Creators</div>
+                <div className="text-xs lg:text-[18px] leading-[110%] lg:leading-[110%]">
+                  <Trans>{'Creators'}</Trans>
+                </div>
               </div>
               <Image src={CreatorIcon} className="w-[38px] lg:w-[58px] h-[38px] lg:h-[58px]" alt="" />
             </motion.div>
@@ -197,9 +201,11 @@ export default function Introduce() {
                   className="  text-black1 text-[21px] lg:text-[24px] 
                   font-medium leading-[110%] lg:leading-[110%] tracking-[-0.25px]"
                 >
-                  Auction
+                  <Trans>{'Auction'}</Trans>
                 </div>
-                <div className="text-xs lg:text-[14px] leading-[100%] lg:leading-[130%]">is coming soon</div>
+                <div className="text-xs lg:text-[14px] leading-[100%] lg:leading-[130%]">
+                  <Trans>{'IsComingSoon'}</Trans>
+                </div>
               </div>
             </motion.div>
           </div>

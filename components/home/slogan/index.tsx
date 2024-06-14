@@ -1,4 +1,5 @@
 import { ButtonImage } from '@/components/button'
+import Trans from '@/components/i18n/Trans'
 import { HeadMarkIcon } from '@/components/ui/icons'
 import { useMediaQuery } from '@/hooks/custom/useMediaQuery'
 import { useInView } from 'framer-motion'
@@ -45,8 +46,7 @@ const Slogin = () => {
             <HeadMarkIcon />
           </div>
           <div className="max-w-[980px] mt-16 mb-14 lg:mt-24 text-center text-2xl font-semibold leading-[1.4] tracking-[-0.72px] uppercase text-secondary px-5 lg:px-10">
-            “Golden Apple is the GameFi platform for the Bitcoin Ecosystem. Through mapping the Bitcoin Assets (BRC20,
-            Ordinals NFT and others) to Ethereum (and other Layer2) networks,”
+            <Trans>{'Slogan'}</Trans>
           </div>
 
           <Link href="/inscribe">
@@ -54,9 +54,9 @@ const Slogin = () => {
               varirant="light-asset"
               className="text-sm lg:text-base font-medium text-red-light w-[105%] h-[100px] md:h-[80px] lg:w-[420px] text-center"
             >
-              Grab your golden ticket today
+              <Trans>{'GrabTicket'}</Trans>
               <br />
-              Mint your NFT now!
+              <Trans>{'MintYourNFTNow'}</Trans>
             </ButtonImage>
           </Link>
         </div>

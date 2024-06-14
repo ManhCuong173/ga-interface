@@ -2,12 +2,13 @@ import { headerItems } from '@/constants/header.constant'
 import logo from '@/images/commons/logo.svg'
 import { selectActiveSection } from '@/lib/features/home-section/home-section-slice'
 import { useAppSelector } from '@/lib/hook'
-import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Fragment, useEffect, useState } from 'react'
+import Trans from '../i18n/Trans'
 import ConnectWalletButton from './connect-wallet-button'
+import LanguageSelect from './language-select'
 
 export default function DesktopHeader() {
   const path = usePathname()
@@ -16,7 +17,6 @@ export default function DesktopHeader() {
   const [show, setShow] = useState(false)
   const [prevScrollPos, setPrevScrollPos] = useState(0)
   const [isScrollOverSidebarHeight, setIsScrollOverSidebarHeight] = useState(false)
-  const t = useTranslations('Navigation')
 
   useEffect(() => {
     setShow(true)
@@ -76,7 +76,9 @@ export default function DesktopHeader() {
                   href={item.href}
                   className={`${(item.href === '/' && isHomePage) || (path.includes(item.href) && !isHomePage && item.href !== '/') ? 'border-red-light text-red-light' : 'border-transparent'} flex h-full items-center gap-2 border-b-2 px-6`}
                 >
-                  <span>{t(item.label)}</span>
+                  <span>
+                    <Trans>{item.label}</Trans>
+                  </span>
                 </Link>
               </Fragment>
             ))}
@@ -84,6 +86,7 @@ export default function DesktopHeader() {
         </div>
         <div className="flex items-center gap-8">
           <ConnectWalletButton mode={mode} />
+          <LanguageSelect className="border border-bgAlt rounded-md w-max h-10" mode="solid" />
         </div>
       </div>
     </header>

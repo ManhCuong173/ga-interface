@@ -1,5 +1,6 @@
 'use client'
 import Footer from '@/components/footer'
+import Trans from '@/components/i18n/Trans'
 import BannerMarketPlace from '@/components/marketplace/Banner'
 import ComingSoon from '@/components/marketplace/ComingSoon'
 import TabIndicator from '@/components/marketplace/TabIndicator'
@@ -24,19 +25,19 @@ const tabs = [
     id: 1,
     icon: tab1,
     icon_active: tab1_active,
-    title: 'items' || null,
+    title: 'Items' || null,
   },
   {
     id: 2,
     icon: tab2,
     icon_active: tab2_active,
-    title: 'analytics',
+    title: 'Analytics',
   },
   {
     id: 3,
     icon: tab3,
     icon_active: tab3_active,
-    title: 'activity',
+    title: 'Activity',
   },
 ]
 const isComingSoonMode = true
@@ -94,7 +95,7 @@ const Marketplace = ({ params: { locale } }: { params: { locale: string } }) => 
                   iconActive={_tab.icon_active}
                   onClick={() => handleSetTab(_tab.id)}
                 >
-                  {_tab.title}
+                  <Trans>{_tab.title}</Trans>
                 </TabIndicator>
               )
             })}
