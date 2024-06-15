@@ -1,6 +1,7 @@
 import { NFT } from '@/types/nft'
-import { SquareCheckIcon } from '../ui/icons'
 import Image from 'next/image'
+import Trans from '../i18n/Trans'
+import { SquareCheckIcon } from '../ui/icons'
 
 interface INfts {
   nfts: NFT[]
@@ -60,9 +61,12 @@ const NFTList: React.FC<INfts> = ({ nfts, isLoading, selectedNFTs, onSelectNFT }
           ))}
         </div>
       ) : (
-        <p className="flex flex-1 items-center justify-center text-center">No NFTs</p>
+        <p className="flex flex-1 items-center justify-center text-center">
+          <Trans>No NFTs</Trans>
+        </p>
       )}
     </div>
   )
 }
 export default NFTList
+

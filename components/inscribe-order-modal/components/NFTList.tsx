@@ -1,3 +1,4 @@
+import Trans from '@/components/i18n/Trans'
 import { cn } from '@/lib/utils'
 import { NFT } from '@/types/nft'
 import Image from 'next/image'
@@ -52,9 +53,12 @@ const NFTList: React.FC<INfts> = ({ nfts, isLoading, onSelectNFT }) => {
           ))}
         </div>
       ) : (
-        <p className="flex flex-1 items-center justify-center text-center">No NFTs</p>
+        <p className="flex flex-1 items-center justify-center text-center">
+          <Trans>No NFTs</Trans>
+        </p>
       )}
     </div>
   )
 }
 export default NFTList
+
