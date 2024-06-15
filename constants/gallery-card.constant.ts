@@ -1,70 +1,77 @@
 import { Props as CardProps } from '@/components/home/nft-gallery/card'
 import { flyInAnimation } from '@/constants/animation.constant'
+import { ElementType } from '@/utils/const'
 
-export const cards: CardProps[] = [
+export const NFTGalleryList: CardProps[] = [
   {
-    icon: '/images/home/nft-gallery/cards/fire/fire-icon.png',
-    bgMobile: '/images/home/nft-gallery/cards/fire/fire-bg-mobile.png',
-    bgDesktop: '/images/home/nft-gallery/cards/fire/fire-bg.png',
+    icon: '/images/home/nft-gallery/cards/fire/fire-icon.svg',
+    bgMobile: '/images/home/nft-gallery/cards/fire/fire-bg-mobile.svg',
+    bgDesktop: '/images/home/nft-gallery/cards/fire/fire-bg.svg',
     color: '#56090B',
 
-    description:
-      '“Uncover the unparalleled allure of Flame NFTs, where each piece ignites with its own distinct essence.”',
+    title: 'IgnitionOfYourFortune',
+    description: 'FireDescription',
     motionProps: {
       transition: { duration: 0.5, delay: 1 },
       ...flyInAnimation,
     },
+    element: ElementType[0],
   },
   {
-    icon: '/images/home/nft-gallery/cards/earth/earth-icon.png',
-    bgMobile: '/images/home/nft-gallery/cards/earth/earth-bg-mobile.png',
-    bgDesktop: '/images/home/nft-gallery/cards/earth/earth-bg.png',
+    icon: '/images/home/nft-gallery/cards/earth/earth-icon.svg',
+    bgMobile: '/images/home/nft-gallery/cards/earth/earth-bg-mobile.svg',
+    bgDesktop: '/images/home/nft-gallery/cards/earth/earth-bg.svg',
     color: '#6B3C02',
 
-    description: '“Discover the unmatched charm of Earth NFTs, where each piece reflects the essence of the land”',
+    title: 'EarthTitle',
+    description: 'EarthDescription',
     motionProps: {
       transition: { duration: 0.5, delay: 1.3 },
       ...flyInAnimation,
     },
+    element: ElementType[1],
   },
   {
-    icon: '/images/home/nft-gallery/cards/mental/mental-icon.png',
-    bgMobile: '/images/home/nft-gallery/cards/mental/mental-bg-mobile.png',
-    bgDesktop: '/images/home/nft-gallery/cards/mental/mental-bg.png',
+    icon: '/images/home/nft-gallery/cards/mental/mental-icon.svg',
+    bgMobile: '/images/home/nft-gallery/cards/mental/mental-bg-mobile.svg',
+    bgDesktop: '/images/home/nft-gallery/cards/mental/mental-bg.svg',
     color: '#A17015',
 
-    description:
-      '“Explore the captivating allure of Metal NFTs, each piece embodying the strength and brilliance of precious metals.” ',
+    title: 'MetalTitle',
+    description: 'MetalDescription',
     motionProps: {
       transition: { duration: 0.5, delay: 1.6 },
       ...flyInAnimation,
     },
+    element: ElementType[2],
   },
   {
-    icon: '/images/home/nft-gallery/cards/wood/wood-icon.png',
-    bgMobile: '/images/home/nft-gallery/cards/wood/wood-bg-mobile.png',
-    bgDesktop: '/images/home/nft-gallery/cards/wood/wood-bg.png',
+    icon: '/images/home/nft-gallery/cards/wood/wood-icon.svg',
+    bgMobile: '/images/home/nft-gallery/cards/wood/wood-bg-mobile.svg',
+    bgDesktop: '/images/home/nft-gallery/cards/wood/wood-bg.svg',
     color: '#023129',
 
-    description:
-      '“Dive into the rustic charm of Wood NFTs, where each artwork reflects the natural beauty and resilience of timber.”',
+    title: 'WoodTitle',
+    description: 'WoodDescription',
     motionProps: {
       transition: { duration: 0.5, delay: 1.9 },
       ...flyInAnimation,
     },
+    element: ElementType[3],
   },
   {
-    icon: '/images/home/nft-gallery/cards/water/water-icon.png',
-    bgMobile: '/images/home/nft-gallery/cards/water/water-bg-mobile.png',
-    bgDesktop: '/images/home/nft-gallery/cards/water/water-bg.png',
+    icon: '/images/home/nft-gallery/cards/water/water-icon.svg',
+    bgMobile: '/images/home/nft-gallery/cards/water/water-bg-mobile.svg',
+    bgDesktop: '/images/home/nft-gallery/cards/water/water-bg.svg',
     color: '#11184C',
 
-    description:
-      '“Delve into the fluid elegance of Water NFTs, each piece capturing the essence of fluidity and serenity."',
+    title: 'WeathTitle',
+    description: 'WeathDescription',
     motionProps: {
       transition: { duration: 0.5, delay: 2.1 },
       ...flyInAnimation,
     },
+    element: ElementType[4],
   },
 ]
 

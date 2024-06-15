@@ -1,8 +1,9 @@
 'use client'
 
+import Trans from '@/components/i18n/Trans'
 import { HeadMarkIcon } from '@/components/ui/icons'
 import { appearAnimation } from '@/constants/animation.constant'
-import { cards } from '@/constants/gallery-card.constant'
+import { NFTGalleryList } from '@/constants/gallery-card.constant'
 import { motion } from 'framer-motion'
 import Card from './card'
 
@@ -15,14 +16,14 @@ export default function NFTGallery() {
             <div className="flex  items-center justify-evenly w-full">
               <HeadMarkIcon className="hidden lg:block" />
               <span className="text-2xl lg:text-[40px] whitespace-nowrap font-semibold tracking-[-0.96px] text-red-light lg:text-5xl">
-                NFT Gallery
+                <Trans>{'NFTGallery'}</Trans>
               </span>
               <HeadMarkIcon className="hidden lg:block" />
             </div>
           </motion.div>
           <div className="grid gap-4 items-center lg:grid-cols-5">
-            {cards.map((card, index) => (
-              <Card key={index} {...card} />
+            {NFTGalleryList.map((nftGallery, index) => (
+              <Card key={index} {...nftGallery} />
             ))}
           </div>
         </div>

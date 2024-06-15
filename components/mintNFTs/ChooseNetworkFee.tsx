@@ -2,6 +2,7 @@ import { cn } from '@/lib/utils'
 import { NetworkFee, NetworkFeeEnum, NetworkFeeType } from '@/types/fee'
 import { toast } from 'react-toastify'
 import { ButtonImage } from '../button'
+import Trans from '../i18n/Trans'
 import Customsize from './Customsize'
 
 type Props = {
@@ -40,7 +41,9 @@ export default function ChooseNetworkFee({
               onSelectFeeType(network)
             }}
           >
-            <div className="mb-1 capitalize font-bold">{network}</div>
+            <div className="mb-1 capitalize font-bold">
+              <Trans>{network}</Trans>
+            </div>
             <div>
               {isLoading ? (
                 'loading'
@@ -60,31 +63,6 @@ export default function ChooseNetworkFee({
       </div>
       {selectedNetworkFeeType === NetworkFeeEnum.Custom && (
         <div className="flex items-center gap-8">
-          {/* {isDisplayTime && <div className='p-3 max-sm:hidden'>
-            <div className='relative h-[80px] w-[80px]'>
-              <Image src={time_range} alt='' />
-              <div className='absolute bottom-0 left-0 right-0 mx-auto flex flex-col items-center gap-[6px]'>
-                <p className='text-lg font-medium uppercase leading-7 tracking-[-0.54px] text-[#FF6634]'>
-                  10m
-                </p>
-                <p className='font-light uppercase leading-5 tracking-[-0.42px] text-[#383F4A]'>
-                  Time
-                </p>
-              </div>
-              <div className='absolute left-0 right-0 top-[-4px] mx-auto w-fit'>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  width='13'
-                  height='13'
-                  viewBox='0 0 13 13'
-                  fill='none'
-                >
-                  <circle cx='6.50781' cy='6.29883' r='6' fill='#4E473F' />
-                  <circle cx='6.50781' cy='6.29883' r='4' fill='white' />
-                </svg>
-              </div>
-            </div>
-          </div>} */}
           <div className="flex w-full flex-col gap-3">
             <Customsize
               min={min}
@@ -100,7 +78,9 @@ export default function ChooseNetworkFee({
               }}
               value={customNetworkFee}
             >
-              <p className="flex flex-1 items-end font-medium leading-5 h-full tracking-[-0.42px]">Custom fee</p>
+              <p className="flex flex-1 items-end font-medium leading-5 h-full tracking-[-0.42px]">
+                <Trans>Custom fee</Trans>
+              </p>
             </Customsize>
           </div>
         </div>
@@ -108,3 +88,4 @@ export default function ChooseNetworkFee({
     </>
   )
 }
+

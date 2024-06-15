@@ -1,3 +1,5 @@
+import Trans from '@/components/i18n/Trans'
+import { useGATranslation } from '@/components/i18n/hooks'
 import BtnClaim from '@/components/ui/button/btnClaim'
 import ModalContainer from '@/components/ui/modal-container'
 import fourthPrice from '@/icons/home/consoliadation-prize.svg'
@@ -55,9 +57,10 @@ const PAGE_SIZE = 10000
 
 export default function YouPrize({ open, onClose }: Props) {
   const [rounds, setRounds] = useState<Option[]>([{ label: 'No Data', value: '' }])
-
+  const [userInscriptionIds, setUserInscriptionIds] = useState<string[]>([])
   const [selectedRound, setSelectedRound] = useState('')
   const [selectedPrize, setSelectedPrize] = useState(prizeOptions[0].value)
+  const t = useGATranslation()
 
   const prizeParams = prizeOptions.find((item) => item.value === selectedPrize)?.label
 
@@ -67,6 +70,7 @@ export default function YouPrize({ open, onClose }: Props) {
       prize: prizeParams?.toLocaleLowerCase() === 'all' ? '' : prizeParams?.toLocaleLowerCase(),
       round: selectedRound.toLowerCase(),
     })
+
     return data.data
   }
   const { data: roundsData } = useQuery({
@@ -82,12 +86,28 @@ export default function YouPrize({ open, onClose }: Props) {
     enabled: !!open && !!selectedRound,
   })
 
+  const getListTxidInscription = async () => {
+    try {
+      let res = await (window as any).unisat.getInscriptions(0, 10000)
+      if (res?.list?.length > 0) {
+        setUserInscriptionIds(res.list.map((inscription: any) => inscription.inscriptionId))
+      }
+    } catch (e) {
+      console.log('error getting list tx id inscription: ', e)
+      return []
+    }
+  }
+
+  useEffect(() => {
+    if (open) getListTxidInscription()
+  }, [open])
+
   useEffect(() => {
     if (roundsData && roundsData.length) {
       const _rounds = [
         ...roundsData.map((round) => {
           return {
-            label: `ROUNDED ${round.round} (${new Date(round.timecreate * 1000).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' })})`,
+            label: `${round.round} (${new Date(round.timecreate * 1000).toLocaleDateString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' })})`,
             value: round.round.toString(),
           }
         }),
@@ -101,43 +121,65 @@ export default function YouPrize({ open, onClose }: Props) {
   return (
     <ModalContainer
       open={open}
-      handleClose={() => {
+      handleClose={(e) => {
         onClose()
       }}
     >
-      <div className="lg:overflow-x-[unset] relative mx-auto my-8 h-fit w-full max-w-[calc(100vw-32px)] overflow-x-auto rounded bg-white p-4 md:w-[536px] md:p-10 lg:w-[872px]">
+      <div
+        className="lg:overflow-x-[unset] relative mx-auto my-8 lg:h-[800px] 
+        w-screen  overflow-x-auto rounded 
+        bg-white p-5 md:w-[536px] md:px-[22px] 
+        md:py-10 h-[85vh] lg:w-[872px]"
+      >
         <button
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault()
+            e.stopPropagation()
             onClose()
           }}
-          className="absolute right-6 top-6 z-10 outline-none md:right-10 md:top-10 hover:bg-[rgba(212,199,156,0.30)] hover:rounded-md"
+          className="absolute right-3 top-3 z-10 outline-none md:right-10 md:top-10 hover:bg-[rgba(212,199,156,0.30)] hover:rounded-md"
         >
-          <Image src={closeModalButton} alt="" width={44} height={44} />
+          <Image
+            src={closeModalButton}
+            alt=""
+            width={44}
+            height={44}
+            className="w-[38px] h-[38px] lg:w-[44px] lg:h-[44px]"
+          />
         </button>
 
-        <div className="size-full space-y-10">
-          <div className="space-y-4">
-            <h2 className="text-[32px] font-medium leading-10 text-red-light">YOUR PRIZE</h2>
+        <div className="size-full space-y-2 lg:space-y-10">
+          <div className="lg:px-[18px]">
+            <h2 className="text-[21px] lg:text-[32px] font-medium leading-10 text-red-light">
+              <Trans>Your prize</Trans>
+            </h2>
           </div>
-          <div className="space-y-4">
+          <div className="my-2 space-y-4 lg:space-y-8 pb-4">
             <div className="flex flex-col justify-end gap-4 lg:flex-row">
               <Dropdown
                 options={rounds}
                 value={selectedRound}
                 setValue={setSelectedRound}
                 className="lg:min-w-[285px] font-Roboto"
+                label={t('Rounded')}
               />
             </div>
             <div className="max-w-full overflow-x-auto">
               <div className="min-w-[500px] space-y-4">
-                <div className="flex h-11 rounded border border-[#EEE0E0] text-center text-sm font-normal leading-5 text-red-darker font-Roboto ">
+                <div className="flex h-11 rounded border border-[#EEE0E0] text-center text-xs lg:text-sm font-normal leading-5 text-red-darker lg:mx-[18px] font-Roboto space-x-3 text-nowrap">
                   <div className="flex h-full w-10 items-center pl-3">No</div>
-                  <div className="flex h-full w-[200px] items-center pl-3 lg:w-[250px]">Prize</div>
-                  <div className="flex h-full w-[192px] items-center whitespace-nowrap pl-3">Index number</div>
-                  <div className="flex h-full w-[200px] items-center justify-end whitespace-nowrap pr-10 lg:flex-1">
-                    Apple ID
+                  <div className="flex h-full w-[200px] items-center pl-3 lg:w-[250px]">
+                    <Trans>Prize</Trans>
                   </div>
-                  <div className="flex h-full w-[200px] items-center justify-end pr-4">Claim</div>
+                  <div className="flex h-full w-[192px] items-center whitespace-nowrap pl-3">
+                    <Trans>Index number</Trans>
+                  </div>
+                  <div className="flex h-full w-[200px] items-center justify-end whitespace-nowrap pr-10 lg:flex-1">
+                    <Trans>Apple ID</Trans>
+                  </div>
+                  <div className="flex h-full w-[200px] items-center justify-end pr-4">
+                    <Trans>Claim</Trans>
+                  </div>
                 </div>
                 <div className="h-[552px] max-h-[552px] space-y-2 overflow-y-auto">
                   {isLoading ? (
@@ -145,17 +187,21 @@ export default function YouPrize({ open, onClose }: Props) {
                   ) : (
                     <>
                       {(data || data?.data.prize?.length > 0) &&
-                        data?.data?.prizes?.map((item: HistoryLuckyDraw, index: number) => {
-                          return (
-                            <Row
-                              item={item}
-                              key={index}
-                              round={Number(selectedRound)}
-                              index={index + 1}
-                              refetch={refetch}
-                            />
-                          )
-                        })}
+                        data.data.prizes
+                          ?.filter((item: any) => {
+                            return userInscriptionIds.includes(item.id_inscription)
+                          })
+                          .map((item: HistoryLuckyDraw, index: number) => {
+                            return (
+                              <Row
+                                item={item}
+                                key={index}
+                                round={Number(selectedRound)}
+                                index={index + 1}
+                                refetch={refetch}
+                              />
+                            )
+                          })}
                       {data && !data?.data?.prizes && <p>No data</p>}
                     </>
                   )}
@@ -178,7 +224,7 @@ interface PropsRow {
 
 function Row({ item, index, round, refetch }: PropsRow) {
   return (
-    <div className="flex h-12 rounded bg-[#FAF6F6] text-center text-sm font-light leading-5 text-[#9F232D]">
+    <div className="flex h-12 rounded bg-[#FAF6F6] text-center text-xs lg:text-sm font-light leading-5 text-[#9F232D]">
       <div className="flex h-full w-10 items-center pl-3">{index}</div>
       <div className="flex h-full w-[200px] items-center gap-2.5 pl-3 lg:w-[250px]">
         {item?.top === 'special' && <Image src={specialPrize} alt="" className="size-4 min-w-4" />}
@@ -193,7 +239,7 @@ function Row({ item, index, round, refetch }: PropsRow) {
           {item.index_number}
         </Link>
       </div>
-      <div className="flex h-full w-[200px] items-center justify-end pr-10 text-base font-medium leading-6 lg:flex-1">
+      <div className="flex h-full w-[200px] items-center justify-end pr-10 font-medium leading-6 lg:flex-1">
         {item.lucky_number}
       </div>
       <div className="flex h-full w-[200px] items-center justify-end pr-4 text-base font-medium leading-6">

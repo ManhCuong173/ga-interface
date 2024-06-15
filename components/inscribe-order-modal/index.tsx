@@ -15,6 +15,7 @@ import { Dialog } from '@headlessui/react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ButtonImage } from '../button'
+import Trans from '../i18n/Trans'
 import NFTDetail from '../mintNFTs/NFTDetail'
 import { CloseIcon } from '../ui/icons'
 import FeeDetails from './FeeDetails'
@@ -27,11 +28,11 @@ import { PayMethodEnum } from './types'
 
 const LIMIT_TIME = 360 // => 10s per request. that will request it within 1 hour.
 
-const InscribeOrderModal: React.FC<{ onClose: () => void; orderId: string; isOpen: boolean }> = ({
-  onClose,
-  orderId,
-  isOpen,
-}: any) => {
+const InscribeOrderModal: React.FC<{
+  onClose: () => void
+  orderId: string
+  isOpen: boolean
+}> = ({ onClose, orderId, isOpen }: any) => {
   const queryClient = useQueryClient()
   const dispatch = useAppDispatch()
   const publicKey = useAppSelector(selectedPublicKey)
@@ -139,9 +140,14 @@ const InscribeOrderModal: React.FC<{ onClose: () => void; orderId: string; isOpe
     }
   }, [])
 
-  const handleCloseModal = () => {
+  const handleCloseAndRefeshMintList = () => {
+    queryClient.invalidateQueries({ queryKey: ['nfts'] })
     onClose()
+  }
+
+  const handleCloseModal = () => {
     dispatch(setProcessState(1))
+    handleCloseAndRefeshMintList()
     queryClient.invalidateQueries({ queryKey: ['orders'] })
   }
 
@@ -169,7 +175,7 @@ const InscribeOrderModal: React.FC<{ onClose: () => void; orderId: string; isOpe
       default:
         return (
           <ButtonImage onClick={handleCloseModal} varirant="primary-asset" className="my-10 w-full px-12 py-4">
-            Done
+            <Trans>Done</Trans>
           </ButtonImage>
         )
     }
@@ -186,7 +192,7 @@ const InscribeOrderModal: React.FC<{ onClose: () => void; orderId: string; isOpe
           <div
             className="cursor-pointer absolute right-[2%] top-[2%]  lg:hidden"
             onClick={() => {
-              onClose()
+              handleCloseAndRefeshMintList()
             }}
           >
             <CloseIcon className="w-11 h-11" />
@@ -195,7 +201,9 @@ const InscribeOrderModal: React.FC<{ onClose: () => void; orderId: string; isOpe
           <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr]">
             <div className="px-4 py-6 xl:p-[40px] border-r-2 border-solid border-bgAlt">
               <div className="flex justify-center lg:justify-between w-full mb-5">
-                <p className="text-2xl text-red-light font-bold sm:text-[32px]">Inscribing Order!</p>
+                <p className="text-2xl text-red-light font-bold sm:text-[32px]">
+                  <Trans>Inscribing order!</Trans>
+                </p>
               </div>
               <OrderListNFT isLoading={isLoading} onSelectNFT={setSelectNFT} orderDetail={orderDetail} />
             </div>
@@ -203,7 +211,7 @@ const InscribeOrderModal: React.FC<{ onClose: () => void; orderId: string; isOpe
             <div className="px-4 py-6 xl:p-[40px] ">
               <div className="flex justify-center items-center font-Roboto text-black2 text-xs text-center lg:justify-between">
                 <span>
-                  Order created{' '}
+                  <Trans>Order created</Trans>
                   {new Date(orderDetail?.createdAt).toLocaleString('en-US', {
                     timeZone: 'America/New_York',
                     timeZoneName: 'short',
@@ -212,7 +220,7 @@ const InscribeOrderModal: React.FC<{ onClose: () => void; orderId: string; isOpe
                 <div
                   className="cursor-pointer hidden lg:block"
                   onClick={() => {
-                    onClose()
+                    handleCloseAndRefeshMintList()
                   }}
                 >
                   <CloseIcon className="w-11 h-11" />

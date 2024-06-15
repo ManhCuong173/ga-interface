@@ -1,6 +1,7 @@
 'use client'
 
 import InputInfoHelp from '@/components/ReceiveAddress/InputInfoHelp'
+import { useGATranslation } from '@/components/i18n/hooks'
 import NFTList from '@/components/mintNFTs/NFTList'
 import { useInscribeContext } from '@/context/InscribeContext'
 import search from '@/images/marketplace/search.svg'
@@ -24,7 +25,7 @@ const NFTForm: React.FC = () => {
     number: null,
     size: 50,
   })
-
+  const t = useGATranslation()
   const { inscribeData, setInscribeData } = useInscribeContext()
   const dispatch = useAppDispatch()
   const address = useAppSelector(selectAddress)
@@ -85,8 +86,8 @@ const NFTForm: React.FC = () => {
         <InputInfoHelp
           icon={search}
           className="w-full"
-          classNameInput="placeholder:text-base font-bold"
-          placeholder="SEARCH NUMBER"
+          classNameInput="lg:placeholder:text-base placeholder:text-[14px] font-bold"
+          placeholder={t('SEARCH NUMBER')}
           onChange={onSearchNumner}
         >
           <SearchInfoHelper />

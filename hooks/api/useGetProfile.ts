@@ -15,13 +15,6 @@ const useGetProfile = () => {
       wallet_address: address,
     })
     const { data: nftAssets }: AxiosResponse<ProfileType> = await profileService.getProfileAssets(address)
-    console.log(
-      '%cMyProject%cline:17%cnftAssets',
-      'color:#fff;background:#ee6f57;padding:3px;border-radius:2px',
-      'color:#fff;background:#1f3c88;padding:3px;border-radius:2px',
-      'color:#fff;background:rgb(89, 61, 67);padding:3px;border-radius:2px',
-      nftAssets,
-    )
 
     return data
   }

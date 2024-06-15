@@ -1,5 +1,6 @@
-import Pagination from '@/components/pagination'
+import Trans from '@/components/i18n/Trans'
 import FilterMarketPlace from '@/components/marketplace/Filter'
+import Pagination from '@/components/pagination'
 import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { selectAddress } from '@/lib/features/wallet/wallet-slice'
 import { useAppSelector } from '@/lib/hook'
@@ -47,12 +48,24 @@ const ActivityPage = () => {
         <Table classNameWrapper="my-10">
           <TableHeader>
             <TableRow className="border-t-0">
-              <TableHead className="w-[15%] min-w-[200px]">Item</TableHead>
-              <TableHead className="w-[15%] min-w-[130px]">Element</TableHead>
-              <TableHead className="w-[20%] min-w-[200px]">Unit Price</TableHead>
-              <TableHead className="w-[15%] min-w-[200px]">From</TableHead>
-              <TableHead className="w-[15%] min-w-[200px]">To</TableHead>
-              <TableHead className="w-[20%] min-w-[200px]">Time</TableHead>
+              <TableHead className="w-[15%] min-w-[200px]">
+                <Trans>Item</Trans>
+              </TableHead>
+              <TableHead className="w-[15%] min-w-[130px]">
+                <Trans>Element</Trans>
+              </TableHead>
+              <TableHead className="w-[20%] min-w-[200px]">
+                <Trans>Unit Price</Trans>
+              </TableHead>
+              <TableHead className="w-[15%] min-w-[200px]">
+                <Trans>From</Trans>
+              </TableHead>
+              <TableHead className="w-[15%] min-w-[200px]">
+                <Trans>To</Trans>
+              </TableHead>
+              <TableHead className="w-[20%] min-w-[200px]">
+                <Trans>Time</Trans>
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -80,3 +93,4 @@ const ActivityPage = () => {
 }
 
 export default ActivityPage
+

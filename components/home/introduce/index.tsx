@@ -1,6 +1,8 @@
 import { ButtonImage } from '@/components/button'
 import Counter from '@/components/counter'
+import Trans from '@/components/i18n/Trans'
 import { appearAnimation } from '@/constants/animation.constant'
+import { urlRoute } from '@/constants/routes'
 import ArtWorkIcon from '@/icons/home/artwork.svg'
 import Auction from '@/icons/home/auction.svg'
 import CreatorIcon from '@/icons/home/creator.svg'
@@ -8,6 +10,7 @@ import NFTIconMobile from '@/icons/home/home-introduce-nft-mobile.svg'
 import NFTIcon from '@/icons/home/home-introduce-nft.svg'
 import { motion, useInView } from 'framer-motion'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import WrapperHero from '../WrapperHero'
 
@@ -45,16 +48,19 @@ export default function Introduce() {
               font-Roboto lg:max-w-unset
               "
             >
-              Golden Apple is the GameFi platform for the Bitcoin Ecosystem. Through mapping the Bitcoin Assets (BRC20,
-              Ordinals NFT and others) to Ethereum (and other Layer2) networks.
+              <Trans>{'IntroduceText'}</Trans>
             </div>
 
-            <ButtonImage
-              varirant="primary-asset"
-              className="text-lg font-medium text-red-light w-64 h-14 mt-10 lg:mt-[50px] p-0"
-            >
-              <div className="text-white font-Roboto text-base font-medium leading-[150%]">Mint NFT Now</div>
-            </ButtonImage>
+            <Link href={urlRoute.inscribe}>
+              <ButtonImage
+                varirant="primary-asset"
+                className="text-lg font-medium text-red-light w-64 h-14 mt-10 lg:mt-[50px] p-0 cursor:pointer"
+              >
+                <div className="text-white font-Roboto text-base font-medium leading-[150%]">
+                  <Trans>{'MintNFTNow'}</Trans>
+                </div>
+              </ButtonImage>
+            </Link>
           </div>
         </div>
 
@@ -103,11 +109,15 @@ export default function Introduce() {
           z-10
           static lg:absolute lg:top-1/2 lg:-translate-y-1/2 
           lg:left-[50%] w-[275px] h-[296px] lg:w-[36%] 
-          lg:h-auto aspect-[514/552] rounded-[30px] lg:rounded-[55px] 
-          border-[#D4C79C] border-[1px] order-1 "
+          lg:h-auto aspect-[514/552] rounded-[30px] lg:rounded-[33px] 
+           order-1 "
         >
-          <div className="p-[6px] w-full h-full bg-[rgba(255, 255, 255, 0.50)] backdrop-blur-[4.69px] relative rounded-[30px] lg:rounded-[55px] lg:p-4">
-            <div className="bg-[url(/images/commons/app-logo-fade.png)] w-full h-full bg-center bg-cover rounded-[30px] lg:rounded-[55px]" />
+          <div
+            className="p-[8px] w-full h-full bg-[rgba(255,255,255,0.70)] backdrop-blur-[10px] relative rounded-[30px] lg:rounded-[40px] lg:p-4
+          border-[#D4C79C] border-[1px]
+          "
+          >
+            <div className="bg-[url(/images/home/bg-introduce-desktop-banner-bg.png)] w-full h-full bg-center bg-cover rounded-[30px] lg:rounded-[35px]" />
             <div className="absolute left-1/2 top-[calc(50%_-_15px)] -translate-x-1/2 -translate-y-1/2 w-[193px] h-[180px] lg:w-[369px] lg:h-[343px] flex items-center justify-center">
               <Image src={NFTIcon} className="hidden lg:block" alt="" />
               <Image src={NFTIconMobile} className="lg:hidden block" alt="" />
@@ -135,7 +145,9 @@ export default function Introduce() {
                 >
                   <Counter value={110} />K <span className="relative">+</span>
                 </div>
-                <div className="text-xs lg:text-[18px] leading-[110%] lg:leading-[110%]">Artworks</div>
+                <div className="text-xs lg:text-[18px] leading-[110%] lg:leading-[110%]">
+                  <Trans>{'Artworks'}</Trans>
+                </div>
               </div>
             </motion.div>
 
@@ -163,7 +175,9 @@ export default function Introduce() {
                 >
                   <Counter value={2} />K <span className="relative left-[-2px]">+</span>
                 </div>
-                <div className="text-xs lg:text-[18px] leading-[110%] lg:leading-[110%]">Creators</div>
+                <div className="text-xs lg:text-[18px] leading-[110%] lg:leading-[110%]">
+                  <Trans>{'Creators'}</Trans>
+                </div>
               </div>
               <Image src={CreatorIcon} className="w-[38px] lg:w-[58px] h-[38px] lg:h-[58px]" alt="" />
             </motion.div>
@@ -187,9 +201,11 @@ export default function Introduce() {
                   className="  text-black1 text-[21px] lg:text-[24px] 
                   font-medium leading-[110%] lg:leading-[110%] tracking-[-0.25px]"
                 >
-                  Auction
+                  <Trans>{'Auction'}</Trans>
                 </div>
-                <div className="text-xs lg:text-[14px] leading-[100%] lg:leading-[130%]">is coming soon</div>
+                <div className="text-xs lg:text-[14px] leading-[100%] lg:leading-[130%]">
+                  <Trans>{'IsComingSoon'}</Trans>
+                </div>
               </div>
             </motion.div>
           </div>

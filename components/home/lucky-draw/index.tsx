@@ -1,6 +1,7 @@
 'use client'
 
 import { ButtonImage } from '@/components/button'
+import Trans from '@/components/i18n/Trans'
 import { urlRoute } from '@/constants/routes'
 import { useMediaQuery } from '@/hooks/custom/useMediaQuery'
 import fourthPrice from '@/icons/home/consoliadation-prize.svg'
@@ -59,11 +60,18 @@ const Progress: React.FC<{ progress: number; className?: string }> = ({ progress
 const CoupleButton: React.FC<{ className?: string }> = ({ className }) => {
   return (
     <div className={cn('flex flex-row justify-center gap-2 text-red-light', className)}>
-      <div className="flex items-center justify-center h-[32px] w-[62px] rounded-[8px]  font-normal leading-[150%] tracking-[-0.54px] font-Roboto border-red-light border-[1px] py-[1px] px-[14px]">
-        Prize
+      <div className="flex items-center justify-center h-[32px] w-[62px] rounded-[8px]  font-normal leading-[150%] tracking-[-0.54px] font-Roboto border-red-light border-[1px] py-[1px] px-[14px] cursor-pointer">
+        <Trans>{'Prize'}</Trans>
       </div>
-      <div className="flex items-center justify-center h-[32px] w-[73px] rounded-[8px]  font-normal leading-[150%] tracking-[-0.54px] font-Roboto bg-[rgba(212,199,156,0.3)] text-text-secondary py-[1px] px-[14px]">
-        History
+      <div
+        className="flex items-center justify-center h-[32px] w-[73px] 
+      rounded-[8px]  font-normal leading-[150%] tracking-[-0.54px] 
+      font-Roboto  text-text-secondary py-[1px] px-[14px]
+      cursor-pointer
+      text-nowrap
+      "
+      >
+        <Trans>{'History'}</Trans>
       </div>
     </div>
   )
@@ -113,16 +121,14 @@ export default function LuckyDraw() {
       id="section-lucky-draw"
       className="snap-center text-_white"
       onClick={(e) => {
-        e.stopPropagation()
-        e.preventDefault()
-        setShowYourPrize(true)
+        setShowHistory(true)
       }}
       ref={ref}
     >
       <WrapperHero src="/images/home/bg-lucky-draw.svg">
         <div className="flex justify-end h-14 md:h-16 md:w-full absolute top-[-1px] right-0">
-          <div className={cn('bg-secondary opacity-[0.3]')} style={{ width: ratio }} />
-          <div className="bg-secondary" style={{ width: ratio }} />
+          <div className={cn('bg-secondary opacity-[0.3] will-change-auto')} style={{ width: ratio }} />
+          <div className="bg-secondary  will-change-auto " style={{ width: ratio }} />
         </div>
 
         <div className="flex flex-1 items-center justify-center px-4">
@@ -131,7 +137,7 @@ export default function LuckyDraw() {
               <div className="flex flex-col">
                 <div className="flex h-9 items-center justify-center gap-2 lg:h-fit">
                   <span className="text-2xl lg:text-[40px] font-semibold tracking-[-0.96px] text-red-light lg:text-5xl">
-                    Lucky draw
+                    <Trans>{'LuckyDraw'}</Trans>
                   </span>
                 </div>
                 <CoupleButton className="flex lg:hidden mt-2" />
@@ -139,10 +145,11 @@ export default function LuckyDraw() {
               <div className="flex flex-col lg:flex-row w-full lg:justify-between mt-5 lg:mt-10">
                 <div className="flex flex-col items-center lg:items-start ">
                   <div className="text-lg mb-[2px]  font-medium leading-[100%] tracking-[-0.54px] text-black1 lg:text-md lg:leading-7 font-Roboto">
-                    Total NFT sold this round:
+                    <Trans>{'TotalNFTSoldRound'}</Trans>
                   </div>
                   <div className="text-[21px] font-medium text-red-light tracking-tighter">
-                    <span>50</span>/<span className="text-subtle">100</span>
+                    <span>{nftSoldData?.mint_count || 0}</span>/
+                    <span className="text-subtle">{nftSoldData?.total_sold || 0}</span>
                   </div>
                 </div>
 
@@ -196,7 +203,9 @@ export default function LuckyDraw() {
               <div className="flex gap-2 justify-center items-center lg:gap-4 relative mt-4 lg:mt-10 mx-auto  w-full h-auto max-w-[450px] sm:h-12">
                 <div className="w-full h-full">
                   <ButtonImage
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.preventDefault()
+                      e.stopPropagation()
                       if (address) {
                         setShowYourPrize(true)
                       } else {
@@ -204,25 +213,23 @@ export default function LuckyDraw() {
                       }
                     }}
                     varirant="light-double-asset"
-                    className="text-[3vw] sm:text-base whitespace-nowrap lg:text-lg  font-medium text-red-light w-full h-full font-Roboto"
+                    className="text-[3vw] sm:text-base whitespace-nowrap lg:text-lg  font-medium text-red-light w-full h-full font-Roboto capitalize"
                   >
-                    {address ? 'Check Your Prize' : 'Connect Wallet'}
+                    <Trans>{address ? 'Check your prize' : 'Connect Wallet'}</Trans>
                   </ButtonImage>
                 </div>
                 <div className="w-full h-full">
                   <Link href={urlRoute.inscribe}>
                     <ButtonImage
-                      onClick={() => {
-                        if (address) {
-                          setShowYourPrize(true)
-                        } else {
-                          typeof window !== 'undefined' && (window as any).unisat.requestAccounts()
-                        }
-                      }}
                       varirant="primary-asset"
-                      className="text-[3vw] sm:text-base whitespace-nowrap lg:text-lg  font-medium text-secondary w-full h-full font-Roboto"
+                      className="text-[3vw] sm:text-base whitespace-nowrap 
+                      lg:text-lg  font-medium text-secondary w-full h-full 
+                      font-Roboto capitalize"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                      }}
                     >
-                      Try Now
+                      <Trans>{'TryNow'}</Trans>
                     </ButtonImage>
                   </Link>
                 </div>

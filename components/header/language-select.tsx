@@ -3,6 +3,7 @@ import chevronDownIcon from '@/icons/header/chevron-down-sm.svg'
 import earthBlackIcon from '@/icons/header/earth-black.svg'
 import earthIcon from '@/icons/header/earth.svg'
 import { cn } from '@/lib/utils'
+import { usePathname, useRouter } from '@/navigation'
 import { Language } from '@/types/language'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
@@ -18,11 +19,14 @@ const LanguageSelect = ({ mode, className }: Props) => {
 
   const selfRef = useRef<HTMLDivElement>(null)
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const router = useRouter()
+  const pathname = usePathname()
 
   const handleChangeLanguge = (lang: Language) => {
     // TODO: add logic to change language here
     setLanguage(lang)
     setShow(false)
+    router.replace(pathname, { locale: lang })
   }
 
   useEffect(() => {

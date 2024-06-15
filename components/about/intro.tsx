@@ -1,6 +1,7 @@
 import { HeadMarkIcon } from '@/components/ui/icons'
 import { appearAnimation } from '@/constants/animation.constant'
 import { motion } from 'framer-motion'
+import Trans from '../i18n/Trans'
 
 const Intro = () => {
   return (
@@ -21,7 +22,7 @@ const Intro = () => {
             transition={{ duration: 0.5, delay: 0.5 }}
             className="mt-[30px] mb-[57px] text-_black text-2xl font-semibold leading-8 -tracking-[0.48px]"
           >
-            About Golden Apple
+            <Trans>About Golden Apple</Trans>
           </motion.div>
           <motion.div
             {...appearAnimation}
@@ -30,15 +31,16 @@ const Intro = () => {
             lg:max-w-[851px] text-[18px] font-normal leading-[150%] font-Roboto text-center"
           >
             <p>
-              Although the history of NFT on Bitcoin has started even before the existence of the Ethereum blockchain,
+              <Trans>
+                At Golden Apple, we are all about possibilities and providing equal opportunities for everyone to
+                transform their lives
+              </Trans>
             </p>
             <p className="mt-8 mb-6">
-              It is still relatively subdued compared to its counterpart. As we believe in the overall development of
-              the Bitcoin blockchain,
+              <Trans>Our mission is to foster a thriving community where everyone has a shot at winning</Trans>.
             </p>
             <p>
-              We want to allocate part of our venture to create a project that can bring users in the hope that this
-              community will be the seed of a bigger ecosystem.
+              <Trans>Golden Apple is your golden to potentially pocket 1 BTC or even more!</Trans>
             </p>
           </motion.div>
         </div>

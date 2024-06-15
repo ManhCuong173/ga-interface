@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils'
+import Trans from '../i18n/Trans'
 import { MarkCircleIcon } from '../ui/icons'
 
 const steps = [
@@ -53,7 +54,7 @@ const Stepper: React.FC<Props> = ({ step: _step }) => {
                       ' font-Roboto text-center text-sm',
                     )}
                   >
-                    {step?.label}
+                    <Trans>{step?.label}</Trans>
                   </span>
                 </div>
               </div>
@@ -71,3 +72,4 @@ const Stepper: React.FC<Props> = ({ step: _step }) => {
   )
 }
 export default Stepper
+

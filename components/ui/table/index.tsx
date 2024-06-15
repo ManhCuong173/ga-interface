@@ -1,6 +1,6 @@
 import { ColumnProps } from '@/types/table'
-import React from 'react'
 
+import Trans from '@/components/i18n/Trans'
 import bgHeader from '@/images/analytics/owners.png'
 import Image from 'next/image'
 
@@ -17,8 +17,8 @@ const TableComponent = <T,>({ columns, data, isLoading }: PropsTable<T>) => {
         {column.renderColumn ? (
           <>{column.renderColumn(column)}</>
         ) : (
-          <p key={`headCell-${index}`} className='!z-0 text-base font-medium text-[#4E473F]'>
-            {column.title}
+          <p key={`headCell-${index}`} className="!z-0 text-base font-medium text-[#4E473F]">
+            <Trans>{column.title}</Trans>
           </p>
         )}
       </>
@@ -26,13 +26,13 @@ const TableComponent = <T,>({ columns, data, isLoading }: PropsTable<T>) => {
   })
 
   const rows = !data?.length ? (
-    <p className='text-center'>No data</p>
+    <p className="text-center">No data</p>
   ) : (
     data?.map((row, index) => {
       return (
         <div
           key={`row-${index}`}
-          className='flex items-center rounded-lg bg-[#FAF5F0] p-4 transition-all hover:bg-[#F6EEE3] lg:h-[72px]'
+          className="flex items-center rounded-lg bg-[#FAF5F0] p-4 transition-all hover:bg-[#F6EEE3] lg:h-[72px]"
         >
           {columns.map((column, index2) => {
             const value = column.render
@@ -42,7 +42,7 @@ const TableComponent = <T,>({ columns, data, isLoading }: PropsTable<T>) => {
               column.render(column, row as T)
             ) : (
               <>
-                <p key={`cell-${index2}`} className='text-center'>
+                <p key={`cell-${index2}`} className="text-center">
                   {value}
                 </p>
               </>
@@ -53,14 +53,16 @@ const TableComponent = <T,>({ columns, data, isLoading }: PropsTable<T>) => {
     })
   )
   return (
-    <div className='w-full overflow-x-auto px-4'>
-      <div className='relative flex h-[72px] w-full items-center overflow-x-auto overflow-y-hidden p-4'>
-        <Image src={bgHeader} alt='bgHeader' fill priority className='' />
+    <div className="w-full overflow-x-auto px-4">
+      <div className="relative flex h-[72px] w-full items-center overflow-x-auto overflow-y-hidden p-4">
+        <Image src={bgHeader} alt="bgHeader" fill priority className="" />
         {headers}
       </div>
-      <div className='mt-6 flex w-full flex-col gap-y-3 overflow-x-auto'>
+      <div className="mt-6 flex w-full flex-col gap-y-3 overflow-x-auto">
         {isLoading ? (
-          <p className='flex h-[400px] items-center justify-center'>Loading...</p>
+          <p className="flex h-[400px] items-center justify-center">
+            <Trans>Loading</Trans>...
+          </p>
         ) : (
           rows
         )}
@@ -70,3 +72,4 @@ const TableComponent = <T,>({ columns, data, isLoading }: PropsTable<T>) => {
 }
 
 export default TableComponent
+

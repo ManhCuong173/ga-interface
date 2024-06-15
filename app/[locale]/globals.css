@@ -1,0 +1,356 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 10% 3.9%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+  }
+}
+
+@font-face {
+  font-family: 'Japanese 3017';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/Japanese 3017.ttf');
+}
+
+@font-face {
+  font-family: 'DK Lemon Yellow Sun';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/DK Lemon Yellow Sun.otf');
+}
+
+/* Font Quicksand */
+@font-face {
+  font-family: 'Quicksand';
+  font-style: normal;
+  font-weight: 300;
+  src: url('/fonts/Quicksand/Quicksand-Light.ttf');
+}
+@font-face {
+  font-family: 'Quicksand';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/Quicksand/Quicksand-Regular.ttf');
+}
+@font-face {
+  font-family: 'Quicksand';
+  font-style: normal;
+  font-weight: 500;
+  src: url('/fonts/Quicksand/Quicksand-Medium.ttf');
+}
+@font-face {
+  font-family: 'Quicksand';
+  font-style: normal;
+  font-weight: 600;
+  src: url('/fonts/Quicksand/Quicksand-SemiBold.ttf');
+}
+@font-face {
+  font-family: 'Quicksand';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/fonts/Quicksand/Quicksand-Bold.ttf');
+}
+
+/* Font Proto Mono */
+@font-face {
+  font-family: 'Proto Mono';
+  font-style: normal;
+  font-weight: 300;
+  src: url('/fonts/ProtoMono/Proto Mono Light.ttf');
+}
+@font-face {
+  font-family: 'Proto Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/ProtoMono/Proto Mono Regular.ttf');
+}
+@font-face {
+  font-family: 'Proto Mono';
+  font-style: medium;
+  font-weight: 500;
+  src: url('/fonts/ProtoMono/Proto Mono Medium.ttf');
+}
+@font-face {
+  font-family: 'Proto Mono';
+  font-style: semibold;
+  font-weight: 600;
+  src: url('/fonts/ProtoMono/Proto Mono Semi Bold.ttf');
+}
+
+:root {
+  font-family: 'Proto Mono';
+  scroll-behavior: smooth;
+  color: #4e473f;
+}
+
+#root-div {
+  scroll-behavior: smooth;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.background-banner-home-highlight-text {
+  background: linear-gradient(154deg, #e5b039 14.1%, #ffebbd 47.86%, #e5b039 84.47%);
+}
+
+input::-webkit-outer-spin-.glyph-text,
+input::-webkit-inner-spin-.glyph-text {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Glyph text */
+.glyph-text {
+  text-transform: uppercase;
+  color: #333;
+  padding: 1rem 2rem;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.glyph-text::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: hsl(0 0% 100%);
+  opacity: calc(var(--intent, 0) * 0.0875);
+  transition: opacity 0.2s;
+}
+
+.glyph-text:is(:hover, :focus-visible) {
+  --intent: 1;
+}
+
+.glyph-text > span:not(.sr-only) {
+  position: relative;
+  color: transparent;
+}
+
+.glyph-text > span:not(.sr-only)::after {
+  content: attr(data-char);
+  position: absolute;
+  display: inline-block;
+  inset: 0;
+  color: #333;
+}
+
+.glyph-text:is(:hover, :focus-visible) > span:not(.sr-only)::after {
+  animation: flash calc(var(--speed, 0.25) * 1s) calc(var(--index, 0) * 0.05s) steps(1, end);
+}
+
+@keyframes flash {
+  0%,
+  20% {
+    content: '_';
+  }
+  40% {
+    content: var(--char-1);
+  }
+  60% {
+    content: var(--char-2);
+  }
+  80% {
+    content: var(--char-3);
+  }
+}
+
+[data-explode='true'] .glyph-text:is(:hover, :focus-visible) {
+  --intent: 0;
+}
+
+[data-explode='true']:has(.glyph-text:is(:hover, :focus-visible)) .dummy {
+  --intent: 1;
+}
+
+[data-explode='true'] #app {
+  transform: translate3d(0, 0, 100vmin) rotateX(-24deg) rotateY(40deg);
+}
+
+[data-explode='true'] .glyph-text {
+  scale: 2.4;
+}
+
+.glyph-text:not(.dummy)::before {
+  content: '.char ::after';
+  position: absolute;
+  left: 100%;
+  white-space: nowrap;
+  translate: 0 -50%;
+  transform-origin: 0 50%;
+  scale: 0.5;
+  top: 50%;
+  text-transform: none;
+  pointer-events: none;
+  opacity: 0;
+}
+
+[data-explode='true'] #app {
+  transition: transform 0.5s 1s;
+}
+
+[data-explode='true'] .glyph-text {
+  transform: translate3d(0, 0, 50px);
+  transition:
+    transform 0.5s 2s,
+    scale 0.5s 0s;
+}
+
+[data-explode='true'] .dummy {
+  opacity: 1;
+  transform: translate3d(0, 0, -50px);
+  transition:
+    transform 0.5s 2s,
+    scale 0.5s 0s,
+    opacity 0s 0s;
+}
+
+[data-explode='true'] .glyph-text:not(.dummy)::before {
+  opacity: 1;
+  transition: opacity 1s 3s;
+}
+
+.glyph-text:not(.dummy)::before {
+  transition: opacity 0.5s 0s;
+}
+
+.glyph-text {
+  transition:
+    transform 0.5s 1s,
+    scale 0.5s 3s,
+    opacity 0s 3s;
+}
+
+/* Flip card */
+.flip-card {
+  background-color: transparent;
+  perspective: 1000px;
+}
+.flip-card-inner {
+  position: relative;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+input[type='range'] {
+  @apply accent-red-light;
+}
+
+@layer utilities {
+  .desktop-menu-container:hover .address-item {
+    @apply text-red-500; /* Adjust the color as needed */
+    @apply fill-red-light;
+  }
+  .desktop-menu-container:hover .address-item-white {
+    @apply text-white; /* Adjust the color as needed */
+    @apply fill-white;
+  }
+
+  .desktop-menu-container:hover .farmer-white-icon {
+    @apply bg-[url(/icons/header/farmer.svg)];
+  }
+  .desktop-menu-container:hover .farmer-icon {
+    @apply bg-[url(/icons/header/farmer-black.svg)];
+  }
+
+  .desktop-menu-container:hover .chevron-white-down {
+    @apply bg-[url(/icons/header/chevron-down-black.svg)];
+  }
+  .desktop-menu-container:hover .chevron-down {
+    @apply bg-[url(/icons/header/chevron-down.svg)];
+  }
+  .desktop-menu-container:hover .wallet-white-icon {
+    @apply bg-[url(/icons/header/wallet.svg)];
+  }
+  .desktop-menu-container:hover .wallet-icon {
+    @apply bg-[url(/icons/header/wallet-white.svg)];
+  }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  border-radius: 100px;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-bgAlt;
+  border-radius: 100px;
+}
+

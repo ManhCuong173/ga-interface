@@ -1,10 +1,10 @@
-import Image from 'next/image'
-import React, { SetStateAction, memo, useCallback, useEffect, useRef, useState } from 'react'
+import useClickOutside from '@/hooks/custom/useClickOutside'
 import tickChecked from '@/icons/profile/tick-checked.svg'
 import tickUncheck from '@/icons/profile/tick-uncheck.svg'
-import useClickOutside from '@/hooks/custom/useClickOutside'
-import { fiveElements } from '@/utils/const'
-import { FiveElements } from '@/types/fiveElements'
+import { ElementType as Type } from '@/types/element'
+import { ElementType } from '@/utils/const'
+import Image from 'next/image'
+import React, { SetStateAction, memo, useRef, useState } from 'react'
 
 interface PropsSelect {
   className?: string
@@ -15,7 +15,7 @@ interface PropsSelect {
 const SelectField = ({ className, nftIds, setNftIds, ...props }: PropsSelect) => {
   const ref = useRef(null)
   const [show, setShow] = useState(false)
-  // const [selecteds, setSelecteds] = useState(fiveElements);
+  // const [selecteds, setSelecteds] = useState(ElementType);
 
   const handleShow = () => {
     setShow(!show)
@@ -24,14 +24,14 @@ const SelectField = ({ className, nftIds, setNftIds, ...props }: PropsSelect) =>
   useClickOutside({ ref, show, setShow })
 
   const handleCheckAll = () => {
-    if (nftIds.length === fiveElements.length) {
+    if (nftIds.length === ElementType.length) {
       setNftIds([])
     } else {
-      setNftIds(fiveElements.map((item) => item.id))
+      setNftIds(ElementType.map((item) => item.id))
     }
   }
 
-  const handleSetSelecteds = (type: FiveElements) => {
+  const handleSetSelecteds = (type: Type) => {
     setNftIds((prev) => {
       if (prev.find((item) => item === type.id)) {
         return prev.filter((item) => item !== type.id)
@@ -44,7 +44,7 @@ const SelectField = ({ className, nftIds, setNftIds, ...props }: PropsSelect) =>
     <div ref={ref} className={className}>
       <div onClick={handleShow} className="flex w-[120px] cursor-pointer items-center justify-center gap-1 ">
         <div className="flex w-[76px] translate-x-[15px] justify-center">
-          {fiveElements.map((element, index) => {
+          {ElementType.map((element, index) => {
             return (
               <Image
                 // transform: 'translateY(-50%)'
@@ -79,14 +79,14 @@ const SelectField = ({ className, nftIds, setNftIds, ...props }: PropsSelect) =>
         <li className="box-border flex h-[76px] w-full items-center space-x-4 bg-white px-[18px] py-2">
           <Image
             onClick={handleCheckAll}
-            src={nftIds.length === fiveElements.length ? tickChecked : tickUncheck}
+            src={nftIds.length === ElementType.length ? tickChecked : tickUncheck}
             alt=""
             width={20}
             height={20}
           />
           <span>ALL</span>
         </li>
-        {fiveElements.map((element) => {
+        {ElementType.map((element) => {
           return (
             <li
               key={`select-element-${element.id}`}
@@ -111,3 +111,4 @@ const SelectField = ({ className, nftIds, setNftIds, ...props }: PropsSelect) =>
 }
 
 export default memo(SelectField)
+

@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRef } from 'react'
 import WrapperHero from '../home/WrapperHero'
+import Trans from '../i18n/Trans'
 
 const Document = () => {
   const ref = useRef(null)
@@ -24,14 +25,16 @@ const Document = () => {
           max-w-[447px] font-ProtoMono
           "
           >
-            “ALL YOU NEED TO KNOW ABOUT GOLDEN APPLE”
+            “<Trans>ALL YOU NEED TO KNOW ABOUT GOLDEN APPLE</Trans>”
           </div>
           <div
             className="text-base font-light leading-3/2 
           max-w-[330px] mg:max-w-[400px] lg:max-w-[591px] text-white2 text-center mt-5 mb-[60px]"
           >
-            Have questions about Golden Apple? We've got you covered. Dive into our documentation to learn more about
-            us!
+            <Trans>
+              Have questions about Golden Apple? We've got you covered_Dive into our documentation to learn more about
+              us!
+            </Trans>
           </div>
 
           <div className="flex flex-col md:flex-row  justify-center items-center gap-[12px] lg:gap-[18px]">
@@ -41,7 +44,10 @@ const Document = () => {
               flex items-center justify-center rounded-lg w-[220px] h-[52px] hover:opacity-[0.96]
               "
               >
-                <span className="font-base font-medium leading-3/2 mr-2"> View Gitbook</span>{' '}
+                <span className="font-base font-medium leading-3/2 mr-2">
+                  {' '}
+                  <Trans>View Gitbook</Trans>
+                </span>{' '}
                 <Image src={ViewIcon} width={18} height={18} alt="" />
               </button>
             </Link>
@@ -51,7 +57,9 @@ const Document = () => {
               flex items-center justify-center rounded-lg w-[220px] h-[52px] hover:opacity-[0.96]
               "
               >
-                <span className="font-base font-medium leading-3/2 mr-2"> View Pitch Desk</span>{' '}
+                <span className="font-base font-medium leading-3/2 mr-2">
+                  <Trans>View Pitch Desk</Trans>
+                </span>
                 <Image src={DownloadIcon} width={18} height={18} alt="" />
               </button>
             </Link>

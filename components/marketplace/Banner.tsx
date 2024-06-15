@@ -5,12 +5,17 @@ import { motion } from 'framer-motion'
 import { ButtonImage } from '../button'
 import Counter from '../counter'
 import WrapperHero from '../home/WrapperHero'
+import Trans from '../i18n/Trans'
 
 const CardInfo: React.FC<{ amount: string; title: string }> = ({ amount, title }) => {
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="leading-tight text-[3.6vw] sm:text-[30px] secondary font-medium">{amount}</div>
-      <div className="leading-tight text-[2.6vw] sm:text-lg secondary font-normal font-Roboto">{title}</div>
+      <div className="leading-tight text-[3.6vw] sm:text-[30px] secondary font-medium">
+        <Trans>{amount}</Trans>
+      </div>
+      <div className="leading-tight text-[2.6vw] sm:text-lg secondary font-normal font-Roboto text-nowrap">
+        <Trans>{title}</Trans>
+      </div>
     </div>
   )
 }
@@ -44,7 +49,7 @@ const BannerMarketPlace = () => {
                       className="flex items-center justify-center gap-2"
                     >
                       <span className="text-2xl lg:text-[45px] leading-tight tracking-[-1.35px] font-bold text-red-light text-center ">
-                        Discover, Collect and Sell Rare NFTs
+                        <Trans>{'DISCOVER, COLLECT, AND TRADE RARE NFTS'}</Trans>
                       </span>
                     </motion.div>
                   </div>
@@ -56,8 +61,25 @@ const BannerMarketPlace = () => {
                       className="flex items-center justify-center gap-2"
                     >
                       <span className="text-sm font-Roboto font-normal text-black1 lg:text-base text-center leading-3/2">
-                        The world’s first and largest digital marketplace for crypto collectibles and non-fungible
-                        tokens (NFTs). Buy, sell, and discover exclusive digital items.
+                        <Trans>Search for the NFT art that resonates with you</Trans>
+                      </span>
+                    </motion.div>
+                    <motion.div
+                      {...appearAnimation}
+                      transition={{ duration: 0.3, delay: 0.5 }}
+                      className="flex items-center justify-center gap-2"
+                    >
+                      <span className="text-sm font-Roboto font-normal text-black1 lg:text-base text-center leading-3/2">
+                        <Trans>Gather the NFTs that match your style</Trans>
+                      </span>
+                    </motion.div>
+                    <motion.div
+                      {...appearAnimation}
+                      transition={{ duration: 0.3, delay: 0.5 }}
+                      className="flex items-center justify-center gap-2"
+                    >
+                      <span className="text-sm font-Roboto font-normal text-black1 lg:text-base text-center leading-3/2">
+                        <Trans>Trade NFTs effortlessly and securely in our marketplace</Trans>
                       </span>
                     </motion.div>
                   </div>
@@ -75,17 +97,17 @@ const BannerMarketPlace = () => {
                         K+
                       </div>
                       <div className="leading-tight text-[2.6vw] sm:text-lg secondary font-normal font-Roboto">
-                        Artworks
+                        <Trans>{'Artworks'}</Trans>
                       </div>
                     </div>
-                    <CardInfo amount="AUTION" title="Coming soon" />
+                    <CardInfo amount="Auction" title="IsComingSoon" />
                     <div className="flex flex-col items-center justify-center">
                       <div className="leading-tight text-[3.6vw] sm:text-[30px] secondary font-medium">
                         <Counter value={2} />
                         K+
                       </div>
                       <div className="leading-tight text-[2.6vw] sm:text-lg secondary font-normal font-Roboto">
-                        Creator
+                        <Trans>{'Creators'}</Trans>
                       </div>
                     </div>
                   </ButtonImage>

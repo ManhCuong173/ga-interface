@@ -31,5 +31,6 @@ export const parseOrderInfoDetail = (data: any) => ({
   lockNFT: data.lock_nft,
   nfts: data.mint_list.map((item: any) => parseNFT(item)),
   qrCodeUrl: data.link_qr_code_image,
-  createdAt: Number(data.time_create) * 1000,
+  createdAt: Number(data.time_create),
 })
+

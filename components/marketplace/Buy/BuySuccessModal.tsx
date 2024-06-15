@@ -3,15 +3,13 @@ import { nftTypes } from '@/constants/nft.constant'
 import button_frame from '@/images/marketplace/buy/button-frame.png'
 import { selectItemBought } from '@/lib/features/marketplace/marketplace-slice'
 import { useAppSelector } from '@/lib/hook'
-import { ItemMarket } from '@/types/market'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { handleReturnIconType } from '../Item'
 
-const BuySuccessModal = ({ open, nftName, setOpen }: any) => {
+const BuySuccessModal = ({ open, setOpen }: any) => {
   const router = useRouter()
   const item = useAppSelector(selectItemBought)
-  const matchedType = nftTypes.find((type) => type.id.toString() === (item as unknown as ItemMarket).nft_id)
 
   const handleRouterAsset = () => {
     router.push('/profile')
@@ -87,3 +85,4 @@ const BuySuccessModal = ({ open, nftName, setOpen }: any) => {
 }
 
 export default BuySuccessModal
+

@@ -1,4 +1,6 @@
 import { IconCopy } from '@/components/button'
+import Trans from '@/components/i18n/Trans'
+import { useGATranslation } from '@/components/i18n/hooks'
 import ModalContainer from '@/components/ui/modal-container'
 import fourthPrice from '@/icons/home/consoliadation-prize.svg'
 import iconCopy from '@/icons/home/lucky-draw/copy.svg'
@@ -60,10 +62,10 @@ const PAGE_SIZE = 5000
 export default function History({ open, onClose }: Props) {
   const [rounds, setRounds] = useState<Option[]>([{ label: 'No Data', value: '' }])
   const addressOwner = useAppSelector(selectAddress)
-
   const [selectedRound, setSelectedRound] = useState('')
   const [selectedPrize, setSelectedPrize] = useState(prizeOptions[0].value)
   const [page, setPage] = useState(1)
+  const t = useGATranslation()
 
   const prizeParams = prizeOptions.find((item) => item.value === selectedPrize)?.label
 
@@ -95,7 +97,7 @@ export default function History({ open, onClose }: Props) {
       const _rounds = [
         ...roundsData.map((round) => {
           return {
-            label: `ROUNDED ${round.round} (${new Date(round.timecreate * 1000).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' })})`,
+            label: `${round.round} (${new Date(round.timecreate * 1000).toLocaleDateString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' })})`,
             value: round.round.toString(),
           }
         }),
@@ -114,29 +116,39 @@ export default function History({ open, onClose }: Props) {
     <ModalContainer open={open} handleClose={onClose}>
       <div
         className="
-      lg:overflow-x-[unset] relative mx-auto my-8 h-[1070px] 
-      w-full max-w-[calc(100vw-32px)] overflow-x-auto rounded 
-      bg-white p-5 md:w-[536px] md:px-[22px] 
-      md:py-10 lg:h-[1032px] lg:w-[872px]"
+          lg:overflow-x-[unset] relative mx-auto my-8 lg:h-[800px] 
+          w-screen  overflow-x-auto rounded 
+          bg-white p-5 md:w-[536px] md:px-[22px] 
+          md:py-10 h-[85vh] lg:w-[872px]"
       >
         <button
           onClick={onClose}
-          className="absolute right-6 top-6 z-10 outline-none md:right-10 md:top-10 hover:bg-[rgba(212,199,156,0.30)] hover:rounded-md"
+          className="absolute right-3 top-3 z-10 outline-none md:right-10 md:top-10 hover:bg-[rgba(212,199,156,0.30)] hover:rounded-md"
         >
-          <Image src={closeModalButton} alt="" width={44} height={44} />
+          <Image
+            src={closeModalButton}
+            alt=""
+            width={44}
+            height={44}
+            className="w-[38px] h-[38px] lg:w-[44px] lg:h-[44px]"
+          />
         </button>
-        <div className="size-full space-y-5 lg:space-y-10">
-          <div className="space-y-4 lg:px-[18px]">
-            <h2 className="text-[32px] font-medium leading-10 text-red-light">Lucky draw History</h2>
+        <div className="size-full space-y-2 lg:space-y-10">
+          <div className="lg:px-[18px]">
+            <h2 className="text-[21px] lg:text-[32px] font-medium leading-10 text-red-light">
+              <Trans>Lucky draw history</Trans>
+            </h2>
           </div>
-          <div className="space-y-4">
+          <div className="my-2 space-y-4 lg:space-y-8 pb-4">
             <div className="flex flex-col items-center  lg:flex-row lg:justify-between  gap-4">
-              <div className="lg:px-[18px] flex flex-col justify-center space-x-1">
-                <h2 className="text-sm text-left font-medium text-red-light font-Roboto">Reward wallet:</h2>
+              <div className="lg:px-[18px] flex flex-col justify-center">
+                <h2 className="text-sm text-left font-medium text-red-light font-Roboto">
+                  <Trans>Reward wallet:</Trans>
+                </h2>
                 {data?.data.reward_wallet && (
-                  <div>
-                    <p className="relative text-[12px] lg:text-sm text-left font-light text-[#4E473F]">
-                      {data.data.reward_wallet}
+                  <div className="flex items-center mt-1">
+                    <p className="relative text-[12px] lg:text-sm text-left font-light text-[#4E473F] mr-2">
+                      {truncate(data.data.reward_wallet, 11, '...')}
                     </p>
                     <IconCopy text={data?.data.reward_wallet} />
                   </div>
@@ -145,33 +157,46 @@ export default function History({ open, onClose }: Props) {
 
               <div className="flex  justify-end gap-4 lg:flex-row lg:px-[18px]">
                 <Dropdown
+                  label={t('Rounded')}
                   options={rounds}
                   value={selectedRound}
                   setValue={setSelectedRound}
-                  className="w-fit lg:min-w-[240px] font-Roboto"
+                  className="w-fit lg:min-w-[240px] h-[32px] lg:h-[37px] font-Roboto border-secondary"
                 />
                 <Dropdown
-                  label="Prize:"
+                  label={`${t('Prize')}:`}
                   options={prizeOptions}
                   value={selectedPrize}
                   setValue={setSelectedPrize}
-                  className="w-fit lg:min-w-[154px] font-Roboto"
+                  className="w-fit lg:min-w-[154px] font-Roboto h-[32px] lg:h-[37px]"
                 />
               </div>
             </div>
 
             <div className="max-w-full overflow-x-auto">
               <div className="min-w-[500px] space-y-4 ">
-                <div className="flex h-11 rounded border border-[#EEE0E0] text-center text-sm font-normal leading-5 text-red-darker lg:mx-[18px] font-Roboto">
-                  <div className="flex h-full w-10 items-center pl-3">No</div>
-                  <div className="flex h-full w-[150px] items-center pl-3 lg:w-[200px]">Prize</div>
-                  <div className="flex h-full flex-1 items-center pl-3">Wallet Address</div>
-                  <div className="flex h-full w-[192px] items-center pl-3">Index number</div>
-                  <div className="flex h-full w-[100px] items-center justify-center lg:w-[167px]">Apple ID</div>
+                <div className="flex h-11 rounded border border-[#EEE0E0] text-center text-xs lg:text-sm font-normal leading-5 text-red-darker lg:mx-[18px] font-Roboto space-x-3 text-nowrap">
+                  <div className="flex h-full w-10 items-center ">
+                    <Trans>No</Trans>
+                  </div>
+                  <div className="flex h-full w-[150px] items-center  lg:w-[200px]">
+                    <Trans>Prize</Trans>
+                  </div>
+                  <div className="flex h-full flex-1 items-center ">
+                    <Trans>Wallet address</Trans>
+                  </div>
+                  <div className="flex h-full w-[192px] items-center ">
+                    <Trans>Index number</Trans>
+                  </div>
+                  <div className="flex h-full w-[100px] items-center justify-center lg:w-[167px]">
+                    <Trans>Apple ID</Trans>
+                  </div>
                 </div>
-                <div className="history h-[552px] max-h-[552px] space-y-2 overflow-y-auto lg:ml-[18px] lg:pr-2">
+                <div className="history h-full  space-y-2 overflow-y-auto lg:ml-[18px] lg:pr-2">
                   {isLoading ? (
-                    <p>Loading...</p>
+                    <p>
+                      <Trans>Loading</Trans>...
+                    </p>
                   ) : (
                     <>
                       {(data || data?.data.prize?.length > 0) &&
@@ -190,14 +215,6 @@ export default function History({ open, onClose }: Props) {
                     </>
                   )}
                 </div>
-                {/* {data && data.totalPages > 1 && (
-                  <Pagination
-                    itemsPerPage={10}
-                    pageCount={data?.totalPages}
-                    setPage={setPage}
-                    className='mt-0'
-                  />
-                )} */}
               </div>
             </div>
           </div>
@@ -216,7 +233,7 @@ interface PropsRow {
 
 function Row({ item, index, round, refetch }: PropsRow) {
   return (
-    <div className="flex h-12 rounded bg-[#FAF6F6] text-center text-sm font-light leading-5 text-[#9F232D]">
+    <div className="flex h-12 rounded bg-[#FAF6F6] text-center text-xs lg:text-sm font-light leading-5 text-[#9F232D]">
       <div className="flex h-full w-10 items-center pl-3">{index}</div>
       <div className="flex h-full w-[150px] items-center gap-2.5 pl-3 lg:w-[200px]">
         {item?.top === 'special' && <Image src={specialPrize} alt="" className="size-4 min-w-4" />}
@@ -235,7 +252,7 @@ function Row({ item, index, round, refetch }: PropsRow) {
           {item.index_number}
         </Link>
       </div>
-      <div className="flex h-full w-[100px] items-center justify-center text-base font-medium leading-6 lg:w-[167px]">
+      <div className="flex h-full w-[100px] items-center justify-center  font-medium leading-6 lg:w-[167px]">
         {item.lucky_number}
       </div>
     </div>

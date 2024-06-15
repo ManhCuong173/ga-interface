@@ -7,6 +7,8 @@ import { UserAsset } from '@/types/asset'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import SelectElement from '../SelectElement'
+import Trans from '../i18n/Trans'
+import { useGATranslation } from '../i18n/hooks'
 
 type Props = {
   isLoading?: boolean
@@ -55,7 +57,7 @@ export default function Assets({ isLoading, assets, onShowInfo, onList: onListin
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full flex-1 border-none bg-transparent text-sm font-semibold outline-none placeholder:text-[#AE9955]"
-            placeholder="Search number"
+            placeholder={useGATranslation()('SEARCH NUMBER')}
           />
           {search && (
             <button className="flex size-6 items-center justify-center" onClick={handleClearSearch}>
@@ -70,9 +72,11 @@ export default function Assets({ isLoading, assets, onShowInfo, onList: onListin
         />
       </div>
       {isLoading ? (
-        <div className="flex min-h-[420px] items-center justify-center">loading...</div>
+        <div className="flex min-h-[420px] items-center justify-center">
+          <Trans>Loading</Trans>...
+        </div>
       ) : filteredAssets?.length ? (
-        <div className="my-6 grid grid-cols-2 gap-2 rounded md:grid-cols-3 lg:grid-cols-4">
+        <div className="my-6 grid grid-cols-1 sm:grid-cols-3 gap-2 rounded md:grid-cols-2 lg:grid-cols-3 xl:flex xl:flex-wrap xl:gap-4">
           {filteredAssets.map((asset) => (
             <Asset
               key={asset.id_inscription}
@@ -84,7 +88,9 @@ export default function Assets({ isLoading, assets, onShowInfo, onList: onListin
           ))}
         </div>
       ) : (
-        <div className="flex min-h-[420px] items-center justify-center font-light">No NFTs</div>
+        <div className="flex min-h-[420px] items-center justify-center font-light">
+          <Trans>No NFTs</Trans>
+        </div>
       )}
     </>
   )

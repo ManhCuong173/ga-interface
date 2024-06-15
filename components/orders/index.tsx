@@ -2,6 +2,8 @@ import { useDebounce } from '@/hooks/custom/useDebouce'
 import { OrderStatus } from '@/types/orders'
 import React, { useState } from 'react'
 import InputInfoHelp from '../ReceiveAddress/InputInfoHelp'
+import Trans from '../i18n/Trans'
+import { useGATranslation } from '../i18n/hooks'
 import InscribeOrderModal from '../inscribe-order-modal'
 import { HeadMarkIcon } from '../ui/icons'
 import ListOrders from './list'
@@ -23,7 +25,9 @@ const MyOrders = () => {
       <div className="relative w-full">
         <div className="flex  items-center justify-evenly w-full">
           <HeadMarkIcon className="hidden lg:block" />
-          <p className="text-center text-2xl md:text-[32px] text-red-light font-bold">MY ORDERS</p>
+          <p className="text-center text-2xl md:text-[32px] text-red-light font-bold">
+            <Trans>My orders</Trans>
+          </p>
 
           <HeadMarkIcon className="hidden lg:block" />
         </div>
@@ -33,7 +37,7 @@ const MyOrders = () => {
             hideEndIcon
             className="w-full md:max-w-[400px]"
             classNameInput="placeholder:text-base font-bold"
-            placeholder="SEARCH NUMBER"
+            placeholder={useGATranslation()('SEARCH NUMBER')}
             onChange={handleSearchOrderID}
           />
 

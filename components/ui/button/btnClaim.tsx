@@ -15,18 +15,11 @@ interface PropsBtnClaim {
   inscriptionId: string
 }
 
-const BtnClaim = ({
-  round,
-  walletAddress,
-  refetch,
-  isCompleted,
-  lucky_number,
-  inscriptionId,
-}: PropsBtnClaim) => {
+const BtnClaim = ({ round, refetch, isCompleted, inscriptionId }: PropsBtnClaim) => {
   const addressOwner = useAppSelector(selectAddress)
   const public_key = useAppSelector(selectedPublicKey)
 
-  const [isClaim, setIsClaim] = useState(false);
+  const [isClaim, setIsClaim] = useState(false)
 
   const handleGetSignature = async () => {
     try {
@@ -67,50 +60,56 @@ const BtnClaim = ({
       wallet_address,
     })
     if (res.status === 200) {
-      return res.data.psbt_claim;
+      return res.data.psbt_claim
     }
   }
 
-  const disable = isCompleted;
+  const disable = isCompleted
 
   const handleSignPsbt = async (psbt: string) => {
-    if (!psbt) return;
-    const res = await (window as any).unisat.signPsbt(psbt);
-    const psbt_sign = Buffer.from(res, 'hex').toString('base64');
-    return psbt_sign;
+    if (!psbt) return
+    const res = await (window as any).unisat.signPsbt(psbt)
+    const psbt_sign = Buffer.from(res, 'hex').toString('base64')
+    return psbt_sign
   }
 
   const handleRewardClaim = async (psbt_claim: string, psbt_claim_sign: string) => {
-    if (!psbt_claim || !psbt_claim_sign) return;
+    if (!psbt_claim || !psbt_claim_sign) return
     const res = await claimService.claimReward({
       psbt_claim,
-      psbt_claim_sign
+      psbt_claim_sign,
     })
-    return res;
+    return res
   }
-
 
   const handleClaim = async () => {
     try {
-      setIsClaim(true);
+      setIsClaim(true)
       const signature = await handleGetSignature()
       const list_txid_inscription = await handleGetTxInscription()
-      const psbt_claim = await verifyClaim(inscriptionId, list_txid_inscription, public_key, round, signature, addressOwner);
-      const psbt_claim_sign = await handleSignPsbt(psbt_claim);
+      const psbt_claim = await verifyClaim(
+        inscriptionId,
+        list_txid_inscription,
+        public_key,
+        round,
+        signature,
+        addressOwner,
+      )
+      const psbt_claim_sign = await handleSignPsbt(psbt_claim)
 
-      const res = await handleRewardClaim(psbt_claim, String(psbt_claim_sign));
+      const res = await handleRewardClaim(psbt_claim, String(psbt_claim_sign))
       if (res?.status === 200) {
-        refetch();
-        setIsClaim(false);
+        refetch()
+        setIsClaim(false)
       }
-      return;
+      return
     } catch (err) {
       console.log(err)
       if (err instanceof AxiosError) {
-        console.log(err.response?.data.message);
-        toast.error(err.response?.data.message);
+        console.log(err.response?.data.message)
+        toast.error(err.response?.data.message)
       }
-      setIsClaim(false);
+      setIsClaim(false)
     }
   }
 
@@ -126,3 +125,4 @@ const BtnClaim = ({
 }
 
 export default BtnClaim
+

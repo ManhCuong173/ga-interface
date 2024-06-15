@@ -3,7 +3,7 @@ import { Fragment, ReactNode } from 'react'
 
 type Props = {
   open: boolean
-  handleClose: () => void
+  handleClose: (e?: any) => void
   children?: ReactNode
   backdropClassname?: string
 }
@@ -27,11 +27,17 @@ export default function ModalContainer({ ...props }: Props) {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className={`${props.backdropClassname} fixed inset-0 bg-black/80`} />
+          <div className={`${props.backdropClassname} fixed inset-0 bg-black/80 z-10`} />
         </Transition.Child>
 
-        <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-[500px] justify-center px-4 text-center font-ProtoMono text-text-primary lg:px-0">
+        <div
+          className="fixed inset-0 overflow-y-auto flex items-center justify-center z-20"
+          onClick={(e) => {
+            props.handleClose(e)
+            e.stopPropagation()
+          }}
+        >
+          <div className="flex min-h-[500px] justify-center text-center font-ProtoMono text-text-primary px-0">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"

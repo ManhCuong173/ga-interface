@@ -1,6 +1,7 @@
+import Trans from '@/components/i18n/Trans'
 import { handleReturnIconType } from '@/components/marketplace/Item'
 import ModalContainer from '@/components/ui/modal-container'
-import button_frame from '@/images/marketplace/buy/button-frame.png'
+import closeModalButton from '@/icons/profile/modal/close-button.svg'
 import { NFTDetail } from '@/types/nft'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -37,70 +38,47 @@ const ListNFTSuccessModal: React.FC<Props> = ({
   }
 
   return (
-    <ModalContainer open={open} handleClose={handleClose} backdropClassname="bg-black/10">
-      <div className="relative my-8 min-h-[488px] w-full lg:w-[378px] bg-white px-10 pb-[82.15px] pt-[75px] text-text-black font-Roboto">
-        <div className="relative z-[1] flex w-full flex-col items-center gap-6 lg:gap-8">
-          <div className="mx-auto lg:space-y-6">
-            <p className="flex items-center gap-2 text-[24px] lg:text-[21px] font-medium leading-8 tracking-[-0.8px] text-red-light">
-              <span>Congratulations! </span>
-            </p>
-          </div>
+    <ModalContainer open={open} handleClose={handleClose}>
+      <div className="w-screen  bg-full lg:p-[30px] lg:pt-[40px] text-text-black lg:w-[540px] h-[600px] bg-white font-Roboto relative p-[10px]">
+        <div className="mx-auto lg:space-y-6">
+          <p className="gap-2 text-[32px] font-medium leading-8 tracking-[-0.8px] text-red-light font-ProtoMono text-center w-full">
+            <Trans>Success!</Trans>
+          </p>
+        </div>
 
-          <p className="text-lg font-medium leading-6 tracking-[-0.6px]">Your NFT Purchase is Complete!</p>
+        <p className="text-sm font-light leading-6 tracking-[-0.6px] text-black1 mt-[25px] w-[263px] mx-auto">
+          <Trans>Your NFT has been officially listed after you set the selling price</Trans>.
+        </p>
 
-          <div className="relative h-[160px] w-[160px] p-4">
-            <div className="flex items-center justify-center lg:h-[160px] lg:w-[160px]">
-              <Image
-                src={nftImage || ''}
-                sizes="100vw"
-                className="h-full w-full"
-                width={0}
-                height={0}
-                loader={() => String(nftImage)}
-                alt=""
-              />
-            </div>
-            <div className="flex items-center gap-2 rounded px-2 py-1">
-              <div className="flex h-5 w-5 items-center justify-center rounded-full ">
-                <Image src={handleReturnIconType(nftId)} alt="" width={20} height={20} />
-              </div>
-              <span className="left-6 text-xs font-light tracking-[-0.48px]">#{inscriptionNumber}</span>
-            </div>
-          </div>
-          <div className="text-center text-[20px] font-medium leading-8 text-text-black">
-            {nftName} APPLE #{number}
-          </div>
-          <div
-            className="
-          flex items-center gap-2 text-2xl 
-          font-semibold leading-5 tracking-[-3%]"
-          >
-            <span>Price:</span>
-            <span>{price} BTC</span>
-          </div>
-
-          <button className="relative" onClick={() => handleRouterAsset()}>
-            <Image src={button_frame} alt="" />
-            <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center gap-2">
-              <span className="text-xl font-medium leading-6 tracking-[-0.6px] text-[#FFDFAC]">view my assets</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
-                <path
-                  d="M5.2041 12.0889H19.2041"
-                  stroke="#FFDFAC"
-                  stroke-width="2.88462"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M12.2041 5.08887L19.2041 12.0889L12.2041 19.0889"
-                  stroke="#FFDFAC"
-                  stroke-width="2.88462"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </div>
+        <div className="flex items-center justify-end absolute top-[10px] right-[10px] lg:right-[30px] lg:top-[30px]">
+          <button onClick={handleClose} className="outline-none">
+            <Image src={closeModalButton} alt="" width={44} height={44} />
           </button>
+        </div>
+        <div className="mx-auto flex items-center justify-center w-fit h-fit pt-[35px]">
+          <div className="relative p-3 border-bgAlt border-[1px] rounded-lg">
+            <figure className="size-[204px] ">
+              <Image loader={() => nftImage} src={nftImage} alt="" width={204} height={204} />
+            </figure>
+          </div>
+        </div>
+        <div className="w-full mt-5">
+          <h2 className="mx-auto whitespace-nowrap text-[18px] font-medium leading-8 tracking-[-0.64px] text-text-black">
+            {nftName} Apple
+          </h2>
+          <div className="flex justify-center items-center gap-1 px-2 bg-white">
+            <span className="flex h-5 w-5 items-center justify-center">
+              <Image src={handleReturnIconType(nftId)} alt="" width={20} height={20} />
+            </span>
+            <span className="text-xs font-light tracking-[-0.36px] text-black1">#{inscriptionNumber}</span>
+          </div>
+
+          <div className="flex justify-center items-center mx-auto border-solid border-[1px] border-red-light rounded-lg lg:w-[226px] py-4 px-6 lg:h-[52px] mt-5">
+            <span className="inline-block w-full text-left text-base font-normal leading-6 tracking-[-0.48px] text-black1">
+              <Trans>Price</Trans>
+            </span>
+            <p className="text-red-light font-base text-[21px] font-ProtoMono font-medium text-nowrap">{price} BTC</p>
+          </div>
         </div>
       </div>
     </ModalContainer>

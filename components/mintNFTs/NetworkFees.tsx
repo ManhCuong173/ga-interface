@@ -9,6 +9,8 @@ import { ReactNode, useEffect, useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
 import { useDebounce, useDebouncedCallback } from 'use-debounce'
 import { ButtonImage } from '../button'
+import Trans from '../i18n/Trans'
+import { useGATranslation } from '../i18n/hooks'
 import { ChevronIcon, InfoCircleIcon } from '../ui/icons'
 import ChooseNetworkFee from './ChooseNetworkFee'
 import Customsize from './Customsize'
@@ -64,9 +66,29 @@ const NetworkFees: React.FC<{
     initialData: feeDefault,
   })
 
+  const mapIdNftSelected = useMemo(
+    () =>
+      inscribeData.pickedNfts
+        .map((nft) => {
+          return nft.number
+        })
+        .join('-'),
+    [inscribeData],
+  )
+
+  const [debounceSelectNFTIdSelected] = useDebounce(mapIdNftSelected, 500)
+
   const { data: feeMintData, isFetching: loadingNetworkFeeMint } = useQuery<NetworkFeeMint>({
-    queryKey: ['fee-mint', satsInscriptionDebounce, selectedNetworkFeeType, customNetworkFeeDebounce],
+    queryKey: [
+      'fee-mint',
+      satsInscriptionDebounce,
+      selectedNetworkFeeType,
+      customNetworkFeeDebounce,
+      debounceSelectNFTIdSelected,
+    ],
     queryFn: async () => {
+      if (!debounceSelectNFTIdSelected) return feeMintDefault
+
       const result = await publicService
         .getNetworkFeeMint({
           satsInInscription: satsInscription,
@@ -77,7 +99,7 @@ const NetworkFees: React.FC<{
       if (result.data) return result.data
       return feeMintDefault
     },
-    enabled: feeData !== feeDefault && inscribeData.pickedNfts.length > 0,
+    enabled: Boolean(feeData !== feeDefault && inscribeData.pickedNfts.length > 0),
     initialData: feeMintDefault,
   })
 
@@ -117,7 +139,7 @@ const NetworkFees: React.FC<{
         min={feeData.normal || 1}
       />
       <div className="relative flex flex-col gap-1 rounded-lg border border-bgAlt p-3">
-        <RowInfo title="Sats inscription:" amount={satsInscription} />
+        <RowInfo title={useGATranslation()('Sats inscription:')} amount={satsInscription} />
 
         <Customsize
           min={600}
@@ -138,7 +160,7 @@ const NetworkFees: React.FC<{
               className="text-left border-bgAlt transition-all rounded p-2  text-black1 text-sm hover:bg-gray-200 "
               onClick={onCallback}
             >
-              Customize
+              <Trans>Customize</Trans>
               <span className={cn(enabledCustom ? 'rotate-180' : 'rotate-0', `ml-1 transition-all duration-500`)}>
                 <ChevronIcon />
               </span>
@@ -147,7 +169,11 @@ const NetworkFees: React.FC<{
         </Customsize>
 
         <div className="flex flex-col mt-1">
-          <RowInfo isLoading={loadingNetworkFeeMint} title="Network Fee:" amount={feeMintData?.networkFee} />
+          <RowInfo
+            isLoading={loadingNetworkFeeMint}
+            title={useGATranslation()('Network Fee:')}
+            amount={feeMintData?.networkFee}
+          />
 
           <div className="w-full border-b border-[#d4c79c4c] border-opacity-65 my-2"></div>
 
@@ -155,7 +181,7 @@ const NetworkFees: React.FC<{
             isLoading={loadingNetworkFeeMint}
             title={
               <span className="flex items-center">
-                Service Base Fee:
+                <Trans>Service Base Fee:</Trans>
                 <InfoCircleIcon className="ml-1" />
               </span>
             }
@@ -165,7 +191,7 @@ const NetworkFees: React.FC<{
             isLoading={loadingNetworkFeeMint}
             title={
               <span className="flex items-center">
-                Platform fee:
+                {useGATranslation()('Platform Fee:')}
                 <InfoCircleIcon className="ml-1" />
               </span>
             }
@@ -175,7 +201,7 @@ const NetworkFees: React.FC<{
             isLoading={loadingNetworkFeeMint}
             title={
               <span className="flex items-center">
-                Fee by size:
+                {useGATranslation()('Fee by size:')}
                 <InfoCircleIcon className="ml-1" />
               </span>
             }
@@ -186,7 +212,7 @@ const NetworkFees: React.FC<{
 
           <div className="w-full border-b border-[#d4c79c4c] border-opacity-65 my-2"></div>
 
-          <RowInfo isLoading={loadingNetworkFeeMint} title="Total:" amount={total} lineThrough />
+          <RowInfo isLoading={loadingNetworkFeeMint} title={useGATranslation()('Total:')} amount={total} lineThrough />
           <RowInfo isLoading={loadingNetworkFeeMint} title="" amount={feeMintData.total} />
         </div>
       </div>
@@ -195,3 +221,4 @@ const NetworkFees: React.FC<{
 }
 
 export default NetworkFees
+

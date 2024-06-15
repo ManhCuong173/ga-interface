@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
+import Trans from '../i18n/Trans'
 
 type Props = {
   mode: 'transparent' | 'solid'
@@ -97,7 +98,9 @@ export default function Menu({ mode, handleDisconnect }: Props) {
           onClick={handleDisconnect}
         >
           <Image src={disconnect} alt="" />
-          <span className="text-sm font-light leading-5 tracking-[-0.42px]">Disconnect</span>
+          <span className="text-sm font-light leading-5 tracking-[-0.42px]">
+            <Trans>Disconnect</Trans>
+          </span>
         </div>
         <div
           className="flex h-11 items-center justify-start gap-4 bg-white px-4 hover:bg-[#FAF5F0]"
@@ -106,7 +109,9 @@ export default function Menu({ mode, handleDisconnect }: Props) {
           }}
         >
           <Image src={oldManIcon} alt="" />
-          <span className="text-sm font-light leading-5 tracking-[-0.42px]">User Profile</span>
+          <span className="text-sm font-light leading-5 tracking-[-0.42px]">
+            <Trans>User Profile</Trans>
+          </span>
         </div>
       </div>
     </div>

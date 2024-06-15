@@ -3,6 +3,7 @@ import { useMemo, useRef, useState } from 'react'
 import useClickOutside from '@/hooks/custom/useClickOutside'
 import { cn } from '@/lib/utils'
 import { OrderStatus } from '@/types/orders'
+import Trans from '../i18n/Trans'
 import { ChevronIcon, MarkIcon } from '../ui/icons'
 
 type Status = {
@@ -61,7 +62,9 @@ const SelectStatus = ({ className, onSelectOrderStatus, selectedOrderStatus }: S
       )}
     >
       <div onClick={handleShow} className="cursor-pointer flex gap-1 items-center justify-between w-full">
-        <span className="text-sm sm:text-base font-medium text-black1">{selected?.title}</span>
+        <span className="text-sm sm:text-base font-medium text-black1">
+          <Trans>{selected?.title}</Trans>
+        </span>
 
         <ChevronIcon className={cn(show ? 'rotate-0' : 'rotate-180', 'transition-all ease-linear duration-100')} />
       </div>
@@ -76,8 +79,11 @@ const SelectStatus = ({ className, onSelectOrderStatus, selectedOrderStatus }: S
             <div
               className="flex items-center justify-between px-4 py-2 h-[40px] hover:bg-secondary  cursor-pointer border-b-[1px] last:border-b-0 text-sm"
               onClick={() => onSelectOrderStatus(item.id)}
+              key={index}
             >
-              <span key={`select-status-my-order-${item.id}`}>{item.title}</span>
+              <span key={`select-status-my-order-${item.id}`}>
+                <Trans>{item.title}</Trans>
+              </span>
               {selectedOrderStatus === item.id && <MarkIcon className="fill-transparent" />}
             </div>
           )
@@ -88,3 +94,4 @@ const SelectStatus = ({ className, onSelectOrderStatus, selectedOrderStatus }: S
 }
 
 export default SelectStatus
+

@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Fragment, useEffect, useState } from 'react'
+import Trans from '../i18n/Trans'
 import ConnectWalletButton from './connect-wallet-button'
 
 export default function DesktopHeader() {
@@ -56,7 +57,7 @@ export default function DesktopHeader() {
         !show && isHomePage
           ? '!-translate-y-full'
           : mode === 'transparent' && !isScrollOverSidebarHeight
-            ? 'border border-[#FFF4DD] border-opacity-40 !text-_white'
+            ? 'border border-[#FFF4DD] border-opacity-40 !text-_white backdrop-blur-md'
             : 'border-[#D4C79C] bg-[#FAF5F0] text-black1'
       } fixed top-0 z-50 hidden h-[67px] w-full origin-top translate-y-0 border-b text-black1 transition-all duration-500 lg:flex lg:h-[67px]`}
     >
@@ -74,7 +75,9 @@ export default function DesktopHeader() {
                   href={item.href}
                   className={`${(item.href === '/' && isHomePage) || (path.includes(item.href) && !isHomePage && item.href !== '/') ? 'border-red-light text-red-light' : 'border-transparent'} flex h-full items-center gap-2 border-b-2 px-6`}
                 >
-                  <span>{item.label}</span>
+                  <span>
+                    <Trans>{item.label}</Trans>
+                  </span>
                 </Link>
               </Fragment>
             ))}

@@ -4,9 +4,12 @@ import ic_down from '@/icons/chervon-down.svg'
 import search from '@/images/marketplace/search.svg'
 import ic_tooltip from '@/images/marketplace/tooltip.svg'
 import Image from 'next/image'
-import { SetStateAction, memo, useMemo, useRef, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { SetStateAction, memo, useEffect, useMemo, useRef, useState } from 'react'
 import InputField from '../InputField'
-import SelectElement from '../SelectElement'
+import SelectElement, { nftElementInfoes } from '../SelectElement'
+import Trans from '../i18n/Trans'
+import { useGATranslation } from '../i18n/hooks'
 
 interface PropFilterMarketPlace {
   nftIds: number[]
@@ -36,6 +39,13 @@ const FilterMarketPlace = ({ nftIds, setFilter, filter, setNftIds }: PropFilterM
   const handleChangeNumberFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFilter({ ...filter, number: e.currentTarget.value })
   }
+  const t = useGATranslation()
+
+  const selectedElementId = useSearchParams().get('elementId')
+  useEffect(() => {
+    const defaultSelectedElement = nftElementInfoes.find((item) => Number(selectedElementId) === item.id)
+    if (defaultSelectedElement) setNftIds([defaultSelectedElement.id])
+  }, [])
 
   useClickOutside({ ref, show, setShow })
 
@@ -66,9 +76,9 @@ const FilterMarketPlace = ({ nftIds, setFilter, filter, setNftIds }: PropFilterM
           className="flex h-11 cursor-pointer items-center justify-between gap-4 rounded border border-[#AE9955] px-4 py-2"
         >
           <span className="font-Roboto whitespace-nowrap text-base font-medium tracking-[-0.48px] text-[#4E473F]">
-            Sort by
+            <Trans>Sort by</Trans>
             <span className="font-Roboto text-red-light ml-1">
-              {sortType?.name} {sortType?.sub}
+              <Trans>{sortType?.name}</Trans> <Trans>{sortType?.sub}</Trans>
             </span>
           </span>
           <Image
@@ -90,9 +100,9 @@ const FilterMarketPlace = ({ nftIds, setFilter, filter, setNftIds }: PropFilterM
                 }}
               >
                 <span>
-                  {item.name}
+                  <Trans>{item.name}</Trans>
                   <br />
-                  {item.sub}
+                  <Trans>{item.sub}</Trans>
                 </span>
                 {item.value === filter.order_by && (
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -120,7 +130,7 @@ const FilterMarketPlace = ({ nftIds, setFilter, filter, setNftIds }: PropFilterM
           <InputField
             onChange={handleChangeNumberFilter}
             className="relative w-[200px] border border-[#AE9955] text-[#AE9955] placeholder:text-xs placeholder:text-[#AE9955] lg:w-[304px]"
-            placeholder="SEARCH NUMBER"
+            placeholder={t('SEARCH NUMBER')}
             icon={search}
             type="text"
           >
@@ -134,8 +144,8 @@ const FilterMarketPlace = ({ nftIds, setFilter, filter, setNftIds }: PropFilterM
                 rounded-lg text-sm font-light 
                text-[#4E473F] transition-all duration-150 ease-linear lg:translate-x-0 font-Roboto`}
             >
-              <span>{`Enter the NFT ID here. Use "X" to represent unspecified digits.`}</span> <br />
-              For example:
+              <span>{`Enter the NFT name or ID here. Use "X" to represent unspecified digits.`}</span> <br />
+              <Trans>For example:</Trans>
               <ul className="list-disc pl-10">
                 <li>{`To find an NFT starting with "123", enter "123X".`}</li>
                 <li>{`To find an NFT ending with "456", enter "X456".`}</li>

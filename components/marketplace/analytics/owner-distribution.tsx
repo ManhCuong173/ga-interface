@@ -1,3 +1,4 @@
+import Trans from '@/components/i18n/Trans'
 import decor from '@/images/marketplace/analytics/decor.png'
 import { ownerService } from '@/services/owner.service'
 import { Distribution } from '@/types/owner'
@@ -31,7 +32,7 @@ export default function OwnerDistribution({ nftId, backgroundColor }: Props) {
       <div className="flex flex-col gap-2.5 lg:gap-4">
         <Image src={decor} alt="" className="mx-auto h-[28.85px] w-[283.92px] object-cover lg:w-[360.21px]" />
         <h2 className="text-center text-2xl font-semibold leading-8 text-text-black lg:text-[32px] lg:font-medium">
-          Owner distribution
+          <Trans>Owner distribution</Trans>
         </h2>
       </div>
       <div className="flex flex-col gap-4">

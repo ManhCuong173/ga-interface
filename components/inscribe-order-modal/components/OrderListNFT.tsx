@@ -1,3 +1,4 @@
+import Trans from '@/components/i18n/Trans'
 import { NFT } from '@/types/nft'
 import { OrderDetail } from '@/types/orders'
 import React from 'react'
@@ -12,15 +13,25 @@ const OrderListNFT: React.FC<{
     <div>
       <div className="flex flex-col items-start max-sm:gap-2 mb-5">
         <p className="text-sm font-medium mb-1">
-          <span className="font-Roboto text-text-secondary">Order ID:</span> {orderDetail?.orderId}
+          <span className="font-Roboto text-text-secondary">
+            <Trans>Order ID</Trans>:
+          </span>{' '}
+          {orderDetail?.orderId}
         </p>
         <div className="flex gap-8">
           <p className="text-sm font-light">
-            <span className="font-Roboto text-text-secondary">Quantity:</span> {orderDetail?.nfts?.length}
+            <span className="font-Roboto text-text-secondary">
+              <Trans>Quantity</Trans>:
+            </span>{' '}
+            {orderDetail?.nfts?.length}
           </p>
           <p className="text-sm font-medium text-orange">
-            <span className="font-Roboto text-text-secondary mr-1">Status:</span>
-            <span className="font-bold"> {orderDetail?.status}</span>
+            <span className="font-Roboto text-text-secondary mr-1">
+              <Trans>Status:</Trans>
+            </span>
+            <span className="font-bold">
+              <Trans>{orderDetail?.status}</Trans>
+            </span>
           </p>
         </div>
       </div>
@@ -30,3 +41,4 @@ const OrderListNFT: React.FC<{
 }
 
 export default OrderListNFT
+

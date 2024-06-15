@@ -1,10 +1,12 @@
 import { ButtonImage } from '@/components/button'
+import Trans from '@/components/i18n/Trans'
+import { useGATranslation } from '@/components/i18n/hooks'
+import { cn } from '@/lib/utils'
 import { OrderDetail } from '@/types/orders'
-import React, { ReactNode, useRef, useState } from 'react'
+import React, { ReactNode } from 'react'
 import { MarkCircleIcon } from '../../../ui/icons'
 import { PayMethodEnum } from '../../types'
 import QRCode from './QRCode'
-import { cn } from '@/lib/utils'
 
 const CardSelect: React.FC<{
   title: string
@@ -45,7 +47,7 @@ const PayMethod: React.FC<PayMethodProps> = ({
   return (
     <div className="flex flex-col font-Roboto items-center gap-3">
       <CardSelect
-        title="Pay with BTC"
+        title={useGATranslation()('Pay with BTC')}
         method={PayMethodEnum.QRCode}
         selectedPayMethod={selectedPayMethod}
         onSelectPayMethod={onSelectPayMethod}
@@ -53,7 +55,7 @@ const PayMethod: React.FC<PayMethodProps> = ({
         <QRCode url={orderDetail?.qrCodeUrl} addressTransferFee={orderDetail?.collectorFeeAddress} />
       </CardSelect>
       <CardSelect
-        title="Pay with Wallet"
+        title={useGATranslation()('Pay with Wallet')}
         method={PayMethodEnum.Wallet}
         selectedPayMethod={selectedPayMethod}
         onSelectPayMethod={onSelectPayMethod}
@@ -64,7 +66,7 @@ const PayMethod: React.FC<PayMethodProps> = ({
           className="w-full px-12 py-4 my-4 whitespace-nowrap"
           onClick={onPayWallet}
         >
-          Open Wallet
+          <Trans>Open Wallet</Trans>
         </ButtonImage>
       </CardSelect>
     </div>
@@ -72,3 +74,4 @@ const PayMethod: React.FC<PayMethodProps> = ({
 }
 
 export default PayMethod
+

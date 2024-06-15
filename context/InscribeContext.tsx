@@ -1,11 +1,11 @@
 import { handleAddItem } from '@/lib/item'
-import { FiveElements } from '@/types/fiveElements'
+import { ElementType } from '@/types/element'
 import { NFT } from '@/types/nft'
 import React, { createContext, useContext, useReducer } from 'react'
 
 type InscribeData = {
   pickedNfts: NFT[]
-  pickedFiveElement: FiveElements[]
+  pickedFiveElement: ElementType[]
 }
 
 type InscribeAction =
@@ -75,3 +75,4 @@ const InscribeContextProvider = ({ children }: { children: React.ReactNode }) =>
 export default InscribeContextProvider
 
 export const useInscribeContext = () => useContext(InscribeContext)
+

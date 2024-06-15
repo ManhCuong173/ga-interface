@@ -1,4 +1,5 @@
 import { ButtonImage } from '@/components/button'
+import Trans from '@/components/i18n/Trans'
 import { HeadMarkIcon } from '@/components/ui/icons'
 import { useMediaQuery } from '@/hooks/custom/useMediaQuery'
 import { useInView } from 'framer-motion'
@@ -36,22 +37,26 @@ const Slogin = () => {
     <div id="section-slogan" className="snap-start" ref={ref}>
       <WrapperHero src="/images/home/bg-slogan.svg">
         <div className="flex justify-start h-14 md:h-16 md:w-full absolute top-[-1px] left-0">
-          <div className=" bg-secondary" style={{ width: ratio }} />
-          <div className=" bg-secondary opacity-[0.3]" style={{ width: ratio }} />
+          <div className=" bg-secondary will-change-auto" style={{ width: ratio }} />
+          <div className=" bg-secondary opacity-[0.3] will-change-auto" style={{ width: ratio }} />
         </div>
 
         <div className="flex flex-col flex-1 items-center justify-center w-full h-full px-4">
           <div>
             <HeadMarkIcon />
           </div>
-          <div className="max-w-[980px] mt-16 mb-14 lg:mt-24 text-center text-2xl font-semibold leading-[1.4] tracking-[-0.72px] uppercase text-secondary">
-            “Golden Apple is the GameFi platform for the Bitcoin Ecosystem. Through mapping the Bitcoin Assets (BRC20,
-            Ordinals NFT and others) to Ethereum (and other Layer2) networks,”
+          <div className="max-w-[980px] mt-16 mb-14 lg:mt-24 text-center text-2xl font-semibold leading-[1.4] tracking-[-0.72px] uppercase text-secondary px-5 lg:px-10">
+            <Trans>{'Slogan'}</Trans>
           </div>
 
           <Link href="/inscribe">
-            <ButtonImage varirant="light-asset" className="text-lg font-medium text-red-light w-64 h-14 ">
-              Explore Now
+            <ButtonImage
+              varirant="light-asset"
+              className="text-sm lg:text-base font-medium text-red-light w-[105%] h-[100px] md:h-[80px] lg:w-[420px] text-center"
+            >
+              <Trans>{'GrabTicket'}</Trans>
+              <br />
+              <Trans>{'MintYourNFTNow'}</Trans>
             </ButtonImage>
           </Link>
         </div>

@@ -19,3 +19,4 @@ export enum NetworkFeeEnum {
 }
 
 export type NetworkFeeType = NetworkFeeEnum
+
