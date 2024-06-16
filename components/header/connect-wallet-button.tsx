@@ -8,6 +8,7 @@ import { userService } from '@/services/user.service'
 import { useMutation } from '@tanstack/react-query'
 import { usePathname } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import Trans from '../i18n/Trans'
 import Menu from './menu'
 
 type Props = {
@@ -156,7 +157,7 @@ export default function ConnectWalletButton({ mode }: Props) {
                 mode === 'transparent' ? 'text-white address-item' : 'text-red-light address-item-white',
               )}
             >
-              Connect Wallet
+              <Trans>Connect Wallet</Trans>
             </span>
           </>
         )}
@@ -169,7 +170,7 @@ export default function ConnectWalletButton({ mode }: Props) {
           }}
           className="lg:hidden w-full text-black1 text-base font-medium leading-[130%] font-Roboto"
         >
-          Disconnect
+          <Trans>Disconnect</Trans>
         </button>
       )}
     </div>

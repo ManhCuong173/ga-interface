@@ -149,6 +149,7 @@
     "Auction": "Auction",
     "IsComingSoon": "is coming soon",
     "NFTGallery": "NFT Gallery",
+    "NFT Gallery": "NFT Gallery",
     "IgnitionOfYourFortune": "The Ignition Your Fortune",
     "FireDescription": "Embrace its transformative energy and light your path to wealth with a Fire NFT. Let the flames guide you to unparalleled abundance",
     "WeathTitle": "The Flow of Wealth",
@@ -209,6 +210,7 @@
     "Points": "Points",
     "Content Type": "Content Type",
     "Success!": "Success!",
-    "Your NFT has been officially listed after you set the selling price": "Your NFT has been officially listed after you set the selling price."
+    "Your NFT has been officially listed after you set the selling price": "Your NFT has been officially listed after you set the selling price.",
+    "My Profile": "My Profile"
   }
 }

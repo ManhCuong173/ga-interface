@@ -3,6 +3,7 @@
 import { headerItems } from '@/constants/header.constant'
 import useGetProfile from '@/hooks/api/useGetProfile'
 import useLinkSocial from '@/hooks/api/useLinkSocial'
+import { useWindowInfo } from '@/hooks/useWindowInfo'
 import DiscordIcon from '@/icons/home/discord.svg'
 import XIcon from '@/icons/home/twitter.svg'
 import { cn } from '@/lib/utils'
@@ -10,6 +11,7 @@ import { Menu, X } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import Trans from '../i18n/Trans'
 import { Drawer, DrawerClose, DrawerContent, DrawerFooter, DrawerTrigger } from '../ui/drawer'
 import ConnectWalletButton from './connect-wallet-button'
 
@@ -21,8 +23,8 @@ const MobileSidebar: React.FC = () => {
   const oauth_verifier = searchParams.get('oauth_verifier')
   const code = searchParams.get('code')
   const state = searchParams.get('state')
-  const { bindDiscord, bindTwitter, removeDiscord, removeX } = useLinkSocial({ refetch })
-
+  const { removeDiscord, removeX } = useLinkSocial({ refetch })
+  const window = useWindowInfo()
   const router = useRouter()
   const pathname = usePathname()
 
@@ -60,7 +62,12 @@ const MobileSidebar: React.FC = () => {
         </button>
       </DrawerTrigger>
       <DrawerContent className="">
-        <div className="relative w-screen h-screen p-5 animate-fadeOut">
+        <div
+          className="relative w-screen p-5 animate-fadeOut"
+          style={{
+            height: window?.innerHeight || '100vh',
+          }}
+        >
           <DrawerClose>
             <button className="absolute right-[4px] top-2 z-30 outline-none p-2 hover:bg-bgAlt4d hover:rounded-md">
               <X className="fill-black1 w-7 h-7" />
@@ -88,7 +95,9 @@ const MobileSidebar: React.FC = () => {
                     `flex w-full gap-2 px-6 text-[24px] font-semibold`,
                   )}
                 >
-                  <DrawerClose>{item.label}</DrawerClose>
+                  <DrawerClose>
+                    <Trans>{item.label}</Trans>
+                  </DrawerClose>
                 </Link>
               ))}
               <div className="flex item-centers gap-3 my-5 w-full px-6">

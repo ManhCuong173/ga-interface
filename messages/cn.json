@@ -155,6 +155,7 @@
     "IsComingSoon": "即将到来",
     "Coming soon": "即将到来",
     "NFTGallery": "NFT画廊",
+    "NFT Gallery": "NFT画廊",
     "IgnitionOfYourFortune": "点燃您的财富之火",
     "FireDescription": "通过我们的火NFT合集，接受它转变的能量，照亮您的财富之路，让火焰引导您走向那前所未有的繁荣与丰富。",
     "WeathTitle": "财富的流动",
@@ -210,6 +211,7 @@
     "Points": "积分",
     "Content Type": "内容种类",
     "Success!": "成功！",
-    "Your NFT has been officially listed after you set the selling price": "当您设定好销售价格后，您的 NFT 即正式上市。"
+    "Your NFT has been officially listed after you set the selling price": "当您设定好销售价格后，您的 NFT 即正式上市。",
+    "My Profile": "我的个人资料"
   }
 }
