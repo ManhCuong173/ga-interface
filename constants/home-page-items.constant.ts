@@ -16,7 +16,7 @@ export const homePageItems = [
   },
   {
     id: 'section-lucky-draw',
-    label: 'Lucky Draw',
+    label: 'Lucky draw',
     activeIcon: twolanternWhite,
     icon: twolanternOrange,
   },
@@ -33,3 +33,4 @@ export const homePageItems = [
     icon: chineseKnotOrange,
   },
 ]
+
