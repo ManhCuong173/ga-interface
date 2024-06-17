@@ -1,22 +1,83 @@
 import { urlRoute } from '@/constants/routes'
+import useGetProfile from '@/hooks/api/useGetProfile'
+import useLinkSocial from '@/hooks/api/useLinkSocial'
 import discord from '@/icons/home/discord.svg'
 import twitter from '@/icons/home/twitter.svg'
 import logo from '@/images/commons/logo.svg'
+import { selectAddress, selectedPublicKey } from '@/lib/features/wallet/wallet-slice'
+import { useAppSelector } from '@/lib/hook'
 import { cn } from '@/lib/utils'
+import { backend } from '@/services/endpoint/endpoint'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useEffect } from 'react'
 import LanguageSelect from './header/language-select'
 import Trans from './i18n/Trans'
 
 const Social: React.FC<{ className?: string; size?: string }> = ({ className, size }) => {
+  const { data: profile, refetch } = useGetProfile()
+  const { bindDiscord, bindTwitter, removeDiscord, removeX } = useLinkSocial({ refetch })
+  const address = useAppSelector(selectAddress)
+  const publicKey = useAppSelector(selectedPublicKey)
+  const searchParams = useSearchParams()
+  const oauth_token = searchParams.get('oauth_token')
+  const oauth_verifier = searchParams.get('oauth_verifier')
+  const code = searchParams.get('code')
+  const state = searchParams.get('state')
+  const pathname = usePathname()
+  const router = useRouter()
+
+  const remove = (key1: string, key2: string) => {
+    const current = new URLSearchParams(Array.from(searchParams.entries()))
+    current.delete(key1)
+    current.delete(key2)
+    router.push(`${pathname}`)
+  }
+  useEffect(() => {
+    if (oauth_token && oauth_verifier && publicKey && address) {
+      bindTwitter(oauth_token, oauth_verifier)
+    }
+  }, [oauth_token, oauth_verifier])
+
+  useEffect(() => {
+    if (code && state && oauth_verifier && publicKey && address) {
+      bindDiscord(code, state)
+    }
+  }, [code, state])
+
+  const connectTwitter = () => {
+    if (profile?.twitter_connect) {
+      remove(String(oauth_token), String(oauth_verifier))
+      removeX()
+
+      return
+    }
+    if (typeof window !== 'undefined') {
+      router.push(`${process.env.NEXT_PUBLIC_API_URL}/${backend}/authentication/twitter`)
+      window.localStorage.setItem('address', address)
+    }
+  }
+  const connectDiscord = () => {
+    if (profile?.discord_connect) {
+      removeDiscord()
+      remove(String(code), String(state))
+      return
+    }
+    if (typeof window !== 'undefined') {
+      router.push(`${process.env.NEXT_PUBLIC_API_URL}/${backend}/authentication/discord`)
+      window.localStorage.setItem('address', address)
+    }
+  }
+
   return (
     <div className={cn('grid grid-cols-2 gap-3 w-fit', className)}>
-      <Link href={urlRoute.twitter} className={cn('flex w-full h-full cursor-pointer hover:opacity-90', size)}>
+      <div className={cn('flex w-full h-full cursor-pointer hover:opacity-90', size)} onClick={connectTwitter}>
         <Image src={twitter} alt="twitter" width={48} height={48} />
-      </Link>
-      <Link href={urlRoute.discord} className={cn('flex w-full h-full cursor-pointer hover:opacity-90', size)}>
+      </div>
+      <div className={cn('flex w-full h-full cursor-pointer hover:opacity-90', size)} onClick={connectDiscord}>
         <Image src={discord} alt="discord" width={48} height={48} />
-      </Link>
+      </div>
     </div>
   )
 }
@@ -45,16 +106,16 @@ const Footer = () => {
             </div>
           </div>
           <div className="grid grid-cols-[max-content_max-content_max-content_max-content] mt-7 mb-5 lg:mt-0 lg:mb-0   lg:grid-cols-1 gap-6 w-fit  text-sm font-bold leading-6 tracking-[0.03em lg:text-base">
-            <Link className="w-fit" href={urlRoute.home}>
+            <Link className="w-fit hover:opacity-80" href={urlRoute.home}>
               <Trans>{'Home'}</Trans>
             </Link>
-            <Link className="w-fit" href={urlRoute.marketplace}>
+            <Link className="w-fit hover:opacity-80" href={urlRoute.marketplace}>
               <Trans>{'Marketplace'}</Trans>
             </Link>
-            <Link className="w-fit" href={urlRoute.mint}>
+            <Link className="w-fit hover:opacity-80" href={urlRoute.inscribe}>
               <Trans>{'Mint'}</Trans>
             </Link>
-            <Link className="w-fit" href={urlRoute.about}>
+            <Link className="w-fit hover:opacity-80" href={urlRoute.about}>
               <Trans>{'About'}</Trans>
             </Link>
           </div>
