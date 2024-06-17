@@ -1,7 +1,6 @@
 import { headerItems } from '@/constants/header.constant'
 import logo from '@/images/commons/logo.svg'
-import { selectActiveSection } from '@/lib/features/home-section/home-section-slice'
-import { useAppSelector } from '@/lib/hook'
+import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -11,15 +10,15 @@ import ConnectWalletButton from './connect-wallet-button'
 
 export default function DesktopHeader() {
   const path = usePathname()
-  const isHomePage = path === '/'
-  const activeSection = useAppSelector(selectActiveSection)
+  const isHomePage = ['/en', '/cn', '/'].includes(path)
   const [show, setShow] = useState(false)
-  const [prevScrollPos, setPrevScrollPos] = useState(0)
   const [isScrollOverSidebarHeight, setIsScrollOverSidebarHeight] = useState(false)
 
   useEffect(() => {
-    setShow(true)
-  }, [])
+    if (isHomePage) {
+      setShow(false)
+    } else setShow(true)
+  }, [isHomePage])
 
   useEffect(() => {
     const rootDiv = document.getElementById('root-div')
@@ -32,13 +31,9 @@ export default function DesktopHeader() {
           setIsScrollOverSidebarHeight(true)
         } else setIsScrollOverSidebarHeight(false)
 
-        if (prevScrollPos > currentScrollPos) {
+        if (rootDiv.scrollTop > 0) {
           setShow(true)
-        } else if (prevScrollPos < currentScrollPos) {
-          setShow(false)
-        }
-
-        setPrevScrollPos(currentScrollPos)
+        } else setShow(false)
       }
 
       rootDiv.addEventListener('scroll', handleScroll)
@@ -47,19 +42,18 @@ export default function DesktopHeader() {
         rootDiv.removeEventListener('scroll', handleScroll)
       }
     }
-  }, [isHomePage, prevScrollPos])
-
-  const mode = isHomePage ? (['banner', ''].includes(activeSection) ? 'transparent' : 'solid') : 'solid'
+  }, [isHomePage, path])
 
   return (
     <header
-      className={`${
-        !show && isHomePage
-          ? '!-translate-y-full'
-          : mode === 'transparent' && !isScrollOverSidebarHeight
-            ? 'border border-[#FFF4DD] border-opacity-40 !text-_white backdrop-blur-md'
-            : 'border-[#D4C79C] bg-[#FAF5F0] text-black1'
-      } fixed top-0 z-50 hidden h-[67px] w-full origin-top translate-y-0 border-b text-black1 transition-all duration-500 lg:flex lg:h-[67px]`}
+      className={cn(
+        !isScrollOverSidebarHeight ? 'hidden' : 'block',
+        'bg-[#FAF5F0] text-black1',
+        'fixed top-0 z-50 hidden h-[67px] w-full origin-top translate-y-0 border-b text-black1 transition-all duration-500 lg:flex lg:h-[67px]',
+      )}
+      style={{
+        visibility: !show ? 'hidden' : 'visible',
+      }}
     >
       <div className="mx-auto flex h-full w-full max-w-container translate-y-[1px] items-center justify-between px-10">
         <div className="flex h-full items-center gap-8">
@@ -84,7 +78,7 @@ export default function DesktopHeader() {
           </div>
         </div>
         <div className="flex items-center gap-8">
-          <ConnectWalletButton mode={mode} />
+          <ConnectWalletButton mode={'solid'} />
         </div>
       </div>
     </header>
