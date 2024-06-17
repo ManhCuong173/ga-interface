@@ -1,5 +1,6 @@
 import Trans from '@/components/i18n/Trans'
 import { urlRoute } from '@/constants/routes'
+import { useLocaleInfo } from '@/hooks/useLocaleInfo'
 import { cn } from '@/lib/utils'
 import { ElementType } from '@/types/element'
 import { motion } from 'framer-motion'
@@ -20,6 +21,8 @@ export type Props = {
 }
 
 const Card: React.FC<Props> = ({ icon, bgDesktop, bgMobile, color, description, title, motionProps, element }) => {
+  const { locale } = useLocaleInfo()
+
   return (
     <motion.div
       {...motionProps}
@@ -65,7 +68,10 @@ const Card: React.FC<Props> = ({ icon, bgDesktop, bgMobile, color, description, 
               </div>
               <Link
                 href={`${urlRoute.marketplace}/?elementId=${element?.id}`}
-                className="text-secondary text-xs font-Roboto text-left lg:text-center"
+                className={cn('text-secondary text-xs font-Roboto text-left lg:text-center relative')}
+                style={{
+                  left: locale === 'cn' ? '2px' : '',
+                }}
               >
                 <Trans>{description}</Trans>
               </Link>

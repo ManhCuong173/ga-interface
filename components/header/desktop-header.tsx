@@ -52,7 +52,7 @@ export default function DesktopHeader() {
         'fixed top-0 z-50 hidden h-[67px] w-full origin-top translate-y-0 border-b text-black1 transition-all duration-500 lg:flex lg:h-[67px]',
       )}
       style={{
-        visibility: !show ? 'hidden' : 'visible',
+        display: !show ? 'none' : 'flex',
       }}
     >
       <div className="mx-auto flex h-full w-full max-w-container translate-y-[1px] items-center justify-between px-10">
