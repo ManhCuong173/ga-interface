@@ -25,8 +25,8 @@ const Card: React.FC<Props> = ({ icon, bgDesktop, bgMobile, color, description, 
       {...motionProps}
       className=" group relative w-full max-w-[400px] lg:max-w-auto mx-auto lg:mx-0 cursor-pointer"
     >
-      <Link href={`${urlRoute.marketplace}/?elementId=${element?.id}`}>
-        <div className="group relative overflow-hidden">
+      <div>
+        <div className="group relative overflow-hidden lg:h-[417px]">
           <div>
             <Image src={bgDesktop} width={235} height={417} alt="" className="hidden object-cover lg:inline-block" />
             <Image src={bgMobile} width={400} height={200} alt="" className="object-cover lg:hidden" />
@@ -55,7 +55,7 @@ const Card: React.FC<Props> = ({ icon, bgDesktop, bgMobile, color, description, 
               'max-lg:translate-x-full max-lg:group-hover:translate-x-0',
               'lg:translate-y-full lg:group-hover:translate-y-[10%]',
               'flex items-center justify-center',
-              'pl-8 pr-8 w-[80%]  h-full lg:px-3  lg:w-full  lg:h-[85%]',
+              'pl-8 pr-8 w-[80%]  h-full lg:px-[28px]  lg:w-full  lg:h-[85%]',
               'rounded-tl-[20px] rounded-bl-[20px] lg:rounded-tr-[20px]',
             )}
           >
@@ -63,13 +63,16 @@ const Card: React.FC<Props> = ({ icon, bgDesktop, bgMobile, color, description, 
               <div className="text-secondary text-sm font-semibold font-Roboto text-left lg:text-center lg:mb-2">
                 <Trans>{title}</Trans>
               </div>
-              <div className="text-secondary text-xs font-Roboto text-left lg:text-center">
+              <Link
+                href={`${urlRoute.marketplace}/?elementId=${element?.id}`}
+                className="text-secondary text-xs font-Roboto text-left lg:text-center"
+              >
                 <Trans>{description}</Trans>
-              </div>
+              </Link>
             </div>
           </div>
         </div>
-      </Link>
+      </div>
     </motion.div>
   )
 }
