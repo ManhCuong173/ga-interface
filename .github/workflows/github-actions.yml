@@ -8,7 +8,7 @@ on:
 env:
   REGISTRY_PATH: ${{ secrets.REGISTRY_PATH }}
   REPO_NAME: landing-page
-  GITHUB_SHORT_SHA: ${GITHUB_SHA::8}
+  GITHUB_SHORT_SHA: ${{ GITHUB_SHA::8 }}
 
 jobs:
   build:
