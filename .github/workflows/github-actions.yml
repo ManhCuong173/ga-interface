@@ -5,11 +5,6 @@ on:
     branches:
       - update/ui/reskin
 
-env:
-  REGISTRY_PATH: ${{ secrets.REGISTRY_PATH }}
-  REPO_NAME: landing-page
-  GITHUB_SHORT_SHA: ${{ GITHUB_SHA::8 }}
-
 jobs:
   build:
     runs-on: self-hosted
@@ -17,6 +12,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Get short SHA
+        id: vars
+        run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+        env:
+          REGISTRY_PATH: ${{ secrets.REGISTRY_PATH }}
+          REPO_NAME: landing-page
+          GITHUB_SHORT_SHA: ${{ env.SHORT_SHA }}
+      
       - name: Build and push Docker image
         run: |
           export ts=`date +%s`
