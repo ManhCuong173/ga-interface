@@ -27,7 +27,7 @@ jobs:
           docker build --build-arg env=main -t $REGISTRY_PATH:$REPO_NAME-prod-ga-$SHORT_SHA-$ts .
           docker build --build-arg env=main -t $REGISTRY_PATH:$REPO_NAME-latest .
 
-          aws ecr get-login-password --region ap-northeast-2 \
+          aws ecr get-login-password --region ap-southeast-1 \
           | docker login --username AWS --password-stdin $ECR_REGISTRY
           
           docker push $REGISTRY_PATH:$REPO_NAME-prod-ga-$SHORT_SHA-$ts
