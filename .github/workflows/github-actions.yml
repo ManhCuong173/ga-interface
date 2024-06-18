@@ -33,6 +33,7 @@ jobs:
           docker push $REGISTRY_PATH:$REPO_NAME-prod-ga-$SHORT_SHA-$ts
           docker push $REGISTRY_PATH:$REPO_NAME-latest
 
-          docker images rm $REGISTRY_PATH:$REPO_NAME-prod-ga-$SHORT_SHA-$ts $REGISTRY_PATH:$REPO_NAME-latest
+          docker image rm $REGISTRY_PATH:$REPO_NAME-prod-ga-$SHORT_SHA-$ts \
+          $REGISTRY_PATH:$REPO_NAME-latest
         env:
           SHORT_SHA: ${{ env.SHORT_SHA }}
