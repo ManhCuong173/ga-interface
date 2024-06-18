@@ -1,0 +1,27 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - update/ui/reskin
+
+env:
+  REGISTRY_PATH: ${{ secrets.REGISTRY_PATH }}
+  REPO_NAME: landing-page
+  GITHUB_SHORT_SHA: ${GITHUB_SHA::8}
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build and push Docker image
+        run: |
+          export ts=`date +%s`
+          docker build --build-arg env=main -t $REGISTRY_PATH:$REPO_NAME-prod-ga-$GITHUB_SHORT_SHA-$ts .
+          docker build --build-arg env=main -t $REGISTRY_PATH:$REPO_NAME-latest .
+
+          docker push $REGISTRY_PATH:$REPO_NAME-prod-ga-$GITHUB_SHORT_SHA-$ts
+          docker push $REGISTRY_PATH:$REPO_NAME-latest
