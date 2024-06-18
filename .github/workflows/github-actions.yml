@@ -6,9 +6,9 @@ on:
       - update/ui/reskin
 
 env:
-  REGISTRY_PATH: 339712905004.dkr.ecr.ap-southeast-1.amazonaws.com/golden-apple
+  REGISTRY_PATH: ${{ secrets.REGISTRY_PATH }}
   REPO_NAME: landing-page
-  # BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+  GITHUB_SHORT_SHA: ${GITHUB_SHA::8}
 
 jobs:
   build:
@@ -20,8 +20,8 @@ jobs:
       - name: Build and push Docker image
         run: |
           export ts=`date +%s`
-          docker build --build-arg env=main -t $REGISTRY_PATH:$REPO_NAME-prod-ga-${GITHUB_SHA::8}-$ts .
+          docker build --build-arg env=main -t $REGISTRY_PATH:$REPO_NAME-prod-ga-$GITHUB_SHORT_SHA-$ts .
           docker build --build-arg env=main -t $REGISTRY_PATH:$REPO_NAME-latest .
 
-          docker push $REGISTRY_PATH:$REPO_NAME-prod-ga-$GITHUB_SHA-$ts
+          docker push $REGISTRY_PATH:$REPO_NAME-prod-ga-$GITHUB_SHORT_SHA-$ts
           docker push $REGISTRY_PATH:$REPO_NAME-latest
