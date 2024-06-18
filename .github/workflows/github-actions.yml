@@ -8,6 +8,10 @@ on:
 jobs:
   build:
     runs-on: self-hosted
+    env:
+      REGISTRY_PATH: ${{ secrets.REGISTRY_PATH }}
+      REPO_NAME: landing-page
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -16,16 +20,13 @@ jobs:
         id: vars
         run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
-        env:
-          REGISTRY_PATH: ${{ secrets.REGISTRY_PATH }}
-          REPO_NAME: landing-page
-          GITHUB_SHORT_SHA: ${{ env.SHORT_SHA }}
-      
       - name: Build and push Docker image
         run: |
-          export ts=`date +%s`
-          docker build --build-arg env=main -t $REGISTRY_PATH:$REPO_NAME-prod-ga-$GITHUB_SHORT_SHA-$ts .
+          export ts=$(date +%s)
+          docker build --build-arg env=main -t $REGISTRY_PATH:$REPO_NAME-prod-ga-$SHORT_SHA-$ts .
           docker build --build-arg env=main -t $REGISTRY_PATH:$REPO_NAME-latest .
 
-          docker push $REGISTRY_PATH:$REPO_NAME-prod-ga-$GITHUB_SHORT_SHA-$ts
+          docker push $REGISTRY_PATH:$REPO_NAME-prod-ga-$SHORT_SHA-$ts
           docker push $REGISTRY_PATH:$REPO_NAME-latest
+        env:
+          SHORT_SHA: ${{ env.SHORT_SHA }}
