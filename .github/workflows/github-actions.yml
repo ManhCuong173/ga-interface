@@ -9,7 +9,8 @@ jobs:
   build:
     runs-on: self-hosted
     env:
-      REGISTRY_PATH: ${{ secrets.REGISTRY_PATH }}
+      REGISTRY_PATH: ${{ vars.REGISTRY_PATH }}
+      ECR_REGISTRY: ${{ vars.ECR_REGISTRY }}
       REPO_NAME: landing-page
 
     steps:
@@ -27,9 +28,11 @@ jobs:
           docker build --build-arg env=main -t $REGISTRY_PATH:$REPO_NAME-latest .
 
           aws ecr get-login-password --region ap-northeast-2 \
-          | docker login --username AWS --password-stdin $REGISTRY_PATH
+          | docker login --username AWS --password-stdin $ECR_REGISTRY
           
           docker push $REGISTRY_PATH:$REPO_NAME-prod-ga-$SHORT_SHA-$ts
           docker push $REGISTRY_PATH:$REPO_NAME-latest
+
+          docker images rm $REGISTRY_PATH:$REPO_NAME-prod-ga-$SHORT_SHA-$ts $REGISTRY_PATH:$REPO_NAME-latest
         env:
           SHORT_SHA: ${{ env.SHORT_SHA }}
