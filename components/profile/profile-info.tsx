@@ -143,8 +143,7 @@ export default function ProfileInfo({ profile, refetch }: Props) {
       leading-[150%] font-light tracking-[-3%] 
       text-black1 mt-[39px] font-Roboto "
       >
-        {profile?.bio ||
-          'In a groundbreaking move, BounceBit introduces the mixed DeFi and CeFi yield mechanism, allowing BTC holders to earn yields through native validator staking 💪'}
+        {profile?.bio || <Trans>DefaultBio</Trans>}
       </p>
       {!profile?.twitter_connect && !profile?.discord_connect && (
         <div className="flex flex-col lg:w-[170px] mt-[120px]">

@@ -1,4 +1,7 @@
+'use client'
+
 import { ButtonImage } from '@/components/button'
+import { useGATranslation } from '@/components/i18n/hooks'
 import ModalContainer from '@/components/ui/modal-container'
 import { baseURL } from '@/constants/base64'
 import defaultAvatar from '@/icons/profile/edit-profile/edit-profile-default-avatar.svg'
@@ -38,6 +41,8 @@ const ModalEditProfile = ({ open, handleClose, publickey, wallet_address, queryC
     cover: false,
   })
 
+  const t = useGATranslation()
+
   const uploadImage = async (file: FormData) => {
     const { data }: AxiosResponse<FileType> = await profileService.uploadImage(file)
     return data
@@ -58,7 +63,7 @@ const ModalEditProfile = ({ open, handleClose, publickey, wallet_address, queryC
   const handleSubmit = async () => {
     const payload = {
       avatar: file.avatar || profile?.avatar,
-      bio: form.bio || profile?.bio,
+      bio: form.bio || t('DefaultBio'),
       cover: file.cover || profile?.cover,
       name: form.userName || profile?.name,
       public_key: publickey,

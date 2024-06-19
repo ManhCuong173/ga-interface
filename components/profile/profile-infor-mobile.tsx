@@ -111,9 +111,7 @@ const ProfileInfoMobile = ({ profile, refetch }: PropsProfile) => {
           </div>
           <button onClick={editProfileClicked} className=" flex h-10 w-fit items-center mt-[19p]">
             <span className="text-sm font-medium leading-5 tracking-[-3%] text-text-secondary font-Roboto">
-              <Trans>
-                <Trans>Edit Profile</Trans>
-              </Trans>
+              <Trans>Edit Profile</Trans>
             </span>
             <Image src={pen} alt="" width={16} height={16} className="ml-2" />
           </button>

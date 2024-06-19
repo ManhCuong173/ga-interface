@@ -79,7 +79,7 @@ export default function DesktopHeader() {
             flex items-center justify-center cursor-pointer 
             hover:opacity-80 transition-all"
             >
-              {locale}
+              {locale.toUpperCase()}
             </div>
             {SocialLinks.filter(
               (item) =>

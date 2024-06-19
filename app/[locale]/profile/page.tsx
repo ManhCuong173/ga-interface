@@ -41,7 +41,7 @@ export default function Profile({ params: { locale } }: { params: { locale: stri
                 <Trans>
                   Dive into my unique collection of lucky and rare NFTs_Explore the distinctive pieces that bring
                   fortune and exclusivity, all part of the Golden Apple series_Each NFT is the golden ticket for you to
-                  win at least 1 BTC and more
+                  win at least 1 BTC and more_
                 </Trans>
               </div>
             </div>
