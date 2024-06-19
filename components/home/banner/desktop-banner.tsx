@@ -1,13 +1,30 @@
 'use client'
 
+import { ButtonImage } from '@/components/button'
 import { appearAnimation } from '@/constants/animation.constant'
+import { cn } from '@/lib/utils'
 import { motion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import WrapperHero from '../WrapperHero'
 
+import ReplayVideoIcon from '@/icons/home/replay-icon.svg'
+import SkipVideoIcon from '@/icons/home/skip-icon.svg'
+import Image from 'next/image'
+
 export default function DesktopBanner() {
   const [isPauseBannerVideo, setIsPauseBannerVideo] = useState<boolean>(false)
-  const videoRef = useRef(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  const handleSkipVideo = () => {
+    if (videoRef.current) videoRef.current.currentTime += 3
+  }
+
+  const handleReplayVideo = () => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0
+      videoRef.current.play()
+    }
+  }
 
   useEffect(() => {
     const rootDiv = document.getElementById('root-div')
@@ -40,14 +57,34 @@ export default function DesktopBanner() {
         controls={false}
         ref={videoRef}
         style={{
-          display: isPauseBannerVideo ? 'none' : 'block',
+          opacity: isPauseBannerVideo ? '0' : '1',
         }}
       >
         <source src="/video/home-banner-video.mp4" type="video/mp4" className="hidden" />
         Sorry, your browser doesn't support embedded videos.
       </video>
+      <div className={cn(isPauseBannerVideo ? 'hidden' : 'block', 'absolute bottom-5 right-5 z-20')}>
+        <div className="flex items-center justify-center gap-2">
+          <ButtonImage
+            varirant="outline"
+            onClick={handleSkipVideo}
+            className="flex items-center justify-center bg-[rgba(0,0,0,0.40)] rounded-[1000px] backdrop-blur-[5px] w-[120px] h-[42px] border-none hover:bg-[#000] cursor-pointer"
+          >
+            <Image src={SkipVideoIcon} width={20} height={20} alt="" />
+            <p className="text-base font-medium leading-3/2 font-Roboto text-white ml-2">Skip</p>
+          </ButtonImage>
+          <ButtonImage
+            varirant="outline"
+            onClick={handleReplayVideo}
+            className="flex items-center justify-center bg-[rgba(0,0,0,0.40)] rounded-[1000px] backdrop-blur-[5px] w-[120px] h-[42px] border-none hover:bg-[#000] cursor-pointer"
+          >
+            <Image src={ReplayVideoIcon} width={20} height={20} alt="" />
+            <p className="text-base font-medium leading-3/2 font-Roboto text-white ml-2">Replay</p>
+          </ButtonImage>
+        </div>
+      </div>
 
-      <div style={{ display: isPauseBannerVideo ? 'block' : 'none' }}>
+      <div style={{ opacity: isPauseBannerVideo ? '1' : '0' }} className="animate-fadeOut transition-all duration-300">
         <WrapperHero src="/images/home/bg-home.svg">
           <div className="relative mx-auto flex flex-1 pt-[72px] h-full max-w-container flex-col items-center justify-center text-_white lg:items-center lg:justify-center lg:pr-[60px] lg:pt-[98px]">
             <div className="space-y-4 text-center">

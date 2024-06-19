@@ -1,4 +1,6 @@
 import { headerItems } from '@/constants/header.constant'
+import { GaSocialLinkVariantEnums, SocialLinks } from '@/constants/socials'
+import { useLocaleInfo } from '@/hooks/useLocaleInfo'
 import logo from '@/images/commons/logo.svg'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
@@ -13,6 +15,14 @@ export default function DesktopHeader() {
   const isHomePage = ['/en', '/cn', '/'].includes(path)
   const [show, setShow] = useState(false)
   const [isScrollOverSidebarHeight, setIsScrollOverSidebarHeight] = useState(false)
+  const { locale } = useLocaleInfo()
+  console.log(
+    '%cMyProject%cline:18%clocale',
+    'color:#fff;background:#ee6f57;padding:3px;border-radius:2px',
+    'color:#fff;background:#1f3c88;padding:3px;border-radius:2px',
+    'color:#fff;background:rgb(161, 23, 21);padding:3px;border-radius:2px',
+    locale,
+  )
 
   useEffect(() => {
     if (isHomePage) {
@@ -61,7 +71,37 @@ export default function DesktopHeader() {
             <Image src={logo} alt="" width={48} height={48} />
             <span className="text-xl font-semibold tracking-tighter">GOLDEN APPLE</span>
           </Link>
-          <div className="h-full bg-bgAlt w-[1px]" />
+
+          <div className="flex items-center justify-center gap-4">
+            <div
+              className="bg-[rgba(212,199,156,0.30)] rounded-full p-[9px] text-lg 
+            font-normal leading-3/2 w-[42px] h-[42px] 
+            flex items-center justify-center cursor-pointer 
+            hover:opacity-80 transition-all"
+            >
+              {locale}
+            </div>
+            {SocialLinks.filter(
+              (item) =>
+                (item.type === GaSocialLinkVariantEnums.X && locale === 'en') ||
+                (item.type === GaSocialLinkVariantEnums.XChina && locale === 'cn') ||
+                ![GaSocialLinkVariantEnums.X, GaSocialLinkVariantEnums.XChina].includes(item.type),
+            ).map((link) => {
+              return (
+                <Link href={link.url} target="_blank">
+                  <Image
+                    src={link.icon}
+                    width={26}
+                    height={26}
+                    alt=""
+                    className="hover:opacity-80 transition-all cursor-pointer"
+                  />
+                </Link>
+              )
+            })}
+          </div>
+        </div>
+        <div className="flex items-center gap-8">
           <div className="flex h-full items-center">
             {headerItems.map((item, index) => (
               <Fragment key={item.href}>
@@ -69,15 +109,13 @@ export default function DesktopHeader() {
                   href={item.href}
                   className={`${(item.href === '/' && isHomePage) || (path.includes(item.href) && !isHomePage && item.href !== '/') ? 'border-red-light text-red-light' : 'border-transparent'} flex h-full items-center gap-2 border-b-2 px-6`}
                 >
-                  <span>
+                  <span className="whitespace-nowrap">
                     <Trans>{item.label}</Trans>
                   </span>
                 </Link>
               </Fragment>
             ))}
           </div>
-        </div>
-        <div className="flex items-center gap-8">
           <ConnectWalletButton mode={'solid'} />
         </div>
       </div>

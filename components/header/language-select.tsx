@@ -1,3 +1,4 @@
+import { useLocaleInfo } from '@/hooks/useLocaleInfo'
 import chevronDownBlackIcon from '@/icons/header/chevron-down-sm-black.svg'
 import chevronDownIcon from '@/icons/header/chevron-down-sm.svg'
 import earthBlackIcon from '@/icons/header/earth-black.svg'
@@ -15,7 +16,8 @@ type Props = {
 
 const LanguageSelect = ({ mode, className }: Props) => {
   const [show, setShow] = useState(false)
-  const [language, setLanguage] = useState<Language>('en')
+  const { locale } = useLocaleInfo()
+  const [language, setLanguage] = useState<Language>(locale as unknown as Language)
 
   const selfRef = useRef<HTMLDivElement>(null)
   const dropdownRef = useRef<HTMLDivElement>(null)
@@ -28,6 +30,10 @@ const LanguageSelect = ({ mode, className }: Props) => {
     setShow(false)
     router.replace(pathname, { locale: lang })
   }
+
+  useEffect(() => {
+    setLanguage(locale as unknown as Language)
+  }, [locale])
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

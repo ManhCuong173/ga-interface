@@ -7,20 +7,8 @@ export const useLocaleInfo = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      let currentLocale = ''
-
-      switch (pathname) {
-        case '/':
-          currentLocale = 'en'
-          break
-        case '/en':
-          currentLocale = 'en'
-          break
-        case '/cn':
-          currentLocale = 'cn'
-          break
-      }
-      setLocale(currentLocale)
+      if (pathname.includes('en')) setLocale('en')
+      else if (pathname.includes('cn')) setLocale('cn')
     }
 
     fetch()
