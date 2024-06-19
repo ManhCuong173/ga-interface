@@ -16,13 +16,6 @@ export default function DesktopHeader() {
   const [show, setShow] = useState(false)
   const [isScrollOverSidebarHeight, setIsScrollOverSidebarHeight] = useState(false)
   const { locale } = useLocaleInfo()
-  console.log(
-    '%cMyProject%cline:18%clocale',
-    'color:#fff;background:#ee6f57;padding:3px;border-radius:2px',
-    'color:#fff;background:#1f3c88;padding:3px;border-radius:2px',
-    'color:#fff;background:rgb(161, 23, 21);padding:3px;border-radius:2px',
-    locale,
-  )
 
   useEffect(() => {
     if (isHomePage) {
@@ -88,7 +81,7 @@ export default function DesktopHeader() {
                 ![GaSocialLinkVariantEnums.X, GaSocialLinkVariantEnums.XChina].includes(item.type),
             ).map((link) => {
               return (
-                <Link href={link.url} target="_blank">
+                <Link href={link.url} target="_blank" key={link.name}>
                   <Image
                     src={link.icon}
                     width={26}
