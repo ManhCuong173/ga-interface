@@ -5,23 +5,35 @@ on:
     branches:
       - update/ui/reskin
 
-env:
-  REGISTRY_PATH: ${{ secrets.REGISTRY_PATH }}
-  REPO_NAME: landing-page
-  GITHUB_SHORT_SHA: ${GITHUB_SHA::8}
-
 jobs:
   build:
     runs-on: self-hosted
+    env:
+      REGISTRY_PATH: ${{ vars.REGISTRY_PATH }}
+      ECR_REGISTRY: ${{ vars.ECR_REGISTRY }}
+      REPO_NAME: landing-page
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Get short SHA
+        id: vars
+        run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
       - name: Build and push Docker image
         run: |
-          export ts=`date +%s`
-          docker build --build-arg env=main -t $REGISTRY_PATH:$REPO_NAME-prod-ga-$GITHUB_SHORT_SHA-$ts .
+          export ts=$(date +%s)
+          docker build --build-arg env=main -t $REGISTRY_PATH:$REPO_NAME-prod-ga-$SHORT_SHA-$ts .
           docker build --build-arg env=main -t $REGISTRY_PATH:$REPO_NAME-latest .
 
-          docker push $REGISTRY_PATH:$REPO_NAME-prod-ga-$GITHUB_SHORT_SHA-$ts
+          aws ecr get-login-password --region ap-southeast-1 \
+          | docker login --username AWS --password-stdin $ECR_REGISTRY
+          
+          docker push $REGISTRY_PATH:$REPO_NAME-prod-ga-$SHORT_SHA-$ts
           docker push $REGISTRY_PATH:$REPO_NAME-latest
+
+          docker image rm $REGISTRY_PATH:$REPO_NAME-prod-ga-$SHORT_SHA-$ts \
+          $REGISTRY_PATH:$REPO_NAME-latest
+        env:
+          SHORT_SHA: ${{ env.SHORT_SHA }}
