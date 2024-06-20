@@ -14,6 +14,8 @@ import 'react-toastify/dist/ReactToastify.css'
 import { languages } from '../../i18n/setting'
 import '../../styles/index.scss'
 import './globals.css'
+import BitcoinProviderContext from '@/context/BitcoinProviderContext'
+import { Updaters } from '@/providers/updaters'
 
 export const metadata: Metadata = {
   title: 'Golden Apple BRC20',
@@ -39,25 +41,27 @@ export default async function RootLayout({
       <TanstackProviders>
         <ReduxStoreProvider>
           <SolanaProvider>
-            <NextIntlClientProvider messages={messages}>
-              <body className="bg-[#FAF5F0] bg-full bg-fixed">
-                <Suspense>
-                  <Header />
-                  {children}
-                  <ToastContainer
-                    position="top-right"
-                    className="z-[10000]"
-                    autoClose={5000}
-                    hideProgressBar
-                    closeOnClick
-                  />
-                </Suspense>
-              </body>
-            </NextIntlClientProvider>
+            <BitcoinProviderContext>
+              <NextIntlClientProvider messages={messages}>
+                <body className="bg-[#FAF5F0] bg-full bg-fixed">
+                  <Suspense>
+                    <Header />
+                    {children}
+                    <ToastContainer
+                      position="top-right"
+                      className="z-[10000]"
+                      autoClose={5000}
+                      hideProgressBar
+                      closeOnClick
+                    />
+                    <Updaters />
+                  </Suspense>
+                </body>
+              </NextIntlClientProvider>
+            </BitcoinProviderContext>
           </SolanaProvider>
         </ReduxStoreProvider>
       </TanstackProviders>
     </html>
   )
 }
-

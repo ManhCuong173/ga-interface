@@ -1,14 +1,14 @@
 'use client'
 
+import { wallets } from '@/constants/wallet'
+import { useBitcoinAccount, useBitcoinConnected } from '@/context/BitcoinProviderContext/hook'
+import { useAuthBitcoin } from '@/hooks/WalletProvider/useAuthBitcoin'
+import { WalletBitcoinConnectorEnums } from '@/hooks/WalletProvider/useWalletBitcoinProviders'
 import { useToggle } from '@/hooks/custom/useToggle'
-import { selectedPublicKey, setAddress, setPublicKey } from '@/lib/features/wallet/wallet-slice'
-import { useAppDispatch, useAppSelector } from '@/lib/hook'
-import { getUnisat } from '@/lib/unisat'
 import { cn } from '@/lib/utils'
 import { userService } from '@/services/user.service'
 import { useMutation } from '@tanstack/react-query'
-import { usePathname } from 'next/navigation'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import WalletModal from '../WalletModal'
 import Trans from '../i18n/Trans'
 import Menu from './menu'
@@ -17,115 +17,39 @@ type Props = {
   mode: 'transparent' | 'solid'
 }
 
-export default function ConnectWalletButton({ mode }: Props) {
-  const [showMenu, setShowMenu] = useState(false)
+const ConnectWalletButton: React.FC<Props> = ({ mode }) => {
+  const account = useBitcoinAccount()
+  const connected = useBitcoinConnected()
+
   const [isDisplayConnectWalletModal, toggle] = useToggle(false)
 
-  const path = usePathname()
-  const dispatch = useAppDispatch()
-  // const address = useAppSelector(selectAddress);
-  const [address, setAddressUnisat] = useState('')
-  const publicKey = useAppSelector(selectedPublicKey)
-
   const [hasPubkeyImported, setPubkeyImported] = useState(false)
-  const [unisatInstalled, setUnisatInstalled] = useState(false)
-
-  const selfRef = useRef<{ accounts: string[] }>({
-    accounts: [],
-  })
-
-  useEffect(() => {
-    if (window !== undefined && window.localStorage.getItem('address')) {
-      setAddress(String(window.localStorage.getItem('address')))
-      dispatch(setAddress(address))
-    }
-  }, [address, dispatch])
-
-  const getBasicInfo = useCallback(async () => {
-    const unisat = (window as any).unisat
-    const [address] = await unisat?.getAccounts()
-    if (address) {
-      setAddressUnisat(address)
-      dispatch(setAddress(address))
-      if (window !== undefined) {
-        window.localStorage.setItem('address', address)
-      }
-    }
-
-    const publicKey = await unisat?.getPublicKey()
-    dispatch(setPublicKey(publicKey))
-  }, [dispatch])
+  const { login, logout } = useAuthBitcoin()
 
   const importPubKeyMutation = useMutation({
     mutationFn: (data: { public_key: string; wallet_address: string }) => userService.importUserPubkey(data),
   })
 
-  const handleAccountsChanged = useCallback(
-    async (_accounts: string[]) => {
-      if (selfRef.current.accounts[0] === _accounts[0]) {
-        // prevent from triggering twice
-        return
-      }
-      selfRef.current.accounts = _accounts
-      if (_accounts.length > 0) {
-        getBasicInfo()
-      }
-    },
-    [getBasicInfo],
-  )
-
   useEffect(() => {
-    async function checkUnisat() {
-      let unisat = await getUnisat()
-
-      if (unisat) {
-        setUnisatInstalled(true)
-      } else if (!unisat) return
-
-      handleAccountsChanged(await unisat.getAccounts())
-
-      unisat.on('accountsChanged', handleAccountsChanged)
-      return () => {
-        unisat.removeListener('accountsChanged', handleAccountsChanged)
-      }
-    }
-
-    if (window !== undefined) {
-      checkUnisat().then()
-    }
-  }, [handleAccountsChanged])
-
-  useEffect(() => {
-    if (!!address && !!publicKey && !hasPubkeyImported) {
+    if (connected && !hasPubkeyImported) {
       importPubKeyMutation.mutate({
-        public_key: publicKey,
-        wallet_address: address,
+        public_key: account.publicKey,
+        wallet_address: account.address,
       })
       setPubkeyImported(true)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [address, publicKey])
+  }, [account, connected])
 
-  const handleClick = async () => {
-    if (!address) toggle()
-    // if (!unisatInstalled) {
-    //   if (window) {
-    //     window.location.href = 'https://unisat.io'
-    //   }
-    // } else if (address) {
-    //   setShowMenu((prev) => !prev)
-    // } else {
-    //   if (window !== undefined) {
-    //     const result = await (window as any).unisat.requestAccounts()
-    //     handleAccountsChanged(result)
-    //   }
-    // }
-  }
+  const handleClick = async (connectorKey: WalletBitcoinConnectorEnums) => {
+    const wallet = wallets.find((wallet) => wallet.connectorKey === connectorKey)
+    if (wallet && !wallet?.installed) {
+      window.open(wallet.downloadLink, '_blank')
+      return
+    }
 
-  const handleDisconnect = () => {
-    handleAccountsChanged([])
-    dispatch(setAddress(''))
-    setAddressUnisat('')
+    if (!account.address) toggle()
+
+    login(connectorKey)
   }
 
   return (
@@ -136,9 +60,9 @@ export default function ConnectWalletButton({ mode }: Props) {
           `h-[48px] w-full rounded-[10px]  border-solid border-[1px] flex justify-center items-center p-[8px_16px] cursor-pointer`,
           mode === 'transparent' ? 'border-white hover:bg-white' : 'border-red-light hover:bg-red-light',
         )}
-        onClick={handleClick}
+        onClick={connected ? () => {} : toggle}
       >
-        {!address && (
+        {!connected && (
           <>
             <div
               className={cn(
@@ -165,20 +89,12 @@ export default function ConnectWalletButton({ mode }: Props) {
             </span>
           </>
         )}
-        {address && <Menu mode={mode} handleDisconnect={handleDisconnect} />}
+        {connected && <Menu mode={mode} handleDisconnect={logout} />}
       </button>
-      {/* {address && (
-        <button
-          onClick={() => {
-            handleDisconnect()
-          }}
-          className="lg:hidden w-full text-black1 text-base font-medium leading-[130%] font-Roboto"
-        >
-          <Trans>Disconnect</Trans>
-        </button>
-      )} */}
-      {isDisplayConnectWalletModal && <WalletModal isOpen={isDisplayConnectWalletModal} onClosed={toggle} />}
+      {isDisplayConnectWalletModal && (
+        <WalletModal onSelect={handleClick} isOpen={isDisplayConnectWalletModal} onClosed={toggle} />
+      )}
     </div>
   )
 }
-
+export default ConnectWalletButton
