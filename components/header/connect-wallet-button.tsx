@@ -1,5 +1,6 @@
 'use client'
 
+import { useToggle } from '@/hooks/custom/useToggle'
 import { selectedPublicKey, setAddress, setPublicKey } from '@/lib/features/wallet/wallet-slice'
 import { useAppDispatch, useAppSelector } from '@/lib/hook'
 import { getUnisat } from '@/lib/unisat'
@@ -8,6 +9,7 @@ import { userService } from '@/services/user.service'
 import { useMutation } from '@tanstack/react-query'
 import { usePathname } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import WalletModal from '../WalletModal'
 import Trans from '../i18n/Trans'
 import Menu from './menu'
 
@@ -17,6 +19,7 @@ type Props = {
 
 export default function ConnectWalletButton({ mode }: Props) {
   const [showMenu, setShowMenu] = useState(false)
+  const [isDisplayConnectWalletModal, toggle] = useToggle(false)
 
   const path = usePathname()
   const dispatch = useAppDispatch()
@@ -104,18 +107,19 @@ export default function ConnectWalletButton({ mode }: Props) {
   }, [address, publicKey])
 
   const handleClick = async () => {
-    if (!unisatInstalled) {
-      if (window) {
-        window.location.href = 'https://unisat.io'
-      }
-    } else if (address) {
-      setShowMenu((prev) => !prev)
-    } else {
-      if (window !== undefined) {
-        const result = await (window as any).unisat.requestAccounts()
-        handleAccountsChanged(result)
-      }
-    }
+    if (!address) toggle()
+    // if (!unisatInstalled) {
+    //   if (window) {
+    //     window.location.href = 'https://unisat.io'
+    //   }
+    // } else if (address) {
+    //   setShowMenu((prev) => !prev)
+    // } else {
+    //   if (window !== undefined) {
+    //     const result = await (window as any).unisat.requestAccounts()
+    //     handleAccountsChanged(result)
+    //   }
+    // }
   }
 
   const handleDisconnect = () => {
@@ -163,7 +167,7 @@ export default function ConnectWalletButton({ mode }: Props) {
         )}
         {address && <Menu mode={mode} handleDisconnect={handleDisconnect} />}
       </button>
-      {address && (
+      {/* {address && (
         <button
           onClick={() => {
             handleDisconnect()
@@ -172,7 +176,8 @@ export default function ConnectWalletButton({ mode }: Props) {
         >
           <Trans>Disconnect</Trans>
         </button>
-      )}
+      )} */}
+      {isDisplayConnectWalletModal && <WalletModal isOpen={isDisplayConnectWalletModal} onClosed={toggle} />}
     </div>
   )
 }

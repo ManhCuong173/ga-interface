@@ -57,7 +57,7 @@ export default function DesktopBanner() {
         controls={false}
         ref={videoRef}
         style={{
-          opacity: isPauseBannerVideo ? '0' : '1',
+          display: isPauseBannerVideo ? 'none' : 'block',
         }}
       >
         <source src="/video/home-banner-video.mp4" type="video/mp4" className="hidden" />
