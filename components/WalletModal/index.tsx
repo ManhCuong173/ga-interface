@@ -1,23 +1,19 @@
+import { wallets } from '@/constants/wallet'
+import { useLatestWallet } from '@/hooks/WalletProvider/useLatestWallet'
+import { WalletBitcoinConnectorEnums } from '@/hooks/WalletProvider/useWalletBitcoinProviders'
 import { ModalProps } from '@/types/modal'
 import { Dialog, Transition } from '@headlessui/react'
 import Image from 'next/image'
 import Trans from '../i18n/Trans'
 import WalletItemCard from './WallletItemCard'
-import { WalletItemCardProps } from './types'
 
-const MockWallet: WalletItemCardProps[] = [
-  {
-    name: 'Unisat Wallet',
-    logo: '/images/wallets/unisat-wallet.png',
-    isDefault: true,
-  },
-  {
-    name: 'Xverse Wallet',
-    logo: '/images/wallets/xverse-wallet.png',
-  },
-]
+const WalletModal: React.FC<ModalProps & { onSelect: (wallet: WalletBitcoinConnectorEnums) => void }> = ({
+  isOpen,
+  onClosed,
+  onSelect,
+}) => {
+  const wallet = useLatestWallet()
 
-const WalletModal: React.FC<ModalProps> = ({ isOpen, onClosed }) => {
   return (
     <Transition
       show={isOpen}
@@ -42,8 +38,15 @@ const WalletModal: React.FC<ModalProps> = ({ isOpen, onClosed }) => {
           </p>
 
           <div className="gap-[12px] flex flex-col ">
-            {MockWallet.map((item, index) => (
-              <WalletItemCard {...item} key={index} />
+            {wallets.map((item, index) => (
+              <WalletItemCard
+                onSelect={() => {
+                  onSelect(item.connectorKey)
+                }}
+                isSelected={wallet === item.connectorKey}
+                {...item}
+                key={index}
+              />
             ))}
           </div>
         </Dialog.Panel>
@@ -53,4 +56,3 @@ const WalletModal: React.FC<ModalProps> = ({ isOpen, onClosed }) => {
 }
 
 export default WalletModal
-

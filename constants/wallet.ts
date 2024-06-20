@@ -9,6 +9,7 @@ export const wallets = [
       return isUnisatInstalled()
     },
     downloadLink: 'https://unisat.io',
+    logo: '/images/wallets/unisat-wallet.png',
   },
   {
     name: 'Xverse',
@@ -17,5 +18,6 @@ export const wallets = [
       return isXverseInstalled()
     },
     downloadLink: 'https://www.xverse.app/',
+    logo: '/images/wallets/xverse-wallet.png',
   },
 ]
