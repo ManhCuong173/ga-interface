@@ -36,7 +36,7 @@ const InscribePage = ({ params: { locale } }: { params: { locale: string } }) =>
 
   return (
     <Suspense>
-      <div ref={ref} className="relative pb-[170px] pt-[72px] sm:pt-[66px]">
+      <div ref={ref} className="relative pb-[170px] pt-[72px] sm:pt-[66px] page-container">
         <div className="relative z-10">
           <Introduce />
           <div className="mx-auto lg:max-w-[1380px] px-4 ">

@@ -80,7 +80,7 @@ const Marketplace = ({ params: { locale } }: { params: { locale: string } }) => 
   }, [tab])
 
   return (
-    <div className="w-full">
+    <div className="w-full page-container">
       <BannerMarketPlace />
 
       <div className="relative">

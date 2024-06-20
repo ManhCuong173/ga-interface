@@ -41,7 +41,7 @@ export default function MobileHeader() {
       <header
         className={cn(
           isHomePage ? (show ? 'scale-y-100' : 'scale-y-0') : '',
-          `fixed inset-x-0 top-0 z-[100] origin-top transition-all lg:hidden`,
+          `fixed inset-x-0 top-0 z-[100] origin-top transition-all lg:hidden block`,
         )}
       >
         <div className="flex h-[72px] w-screen overflow-hidden items-center justify-between  gap-2 bg-secondary px-4">

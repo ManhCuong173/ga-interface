@@ -12,7 +12,7 @@ export default function Profile({ params: { locale } }: { params: { locale: stri
 
   return (
     <>
-      <div className="mt-[67px] bg-[#FAF5F0] px-[16px] lg:px-[50px] pb-16 lg;pb-[186px]">
+      <div className="page-container mt-[67px] bg-[#FAF5F0] px-[16px] lg:px-[50px] pb-16 lg;pb-[186px]">
         <div className="flex flex-col md:flex-row">
           <div
             className="
