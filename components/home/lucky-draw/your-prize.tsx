@@ -15,6 +15,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import Dropdown from './dropdown'
+import { useWalletBitcoinProviderByWallet } from '@/hooks/WalletProvider/useWalletBitcoinProviders'
+import { useBitcoinAddress } from '@/context/BitcoinProviderContext/hook'
 
 type Props = {
   open: boolean
@@ -61,6 +63,8 @@ export default function YouPrize({ open, onClose }: Props) {
   const [selectedRound, setSelectedRound] = useState('')
   const [selectedPrize, setSelectedPrize] = useState(prizeOptions[0].value)
   const t = useGATranslation()
+  const provider = useWalletBitcoinProviderByWallet()
+  const address = useBitcoinAddress()
 
   const prizeParams = prizeOptions.find((item) => item.value === selectedPrize)?.label
 
@@ -88,9 +92,11 @@ export default function YouPrize({ open, onClose }: Props) {
 
   const getListTxidInscription = async () => {
     try {
-      let res = await (window as any).unisat.getInscriptions(0, 10000)
+      if (!provider) return []
+
+      let res = await provider.getInscriptions(address, 0, 10000)
       if (res?.list?.length > 0) {
-        setUserInscriptionIds(res.list.map((inscription: any) => inscription.inscriptionId))
+        setUserInscriptionIds(res.list.map((inscription) => inscription.inscriptionId))
       }
     } catch (e) {
       console.log('error getting list tx id inscription: ', e)
@@ -99,8 +105,8 @@ export default function YouPrize({ open, onClose }: Props) {
   }
 
   useEffect(() => {
-    if (open) getListTxidInscription()
-  }, [open])
+    if (open && provider && address) getListTxidInscription()
+  }, [open, provider])
 
   useEffect(() => {
     if (roundsData && roundsData.length) {
@@ -255,4 +261,3 @@ function Row({ item, index, round, refetch }: PropsRow) {
     </div>
   )
 }
-

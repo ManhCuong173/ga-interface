@@ -3,6 +3,7 @@
 import Assets from '@/components/profile/assets'
 import { emptyAsset } from '@/constants/asset.constant'
 import { nftTypes } from '@/constants/nft.constant'
+import { useWalletBitcoinProviderByWallet } from '@/hooks/WalletProvider/useWalletBitcoinProviders'
 import { selectAddress, selectedPublicKey } from '@/lib/features/wallet/wallet-slice'
 import { useAppSelector } from '@/lib/hook'
 import axiosClient from '@/services/axios-client'
@@ -30,6 +31,7 @@ export default function MyNFTs() {
   const [modalOpen, setModalOpen] = useState<'nft-info' | 'list-nft' | 'list-success' | 'confirm-cancel' | null>(null)
   const [isListing, startListingTransition] = useTransition()
   const [isCancelListing, startCancelListingTransition] = useTransition()
+  const provider = useWalletBitcoinProviderByWallet()
 
   const { data: assets, isLoading: loadingAssets } = useQuery({
     queryKey: ['user-assets', address],
@@ -73,10 +75,12 @@ export default function MyNFTs() {
   const handleListNft = async () => {
     startListingTransition(async () => {
       try {
+        if (!provider) return
+
         const listTxIdInscription = await getListTxidInscription()
 
-        if (!listTxIdInscription.length) return
-
+        if (!listTxIdInscription || !listTxIdInscription.length || !provider) return
+        
         const res = (
           await listService.getPsbt({
             id_inscription: selectedAsset.id_inscription,
@@ -85,15 +89,20 @@ export default function MyNFTs() {
           })
         ).data
 
-        const signedPsbt: string = await (window as any).unisat.signPsbt(res.psbt)
-        const psbtBase64 = Buffer.from(signedPsbt, 'hex').toString('base64')
+        const signedPsbt: string = await provider.signPsbt(address, res.psbt, {
+          signInputs: {
+            [address]: [0, 1],
+          },
+        })
+
+        if (!signedPsbt) return
 
         await listService.sellNft({
           address: address,
           id_inscription: selectedAsset.id_inscription,
           list_unspent_lock: res.list_unspent_lock,
           price: Number(price),
-          psbt: psbtBase64,
+          psbt: signedPsbt,
           pubkey: publicKey,
         })
 
@@ -128,10 +137,12 @@ export default function MyNFTs() {
     })
   }
 
-  const getListTxidInscription = async () => {
+  const getListTxidInscription = async (): Promise<string[] | null> => {
     try {
-      let res = await (window as any).unisat.getInscriptions(0, 10000)
-      return res.list.map((item: { location: string }) => item.location.split(':')[0])
+      if (!provider) return null
+
+      let res = await provider.getInscriptions(address, 0, 10000)
+      return res.list.map((item) => item.inscriptionId)
     } catch (e) {
       toast.error('Error getting list tx id inscription! Please try again')
       return []
@@ -219,4 +230,3 @@ export default function MyNFTs() {
     </div>
   )
 }
-

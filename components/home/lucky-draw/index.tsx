@@ -22,6 +22,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import WrapperHero from '../WrapperHero'
 import History from './history'
 import YouPrize from './your-prize'
+import { useAuthBitcoin } from '@/hooks/WalletProvider/useAuthBitcoin'
+import { useLatestWallet } from '@/hooks/WalletProvider/useLatestWallet'
 
 const CardPrize: React.FC<{
   prizeAsset: StaticImageData
@@ -88,6 +90,9 @@ export default function LuckyDraw() {
   const ratio = !isTablet
     ? `calc(0px + ${(ratioDimension / 100) * 10}px)`
     : `calc(0px + ${(ratioDimension / 100) * 50}px)`
+
+  const { login } = useAuthBitcoin()
+  const wallet = useLatestWallet()
 
   useEffect(() => {
     const scroll = (event: any) => {
@@ -209,7 +214,7 @@ export default function LuckyDraw() {
                       if (address) {
                         setShowYourPrize(true)
                       } else {
-                        typeof window !== 'undefined' && (window as any).unisat.requestAccounts()
+                        login(wallet)
                       }
                     }}
                     varirant="light-double-asset"
@@ -244,4 +249,3 @@ export default function LuckyDraw() {
     </div>
   )
 }
-

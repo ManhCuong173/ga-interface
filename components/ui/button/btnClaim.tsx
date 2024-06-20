@@ -1,3 +1,4 @@
+import { useWalletBitcoinProviderByWallet } from '@/hooks/WalletProvider/useWalletBitcoinProviders'
 import { selectAddress, selectedPublicKey } from '@/lib/features/wallet/wallet-slice'
 import { useAppSelector } from '@/lib/hook'
 import { claimService } from '@/services/claim.service'
@@ -18,12 +19,15 @@ interface PropsBtnClaim {
 const BtnClaim = ({ round, refetch, isCompleted, inscriptionId }: PropsBtnClaim) => {
   const addressOwner = useAppSelector(selectAddress)
   const public_key = useAppSelector(selectedPublicKey)
+  const provider = useWalletBitcoinProviderByWallet()
 
   const [isClaim, setIsClaim] = useState(false)
 
   const handleGetSignature = async () => {
     try {
-      const res = await (window as any).unisat.signMessage(inscriptionId)
+      if (!provider) return ''
+
+      const res = await provider.signMessage(addressOwner, inscriptionId)
       return res
     } catch (err) {
       if (err instanceof AxiosError) {
@@ -31,16 +35,20 @@ const BtnClaim = ({ round, refetch, isCompleted, inscriptionId }: PropsBtnClaim)
         toast.error(err.response?.data.message)
       }
     }
+    return ''
   }
-  const handleGetTxInscription = async () => {
+  const handleGetTxInscription = async (): Promise<string[]> => {
     try {
-      let res = await (window as any).unisat.getInscriptions(0, 10)
-      const list = await res.list.map((inscription: any) => {
+      if (!provider) return []
+
+      const res = await provider.getInscriptions(addressOwner, 0, 10)
+      const list = await res.list.map((inscription) => {
         return inscription.inscriptionId
       })
       return list
     } catch (err) {
       console.log(err)
+      return []
     }
   }
   const verifyClaim = async (
@@ -66,13 +74,6 @@ const BtnClaim = ({ round, refetch, isCompleted, inscriptionId }: PropsBtnClaim)
 
   const disable = isCompleted
 
-  const handleSignPsbt = async (psbt: string) => {
-    if (!psbt) return
-    const res = await (window as any).unisat.signPsbt(psbt)
-    const psbt_sign = Buffer.from(res, 'hex').toString('base64')
-    return psbt_sign
-  }
-
   const handleRewardClaim = async (psbt_claim: string, psbt_claim_sign: string) => {
     if (!psbt_claim || !psbt_claim_sign) return
     const res = await claimService.claimReward({
@@ -95,7 +96,16 @@ const BtnClaim = ({ round, refetch, isCompleted, inscriptionId }: PropsBtnClaim)
         signature,
         addressOwner,
       )
-      const psbt_claim_sign = await handleSignPsbt(psbt_claim)
+
+      if (!psbt_claim || !provider) return
+
+      const psbt_claim_sign = await provider.signPsbt(addressOwner, psbt_claim, {
+        signInputs: {
+          address: [0],
+        },
+      })
+
+      if (!psbt_claim_sign) return
 
       const res = await handleRewardClaim(psbt_claim, String(psbt_claim_sign))
       if (res?.status === 200) {
@@ -125,4 +135,3 @@ const BtnClaim = ({ round, refetch, isCompleted, inscriptionId }: PropsBtnClaim)
 }
 
 export default BtnClaim
-

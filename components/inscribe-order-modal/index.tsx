@@ -25,6 +25,7 @@ import OrderListNFT from './components/OrderListNFT'
 import PayMethod from './components/PayMethod'
 import Stepper from './stepper'
 import { PayMethodEnum } from './types'
+import { useWalletBitcoinProviderByWallet } from '@/hooks/WalletProvider/useWalletBitcoinProviders'
 
 const LIMIT_TIME = 360 // => 10s per request. that will request it within 1 hour.
 
@@ -44,6 +45,7 @@ const InscribeOrderModal: React.FC<{
 
   const [isSigning, setIsSiging] = useState(false)
   const [txnID, setTxnID] = useState('')
+  const provider = useWalletBitcoinProviderByWallet()
 
   const [selectedPayMethod, setPayMethod] = useState<PayMethodEnum | null>(null)
 
@@ -112,11 +114,16 @@ const InscribeOrderModal: React.FC<{
 
   const handlePayWithWallet = async () => {
     try {
+      if (!provider) return
+
       setIsSiging(true)
 
       const recipient = orderDetail.collectorFeeAddress || orderDetail.paymentWallet
-      const amount = orderDetail.feeMint
-      const txId = await (window as any).unisat.sendBitcoin(recipient, getDecimalAmount(amount, FEE_DECIMALS))
+
+      const txId = await provider.sendBitcoin({
+        recipient,
+        amount: getDecimalAmount(orderDetail.feeMint, FEE_DECIMALS),
+      })
 
       if (txId) {
         setTxnID(txId)
@@ -251,4 +258,3 @@ const InscribeOrderModal: React.FC<{
   )
 }
 export default InscribeOrderModal
-
