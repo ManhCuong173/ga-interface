@@ -14,7 +14,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import Trans from '../i18n/Trans'
-import ConnectWalletButton from './connect-wallet-button'
 
 const MobileSidebar: React.FC = () => {
   const path = usePathname()
@@ -105,9 +104,6 @@ const MobileSidebar: React.FC = () => {
                 </div>
               </div>
             </div>
-            <div className="p-0">
-              <ConnectWalletButton mode="solid" />
-            </div>{' '}
           </div>
         </div>
       </div>

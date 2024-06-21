@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import ConnectWalletButton from './connect-wallet-button'
 import MobileSidebar from './mobile-sidebar'
 
 export default function MobileHeader() {
@@ -59,6 +60,7 @@ export default function MobileHeader() {
             </div>
           </div>
           <div className="flex items-center gap-4">
+            <ConnectWalletButton mode="solid" />
             <MobileSidebar />
           </div>
         </div>

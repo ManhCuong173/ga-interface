@@ -5,6 +5,7 @@ import FormatPrice from '@/components/mintNFTs/FormatPrice'
 import { ChevronIcon } from '@/components/ui/icons'
 import ModalContainer from '@/components/ui/modal-container'
 import { nftTypes } from '@/constants/nft.constant'
+import { useWalletBitcoinProviderByWallet } from '@/hooks/WalletProvider/useWalletBitcoinProviders'
 import { setItemBought } from '@/lib/features/marketplace/marketplace-slice'
 import { selectBtnToUsdRateData } from '@/lib/features/wallet/fee-slice'
 import { selectAddress } from '@/lib/features/wallet/wallet-slice'
@@ -124,6 +125,7 @@ const ConfirmModal = ({
   const [isBuying, setBuying] = useState(false)
   const matchedType = nftTypes.find((type) => type.id.toString() === item.nft_id)
   const [enabledCustom, setEnableCustom] = useState(false)
+  const provider = useWalletBitcoinProviderByWallet()
 
   const {
     data: feeData,
@@ -173,28 +175,37 @@ const ConfirmModal = ({
 
   const getListTxidInscription = async () => {
     try {
-      let res = await (window as any).unisat.getInscriptions(0, 10000)
-      return res.list.map((item: { location: string }) => item.location.split(':')[0])
+      if (!provider) return []
+
+      const res = await provider.getInscriptions(address, 0, 10000)
+      return res.list.map((item) => item.inscriptionId)
     } catch (e) {
       console.log('error getting list tx id inscription: ', e)
       return []
     }
   }
 
-  const getBalance = async () => {
+  const getBalance = async (address: string) => {
     try {
-      let res = await (window as any).unisat.getBalance()
+      if (!provider || !address) return 0
+
+      const res = await provider.getBalance(address)
       return res.confirmed
     } catch (e) {
       console.log(e)
     }
+    return 0
   }
 
   const handleConfirm = async () => {
+    if (!provider) {
+      toast.error('Provider not found')
+      return
+    }
     if (feeRate < feeData.normal || feeRate > 500) toast.error(`Please enter a value between ${feeData.normal} and 500`)
     else {
       try {
-        const balance = await getBalance()
+        const balance = await getBalance(address)
         if (balance < data?.total) {
           toast.error('Insufficient balance')
           return
@@ -202,7 +213,7 @@ const ConfirmModal = ({
 
         setBuying(true)
         onExchangeNFTProcessing(true)
-
+        
         const listTxIdInscription = await getListTxidInscription()
         const res = await marketPlaceService.getPsBTNft({
           fee_rate: feeRate,
@@ -211,15 +222,21 @@ const ConfirmModal = ({
           wallet_address: address,
         })
 
-        const signedPsbt: string = await (window as any).unisat.signPsbt(res.psbt)
-        const psbtBase64 = Buffer.from(signedPsbt, 'hex').toString('base64')
+        const signedPsbt: string = await provider.signPsbt(address, res.psbt, {
+          signInputs: {
+            [address]: [0],
+          },
+        })
+
+        if (!signedPsbt) return
+
         const resExchange: any = await marketPlaceService.exChangeNft({
           address_buyer: address,
           id_sell: id_sell,
-          psbt_buyer: psbtBase64,
+          psbt_buyer: signedPsbt,
           fee_rate: feeRate,
         })
-
+        
         if (resExchange.status === 200) {
           setOpen(false)
           setShowSuccessModal(true)
@@ -342,4 +359,3 @@ const ConfirmModal = ({
 }
 
 export default memo(ConfirmModal)
-
