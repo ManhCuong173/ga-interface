@@ -46,8 +46,8 @@ const ListNFTSuccessModal: React.FC<Props> = ({
           </p>
         </div>
 
-        <p className="text-sm font-light leading-6 tracking-[-0.6px] text-black1 mt-[25px] w-[263px] mx-auto">
-          <Trans>Your NFT has been officially listed after you set the selling price</Trans>.
+        <p className="text-base font-light leading-6 tracking-[-0.6px] text-black1 mt-[25px] w-[263px] mx-auto">
+          <Trans>Your NFT has been officially listed after you set the selling price</Trans>
         </p>
 
         <div className="flex items-center justify-end absolute top-[10px] right-[10px] lg:right-[30px] lg:top-[30px]">
@@ -77,7 +77,9 @@ const ListNFTSuccessModal: React.FC<Props> = ({
             <span className="inline-block w-full text-left text-base font-normal leading-6 tracking-[-0.48px] text-black1">
               <Trans>Price</Trans>
             </span>
-            <p className="text-red-light font-base text-[21px] font-ProtoMono font-medium text-nowrap">{price} BTC</p>
+            <p className="text-red-light font-base text-[21px] font-ProtoMono font-medium text-nowrap ml-2 tracking-tighter">
+              {price} BTC
+            </p>
           </div>
         </div>
       </div>
