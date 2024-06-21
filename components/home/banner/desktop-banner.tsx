@@ -84,7 +84,13 @@ export default function DesktopBanner() {
         </div>
       </div>
 
-      <div style={{ opacity: isPauseBannerVideo ? '1' : '0' }} className="animate-fadeOut transition-all duration-300">
+      <div
+        style={{ opacity: isPauseBannerVideo ? '1' : '0' }}
+        className={cn(
+          isPauseBannerVideo ? 'after:animate-gradientTopBottom' : '',
+          'after:absolute after:content-normal after:left-0 after:top-0 after:w-full after:h-full after:bg-white after:transition-all after:duration-300 overflow-hidden',
+        )}
+      >
         <WrapperHero src="/images/home/bg-home.svg">
           <div className="relative mx-auto flex flex-1 pt-[72px] h-full max-w-container flex-col items-center justify-center text-_white lg:items-center lg:justify-center lg:pr-[60px] lg:pt-[98px]">
             <div className="space-y-4 text-center">

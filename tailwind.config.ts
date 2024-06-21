@@ -13,9 +13,14 @@ const config: Config = {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
+        gradientTopBottom: {
+          '0%': { transform: 'translateY(0%)' },
+          '100%': { transform: 'translateY(140%)' },
+        },
       },
       animation: {
         fadeOut: 'fadeOutKeyframe 0.5s linear',
+        gradientTopBottom: 'gradientTopBottom .5s linear forwards',
       },
       aspectRatio: {
         home: '1114/725',
@@ -27,6 +32,7 @@ const config: Config = {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'gradient-top-to-bottom': 'linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #FFFF 100%)',
       },
       boxShadow: {
         dropdown: '3px 6px 30px 0px rgba(0, 0, 0, 0.12)',
