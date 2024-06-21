@@ -67,7 +67,7 @@ export default function DesktopBanner() {
         <div className="flex items-center justify-center gap-2">
           <ButtonImage
             varirant="outline"
-            onClick={handleSkipVideo}
+            onClick={() => setIsPauseBannerVideo(true)}
             className="flex items-center justify-center bg-[rgba(0,0,0,0.40)] rounded-[1000px] backdrop-blur-[5px] w-[120px] h-[42px] border-none hover:bg-[#000] cursor-pointer"
           >
             <Image src={SkipVideoIcon} width={20} height={20} alt="" />
