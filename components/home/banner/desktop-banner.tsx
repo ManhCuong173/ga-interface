@@ -15,10 +15,6 @@ export default function DesktopBanner() {
   const [isPauseBannerVideo, setIsPauseBannerVideo] = useState<boolean>(false)
   const videoRef = useRef<HTMLVideoElement>(null)
 
-  const handleSkipVideo = () => {
-    if (videoRef.current) videoRef.current.currentTime += 3
-  }
-
   const handleReplayVideo = () => {
     if (videoRef.current) {
       videoRef.current.currentTime = 0
