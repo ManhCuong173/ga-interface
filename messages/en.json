@@ -107,13 +107,13 @@
     "My orders": "My orders",
     "Closed": "Closed",
     "Date": "Date",
-    "Earn you golden ticket to win at least 1 BTC and more": "Earn you golden ticket to win at least 1 BTC and more",
+    "Earn you golden ticket to win at least 1 BTC and more": "Earn you golden <br></br> ticket  to win <br></br> at least  1 BTC <br> </br> and more",
     "About Golden Apple": "About Golden Apple",
     "At Golden Apple, we are all about possibilities and providing equal opportunities for everyone to transform their lives": "At Golden Apple, we are all about possibilities and providing equal opportunities for everyone to transform their lives",
     "Our mission is to foster a thriving community where everyone has a shot at winning": "Our mission is to foster a thriving community where everyone has a shot at winning",
     "Golden Apple is your golden to potentially pocket 1 BTC or even more!": "Golden Apple is your golden to potentially pocket 1 BTC or even more!",
     "ALL YOU NEED TO KNOW ABOUT GOLDEN APPLE”": "ALL YOU NEED TO KNOW ABOUT GOLDEN APPLE”",
-    "Have questions about Golden Apple? We've got you covered_Dive into our documentation to learn more about us!": "Have questions about Golden Apple? We've got you covered. Dive into our documentation to learn more about us!",
+    "Have questions about Golden Apple? We've got you covered_Dive into our documentation to learn more about us!": "Have questions about Golden Apple? <br_line1></br_line1>We've got you covered.<br_line2></br_line2> Dive into our documentation to learn more about us!",
     "View Gitbook": "View Gitbook",
     "View Pitch Desk": "View Pitch Desk",
     "Disconnect": "Disconnect",
@@ -214,6 +214,14 @@
     "My Profile": "My Profile",
     "DefaultBio": "Hello fellow NFT enthusiasts! I am an avid NFT investor with a passion for collecting rare and lucky NFTs. Take a look at my collection and find your favorites. Remember, the value is in the uniqueness!",
     "Dive into my unique collection of lucky and rare NFTs_Explore the distinctive pieces that bring fortune and exclusivity, all part of the Golden Apple series_Each NFT is the golden ticket for you to win at least 1 BTC and more_": "Dive into my unique collection of lucky and rare NFTs. Explore the distinctive pieces that bring fortune and exclusivity, all part of the Golden Apple series. Each NFT is the golden ticket for you to win at least 1 BTC and more. ",
-    "Connect Your Wallet": "Connect Your Wallet"
+    "Connect Your Wallet": "Connect Your Wallet",
+    "CreateYourOwnNFTGalleryDesktop": "<animation1><h1_line1>Create your own</h1_line1></animation1><animation2><h1_line2><span>NFT</span> Dream Gallery</h1_line2></animation2>",
+    "CreateYourOwnNFTGalleryMobile": "<animation1><h1>Create your own</h1></animation1><animation2><h1><span>NFT</span> Dream Gallery</h1></animation2>",
+    "Get started with the easiest and most secure platform to buy and collect NFTs": "Get started with the easiest and most secure platform to buy and collect NFTs",
+    "Special Prize": "Special Prize",
+    "1st Prize": "1st Prize",
+    "2nd Prize": "2nd Prize",
+    "3rd Prize": "3rd Prize",
+    "Consolation Prize": "Consolation Prize"
   }
 }

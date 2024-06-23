@@ -38,6 +38,7 @@ export default function ProfileInfo({ profile, refetch }: Props) {
   const [profileEdit, setProfileEdit] = useState<ProfileType | undefined>()
   const queryClient = useQueryClient()
   const { data: point } = useGetPoints()
+  const t = useGATranslation()
 
   const { bindDiscord, bindTwitter, removeDiscord, removeX } = useLinkSocial({ refetch })
 
@@ -117,7 +118,7 @@ export default function ProfileInfo({ profile, refetch }: Props) {
         <div className="flex flex-col items-center gap-3">
           <div className="space-y-2">
             <h2 className="w-[250px] truncate text-center text-lg font-medium leading-8 tracking-[-2%] text-black font-Roboto">
-              {profile?.name || 'Unknown Name'}
+              {profile?.name || <Trans>Unknown Name</Trans>}
             </h2>
           </div>
           <div className="flex h-[36px] w-[129px] items-center justify-center gap-2 bg-full border-bgAlt border-[1px] border-solid py-[6px] px-[18px] rounded-[100px]">

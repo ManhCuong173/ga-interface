@@ -43,7 +43,7 @@ const columns: Array<ColumnProps<Owner>> = [
             </>
           )}
           <span className="ml-[10px] max-w-full truncate text-sm font-light text-[#171717] ">
-            {record.name || <Trans>Unknown name</Trans>}
+            {record.name || <Trans>Unknown Name</Trans>}
           </span>
         </div>
       )

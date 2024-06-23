@@ -2,7 +2,10 @@
 
 import { ButtonImage } from '@/components/button'
 import Trans from '@/components/i18n/Trans'
+import { useGATranslation } from '@/components/i18n/hooks'
 import { urlRoute } from '@/constants/routes'
+import { useAuthBitcoin } from '@/hooks/WalletProvider/useAuthBitcoin'
+import { useLatestWallet } from '@/hooks/WalletProvider/useLatestWallet'
 import { useMediaQuery } from '@/hooks/custom/useMediaQuery'
 import fourthPrice from '@/icons/home/consoliadation-prize.svg'
 import firstPrice from '@/icons/home/first-prize.svg'
@@ -22,8 +25,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import WrapperHero from '../WrapperHero'
 import History from './history'
 import YouPrize from './your-prize'
-import { useAuthBitcoin } from '@/hooks/WalletProvider/useAuthBitcoin'
-import { useLatestWallet } from '@/hooks/WalletProvider/useLatestWallet'
 
 const CardPrize: React.FC<{
   prizeAsset: StaticImageData
@@ -93,6 +94,7 @@ export default function LuckyDraw() {
 
   const { login } = useAuthBitcoin()
   const wallet = useLatestWallet()
+  const t = useGATranslation()
 
   useEffect(() => {
     const scroll = (event: any) => {
@@ -173,35 +175,35 @@ export default function LuckyDraw() {
                   prizeAsset={specialPrice}
                   isLoading={isLoadingRoundActivated}
                   data={roundActivatedData?.reward?.Special}
-                  title={'Special Prize'}
+                  title={t('Special Prize')}
                 />
 
                 <CardPrize
                   prizeAsset={firstPrice}
                   isLoading={isLoadingNftSold}
                   data={roundActivatedData?.reward?.Top1}
-                  title={'1st Prize'}
+                  title={t('1st Prize')}
                 />
 
                 <CardPrize
                   prizeAsset={secondPrice}
                   isLoading={isLoadingNftSold}
                   data={roundActivatedData?.reward?.Top2}
-                  title={'2nd Prize'}
+                  title={t('2nd Prize')}
                 />
 
                 <CardPrize
                   prizeAsset={thirdPrice}
                   isLoading={isLoadingNftSold}
                   data={roundActivatedData?.reward?.Top3}
-                  title={'3rd Prize'}
+                  title={t('3rd Prize')}
                 />
 
                 <CardPrize
                   prizeAsset={fourthPrice}
                   isLoading={isLoadingNftSold}
                   data={roundActivatedData?.reward?.Consolation}
-                  title={'Consolation Prize'}
+                  title={t('Consolation Prize')}
                 />
               </div>
 
@@ -249,3 +251,4 @@ export default function LuckyDraw() {
     </div>
   )
 }
+

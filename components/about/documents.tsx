@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { useRef } from 'react'
 import WrapperHero from '../home/WrapperHero'
 import Trans from '../i18n/Trans'
+import { useGATranslation } from '../i18n/hooks'
 
 const Document = () => {
   const ref = useRef(null)
@@ -29,12 +30,15 @@ const Document = () => {
           </div>
           <div
             className="text-base font-light leading-3/2 
-          max-w-[330px] mg:max-w-[400px] lg:max-w-[591px] text-white2 text-center mt-5 mb-[60px]"
+          max-w-[330px] md:max-w-none  text-white2 text-center mt-5 mb-[60px] xl:text-nowrap"
           >
-            <Trans>
-              Have questions about Golden Apple? We've got you covered_Dive into our documentation to learn more about
-              us!
-            </Trans>
+            {useGATranslation().rich(
+              "Have questions about Golden Apple? We've got you covered_Dive into our documentation to learn more about us!",
+              {
+                br_line1: () => <br className="block xl:hidden" />,
+                br_line2: () => <br className="block: md:hidden" />,
+              },
+            )}
           </div>
 
           <div className="flex flex-col md:flex-row  justify-center items-center gap-[12px] lg:gap-[18px]">

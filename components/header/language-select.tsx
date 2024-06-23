@@ -113,7 +113,7 @@ const LanguageSelect = ({ mode, className }: Props) => {
             handleChangeLanguge('cn')
           }}
         >
-          <span className="text-sm font-light leading-5 tracking-[-0.42px]">中国人</span>
+          <span className="text-sm font-light leading-5 tracking-[-0.42px]">中文</span>
         </div>
       </div>
     </div>

@@ -118,7 +118,7 @@ const ProfileInfoMobile = ({ profile, refetch }: PropsProfile) => {
         </div>
         <div className="flex flex-col ml-4">
           <h2 className='h2 className="w-[250px] truncate  text-lg font-medium leading-8 tracking-[-2%] text-black font-Roboto'>
-            {profile?.name || 'Unknown name '}
+            {profile?.name || <Trans>Unknown Name</Trans>}
           </h2>
           <div className="flex h-[36px] w-[129px] items-center justify-center gap-2 bg-full border-bgAlt border-[1px] border-solid py-[6px] px-[18px] rounded-[100px]">
             <span className="text-[20px] font-medium leading-6 tracking-[-2%] text-[#EF232C]">{point}</span>
