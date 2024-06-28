@@ -1,8 +1,15 @@
 import { CHAIN_ID } from '@/constants'
-import { request, AddressPurpose } from 'sats-connect'
-import { Balance, BasePropsTransfer, BitcoinAccountWallet, ChainId, OptionsSignPsbt, WalletProvider } from './base'
+import { AddressPurpose, BitcoinNetworkType, request, signTransaction } from 'sats-connect'
+import {
+  Balance,
+  BasePropsTransfer,
+  BitcoinAccountWallet,
+  ChainId,
+  Inscription,
+  OptionsSignPsbt,
+  WalletProvider,
+} from './base'
 import { getBalanceByMempool, getInscriptionsByAddress, isTestnet } from './utils'
-import { Inscription } from './base'
 
 type IWalletProvider = {
   call: () => void
@@ -76,15 +83,31 @@ export class XverseWalletProvider extends WalletProvider<IWalletProvider> {
   }
 
   public signPsbt = async (address: string, psbt: string, options: OptionsSignPsbt): Promise<string> => {
-    const response = await request('signPsbt', {
-      psbt: psbt,
-      ...options,
-      broadcast: true,
-    })
-    if (response.status === 'success') {
-      return response.result.psbt
+    try {
+      let responseData = ''
+      await signTransaction({
+        payload: {
+          network: {
+            type: BitcoinNetworkType.Testnet,
+          },
+          psbtBase64: psbt,
+          broadcast: true,
+          inputsToSign: [
+            {
+              address,
+              signingIndexes: [0, 1],
+            },
+          ],
+          message: 'Sign transaction hello',
+        },
+        onFinish(response) {},
+        onCancel() {},
+      })
+      return responseData
+    } catch (error) {
+      console.error(error)
+      return ''
     }
-    return ''
   }
 
   public signMessage = async (address: string, message: string): Promise<string> => {

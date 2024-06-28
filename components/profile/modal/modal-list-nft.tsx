@@ -76,7 +76,7 @@ export default function ModalListNft({
               <span className="pl-2 text-base font-light leading-5 tracking-[-0.48px] text-black1 ">BTC</span>
             </div>
             <p className="text-left text-xs text-text-secondary mt-2">
-              <span className="text-red-700">(*)</span> <Trans>(*) Price must be equal or greater than 0_00001</Trans>
+              <span className="text-red-700"></span> <Trans>(*) Price must be equal or greater than 0_00001</Trans>
             </p>
           </div>
         </div>

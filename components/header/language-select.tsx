@@ -75,7 +75,7 @@ const LanguageSelect = ({ mode, className }: Props) => {
             className={cn('absolute inset-0 transition-all', mode === 'transparent' ? 'opacity-0' : 'opacity-100')}
           />
         </span>
-        <span className="whitespace-nowrap">{language === 'en' ? 'English' : '中国人'}</span>
+        <span className="whitespace-nowrap">{language === 'en' ? 'English' : '中文'}</span>
         <span className="relative size-6">
           <Image
             src={chevronDownIcon}

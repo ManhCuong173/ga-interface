@@ -69,9 +69,6 @@ const Card: React.FC<Props> = ({ icon, bgDesktop, bgMobile, color, description, 
               <Link
                 href={`${urlRoute.marketplace}/?elementId=${element?.id}`}
                 className={cn('text-secondary text-xs font-Roboto text-left lg:text-center relative')}
-                style={{
-                  left: locale === 'cn' ? '2px' : '',
-                }}
               >
                 <Trans>{description}</Trans>
               </Link>

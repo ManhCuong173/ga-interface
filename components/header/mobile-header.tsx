@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import ConnectWalletButton from './connect-wallet-button'
+import ConnectWalletButton from './ConnectWalletButton'
 import MobileSidebar from './mobile-sidebar'
 
 export default function MobileHeader() {

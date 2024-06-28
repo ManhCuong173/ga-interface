@@ -29,6 +29,7 @@ export type OptionsSignPsbt = {
   signInputs: {
     [address: string]: number[]
   }
+  allowedSignHash?: number
 }
 
 export abstract class WalletProvider<T> {

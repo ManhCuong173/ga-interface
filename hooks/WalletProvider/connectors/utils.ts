@@ -7,7 +7,7 @@ export const MEMPOOL_APIs = {
 }
 export const UNI_SATs = {
   [ChainId.Mainnet]: '', // TODO
-  [ChainId.Testnet]: 'https://open-api-testnet.unisat.io/v1',
+  [ChainId.Testnet]: 'https://open-api.unisat.io/v1/',
 }
 export const UNI_SAT = UNI_SATs[CHAIN_ID]
 export const MEMPOOL_API = MEMPOOL_APIs[CHAIN_ID]
@@ -26,18 +26,15 @@ export const getInscriptionsByAddress = async ({
   offset: number
 }): Promise<Inscription> => {
   const params = { size: `${limit}`, cursor: `${offset}` }
-  const res = await fetch(
-    `${UNI_SAT}/indexer/address/${address}/inscription-utxo-data?${new URLSearchParams(params)}`,
-    {
-      headers: {
-        Authorization: `Bearer ${BEARER_UNISAT}`,
-      },
+  const res = await fetch(`${UNI_SAT}/indexer/address/${address}/utxo-data`, {
+    headers: {
+      Authorization: `Bearer ${BEARER_UNISAT}`,
     },
-  )
+  })
   if (res.ok) {
     const { data } = await res.json()
     const list = data.utxo.map((item: any) => ({
-      inscriptionId: item.txid,
+      inscriptionId: item.inscriptions[0].inscriptionId,
     }))
     return { list, total: data.total }
   } else {
