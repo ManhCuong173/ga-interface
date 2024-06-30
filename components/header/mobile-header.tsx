@@ -6,8 +6,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import DropdownAction from '../dropdown'
 import ConnectWalletButton from './ConnectWalletButton'
 import ProfileDropdown from './ProfileDropdown'
+import { LanguageSelect } from './desktop-header'
 import MobileSidebar from './mobile-sidebar'
 
 export default function MobileHeader() {
@@ -53,14 +55,9 @@ export default function MobileHeader() {
             <Link href="/" className="flex items-center gap-[7.74px]">
               <Image src={logo} alt="" className="h-[48px] w-[48px]" />
             </Link>
-            <div
-              className="bg-[rgba(212,199,156,0.30)] rounded-full p-[9px] text-lg 
-            font-normal leading-3/2 w-[42px] h-[42px] 
-            flex items-center justify-center cursor-pointer 
-            hover:opacity-80 transition-all"
-            >
-              {locale.toUpperCase()}
-            </div>
+            <DropdownAction>
+              <LanguageSelect />
+            </DropdownAction>
           </div>
           <div className="flex items-center gap-4">
             <div
