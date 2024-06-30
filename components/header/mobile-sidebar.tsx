@@ -34,7 +34,7 @@ const MobileSidebar: React.FC = () => {
       <div
         className={cn(
           isOpen ? 'translate-x-0 opacity-1 ' : 'translate-x-[200vw] opacity-0',
-          'fixed top-0 bottom-0 left-0 right-0 h-screen w-screen transition-all',
+          'fixed top-0 bottom-0 left-0 right-0 h-screen w-screen transition-all z-30',
         )}
       >
         <div
@@ -44,7 +44,7 @@ const MobileSidebar: React.FC = () => {
           }}
         >
           <div onClick={toggle}>
-            <button className="absolute right-[4px] top-2 z-30 outline-none p-2 hover:bg-bgAlt4d hover:rounded-md">
+            <button className="absolute right-[4px] top-2 z-100 outline-none p-2 hover:bg-bgAlt4d hover:rounded-md z-30">
               <X className="fill-black1 w-7 h-7" />
             </button>
           </div>

@@ -15,7 +15,7 @@ import Trans from '../i18n/Trans'
 import ConnectWalletButton from './ConnectWalletButton'
 import ProfileDropdown from './ProfileDropdown'
 
-const LanguageSelect: React.FC<Partial<DropdownActionProps>> = ({ show, toggle }) => {
+export const LanguageSelect: React.FC<Partial<DropdownActionProps>> = ({ show, toggle }) => {
   const { locale } = useLocaleInfo()
   const listLocale = locales
   const router = useRouter()
@@ -32,7 +32,7 @@ const LanguageSelect: React.FC<Partial<DropdownActionProps>> = ({ show, toggle }
       >
         <div
           className={cn(
-            'relative z-20',
+            'relative z-10',
             show ? 'rounded-t-[20px]' : 'rounded-full',
             'bg-[rgba(212,199,156,0.30)] p-[9px] text-lg font-normal leading-3/2 w-[42px] h-[42px]  flex items-center justify-center cursor-pointer hover:opacity-80 transition-all',
           )}
