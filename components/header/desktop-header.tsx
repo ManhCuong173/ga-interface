@@ -158,7 +158,7 @@ export default function DesktopHeader() {
 
           <div
             className={cn(
-              'h-[48px] w-full rounded-[10px]  border-solid border-[1px] flex justify-center items-center p-[8px_16px] cursor-pointer',
+              'h-[48px] w-[190px] rounded-[10px]  border-solid border-[1px] flex justify-center items-center p-[8px_16px] cursor-pointer',
               'border-red-light',
             )}
           >

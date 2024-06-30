@@ -48,7 +48,7 @@ const Banner = () => {
       <InscribeGuildModal
         open={isPresentOpenInscribeGuildModal}
         handleClose={() => setOpenInscribeGuiidModal(false)}
-        className="w-full h-[80vh]"
+        className="w-fit h-fit"
       />
     </div>
   )

@@ -1,5 +1,6 @@
 'use client'
 
+import { appearAnimation } from '@/constants/animation.constant'
 import { wallets } from '@/constants/wallet'
 import { useBitcoinAccount, useBitcoinConnected } from '@/context/BitcoinProviderContext/hook'
 import { useAuthBitcoin } from '@/hooks/WalletProvider/useAuthBitcoin'
@@ -8,6 +9,7 @@ import { useToggle } from '@/hooks/custom/useToggle'
 import { cn } from '@/lib/utils'
 import { userService } from '@/services/user.service'
 import { useMutation } from '@tanstack/react-query'
+import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import WalletModal from '../WalletModal'
 import Trans from '../i18n/Trans'
@@ -48,25 +50,23 @@ const ConnectWalletButton: React.FC<Props> = ({ mode }) => {
   }
 
   return (
-    <>
-      <button className={cn('desktop-menu-container')} onClick={toggle}>
+    <motion.div {...appearAnimation} className="flex items-center justify-center">
+      <button className={cn('desktop-menu-container', 'w-[180px]')} onClick={toggle}>
         <div className="flex justify-center items-center">
-          <div
-            className={cn('relative h-6 w-6 transition-all', mode === 'transparent' ? 'fill-white' : 'fill-red-light')}
-          >
+          <div className={cn('relative h-6 w-6 transition-all')}>
             <div
               className={cn(
                 mode !== 'transparent'
-                  ? 'bg-[url(/icons/header/wallet.svg)] wallet-icon'
-                  : 'bg-[url(/icons/header/wallet-white.svg)] wallet-white-icon',
-                'w-[24px] h-[24px]',
+                  ? 'bg-[url(/icons/header/wallet.svg)]'
+                  : 'bg-[url(/icons/header/wallet-white.svg)]',
+                'scale-75 md:scale-100 w-[24px] h-[24px]',
               )}
             />
           </div>
           <span
             className={cn(
-              'text-nowrap transition-all text-base font-medium ml-[12px] font-Roboto',
-              'text-red-light address-item-white',
+              'text-nowrap transition-all text-[12px] md:text-base font-medium ml-1 md:ml-[12px] font-Roboto',
+              'text-red-light',
             )}
           >
             <Trans>Connect Wallet</Trans>
@@ -76,7 +76,7 @@ const ConnectWalletButton: React.FC<Props> = ({ mode }) => {
       {isDisplayConnectWalletModal && (
         <WalletModal onSelect={handleClick} isOpen={isDisplayConnectWalletModal} onClosed={toggle} />
       )}
-    </>
+    </motion.div>
   )
 }
 export default ConnectWalletButton

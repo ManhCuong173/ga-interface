@@ -1,22 +1,21 @@
-import { ModalLayout } from '@/components/marketplace/Buy/ModalLayout'
-import ModalContainer from '@/components/ui/modal-container'
-import { EmbedPDF } from '@simplepdf/react-embed-pdf'
+'use client'
 
+import ModalContainer from '@/components/ui/modal-container'
 interface Props {
   open: boolean
   handleClose: () => void
   className?: string
 }
 
-const InscribeGuildModal: React.FC<Props> = ({ open, handleClose, className }) => {
+export default function InscribeGuildModal({ open, handleClose, className }: Props) {
   return (
-    <ModalContainer handleClose={handleClose} open={open}>
-      <ModalLayout>
-        <EmbedPDF mode="inline" style={{ width: '100%', height: 800 }} documentURL="/mint-guildline.pdf" />
-      </ModalLayout>
-    </ModalContainer>
+    <div className="Example">
+      <ModalContainer handleClose={handleClose} open={open}>
+        <div>
+          <iframe src="/mint-guildline.pdf" className="w-[70vw] aspect-[3/2]" />
+        </div>
+      </ModalContainer>
+    </div>
   )
 }
-
-export default InscribeGuildModal
 
