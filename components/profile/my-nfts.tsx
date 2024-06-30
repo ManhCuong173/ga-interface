@@ -80,7 +80,7 @@ export default function MyNFTs() {
         const listTxIdInscription = await getListTxidInscription()
 
         if (!listTxIdInscription || !listTxIdInscription.length || !provider) return
-        
+
         const res = (
           await listService.getPsbt({
             id_inscription: selectedAsset.id_inscription,
@@ -89,10 +89,14 @@ export default function MyNFTs() {
           })
         ).data
 
+        const unspentLocks = res.list_unspent_lock
+        const signInputs = {
+          [address]: unspentLocks.map((utxo) => utxo.vout).reverse(),
+        }
+        console.log(signInputs)
+
         const signedPsbt: string = await provider.signPsbt(address, res.psbt, {
-          signInputs: {
-            [address]: [0, 1],
-          },
+          signInputs,
         })
 
         if (!signedPsbt) return
@@ -112,6 +116,7 @@ export default function MyNFTs() {
         })
         setModalOpen('list-success')
       } catch (err) {
+        console.error(err)
         toast.error('Error happed when listing nft. Please try again')
       }
     })
@@ -230,3 +235,4 @@ export default function MyNFTs() {
     </div>
   )
 }
+

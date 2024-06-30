@@ -1,83 +1,43 @@
 import { urlRoute } from '@/constants/routes'
-import useGetProfile from '@/hooks/api/useGetProfile'
-import useLinkSocial from '@/hooks/api/useLinkSocial'
-import discord from '@/icons/home/discord.svg'
-import twitter from '@/icons/home/twitter.svg'
+import { GaSocialLinkVariantEnums, SocialLinks } from '@/constants/socials'
+import { useLocaleInfo } from '@/hooks/useLocaleInfo'
 import logo from '@/images/commons/logo.svg'
-import { selectAddress, selectedPublicKey } from '@/lib/features/wallet/wallet-slice'
-import { useAppSelector } from '@/lib/hook'
 import { cn } from '@/lib/utils'
-import { backend } from '@/services/endpoint/endpoint'
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { useEffect } from 'react'
 import LanguageSelect from './header/language-select'
 import Trans from './i18n/Trans'
 
+import discord from '@/icons/home/discord.svg'
+import telegram from '@/icons/home/telegram.svg'
+import twitter from '@/icons/home/twitter.svg'
+
 const Social: React.FC<{ className?: string; size?: string }> = ({ className, size }) => {
-  const { data: profile, refetch } = useGetProfile()
-  const { bindDiscord, bindTwitter, removeDiscord, removeX } = useLinkSocial({ refetch })
-  const address = useAppSelector(selectAddress)
-  const publicKey = useAppSelector(selectedPublicKey)
-  const searchParams = useSearchParams()
-  const oauth_token = searchParams.get('oauth_token')
-  const oauth_verifier = searchParams.get('oauth_verifier')
-  const code = searchParams.get('code')
-  const state = searchParams.get('state')
-  const pathname = usePathname()
-  const router = useRouter()
-
-  const remove = (key1: string, key2: string) => {
-    const current = new URLSearchParams(Array.from(searchParams.entries()))
-    current.delete(key1)
-    current.delete(key2)
-    router.push(`${pathname}`)
-  }
-  useEffect(() => {
-    if (oauth_token && oauth_verifier && publicKey && address) {
-      bindTwitter(oauth_token, oauth_verifier)
-    }
-  }, [oauth_token, oauth_verifier])
-
-  useEffect(() => {
-    if (code && state && oauth_verifier && publicKey && address) {
-      bindDiscord(code, state)
-    }
-  }, [code, state])
-
-  const connectTwitter = () => {
-    if (profile?.twitter_connect) {
-      remove(String(oauth_token), String(oauth_verifier))
-      removeX()
-
-      return
-    }
-    if (typeof window !== 'undefined') {
-      router.push(`${process.env.NEXT_PUBLIC_API_URL}/${backend}/authentication/twitter`)
-      window.localStorage.setItem('address', address)
-    }
-  }
-  const connectDiscord = () => {
-    if (profile?.discord_connect) {
-      removeDiscord()
-      remove(String(code), String(state))
-      return
-    }
-    if (typeof window !== 'undefined') {
-      router.push(`${process.env.NEXT_PUBLIC_API_URL}/${backend}/authentication/discord`)
-      window.localStorage.setItem('address', address)
-    }
-  }
+  const { locale } = useLocaleInfo()
 
   return (
-    <div className={cn('grid grid-cols-2 gap-3 w-fit', className)}>
-      <div className={cn('flex w-full h-full cursor-pointer hover:opacity-90', size)} onClick={connectTwitter}>
-        <Image src={twitter} alt="twitter" width={48} height={48} />
-      </div>
-      <div className={cn('flex w-full h-full cursor-pointer hover:opacity-90', size)} onClick={connectDiscord}>
-        <Image src={discord} alt="discord" width={48} height={48} />
-      </div>
+    <div className={cn('grid grid-cols-3 gap-3 w-fit', className)}>
+      {SocialLinks.filter(
+        (item) =>
+          (item.type === GaSocialLinkVariantEnums.X && locale === 'en') ||
+          (item.type === GaSocialLinkVariantEnums.XChina && locale === 'cn') ||
+          ![GaSocialLinkVariantEnums.X, GaSocialLinkVariantEnums.XChina].includes(item.type),
+      )
+        .map((link) => {
+          const socialThubnail =
+            link.type === GaSocialLinkVariantEnums.Discord
+              ? discord
+              : [GaSocialLinkVariantEnums.X, GaSocialLinkVariantEnums.XChina].includes(link.type)
+                ? twitter
+                : telegram
+
+          return (
+            <Link href={link.url} target="_blank" key={link.name}>
+              <Image src={socialThubnail} alt={link.name} width={48} height={48} />
+            </Link>
+          )
+        })
+        .reverse()}
     </div>
   )
 }

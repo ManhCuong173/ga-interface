@@ -38,7 +38,7 @@ type Props = {
 }
 
 export default function Transaction({ data }: Props) {
-  const [activeTab, setActiveTab] = useState('all')
+  const [activeTab, setActiveTab] = useState('week')
   const [activeYearIndex, setActiveYearIndex] = useState(0)
   const [years, setYears] = useState<number[]>([])
 

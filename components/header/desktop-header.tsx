@@ -1,14 +1,63 @@
 import { headerItems } from '@/constants/header.constant'
 import { GaSocialLinkVariantEnums, SocialLinks } from '@/constants/socials'
+import { useBitcoinConnected } from '@/context/BitcoinProviderContext/hook'
 import { useLocaleInfo } from '@/hooks/useLocaleInfo'
+import { locales } from '@/i18n'
 import logo from '@/images/commons/logo.svg'
 import { cn } from '@/lib/utils'
+import { usePathname, useRouter } from '@/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import { Fragment, useEffect, useState } from 'react'
+import DropdownAction, { DropdownActionProps } from '../dropdown'
+import { DropdownAnchor, DropdownContainer } from '../dropdown/styled'
 import Trans from '../i18n/Trans'
-import ConnectWalletButton from './connect-wallet-button'
+import ConnectWalletButton from './ConnectWalletButton'
+import ProfileDropdown from './ProfileDropdown'
+
+const LanguageSelect: React.FC<Partial<DropdownActionProps>> = ({ show, toggle }) => {
+  const { locale } = useLocaleInfo()
+  const listLocale = locales
+  const router = useRouter()
+  const pathname = usePathname()
+
+  return (
+    <DropdownContainer>
+      <div
+        className="flex items-center justify-center gap-4"
+        onClick={() => {
+          console.log('click')
+          if (toggle) toggle()
+        }}
+      >
+        <div
+          className={cn(
+            'relative z-20',
+            show ? 'rounded-t-[20px]' : 'rounded-full',
+            'bg-[rgba(212,199,156,0.30)] p-[9px] text-lg font-normal leading-3/2 w-[42px] h-[42px]  flex items-center justify-center cursor-pointer hover:opacity-80 transition-all',
+          )}
+        >
+          {locale.toUpperCase()}
+        </div>
+      </div>
+      <DropdownAnchor
+        show={show || false}
+        className={cn(
+          'w-[42px] h-[42px] bg-[rgba(212,199,156)] flex items-center justify-center rounded-b-[20px]',
+          show ? 'translate-y-0' : '-translate-y-2',
+          'duration-75',
+          'cursor-pointer',
+        )}
+      >
+        {listLocale
+          .filter((item) => item !== locale)
+          .map((item) => (
+            <div onClick={() => router.replace(pathname, { locale: item })}>{item}</div>
+          ))}
+      </DropdownAnchor>
+    </DropdownContainer>
+  )
+}
 
 export default function DesktopHeader() {
   const path = usePathname()
@@ -16,6 +65,7 @@ export default function DesktopHeader() {
   const [show, setShow] = useState(false)
   const [isScrollOverSidebarHeight, setIsScrollOverSidebarHeight] = useState(false)
   const { locale } = useLocaleInfo()
+  const isWalletConnected = useBitcoinConnected()
 
   useEffect(() => {
     if (isHomePage) {
@@ -66,14 +116,10 @@ export default function DesktopHeader() {
           </Link>
 
           <div className="flex items-center justify-center gap-4">
-            <div
-              className="bg-[rgba(212,199,156,0.30)] rounded-full p-[9px] text-lg 
-            font-normal leading-3/2 w-[42px] h-[42px] 
-            flex items-center justify-center cursor-pointer 
-            hover:opacity-80 transition-all"
-            >
-              {locale.toUpperCase()}
-            </div>
+            <DropdownAction>
+              <LanguageSelect />
+            </DropdownAction>
+
             {SocialLinks.filter(
               (item) =>
                 (item.type === GaSocialLinkVariantEnums.X && locale === 'en') ||
@@ -109,7 +155,16 @@ export default function DesktopHeader() {
               </Fragment>
             ))}
           </div>
-          <ConnectWalletButton mode={'solid'} />
+
+          <div
+            className={cn(
+              'h-[48px] w-[190px] rounded-[10px]  border-solid border-[1px] flex justify-center items-center p-[8px_16px] cursor-pointer',
+              'border-red-light',
+            )}
+          >
+            {isWalletConnected && <ProfileDropdown mode="solid" />}
+            {!isWalletConnected && <ConnectWalletButton mode={'solid'} />}
+          </div>
         </div>
       </div>
     </header>
