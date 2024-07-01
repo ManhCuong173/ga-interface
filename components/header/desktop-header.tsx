@@ -158,8 +158,8 @@ export default function DesktopHeader() {
 
           <div
             className={cn(
-              'h-[48px] w-[190px] rounded-[10px]  border-solid border-[1px] flex justify-center items-center p-[8px_16px] cursor-pointer',
-              'border-red-light',
+              'h-[48px] w-[190px] rounded-[10px]  border-solid border-[1px] flex justify-center items-center  cursor-pointer',
+              'border-red-light hover:bg-red-light desktop-menu-container ',
             )}
           >
             {isWalletConnected && <ProfileDropdown mode="solid" />}

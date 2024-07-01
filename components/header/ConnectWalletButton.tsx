@@ -50,8 +50,8 @@ const ConnectWalletButton: React.FC<Props> = ({ mode }) => {
   }
 
   return (
-    <motion.div {...appearAnimation} className="flex items-center justify-center">
-      <button className={cn('desktop-menu-container', 'w-[180px]')} onClick={toggle}>
+    <motion.div {...appearAnimation} className="flex items-center justify-center p-[8px_16px] w-full h-full">
+      <button className={cn('w-[180px]', '')} onClick={toggle}>
         <div className="flex justify-center items-center">
           <div className={cn('relative h-6 w-6 transition-all')}>
             <div
@@ -59,14 +59,14 @@ const ConnectWalletButton: React.FC<Props> = ({ mode }) => {
                 mode !== 'transparent'
                   ? 'bg-[url(/icons/header/wallet.svg)]'
                   : 'bg-[url(/icons/header/wallet-white.svg)]',
-                'scale-75 md:scale-100 w-[24px] h-[24px]',
+                'scale-75 md:scale-100 w-[24px] h-[24px] wallet-icon',
               )}
             />
           </div>
           <span
             className={cn(
               'text-nowrap transition-all text-[12px] md:text-base font-medium ml-1 md:ml-[12px] font-Roboto',
-              'text-red-light',
+              'text-red-light address-item-white',
             )}
           >
             <Trans>Connect Wallet</Trans>

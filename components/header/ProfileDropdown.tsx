@@ -8,7 +8,7 @@ const ProfileDropdown: React.FC<{ mode: 'transparent' | 'solid' }> = ({ mode }) 
   const { logout } = useAuthBitcoin()
 
   return (
-    <motion.div {...appearAnimation} className="flex items-center justify-center">
+    <motion.div {...appearAnimation} className="flex items-center justify-center w-full h-full">
       <button className={cn('profile-menu-dropdown', 'w-fit md:w-[180px]')}>
         <Menu mode={mode} handleDisconnect={logout} />
       </button>
