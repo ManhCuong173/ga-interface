@@ -8,7 +8,7 @@ const WalletItemCard: React.FC<PropsWithClassName & WalletItemCardProps> = ({
   logo,
   name,
   isSelected,
-  onSelect,
+  onSelect
 }) => {
   return (
     <div

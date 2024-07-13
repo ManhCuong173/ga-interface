@@ -1,7 +1,16 @@
 import { isUnisatInstalled, isXverseInstalled } from '@/hooks/WalletProvider/connectors/utils'
 import { WalletBitcoinConnectorEnums } from '@/hooks/WalletProvider/useWalletBitcoinProviders'
 
-export const wallets = [
+export type WalletListType = {
+  name: string
+  connectorKey: WalletBitcoinConnectorEnums,
+  downloadLink: string
+  logo: string 
+  active: boolean
+  get installed(): () =>  any
+}
+
+export const wallets: WalletListType[] = [
   {
     name: 'UniSat',
     connectorKey: WalletBitcoinConnectorEnums.UniSat,
@@ -10,6 +19,7 @@ export const wallets = [
     },
     downloadLink: 'https://unisat.io',
     logo: '/images/wallets/unisat-wallet.png',
+    active: true
   },
   {
     name: 'Xverse',
@@ -19,5 +29,6 @@ export const wallets = [
     },
     downloadLink: 'https://www.xverse.app/',
     logo: '/images/wallets/xverse-wallet.png',
+    active: false
   },
 ]

@@ -6,6 +6,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import Image from 'next/image'
 import Trans from '../i18n/Trans'
 import WalletItemCard from './WallletItemCard'
+import { cn } from '@/lib/utils'
 
 const WalletModal: React.FC<ModalProps & { onSelect: (wallet: WalletBitcoinConnectorEnums) => void }> = ({
   isOpen,
@@ -37,16 +38,28 @@ const WalletModal: React.FC<ModalProps & { onSelect: (wallet: WalletBitcoinConne
             <Trans>Connect Your Wallet</Trans>
           </p>
 
-          <div className="gap-[12px] flex flex-col ">
+          <div className={cn("gap-[12px] flex flex-col")}>
             {wallets.map((item, index) => (
-              <WalletItemCard
+              <div className='relative'>
+                <WalletItemCard
                 onSelect={() => {
+                  if(!item.active) return;
                   onSelect(item.connectorKey)
                 }}
                 isSelected={wallet === item.connectorKey}
                 {...item}
                 key={index}
               />
+              {!item.active && <div className='absolute w-full h-full z-10 
+              left-0 top-0 bottom-0 right-0 
+              text-base font-medium 
+              bg-black/50  rounded-lg 
+              flex items-center justify-center text-white
+              cursor-not-allowed pointer-event-none
+              '>
+                Maintenance
+                </div>}
+              </div>
             ))}
           </div>
         </Dialog.Panel>
