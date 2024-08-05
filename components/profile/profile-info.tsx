@@ -4,8 +4,6 @@ import { baseURL } from '@/constants/base64'
 import useGetPoints from '@/hooks/api/useGetPoints'
 import useLinkSocial from '@/hooks/api/useLinkSocial'
 import pen from '@/icons/profile/profile-info/pen.svg'
-import ic_discord from '@/icons/socials/discord.svg'
-import ic_x from '@/icons/socials/x.svg'
 import { selectAddress, selectedPublicKey } from '@/lib/features/wallet/wallet-slice'
 import { useAppSelector } from '@/lib/hook'
 import { backend } from '@/services/endpoint/endpoint'
@@ -18,6 +16,7 @@ import Trans from '../i18n/Trans'
 import { useGATranslation } from '../i18n/hooks'
 import ButtonConnect from './button/btnconnect'
 import ModalEditProfile from './modal/modal-edit-profile'
+import { DiscordIcon, TwitterIcon } from '../svgs'
 
 interface Props {
   profile: ProfileType | undefined
@@ -151,17 +150,17 @@ export default function ProfileInfo({ profile, refetch }: Props) {
           <div className="flex flex-col items-center space-y-4">
             <ButtonConnect
               status={profile?.twitter_connect}
-              icon={ic_x}
+              icon={<TwitterIcon />}
               text={profile?.twitter_connect ? profile.twitter_username : useGATranslation()('Connect X')}
               onClick={connectTwitter}
-              className="border-[1px] border-solid border-bgAlt rounded-[10px] w-[200px] text-text-secondary text-base font-Roboto"
+              className="border-[1px] border-solid border-bgAlt rounded-[10px] w-[200px] text-text-secondary text-base font-Roboto hover:bg-red-light hover:text-white hover:border-red-light [&>svg]:hover:text-white"
             />
             <ButtonConnect
               status={profile?.discord_connect}
-              icon={ic_discord}
+              icon={<DiscordIcon />}
               text={profile?.discord_connect ? profile.discord_username : useGATranslation()('Connect Discord')}
               onClick={connectDiscord}
-              className="border-[1px] border-solid border-bgAlt rounded-[10px] w-[200px] text-text-secondary text-base font-Roboto"
+              className="border-[1px] border-solid border-bgAlt rounded-[10px] w-[200px] text-text-secondary text-base font-Roboto hover:bg-red-light hover:text-white hover:border-red-light [&>svg]:hover:text-white"
             />
           </div>
         </div>
@@ -185,4 +184,3 @@ export default function ProfileInfo({ profile, refetch }: Props) {
     </div>
   )
 }
-

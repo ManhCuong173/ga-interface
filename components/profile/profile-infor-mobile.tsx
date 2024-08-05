@@ -17,6 +17,7 @@ import Trans from '../i18n/Trans'
 import { useGATranslation } from '../i18n/hooks'
 import ButtonConnect from './button/btnconnect'
 import ModalEditProfile from './modal/modal-edit-profile'
+import { DiscordIcon, TwitterIcon } from '../svgs'
 interface PropsProfile {
   profile: ProfileType | undefined
   refetch: (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<ProfileType, Error>>
@@ -132,16 +133,16 @@ const ProfileInfoMobile = ({ profile, refetch }: PropsProfile) => {
       </p>
       <div className="flex justify-between items-center gap-3 my-5">
         <ButtonConnect
-          className="text-base font-medium leading-[130%] font-Roboto text-text-secondary"
+          className="text-base font-medium leading-[130%] font-Roboto text-text-secondary hover:bg-red-light hover:text-white hover:border-red-light [&>svg]:hover:text-white"
           status={profile?.twitter_connect}
-          icon={ic_x}
+          icon={<TwitterIcon />}
           text={profile?.twitter_connect ? profile.twitter_username : useGATranslation()('Connect X')}
           onClick={connectTwitter}
         />
         <ButtonConnect
-          className="text-base font-medium leading-[130%] font-Roboto text-text-secondary"
+          className="text-base font-medium leading-[130%] font-Roboto text-text-secondary hover:bg-red-light hover:text-white hover:border-red-light [&>svg]:hover:text-white"
           status={profile?.discord_connect}
-          icon={ic_discord}
+          icon={<DiscordIcon />}
           text={profile?.discord_connect ? profile.discord_username : useGATranslation()('Connect Discord')}
           onClick={connectDiscord}
         />
@@ -162,4 +163,3 @@ const ProfileInfoMobile = ({ profile, refetch }: PropsProfile) => {
 }
 
 export default ProfileInfoMobile
-
