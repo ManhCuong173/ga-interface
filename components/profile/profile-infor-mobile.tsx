@@ -3,8 +3,6 @@ import useGetPoints from '@/hooks/api/useGetPoints'
 
 import useLinkSocial from '@/hooks/api/useLinkSocial'
 import pen from '@/icons/profile/profile-info/pen.svg'
-import ic_discord from '@/icons/socials/discord.svg'
-import ic_x from '@/icons/socials/x.svg'
 import { setProfile } from '@/lib/features/profile/profile.slice'
 import { selectAddress, selectedPublicKey } from '@/lib/features/wallet/wallet-slice'
 import { useAppDispatch, useAppSelector } from '@/lib/hook'
@@ -15,15 +13,22 @@ import { useEffect, useState } from 'react'
 import { ProfileType } from '../../types/profile'
 import Trans from '../i18n/Trans'
 import { useGATranslation } from '../i18n/hooks'
+import { DiscordIcon, TwitterIcon } from '../svgs'
 import ButtonConnect from './button/btnconnect'
 import ModalEditProfile from './modal/modal-edit-profile'
-import { DiscordIcon, TwitterIcon } from '../svgs'
 interface PropsProfile {
   profile: ProfileType | undefined
   refetch: (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<ProfileType, Error>>
 }
 
 const ProfileInfoMobile = ({ profile, refetch }: PropsProfile) => {
+  console.log(
+    '%cMyProject%cline:26%cprofile',
+    'color:#fff;background:#ee6f57;padding:3px;border-radius:2px',
+    'color:#fff;background:#1f3c88;padding:3px;border-radius:2px',
+    'color:#fff;background:rgb(56, 13, 49);padding:3px;border-radius:2px',
+    profile,
+  )
   const router = useRouter()
   const pathname = usePathname()
   const address = useAppSelector(selectAddress)
@@ -163,3 +168,4 @@ const ProfileInfoMobile = ({ profile, refetch }: PropsProfile) => {
 }
 
 export default ProfileInfoMobile
+

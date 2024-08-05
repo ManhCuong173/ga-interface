@@ -14,9 +14,9 @@ import { useEffect, useState } from 'react'
 import { ProfileType } from '../../types/profile'
 import Trans from '../i18n/Trans'
 import { useGATranslation } from '../i18n/hooks'
+import { DiscordIcon, TwitterIcon } from '../svgs'
 import ButtonConnect from './button/btnconnect'
 import ModalEditProfile from './modal/modal-edit-profile'
-import { DiscordIcon, TwitterIcon } from '../svgs'
 
 interface Props {
   profile: ProfileType | undefined
@@ -184,3 +184,4 @@ export default function ProfileInfo({ profile, refetch }: Props) {
     </div>
   )
 }
+
