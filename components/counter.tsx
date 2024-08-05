@@ -28,7 +28,7 @@ export default function Counter({ value, direction = 'up' }: Props) {
     () =>
       springValue.on('change', (latest) => {
         if (ref.current) {
-          ref.current.textContent = Intl.NumberFormat('en-US').format(latest.toFixed(0))
+          ref.current.textContent = Intl.NumberFormat('en-US').format(latest.toFixed(0) as any)
         }
       }),
     [springValue],
@@ -36,3 +36,4 @@ export default function Counter({ value, direction = 'up' }: Props) {
 
   return <span ref={ref} />
 }
+
