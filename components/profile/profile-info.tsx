@@ -143,30 +143,23 @@ export default function ProfileInfo({ profile, refetch }: Props) {
       <p className="w-full md:max-w-[220px] text-wrap break-words text-center text-base leading-[150%] font-light tracking-[-3%] text-black1 font-Roboto ">
         {profile?.bio || <Trans>DefaultBio</Trans>}
       </p>
-      {!profile?.twitter_connect && !profile?.discord_connect && (
-        <div className="flex flex-col lg:w-[170px] mt-[120px]">
-          <div className="flex flex-col items-center space-y-4">
-            <ButtonConnect
-              status={profile?.twitter_connect}
-              icon={ic_x}
-              text={profile?.twitter_connect ? profile.twitter_username : t('Connect X')}
-              onClick={connectTwitter}
-              className="border-[1px] border-solid border-bgAlt rounded-[10px] w-[200px] text-text-secondary text-base font-Roboto"
-            />
-            <ButtonConnect
-              status={profile?.discord_connect}
-              icon={ic_discord}
-              text={profile?.discord_connect ? profile.discord_username : t('Connect Discord')}
-              onClick={connectDiscord}
-              className="border-[1px] border-solid border-bgAlt rounded-[10px] w-[200px] text-text-secondary text-base font-Roboto"
-            />
-          </div>
+      <div className="flex flex-col lg:w-[170px] mt-[120px]">
+        <div className="flex flex-col items-center space-y-4">
+          <ButtonConnect
+            status={profile?.twitter_connect}
+            icon={ic_x}
+            text={profile?.twitter_connect ? profile.twitter_username : t('Connect X')}
+            onClick={connectTwitter}
+            className="border-[1px] border-solid border-bgAlt rounded-[10px] w-[200px] text-text-secondary text-base font-Roboto"
+          />
+          <ButtonConnect
+            status={profile?.discord_connect}
+            icon={ic_discord}
+            text={profile?.discord_connect ? profile.discord_username : t('Connect Discord')}
+            onClick={connectDiscord}
+            className="border-[1px] border-solid border-bgAlt rounded-[10px] w-[200px] text-text-secondary text-base font-Roboto"
+          />
         </div>
-      )}
-      <div className="flex flex-col space-y-3">
-        {(profile?.twitter_connect || profile?.discord_connect) && (
-          <div className="text-left text-xs font-light leading-[18px] text-text-sub">Connected accounts</div>
-        )}
       </div>
       <ModalEditProfile
         open={editFlag}
