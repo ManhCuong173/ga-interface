@@ -21,7 +21,7 @@ const FeeDetails: React.FC<Props> = ({ orderDetail }) => {
     <div className="py-3 px-5 border font-semibold  text-sm border-bgAlt rounded-lg flex flex-col gap-2">
       <div className="flex justify-between leading-5 tracking-[-0.42px]">
         <span className="text-black1 font-Roboto font-normal">
-          <Trans>Fee Rate:</Trans>
+          <Trans>Fee Rate</Trans>:
         </span>
         <span className=" text-orange2">
           {feeRate} <span className=" text-black1">sats/vB</span>

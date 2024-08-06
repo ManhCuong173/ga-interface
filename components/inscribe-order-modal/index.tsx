@@ -8,6 +8,7 @@ import orderService from '@/services/order.service'
 
 import { FEE_DECIMALS } from '@/constants/fee'
 import { orderInfoDetail } from '@/constants/order'
+import { useWalletBitcoinProviderByWallet } from '@/hooks/WalletProvider/useWalletBitcoinProviders'
 import { getDecimalAmount } from '@/lib/formatNumber'
 import { NFT } from '@/types/nft'
 import { OrderDetail, OrderStatus } from '@/types/orders'
@@ -25,7 +26,6 @@ import OrderListNFT from './components/OrderListNFT'
 import PayMethod from './components/PayMethod'
 import Stepper from './stepper'
 import { PayMethodEnum } from './types'
-import { useWalletBitcoinProviderByWallet } from '@/hooks/WalletProvider/useWalletBitcoinProviders'
 
 const LIMIT_TIME = 360 // => 10s per request. that will request it within 1 hour.
 
@@ -218,8 +218,8 @@ const InscribeOrderModal: React.FC<{
             <div className="px-4 py-6 xl:p-[40px] ">
               <div className="flex justify-center items-center font-Roboto text-black2 text-xs text-center lg:justify-between">
                 <span>
-                  <Trans>Order created</Trans>
-                  {new Date(orderDetail?.createdAt).toLocaleString('en-US', {
+                  <Trans>Order created</Trans>{' '}
+                  {new Date(orderDetail?.createdAt * 1000).toLocaleString('en-US', {
                     timeZone: 'America/New_York',
                     timeZoneName: 'short',
                   })}
@@ -258,3 +258,4 @@ const InscribeOrderModal: React.FC<{
   )
 }
 export default InscribeOrderModal
+
