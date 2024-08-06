@@ -1,54 +1,68 @@
 import { useDebounce } from '@/hooks/custom/useDebouce'
+import { OrderStatus } from '@/types/orders'
 import React, { useState } from 'react'
+import InputInfoHelp from '../ReceiveAddress/InputInfoHelp'
+import Trans from '../i18n/Trans'
+import { useGATranslation } from '../i18n/hooks'
 import InscribeOrderModal from '../inscribe-order-modal'
-import InputField from '../inscribe/InputField'
-import { MintModalLayout } from '../mintNFTs/MintModalLayout'
+import { HeadMarkIcon } from '../ui/icons'
 import ListOrders from './list'
-import SelectStatus from './status'
+import SelectStatusOrder from './status'
 
 const MyOrders = () => {
-  const [orderID, setOrderID] = useState('')
-  const debounceValue = useDebounce(orderID, 500)
-  const [statusValue, setStatusValue] = useState('all')
+  const [searchOrderId, setOrderId] = useState('')
+  const [selectedOrderId, setSelectedOrderId] = useState('')
+  const debounceSearchOrderId = useDebounce(searchOrderId, 1500)
+
+  const [selectedOrderStatus, onSelectOrderStatus] = useState<OrderStatus>(OrderStatus.All)
 
   const handleSearchOrderID = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setOrderID(e.target.value)
+    setOrderId(e.target.value)
   }
-
-  const [order, setOrder] = useState('')
-  const [showInscribeOrderModal, setShowInscribeOrderModal] = useState(false)
 
   return (
     <>
-      <MintModalLayout className='relative mx-auto mt-8 flex w-full flex-col gap-6 font-ProtoMono font-medium sm:mt-10 lg:w-[800px]'>
-        <main className='relative z-10 flex flex-col gap-12'>
-          <p className='text_heading text-center capitalize text-[#4E473F]'>my orders</p>
+      <div className="relative w-full">
+        <div className="flex  items-center justify-evenly w-full">
+          <HeadMarkIcon className="hidden lg:block" />
+          <p className="text-center text-2xl md:text-[32px] text-red-light font-bold">
+            <Trans>My orders</Trans>
+          </p>
 
-          <div className='flex items-center space-x-2'>
-            <InputField
-              onChange={handleSearchOrderID}
-              className='grow border border-stroke lg:h-[44px]'
-              placeholder='Search by order ID'
-            />
-            <SelectStatus statusValue={statusValue} setStatusValue={setStatusValue} />
-          </div>
-          <ListOrders
-            debounceValue={debounceValue}
-            status={statusValue}
-            setOrder={setOrder}
-            setShowInscribeOrderModal={setShowInscribeOrderModal}
+          <HeadMarkIcon className="hidden lg:block" />
+        </div>
+
+        <div className="flex items-center justify-between w-full space-x-2 my-10 lg:my-20">
+          <InputInfoHelp
+            hideEndIcon
+            className="w-full md:max-w-[400px]"
+            classNameInput="placeholder:text-base font-bold"
+            placeholder={useGATranslation()('SEARCH NUMBER')}
+            onChange={handleSearchOrderID}
           />
-        </main>
-      </MintModalLayout>
-      <InscribeOrderModal
-        open={showInscribeOrderModal}
-        setOpen={setShowInscribeOrderModal}
-        order={order}
-        // orderId={order}
-        setOrderID={setOrderID}
-      />
+
+          <SelectStatusOrder
+            className="max-w-[130px] md:max-w-[200px]"
+            selectedOrderStatus={selectedOrderStatus}
+            onSelectOrderStatus={onSelectOrderStatus}
+          />
+        </div>
+
+        <ListOrders orderId={debounceSearchOrderId} status={selectedOrderStatus} onSelectOrderId={setSelectedOrderId} />
+      </div>
+
+      {selectedOrderId && (
+        <InscribeOrderModal
+          isOpen={Boolean(selectedOrderId)}
+          orderId={selectedOrderId}
+          onClose={() => {
+            setSelectedOrderId('')
+          }}
+        />
+      )}
     </>
   )
 }
 
 export default MyOrders
+

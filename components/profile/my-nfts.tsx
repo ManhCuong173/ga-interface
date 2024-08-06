@@ -3,16 +3,16 @@
 import Assets from '@/components/profile/assets'
 import { emptyAsset } from '@/constants/asset.constant'
 import { nftTypes } from '@/constants/nft.constant'
-import lantern from '@/icons/profile/rounded-lantern.svg'
+import { useWalletBitcoinProviderByWallet } from '@/hooks/WalletProvider/useWalletBitcoinProviders'
 import { selectAddress, selectedPublicKey } from '@/lib/features/wallet/wallet-slice'
 import { useAppSelector } from '@/lib/hook'
 import axiosClient from '@/services/axios-client'
+import { backend } from '@/services/endpoint/endpoint'
 import { listService } from '@/services/list.service'
 import { userService } from '@/services/user.service'
 import { UserAsset } from '@/types/asset'
 import { NFTDetail } from '@/types/nft'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import Image from 'next/image'
 import { useState, useTransition } from 'react'
 import { toast } from 'react-toastify'
 import Loading from '../Loading'
@@ -20,7 +20,6 @@ import ModalConfirmCancel from './modal/modal-confirm-cancel'
 import ModalListNft from './modal/modal-list-nft'
 import ModalListSuccess from './modal/modal-list-success'
 import ModalNftInfo from './modal/modal-nft-info'
-import { backend } from '@/services/endpoint/endpoint'
 
 export default function MyNFTs() {
   const address = useAppSelector(selectAddress)
@@ -29,11 +28,10 @@ export default function MyNFTs() {
   const [selectedAsset, setSelectedAsset] = useState<UserAsset>(emptyAsset)
   const [price, setPrice] = useState('')
   const queryClient = useQueryClient()
-  const [modalOpen, setModalOpen] = useState<
-    'nft-info' | 'list-nft' | 'list-success' | 'confirm-cancel' | null
-  >(null)
+  const [modalOpen, setModalOpen] = useState<'nft-info' | 'list-nft' | 'list-success' | 'confirm-cancel' | null>(null)
   const [isListing, startListingTransition] = useTransition()
   const [isCancelListing, startCancelListingTransition] = useTransition()
+  const provider = useWalletBitcoinProviderByWallet()
 
   const { data: assets, isLoading: loadingAssets } = useQuery({
     queryKey: ['user-assets', address],
@@ -47,12 +45,7 @@ export default function MyNFTs() {
     isLoading: loadingDetail,
     refetch,
   } = useQuery({
-    queryKey: [
-      'nft-detail',
-      selectedAsset.id_create,
-      selectedAsset.number,
-      selectedAsset.inscription_number,
-    ],
+    queryKey: ['nft-detail', selectedAsset.id_create, selectedAsset.number, selectedAsset.inscription_number],
     queryFn: async () =>
       (
         await axiosClient.post<NFTDetail>(`${backend}/inscription/info`, {
@@ -82,9 +75,11 @@ export default function MyNFTs() {
   const handleListNft = async () => {
     startListingTransition(async () => {
       try {
+        if (!provider) return
+
         const listTxIdInscription = await getListTxidInscription()
 
-        if (!listTxIdInscription.length) return
+        if (!listTxIdInscription || !listTxIdInscription.length || !provider) return
 
         const res = (
           await listService.getPsbt({
@@ -94,15 +89,24 @@ export default function MyNFTs() {
           })
         ).data
 
-        const signedPsbt: string = await (window as any).unisat.signPsbt(res.psbt)
-        const psbtBase64 = Buffer.from(signedPsbt, 'hex').toString('base64')
+        const unspentLocks = res.list_unspent_lock
+        const signInputs = {
+          [address]: unspentLocks.map((utxo) => utxo.vout).reverse(),
+        }
+        console.log(signInputs)
+
+        const signedPsbt: string = await provider.signPsbt(address, res.psbt, {
+          signInputs,
+        })
+
+        if (!signedPsbt) return
 
         await listService.sellNft({
           address: address,
           id_inscription: selectedAsset.id_inscription,
           list_unspent_lock: res.list_unspent_lock,
           price: Number(price),
-          psbt: psbtBase64,
+          psbt: signedPsbt,
           pubkey: publicKey,
         })
 
@@ -112,6 +116,7 @@ export default function MyNFTs() {
         })
         setModalOpen('list-success')
       } catch (err) {
+        console.error(err)
         toast.error('Error happed when listing nft. Please try again')
       }
     })
@@ -137,10 +142,12 @@ export default function MyNFTs() {
     })
   }
 
-  const getListTxidInscription = async () => {
+  const getListTxidInscription = async (): Promise<string[] | null> => {
     try {
-      let res = await (window as any).unisat.getInscriptions(0, 10000)
-      return res.list.map((item: { location: string }) => item.location.split(':')[0])
+      if (!provider) return null
+
+      let res = await provider.getInscriptions(address, 0, 10000)
+      return res.list.map((item) => item.inscriptionId)
     } catch (e) {
       toast.error('Error getting list tx id inscription! Please try again')
       return []
@@ -160,14 +167,8 @@ export default function MyNFTs() {
   const matchedType = nftTypes.find((item) => item.id.toString() === selectedAsset.nft_id)
 
   return (
-    <div className='pt-11'>
-      <div className='mx-auto mb-[22.5px] flex items-center justify-start gap-4'>
-        <Image src={lantern} alt='' width={40} height={40} />
-        <span className='text-[24px] font-medium leading-10 tracking-[-2%] text-black1 lg:text-[32px]'>
-          My ASSETS
-        </span>
-      </div>
-      <div className='space-y-8'>
+    <div className="pt-11">
+      <div className="">
         <Assets
           key={assets?.user_asset?.length}
           isLoading={loadingAssets}
@@ -234,3 +235,4 @@ export default function MyNFTs() {
     </div>
   )
 }
+

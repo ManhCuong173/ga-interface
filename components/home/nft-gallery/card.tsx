@@ -1,70 +1,83 @@
+import Trans from '@/components/i18n/Trans'
+import { urlRoute } from '@/constants/routes'
+import { useLocaleInfo } from '@/hooks/useLocaleInfo'
+import { cn } from '@/lib/utils'
+import { ElementType } from '@/types/element'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import Link from 'next/link'
+import React from 'react'
 
 export type Props = {
-  background: string
-  backgroundMobile: string
   icon: string
-  symbol: string
-  title: string
-  body: string
+  bgMobile: string
+  bgDesktop: string
+  color: string
+
+  title?: string
+  description: string
   motionProps: any
+  element?: ElementType
 }
 
-export default function Card({ ...props }: Props) {
+const Card: React.FC<Props> = ({ icon, bgDesktop, bgMobile, color, description, title, motionProps, element }) => {
+  const { locale } = useLocaleInfo()
+
   return (
     <motion.div
-      {...props.motionProps}
-      className='flip-card group relative aspect-[382/220.47] lg:aspect-[235/480]'
+      {...motionProps}
+      className=" group relative w-full max-w-[400px] lg:max-w-auto mx-auto lg:mx-0 cursor-pointer"
     >
-      <div className='flip-card-inner size-full'>
-        {/* Front */}
-        <div
-          className='absolute inset-0'
-          style={{
-            WebkitBackfaceVisibility: 'hidden',
-            backfaceVisibility: 'hidden',
-          }}
-        >
-          <Image
-            src={props.background}
-            alt=''
-            fill
-            className='hidden object-cover lg:inline-block'
-          />
-          <Image src={props.backgroundMobile} alt='' fill className='object-cover lg:hidden' />
-        </div>
+      <div>
+        <div className="group relative overflow-hidden lg:h-[417px]">
+          <div>
+            <Image src={bgDesktop} width={235} height={417} alt="" className="hidden object-cover lg:inline-block" />
+            <Image src={bgMobile} width={400} height={200} alt="" className="object-cover lg:hidden" />
+          </div>
 
-        {/* Back */}
-        <div
-          className='rotate absolute inset-0 flex flex-col items-center justify-between bg-[url(/images/home/nft-gallery/cards/background-mobile.png)] bg-full px-[22px] lg:bg-[url(/images/home/nft-gallery/cards/background.png)]'
-          style={{
-            WebkitBackfaceVisibility: 'hidden',
-            backfaceVisibility: 'hidden',
-            transform: 'rotateY(180deg)',
-          }}
-        >
-          <div className='flex h-full flex-col items-center justify-center lg:justify-between'>
-            <p className='relative z-[2] max-w-[314px] text-sm font-semibold leading-[22px] tracking-[-0.2px] text-black1 lg:mt-[72px] lg:max-w-[192px]'>
-              {props.body}
-            </p>
-            <Image
-              src={props.symbol}
-              alt=''
-              width={88}
-              height={122}
-              className='absolute left-1/2 top-1/2 z-[1] -translate-x-1/2 -translate-y-1/2 opacity-10 lg:hidden'
-            />
-            <Image
-              src={props.symbol}
-              alt=''
-              width={88}
-              height={122}
-              className='mb-[41px] hidden lg:inline'
-            />
+          <div
+            className={cn(
+              'absolute top-1/2 left-1/2',
+              '-translate-x-1/2 -translate-y-1/2',
+              'max-lg:group-hover:left-[15%]',
+              'lg:group-hover:top-[20%]',
+              'transition-all duration-200 z-10',
+              'w-[82px] h-[82px]',
+            )}
+          >
+            <Image src={icon} width={82} height={82} alt="" />
+          </div>
+
+          <div
+            style={{
+              backgroundColor: color,
+            }}
+            className={cn(
+              'absolute max-lg:right-0 bottom-0',
+              'transition-all duration-200',
+              'max-lg:translate-x-full max-lg:group-hover:translate-x-0',
+              'lg:translate-y-full lg:group-hover:translate-y-[10%]',
+              'flex items-center justify-center',
+              'pl-8 pr-8 w-[80%]  h-full lg:px-[28px]  lg:w-full  lg:h-[85%]',
+              'rounded-tl-[20px] rounded-bl-[20px] lg:rounded-tr-[20px]',
+            )}
+          >
+            <div className="flex flex-col items-center justify-center">
+              <div className="text-secondary text-sm font-semibold font-Roboto text-left lg:text-center lg:mb-2">
+                <Trans>{title}</Trans>
+              </div>
+              <Link
+                href={`${urlRoute.marketplace}/?elementId=${element?.id}`}
+                className={cn('text-secondary text-xs font-Roboto text-left lg:text-center relative')}
+              >
+                <Trans>{description}</Trans>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
     </motion.div>
   )
 }
+export default Card
+

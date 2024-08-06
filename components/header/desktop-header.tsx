@@ -1,37 +1,92 @@
 import { headerItems } from '@/constants/header.constant'
+import { GaSocialLinkVariantEnums, SocialLinks } from '@/constants/socials'
+import { useBitcoinConnected } from '@/context/BitcoinProviderContext/hook'
+import { useLocaleInfo } from '@/hooks/useLocaleInfo'
+import { locales } from '@/i18n'
 import logo from '@/images/commons/logo.svg'
-import { selectActiveSection } from '@/lib/features/home-section/home-section-slice'
-import { useAppSelector } from '@/lib/hook'
+import { cn } from '@/lib/utils'
+import { usePathname, useRouter } from '@/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import { Fragment, useEffect, useState } from 'react'
-import ConnectWalletButton from './connect-wallet-button'
-import LanguageSelect from './language-select'
+import DropdownAction, { DropdownActionProps } from '../dropdown'
+import { DropdownAnchor, DropdownContainer } from '../dropdown/styled'
+import Trans from '../i18n/Trans'
+import ConnectWalletButton from './ConnectWalletButton'
+import ProfileDropdown from './ProfileDropdown'
+
+export const LanguageSelect: React.FC<Partial<DropdownActionProps>> = ({ show, toggle }) => {
+  const { locale } = useLocaleInfo()
+  const listLocale = locales
+  const router = useRouter()
+  const pathname = usePathname()
+
+  return (
+    <DropdownContainer>
+      <div
+        className="flex items-center justify-center gap-4"
+        onClick={() => {
+          console.log('click')
+          if (toggle) toggle()
+        }}
+      >
+        <div
+          className={cn(
+            'relative z-10',
+            show ? 'rounded-t-[20px]' : 'rounded-full',
+            'bg-[rgba(212,199,156,0.30)] p-[9px] text-lg font-normal leading-3/2 w-[42px] h-[42px]  flex items-center justify-center cursor-pointer hover:opacity-80 transition-all',
+          )}
+        >
+          {locale.toUpperCase()}
+        </div>
+      </div>
+      <DropdownAnchor
+        show={show || false}
+        className={cn(
+          'w-[42px] h-[42px] bg-[rgba(212,199,156)] flex items-center justify-center rounded-b-[20px]',
+          show ? 'translate-y-0' : '-translate-y-2',
+          'duration-75',
+          'cursor-pointer',
+        )}
+      >
+        {listLocale
+          .filter((item) => item !== locale)
+          .map((item) => (
+            <div onClick={() => router.replace(pathname, { locale: item })}>{item}</div>
+          ))}
+      </DropdownAnchor>
+    </DropdownContainer>
+  )
+}
 
 export default function DesktopHeader() {
   const path = usePathname()
-  const isHomePage = path === '/'
-  const activeSection = useAppSelector(selectActiveSection)
+  const isHomePage = ['/en', '/cn', '/'].includes(path)
   const [show, setShow] = useState(false)
-  const [prevScrollPos, setPrevScrollPos] = useState(0)
+  const [isScrollOverSidebarHeight, setIsScrollOverSidebarHeight] = useState(false)
+  const { locale } = useLocaleInfo()
+  const isWalletConnected = useBitcoinConnected()
 
   useEffect(() => {
-    setShow(true)
-  }, [])
+    if (isHomePage) {
+      setShow(false)
+    } else setShow(true)
+  }, [isHomePage])
 
   useEffect(() => {
     const rootDiv = document.getElementById('root-div')
     if (rootDiv) {
       const handleScroll = () => {
         const currentScrollPos = rootDiv.scrollTop
-        if (prevScrollPos > currentScrollPos) {
-          setShow(true)
-        } else if (prevScrollPos < currentScrollPos) {
-          setShow(false)
-        }
+        const homeBannerSection = document.getElementById('banner')
 
-        setPrevScrollPos(currentScrollPos)
+        if (homeBannerSection && currentScrollPos > homeBannerSection?.clientHeight) {
+          setIsScrollOverSidebarHeight(true)
+        } else setIsScrollOverSidebarHeight(false)
+
+        if (rootDiv.scrollTop > 0) {
+          setShow(true)
+        } else setShow(false)
       }
 
       rootDiv.addEventListener('scroll', handleScroll)
@@ -40,70 +95,79 @@ export default function DesktopHeader() {
         rootDiv.removeEventListener('scroll', handleScroll)
       }
     }
-  }, [isHomePage, prevScrollPos])
-
-  const mode = isHomePage
-    ? ['banner', ''].includes(activeSection)
-      ? 'transparent'
-      : 'solid'
-    : 'solid'
+  }, [isHomePage, path])
 
   return (
     <header
-      className={`${!show && isHomePage ? '!-translate-y-full' : mode === 'transparent' ? '] border border-[#FFF4DD] border-opacity-40 !text-_white' : 'border-[#D4C79C] bg-[#FAF5F0] text-black1'} fixed top-0 z-50 hidden h-[67px] w-full origin-top translate-y-0 border-b text-black1 transition-all duration-500 lg:flex`}
+      className={cn(
+        !isScrollOverSidebarHeight ? 'hidden' : 'block',
+        'bg-[#FAF5F0] text-black1',
+        'fixed top-0 z-50 hidden h-[67px] w-full origin-top translate-y-0 border-b text-black1 transition-all duration-500 lg:flex lg:h-[67px]',
+      )}
+      style={{
+        display: !show ? 'none' : 'flex',
+      }}
     >
-      <div className='mx-auto flex h-full w-full max-w-container translate-y-[1px] items-center justify-between px-10'>
-        <div className='flex h-full items-center gap-8'>
-          <Link href='/' className='flex items-center gap-[7.74px]'>
-            <Image src={logo} alt='' width={48} height={48} />
-            <span className='text-xl font-semibold'>
-              GOLDEN <br /> APPLE
-            </span>
+      <div className="mx-auto flex h-full w-full max-w-container translate-y-[1px] items-center justify-between px-10">
+        <div className="flex h-full items-center gap-8">
+          <Link href="/" className="flex items-center gap-[12px]">
+            <Image src={logo} alt="" width={48} height={48} />
+            <span className="text-xl font-semibold tracking-tighter">GOLDEN APPLE</span>
           </Link>
-          <div className='flex h-full items-center'>
+
+          <div className="flex items-center justify-center gap-4">
+            <DropdownAction>
+              <LanguageSelect />
+            </DropdownAction>
+
+            {SocialLinks.filter(
+              (item) =>
+                (item.type === GaSocialLinkVariantEnums.X && locale === 'en') ||
+                (item.type === GaSocialLinkVariantEnums.XChina && locale === 'cn') ||
+                ![GaSocialLinkVariantEnums.X, GaSocialLinkVariantEnums.XChina].includes(item.type),
+            ).map((link) => {
+              return (
+                <Link href={link.url} target="_blank" key={link.name}>
+                  <Image
+                    src={link.icon}
+                    width={26}
+                    height={26}
+                    alt=""
+                    className="hover:opacity-80 transition-all cursor-pointer"
+                  />
+                </Link>
+              )
+            })}
+          </div>
+        </div>
+        <div className="flex items-center gap-8">
+          <div className="flex h-full items-center">
             {headerItems.map((item, index) => (
               <Fragment key={item.href}>
                 <Link
                   href={item.href}
                   className={`${(item.href === '/' && isHomePage) || (path.includes(item.href) && !isHomePage && item.href !== '/') ? 'border-red-light text-red-light' : 'border-transparent'} flex h-full items-center gap-2 border-b-2 px-6`}
                 >
-                  {/* {(item.href === '/' && isHomePage) ||
-                  (path.includes(item.href) && !isHomePage && item.href !== '/') ? (
-                    <Image src={item.activeIcon} alt='' width={24} height={24} />
-                  ) : (
-                    <div className='relative h-6 w-6'>
-                      <Image
-                        src={item.icon}
-                        alt=''
-                        width={24}
-                        height={24}
-                        className={`${isHomePage && mode === 'transparent' ? 'opacity-100' : 'opacity-0'} absolute inset-0 transition-opacity`}
-                      />
-                      <Image
-                        src={item.blackIcon}
-                        alt=''
-                        width={24}
-                        height={24}
-                        className={`${isHomePage && mode === 'transparent' ? 'opacity-0' : 'opacity-100'} absolute inset-0 transition-opacity`}
-                      />
-                    </div>
-                  )} */}
-                  <span>{item.label}</span>
+                  <span className="whitespace-nowrap">
+                    <Trans>{item.label}</Trans>
+                  </span>
                 </Link>
-                {index !== headerItems.length - 1 && (
-                  <div
-                    className={`${!isHomePage ? 'bg-black1' : mode === 'transparent' ? 'bg-_white' : 'bg-black1'} h-[21px] w-[1px]`}
-                  ></div>
-                )}
               </Fragment>
             ))}
           </div>
-        </div>
-        <div className='flex items-center gap-8'>
-          <LanguageSelect mode={isHomePage ? mode : 'solid'} />
-          <ConnectWalletButton mode={mode} />
+
+          <div
+            className={cn(
+              'h-[48px] w-[190px] rounded-[10px]  border-solid border-[1px] flex justify-center items-center  cursor-pointer',
+              'border-red-light hover:bg-red-light desktop-menu-container ',
+            )}
+          >
+            {isWalletConnected && <ProfileDropdown mode="solid" />}
+            {!isWalletConnected && <ConnectWalletButton mode={'solid'} />}
+          </div>
         </div>
       </div>
     </header>
   )
 }
+

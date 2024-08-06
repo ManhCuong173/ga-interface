@@ -1,3 +1,4 @@
+import { useWalletBitcoinProviderByWallet } from '@/hooks/WalletProvider/useWalletBitcoinProviders'
 import { selectAddress, selectedPublicKey } from '@/lib/features/wallet/wallet-slice'
 import { useAppSelector } from '@/lib/hook'
 import { claimService } from '@/services/claim.service'
@@ -15,22 +16,18 @@ interface PropsBtnClaim {
   inscriptionId: string
 }
 
-const BtnClaim = ({
-  round,
-  walletAddress,
-  refetch,
-  isCompleted,
-  lucky_number,
-  inscriptionId,
-}: PropsBtnClaim) => {
+const BtnClaim = ({ round, refetch, isCompleted, inscriptionId }: PropsBtnClaim) => {
   const addressOwner = useAppSelector(selectAddress)
   const public_key = useAppSelector(selectedPublicKey)
+  const provider = useWalletBitcoinProviderByWallet()
 
-  const [isClaim, setIsClaim] = useState(false);
+  const [isClaim, setIsClaim] = useState(false)
 
   const handleGetSignature = async () => {
     try {
-      const res = await (window as any).unisat.signMessage(inscriptionId)
+      if (!provider) return ''
+
+      const res = await provider.signMessage(addressOwner, inscriptionId)
       return res
     } catch (err) {
       if (err instanceof AxiosError) {
@@ -38,16 +35,20 @@ const BtnClaim = ({
         toast.error(err.response?.data.message)
       }
     }
+    return ''
   }
-  const handleGetTxInscription = async () => {
+  const handleGetTxInscription = async (): Promise<string[]> => {
     try {
-      let res = await (window as any).unisat.getInscriptions(0, 10)
-      const list = await res.list.map((inscription: any) => {
+      if (!provider) return []
+
+      const res = await provider.getInscriptions(addressOwner, 0, 10)
+      const list = await res.list.map((inscription) => {
         return inscription.inscriptionId
       })
       return list
     } catch (err) {
       console.log(err)
+      return []
     }
   }
   const verifyClaim = async (
@@ -67,50 +68,58 @@ const BtnClaim = ({
       wallet_address,
     })
     if (res.status === 200) {
-      return res.data.psbt_claim;
+      return res.data.psbt_claim
     }
   }
 
-  const disable = isCompleted;
-
-  const handleSignPsbt = async (psbt: string) => {
-    if (!psbt) return;
-    const res = await (window as any).unisat.signPsbt(psbt);
-    const psbt_sign = Buffer.from(res, 'hex').toString('base64');
-    return psbt_sign;
-  }
+  const disable = isCompleted
 
   const handleRewardClaim = async (psbt_claim: string, psbt_claim_sign: string) => {
-    if (!psbt_claim || !psbt_claim_sign) return;
+    if (!psbt_claim || !psbt_claim_sign) return
     const res = await claimService.claimReward({
       psbt_claim,
-      psbt_claim_sign
+      psbt_claim_sign,
     })
-    return res;
+    return res
   }
-
 
   const handleClaim = async () => {
     try {
-      setIsClaim(true);
+      setIsClaim(true)
       const signature = await handleGetSignature()
       const list_txid_inscription = await handleGetTxInscription()
-      const psbt_claim = await verifyClaim(inscriptionId, list_txid_inscription, public_key, round, signature, addressOwner);
-      const psbt_claim_sign = await handleSignPsbt(psbt_claim);
+      const psbt_claim = await verifyClaim(
+        inscriptionId,
+        list_txid_inscription,
+        public_key,
+        round,
+        signature,
+        addressOwner,
+      )
 
-      const res = await handleRewardClaim(psbt_claim, String(psbt_claim_sign));
+      if (!psbt_claim || !provider) return
+
+      const psbt_claim_sign = await provider.signPsbt(addressOwner, psbt_claim, {
+        signInputs: {
+          address: [0],
+        },
+      })
+
+      if (!psbt_claim_sign) return
+
+      const res = await handleRewardClaim(psbt_claim, String(psbt_claim_sign))
       if (res?.status === 200) {
-        refetch();
-        setIsClaim(false);
+        refetch()
+        setIsClaim(false)
       }
-      return;
+      return
     } catch (err) {
       console.log(err)
       if (err instanceof AxiosError) {
-        console.log(err.response?.data.message);
-        toast.error(err.response?.data.message);
+        console.log(err.response?.data.message)
+        toast.error(err.response?.data.message)
       }
-      setIsClaim(false);
+      setIsClaim(false)
     }
   }
 

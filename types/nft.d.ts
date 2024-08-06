@@ -1,17 +1,23 @@
 export type NFT = {
-  id_nft: number
-  nft_link: string
-  price: number
-  base_64: string
-  format: string
-  size: number
+  nft_link?: string
+  price?: number
   number?: string
-  is_min?: boolean
+
+  id?: number
+  url?: string
+  natural?: string
+  round?: number
 }
 
 export type NFTCollectionResponse = {
   nft_collection: NFT[]
   data: NFT[]
+}
+
+export type NFTFilterResponse = {
+  current: number
+  total: number
+  nfts: NFT[]
 }
 
 export type NFTType = {

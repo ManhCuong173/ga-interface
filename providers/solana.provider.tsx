@@ -45,3 +45,4 @@ export default function SolanaProvider({ children }: any) {
 }
 
 export const useSolanaWallet = useWallet
+
