@@ -1,11 +1,13 @@
 export type Activity = {
-    address_buyer: string;
-    address_seller: string;
-    price_nft: number;
-    time_exchange: number;
-    inscription_id: string;
-    inscription_number: number;
-    nft_id: string;
-    number: string;
-    nft_link: string;
+  title: string
+  buyer: string
+  seller: string
+  price: number
+  inscriptionId: string
+  inscriptionNumber: number
+  nftId: string
+  number: string
+  nftUrl: string
+
+  createdAt: number
 }

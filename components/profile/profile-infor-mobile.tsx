@@ -1,41 +1,44 @@
+import { baseURL } from '@/constants/base64'
 import useGetPoints from '@/hooks/api/useGetPoints'
+
 import useLinkSocial from '@/hooks/api/useLinkSocial'
 import pen from '@/icons/profile/profile-info/pen.svg'
 import ic_discord from '@/icons/socials/discord.svg'
 import ic_x from '@/icons/socials/x.svg'
-import decor from '@/images/profile/profile-info/decor.png'
 import { setProfile } from '@/lib/features/profile/profile.slice'
 import { selectAddress, selectedPublicKey } from '@/lib/features/wallet/wallet-slice'
 import { useAppDispatch, useAppSelector } from '@/lib/hook'
-import { sliceAddress } from '@/lib/utils'
 import { QueryObserverResult, RefetchOptions, useQueryClient } from '@tanstack/react-query'
 import Image from 'next/image'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { ProfileType } from '../../types/profile'
-import { IconCopy } from '../button'
+import Trans from '../i18n/Trans'
+import { useGATranslation } from '../i18n/hooks'
 import ButtonConnect from './button/btnconnect'
 import ModalEditProfile from './modal/modal-edit-profile'
+import Referral from './referral'
+import { useTranslations } from 'next-intl'
 interface PropsProfile {
   profile: ProfileType | undefined
-  refetch: (
-    options?: RefetchOptions | undefined,
-  ) => Promise<QueryObserverResult<ProfileType, Error>>
+  refetch: (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<ProfileType, Error>>
 }
 
 const ProfileInfoMobile = ({ profile, refetch }: PropsProfile) => {
   const router = useRouter()
+  const pathname = usePathname()
   const address = useAppSelector(selectAddress)
   const publicKey = useAppSelector(selectedPublicKey)
-  const searchParams = useSearchParams()
-  const pathname = usePathname()
   const [editFlag, setEditFlag] = useState(false)
   const queryClient = useQueryClient()
   const dispatch = useAppDispatch()
+  const searchParams = useSearchParams()
   const oauth_token = searchParams.get('oauth_token')
   const oauth_verifier = searchParams.get('oauth_verifier')
   const code = searchParams.get('code')
   const state = searchParams.get('state')
+
+  const t = useTranslations()
 
   const { bindDiscord, bindTwitter, removeDiscord, removeX } = useLinkSocial({ refetch })
   const { data: point } = useGetPoints()
@@ -56,14 +59,14 @@ const ProfileInfoMobile = ({ profile, refetch }: PropsProfile) => {
       removeX()
       return
     }
-    router.push(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/authentication/twitter`)
+    router.push(`${process.env.NEXT_PUBLIC_API_URL}/authentication/twitter`)
   }
   const connectDiscord = () => {
     if (profile?.discord_connect) {
       removeDiscord()
       return
     }
-    router.push(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/authentication/discord`)
+    router.push(`${process.env.NEXT_PUBLIC_API_URL}/authentication/discord`)
   }
 
   useEffect(() => {
@@ -92,49 +95,62 @@ const ProfileInfoMobile = ({ profile, refetch }: PropsProfile) => {
   }
 
   return (
-    <div className='flex w-full flex-col justify-center gap-4 pt-20 lg:hidden'>
-      <h2 className='mx-auto w-[250px] truncate text-center text-2xl font-medium leading-8 tracking-[-2%] text-black'>
-        {profile?.name || 'Unknown name '}
-      </h2>
-      {/* <div className='flex h-fit items-center justify-center gap-2 text-xs font-light leading-[18px] tracking-[-3%] text-text-black'>
-        <span> {sliceAddress(profile?.wallet_address)}</span>
-        <IconCopy text={String(profile?.wallet_address)} />
-      </div> */}
-      <div className='flex items-center justify-center gap-2'>
-        <span className='text-[20px] font-medium leading-6 tracking-[-2%] text-[#EF232C]'>
-          {point || 0}
-        </span>
-        <span className='text-base font-medium leading-6 tracking-[-2%] text-text-sub'>POINTS</span>
+    <div className="flex w-full flex-col justify-center gap-1 pt-20 md:hidden">
+      <div className="flex">
+        <div className="w-[100px]">
+          <div className="mx-auto h-[100px] w-[100px] overflow-hidden rounded-full border-4 border-bgAlt">
+            {profile?.avatar ? (
+              <Image
+                src={profile.avatar}
+                alt="avatar"
+                className="h-full w-full"
+                width={0}
+                height={0}
+                fill
+                blurDataURL={baseURL}
+              />
+            ) : (
+              <div className="mx-auto h-full w-full bg-red-500"></div>
+            )}
+          </div>
+          <button onClick={editProfileClicked} className=" flex h-10 w-fit items-center mt-[19p]">
+            <span className="text-sm font-medium leading-5 tracking-[-3%] text-text-secondary font-Roboto">
+              <Trans>Edit Profile</Trans>
+            </span>
+            <Image src={pen} alt="" width={16} height={16} className="ml-2" />
+          </button>
+        </div>
+        <div className="flex flex-col ml-4">
+          <h2 className='h2 className="w-[250px] truncate  text-lg font-medium leading-8 tracking-[-2%] text-black font-Roboto'>
+            {profile?.name || <Trans>Unknown Name</Trans>}
+          </h2>
+          <div className="flex h-[36px] w-[129px] items-center justify-center gap-2 bg-full border-bgAlt border-[1px] border-solid py-[6px] px-[18px] rounded-[100px]">
+            <span className="text-[20px] font-medium leading-6 tracking-[-2%] text-[#EF232C]">{point}</span>
+            <span className="text-base font-medium leading-6 tracking-[-2%] text-text-sub ">Points</span>
+          </div>
+        </div>
       </div>
-      <button
-        onClick={editProfileClicked}
-        className='mx-auto flex h-10 w-fit items-center gap-2 rounded-full border border-line px-4'
-      >
-        <Image src={pen} alt='' width={24} height={24} />
-        <span className='text-sm font-light leading-5 tracking-[-3%] text-black1'>
-          Edit Profile
-        </span>
-      </button>
-      <p className='w-full break-words text-center text-sm font-light leading-5 tracking-[-3%] text-black1'>
+
+      <p className="w-full break-words text-md font-light leading-5 tracking-[-3%] text-black1 font-Roboto">
         {profile?.bio}
       </p>
-      <div className='flex flex-col items-center space-y-4'>
+      <Referral />
+      <div className="flex justify-between items-center gap-3 my-5">
         <ButtonConnect
-          className='bg-[#fff]'
+          className="text-base font-medium leading-[130%] font-Roboto text-text-secondary"
           status={profile?.twitter_connect}
           icon={ic_x}
-          text={profile?.twitter_connect ? profile.twitter_username : 'connect x'}
+          text={profile?.twitter_connect ? profile.twitter_username : t('Connect X')}
           onClick={connectTwitter}
         />
         <ButtonConnect
-          className='bg-[#fff]'
+          className="text-base font-medium leading-[130%] font-Roboto text-text-secondary"
           status={profile?.discord_connect}
           icon={ic_discord}
-          text={profile?.discord_connect ? profile.discord_username : 'connect discord'}
+          text={profile?.discord_connect ? profile.discord_username : t('Connect Discord')}
           onClick={connectDiscord}
         />
       </div>
-      <Image src={decor} alt='' className='mx-auto w-[180px]' />
       <ModalEditProfile
         open={editFlag}
         handleClose={() => {
@@ -151,3 +167,4 @@ const ProfileInfoMobile = ({ profile, refetch }: PropsProfile) => {
 }
 
 export default ProfileInfoMobile
+

@@ -1,10 +1,11 @@
 import homeSectionReducer from '@/lib/features/home-section/home-section-slice'
 import walletReducer from '@/lib/features/wallet/wallet-slice'
 import { configureStore } from '@reduxjs/toolkit'
-import MintProcessSlice from './features/wallet/mintProcess';
-import feeSlice from './features/wallet/fee-slice';
-import marketplaceSlice from './features/marketplace/marketplace-slice';
-import profileSlice from './features/profile/profile.slice';
+import MintProcessSlice from './features/wallet/mintProcess'
+import feeSlice from './features/wallet/fee-slice'
+import marketplaceSlice from './features/marketplace/marketplace-slice'
+import profileSlice from './features/profile/profile.slice'
+import authSlice from './features/auth/auth-slice'
 
 export const makeStore = () => {
   return configureStore({
@@ -14,11 +15,17 @@ export const makeStore = () => {
       fee: feeSlice,
       homeSection: homeSectionReducer,
       marketplaceSlice: marketplaceSlice,
-      profile: profileSlice
+      profile: profileSlice,
+      auth: authSlice,
     },
   })
 }
 
+const store = makeStore()
+
 export type AppStore = ReturnType<typeof makeStore>
 export type RootState = ReturnType<AppStore['getState']>
 export type AppDispatch = AppStore['dispatch']
+
+export default store
+

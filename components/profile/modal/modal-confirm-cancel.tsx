@@ -1,9 +1,11 @@
 'use client'
 
+import { ButtonImage } from '@/components/button'
+import Trans from '@/components/i18n/Trans'
+import { useGATranslation } from '@/components/i18n/hooks'
 import { handleReturnIconType } from '@/components/marketplace/Item'
 import ModalContainer from '@/components/ui/modal-container'
 import closeModalButton from '@/icons/profile/modal/close-button.svg'
-import decor from '@/images/profile/modal/decor.png'
 import Image from 'next/image'
 
 type Props = {
@@ -25,59 +27,75 @@ export default function ModalConfirmCancel({
   nftImage,
   nftName,
   inscriptionNumber,
-  backdropClassname,
   handleClose,
   handleSubmit,
 }: Props) {
   return (
-    <ModalContainer open={open} handleClose={handleClose} backdropClassname={backdropClassname}>
-      <div className='realtive my-8 flex w-[664px] flex-col items-center space-y-8 bg-white bg-[url(/images/profile/modal/background-cancel.png)] bg-full p-10 text-text-black'>
-        <div className='flex w-full items-center justify-end'>
-          <button onClick={handleClose} className='outline-none'>
-            <Image src={closeModalButton} alt='' width={44} height={44} />
+    <ModalContainer open={open} handleClose={handleClose}>
+      <div className="w-screen  bg-full lg:p-[30px] text-text-black lg:w-[540px] h-[600px] bg-white font-Roboto relative p-[10px]">
+        <div className="flex items-center justify-end absolute top-[10px] right-[10px] lg:right-[30px] lg:top-[30px]">
+          <button onClick={handleClose} className="outline-none">
+            <Image src={closeModalButton} alt="" width={44} height={44} />
           </button>
         </div>
-        <div className='flex w-full flex-col items-center gap-11'>
-          <div className='space-y-6'>
-            <div className='space-y-6'>
-              <Image src={decor} alt='' height={28.85} width={360.21} className='mx-auto' />
-              <div className='relative mx-auto items-center justify-center text-[32px] font-medium leading-[39px]'>
-                Are you sure to cancel <br /> listing{' '}
-                <span className='text-red-light'>
-                  {nftName} APPLE #{number}?
-                </span>
-              </div>
+
+        <div className="flex w-full flex-col items-center gap-3">
+          <div className="space-y-6 font-ProtoMono">
+            <div className="relative mx-auto items-center justify-center text-[24px] font-medium leading-[39px] tracking-tighter">
+              {useGATranslation().rich('Are you sure to cancel <br /> listing', { br: () => <br /> })}
+              <span className="text-red-light ml-1">
+                {nftName} APPLE #{number}?
+              </span>
             </div>
-            <p className='w-full text-center text-sm font-medium leading-6 text-black1'>
-              Cancelling this NFT listing will remove it from the marketplace and any associated
-              transactions or bids will be lost. If you proceed, you{"'"}ll need to relist the NFT.
-            </p>
           </div>
-          <div className='relative mx-auto flex size-[350px] items-center justify-center bg-[url(/images/profile/modal/nft-frame.png)] bg-full'>
-            <span className='absolute left-[31px] top-[31px] z-10 flex h-7 items-center gap-1 rounded bg-[#FFF4DD]/50 px-2'>
-              <span className='flex h-5 w-5 items-center justify-center rounded-full bg-[#fff4dd]'>
-                <Image src={handleReturnIconType(nftId)} alt='' width={20} height={20} />
-              </span>
-              <span className='text-xs font-light tracking-[-0.36px] text-black1'>
-                #{inscriptionNumber}
-              </span>
-            </span>
-            <figure className='size-[320px]'>
-              <Image loader={() => nftImage} src={nftImage} alt='' width={320} height={320} />
+          <p className="w-full text-center text-sm font-light leading-6 text-black1 lg-w-[523px]">
+            <Trans>
+              Cancelling this NFT listing will remove it from the marketplace_Keep your NFTs listed if you still want to
+              sell them
+            </Trans>
+          </p>
+        </div>
+
+        <div className="mx-auto flex items-center justify-center w-fit h-fit pt-[20px]">
+          <div className="relative p-3 border-bgAlt border-[1px] rounded-lg">
+            <figure className="size-[204px] ">
+              <Image loader={() => nftImage} src={nftImage} alt="" width={204} height={204} />
             </figure>
           </div>
-          <div className='flex items-center justify-center gap-4'>
-            <button
-              className='aspect-[280/60] w-[280px] max-w-full bg-[url(/images/profile/modal/button-keep-listing.png)] bg-full'
-              onClick={handleClose}
-            />
-            <button
-              className='aspect-[280/60] w-[280px] max-w-full bg-[url(/images/profile/modal/button-yes.png)] bg-full'
-              onClick={handleSubmit}
-            />
+        </div>
+        <div className="w-full mt-5">
+          <h2 className="mx-auto whitespace-nowrap text-[18px] font-medium leading-8 tracking-[-0.64px] text-text-black">
+            {nftName} Apple
+          </h2>
+          <div className="flex justify-center items-center gap-1 px-2 bg-white">
+            <span className="flex h-5 w-5 items-center justify-center">
+              <Image src={handleReturnIconType(nftId)} alt="" width={20} height={20} />
+            </span>
+            <span className="text-xs font-light tracking-[-0.36px] text-black1">#{inscriptionNumber}</span>
           </div>
+        </div>
+        <div className="flex items-center w-full justify-center gap-2">
+          <ButtonImage
+            className="h-[57px] w-[280px]  bg-full transition-all lg:w-full mx-auto my-3"
+            onClick={handleClose}
+            varirant="light-double-asset"
+          >
+            <span className="text-lg font-medium leading-3/2">
+              <Trans>Keep Listing</Trans>
+            </span>
+          </ButtonImage>
+          <ButtonImage
+            className="h-[57px] w-[280px]  bg-full transition-all lg:w-full mx-auto my-3"
+            onClick={handleSubmit}
+            varirant="primary-asset"
+          >
+            <span className="text-lg font-medium leading-3/2">
+              <Trans>Yes</Trans>
+            </span>
+          </ButtonImage>
         </div>
       </div>
     </ModalContainer>
   )
 }
+

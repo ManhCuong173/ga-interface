@@ -16,11 +16,14 @@ export default function InformationRow({ title, value }: Props) {
     // </div>
     <div className="flex flex-col gap-2">
       <p className="text-xs font-light leading-6 tracking-[-0.48px]">{title}</p>
-      {value !== 'Unconfirmed'? <div className={`py-3 px-4 border border-[#E5E4E3] rounded-[4px] w-full truncate`}>
-        <span className="text-sm font-light leading-5 tracking-[-0.42px] text-[#B2B0AD]">{value}</span>
-      </div>
-      :<Skeleton height={40} />
-      }
+      {value !== 'Unconfirmed' ? (
+        <div className={`py-3 px-4 border border-[#E5E4E3] rounded-[4px] w-full truncate`}>
+          <span className="text-sm font-light leading-5 tracking-[-0.42px] text-[#B2B0AD]">{value}</span>
+        </div>
+      ) : (
+        <Skeleton height={40} />
+      )}
     </div>
   )
 }
+

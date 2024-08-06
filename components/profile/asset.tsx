@@ -1,7 +1,8 @@
 import { nftTypes } from '@/constants/nft.constant'
-import corner from '@/icons/profile/corner.svg'
+import ButtonListNFT from '@/icons/button/button-list-nft.svg'
 import { UserAsset } from '@/types/asset'
 import Image from 'next/image'
+import Trans from '../i18n/Trans'
 import { handleReturnIconType } from '../marketplace/Item'
 
 type Props = UserAsset & {
@@ -26,57 +27,49 @@ export default function Asset({ onShowInfo, onList, onCancel, ...props }: Props)
 
   return (
     <div
-      className='relative flex cursor-pointer flex-col gap-2.5 rounded border border-[#D4C79C] bg-_white p-2 pb-3'
+      className="relative flex cursor-pointer flex-col  items-center
+     rounded border-bgAlt border-[1px] mx-auto md:mx-0  w-fit p-3 pb-3 md:min-w-[180px] lg:w-[237px] lg:min-h-[246px] font-Roboto"
       onClick={handleShowNFtInfo}
     >
-      <span className='absolute left-2 top-2 z-10 flex h-7 items-center gap-1 rounded bg-[#FFF4DD] bg-opacity-50 px-2'>
-        <span className='flex h-5 w-5 items-center justify-center rounded-full bg-[#fff4dd]'>
-          <Image src={handleReturnIconType(props.nft_id)} alt='' width={20} height={20} />
+      <span
+        className="absolute left-2 top-2 z-10 flex h-7 
+      items-center rounded  px-2 bg-[#faf5f0]"
+      >
+        <span className="flex h-5 w-5 items-center justify-center rounded-full ">
+          <Image src={handleReturnIconType(props.nft_id)} alt="" width={20} height={20} />
         </span>
-        <span className='text-xs font-light tracking-[-0.36px] text-black1'>
-          #{props.inscription_number}
-        </span>
+        <span className="text-xs font-light tracking-[-0.36px] text-black1 ml-1"># {props.number}</span>
       </span>
       <div
-        className='relative aspect-[234.16/250] w-full rounded-sm bg-cover'
+        className="relative w-[160px] h-[160px] lg:w-[213px] lg:h-[213px] bg-cover rounded-lg"
         style={{
           backgroundImage: `url(${props.link_image})`,
         }}
       />
-      <div className='relative w-full'>
-        <Image
-          src={corner}
-          alt=''
-          width={47.12}
-          height={26.45}
-          className='absolute left-0 top-0 max-h-[26.45px] min-h-[26.45px] min-w-[47.12px] max-w-[47.12px]'
-        />
-        <Image
-          src={corner}
-          alt=''
-          width={47.12}
-          height={26.45}
-          className='absolute right-0 top-0 max-h-[26.45px] min-h-[26.45px] min-w-[47.12px] max-w-[47.12px] -scale-x-100'
-        />
-        <div className='flex w-full justify-center gap-2'>
-          <span className='text-sm font-medium text-[#4E473F] lg:text-base'>
-            {matchedType?.label} APPLE
-          </span>
+      <div className="relative w-full">
+        <div className="flex w-full mt-[16px] mb-[18px] justify-center md:justify-start">
+          <span className="text-sm font-medium text-[#4E473F] lg:text-base">{matchedType?.label} Apple</span>
         </div>
         <button
-          className={`${props.is_listing ? 'bg-[url(/images/profile/button-cancel-1.png)]' : 'bg-[url(/images/profile/button-list-1.png)]'} group mt-4 flex h-11 w-full items-center justify-center bg-full px-[13.82px] transition-all`}
+          className={`group mt-4 flex h-11 w-full  bg-full px-[13.82px] transition-all relative`}
           onClick={(e) => {
             e.stopPropagation()
             ;(!props.is_listing ? handleListNft : handleCancel)()
           }}
         >
+          <Image
+            src={ButtonListNFT}
+            className="w-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-h-[46px] md:max-h-[57px]"
+            alt=""
+          />
           <span
-            className={`${props.is_listing ? 'bg-[url(/images/profile/button-cancel-2.png)] text-[#B26802] group-hover:bg-[url(/images/profile/button-cancel-2-hover.png)]' : 'bg-[url(/images/profile/button-list-2.png)] text-yellow1 group-hover:bg-[url(/images/profile/button-list-2-hover.png)]'} flex h-[30.13px] w-full items-center justify-center whitespace-nowrap bg-full text-[12px] text-sm font-medium leading-[18px] tracking-[-0.36px] group-hover:shadow-btn-list-hover lg:text-base`}
+            className={`h-[30.13px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center text-white2`}
           >
-            {props.is_listing ? 'Cancel listing' : 'List'}
+            <Trans>{props.is_listing ? 'Cancel listing' : 'List'}</Trans>
           </span>
         </button>
       </div>
     </div>
   )
 }
+

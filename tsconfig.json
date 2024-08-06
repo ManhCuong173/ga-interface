@@ -14,16 +14,18 @@
     "incremental": true,
     "plugins": [
       {
-        "name": "next",
-      },
+        "name": "next"
+      }
     ],
     "paths": {
       "@/*": ["./*"],
       "@/images/*": ["./public/images/*"],
       "@/icons/*": ["./public/icons/*"],
-      "@/abi/*":["./abi/*"],
-    },
+      "@/abi/*": ["./abi/*"],
+      "@/assets/*": ["./public/*"]
+    }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules"]
 }
+

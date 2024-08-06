@@ -1,4 +1,5 @@
 import MixedChart from '@/components/chart/mixed-chart'
+import Trans from '@/components/i18n/Trans'
 import decor from '@/images/marketplace/analytics/decor.png'
 import { groupTransactionsByDate } from '@/lib/chart'
 import {
@@ -30,7 +31,7 @@ const tabs = [
   },
   {
     value: 'all',
-    label: 'ALL',
+    label: 'All',
   },
 ]
 
@@ -126,18 +127,14 @@ export default function PriceAndVolume({ ...props }: Props) {
   }, [data, activeTab])
 
   return (
-    <div className='flex h-fit w-full flex-col gap-6 rounded-lg bg-white p-4 lg:gap-8 lg:p-[60px]'>
-      <div className='flex flex-col gap-2.5 lg:gap-4'>
-        <Image
-          src={decor}
-          alt=''
-          className='mx-auto h-[28.85px] w-[283.92px] object-cover lg:w-[360.21px]'
-        />
-        <h2 className='text-center text-2xl font-semibold leading-8 text-[#0D0C22] lg:font-medium'>
-          Price and Volume
+    <div className="flex h-fit w-full flex-col gap-6 rounded-lg bg-white p-4 lg:gap-8 lg:p-[60px]">
+      <div className="flex flex-col gap-2.5 lg:gap-4">
+        <Image src={decor} alt="" className="mx-auto h-[28.85px] w-[283.92px] object-cover lg:w-[360.21px]" />
+        <h2 className="text-center text-2xl font-semibold leading-8 text-[#0D0C22] lg:font-medium">
+          <Trans>Price and volume</Trans>
         </h2>
       </div>
-      <div className='grid w-full cursor-pointer grid-cols-4 bg-[#FDE8C4] bg-opacity-40 p-1 text-sm text-text-secondary lg:ml-auto lg:flex lg:w-[unset] lg:w-fit'>
+      <div className="grid w-full cursor-pointer grid-cols-4 bg-[#FDE8C4] bg-opacity-40 p-1 text-sm text-text-secondary lg:ml-auto lg:flex lg:w-[unset] lg:w-fit">
         {tabs.map((item, index) => (
           <div
             key={item.value}
@@ -146,31 +143,31 @@ export default function PriceAndVolume({ ...props }: Props) {
               setActiveTab(item.value)
             }}
           >
-            {item.label}
+            <Trans>{item.label}</Trans>
           </div>
         ))}
       </div>
       {/* Desktop chart */}
-      <div className='hidden lg:block'>
+      <div className="hidden lg:block">
         <MixedChart
           key={props.backgroundColor + chartData.labels + activeTab}
           backgroundColor={props.backgroundColor}
           barChartDataset={chartData.barChartDataset}
           maxBarThickness={100}
-          className='h-[250px]'
+          className="h-[250px]"
           labels={chartData.labels}
           lineChartDataset={chartData.lineChartDataset}
         />
       </div>
 
       {/* Mobile chart */}
-      <div className='max-w-full overflow-x-auto lg:hidden'>
+      <div className="max-w-full overflow-x-auto lg:hidden">
         <MixedChart
           key={props.backgroundColor + chartData.labels + activeTab}
           barChartDataset={chartData.barChartDataset}
           backgroundColor={props.backgroundColor}
           maxBarThickness={40}
-          className='h-[220px]'
+          className="h-[220px]"
           labels={chartData.labels}
           lineChartDataset={chartData.lineChartDataset}
           style={chartStyle as any}
@@ -179,3 +176,4 @@ export default function PriceAndVolume({ ...props }: Props) {
     </div>
   )
 }
+

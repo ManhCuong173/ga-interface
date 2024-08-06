@@ -36,5 +36,7 @@ export const nftTypes: NFTType[] = [
     color: '#0BA5EC',
     icon: ic_water,
   },
-  
 ]
+
+export const MAX_PAGE_SIZE_NFT = 100
+

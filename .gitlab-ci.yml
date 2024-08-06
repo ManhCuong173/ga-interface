@@ -1,0 +1,57 @@
+# variables:
+#   REGISTRY: 968557029040.dkr.ecr.ap-southeast-1.amazonaws.com/project/vertiree
+
+# stages:
+#   - build
+
+# build:
+#   stage: build
+#   image:
+#     name: gcr.io/kaniko-project/executor:debug
+#     entrypoint: [""]
+#   script:
+#     - export ts=`date +%s`
+    
+#     - >-
+#       /kaniko/executor
+#       --context "${CI_PROJECT_DIR}"
+#       --destination "${REGISTRY}:golden-apple-landing-${CI_COMMIT_BRANCH}-${CI_COMMIT_SHORT_SHA}-$ts"
+#       --destination "${REGISTRY}:golden-apple-landing-stag-v2-latest"
+#       --build-arg "env=${CI_COMMIT_BRANCH}"
+#       --cache=true
+#   tags:
+#     - build
+#     - k8s
+#   only:
+#     refs:
+#       - stag-v2
+#       - main
+
+
+variables:
+  REGISTRY_PATH: 339712905004.dkr.ecr.ap-southeast-1.amazonaws.com/golden-apple
+
+stages:
+  - build
+
+build:
+  stage: build
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  script:
+    - export ts=`date +%s`
+    - >-
+      /kaniko/executor
+      --context "${CI_PROJECT_DIR}"
+      --destination "${REGISTRY_PATH}:${CI_PROJECT_NAME}-prod-ga-${CI_COMMIT_SHORT_SHA}-$ts"
+      --build-arg "env=main"
+      --cache=true
+      
+  tags:
+    - build
+    - k8s
+  only:
+    refs:
+      # - prod-ga
+      - dev-ga

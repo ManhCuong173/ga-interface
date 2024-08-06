@@ -37,3 +37,4 @@ export const flyToAnimation = {
     end: { opacity: 1, x: 0 },
   },
 }
+

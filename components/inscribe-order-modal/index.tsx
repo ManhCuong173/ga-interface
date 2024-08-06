@@ -3,264 +3,258 @@
 import { setProcessState } from '@/lib/features/wallet/mintProcess'
 import { selectedPublicKey } from '@/lib/features/wallet/wallet-slice'
 import { useAppDispatch, useAppSelector } from '@/lib/hook'
-import { mintService } from '@/services/mint.service'
-import { nftService } from '@/services/nft.service'
+import mintService from '@/services/mint.service'
+import orderService from '@/services/order.service'
+
+import { FEE_DECIMALS } from '@/constants/fee'
+import { orderInfoDetail } from '@/constants/order'
+import { getDecimalAmount } from '@/lib/formatNumber'
+import { NFT } from '@/types/nft'
+import { OrderDetail, OrderStatus } from '@/types/orders'
 import { Dialog } from '@headlessui/react'
-import { useQueryClient } from '@tanstack/react-query'
-import { useCallback, useEffect, useRef, useState } from 'react'
-import QRBox from '../QRBox'
-import { MintModalLayout } from '../mintNFTs/MintModalLayout'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { ButtonImage } from '../button'
+import Trans from '../i18n/Trans'
 import NFTDetail from '../mintNFTs/NFTDetail'
-import { NFTSection } from '../mintNFTs/NFTSection'
-import FeeDetail from './fee-detail'
+import { CloseIcon } from '../ui/icons'
+import FeeDetails from './FeeDetails'
+import StepInscribing from './StepPay/Inscribing'
+import PaymentReceived from './StepPay/PaymentReceived'
+import OrderListNFT from './components/OrderListNFT'
+import PayMethod from './components/PayMethod'
 import Stepper from './stepper'
-import StepInscribing from './steps/step-inscribing'
+import { PayMethodEnum } from './types'
+import { useWalletBitcoinProviderByWallet } from '@/hooks/WalletProvider/useWalletBitcoinProviders'
 
-export default function InscribeOrderModal({ setOpen, order, open }: any) {
-  const [payBTC, setPayBTC] = useState(true)
-  const [limitTime, setLimitTime] = useState(180)
-  const [countdown, setCountdown] = useState(15)
-  const publicKey = useAppSelector(selectedPublicKey)
-  const [orderDetail, setOrderDetail] = useState<any>()
-  const [isLoading, setIsLoading] = useState<boolean>(false)
-  const dispatch = useAppDispatch()
-  const [step, setStep] = useState<1 | 2 | 3 | 4>(1)
-  const [unisat, setUnisat] = useState<any>()
-  const [NFT, setNFT] = useState('')
-  const [isOpenWallet, setIsOpenWallet] = useState(false)
+const LIMIT_TIME = 360 // => 10s per request. that will request it within 1 hour.
+
+const InscribeOrderModal: React.FC<{
+  onClose: () => void
+  orderId: string
+  isOpen: boolean
+}> = ({ onClose, orderId, isOpen }: any) => {
   const queryClient = useQueryClient()
-  const [txidd,setTxidd] = useState('')
+  const dispatch = useAppDispatch()
+  const publicKey = useAppSelector(selectedPublicKey)
 
-  const getOrderDetail = useCallback(async () => {
-    setIsLoading(true)
-    const res = await nftService.getNFT({
-      id_create: order?.id_create,
-      public_key: publicKey,
-    })
-    if (res) setIsLoading(false)
-    setOrderDetail(res)
-  }, [order?.id_create, publicKey])
+  const refLimitTime = useRef(LIMIT_TIME)
 
-  const confirmPayment = useCallback(async (id_create: string) => {
-    try {
-      const res: any = await mintService.confirm({
-        id_create: id_create,
-      })
-      if (res && res.data && res.data.status === 'inscribing') {
-        getOrderDetail()
-      }
-    } catch (error) {
-      console.log('err: ', error)
+  const [step, setStep] = useState<1 | 2 | 3 | 4>(1)
+  const [selectedNFT, setSelectNFT] = useState<NFT | undefined>(undefined)
+
+  const [isSigning, setIsSiging] = useState(false)
+  const [txnID, setTxnID] = useState('')
+  const provider = useWalletBitcoinProviderByWallet()
+
+  const [selectedPayMethod, setPayMethod] = useState<PayMethodEnum | null>(null)
+
+  const handleUpdateStep = (status: OrderStatus) => {
+    switch (status) {
+      case OrderStatus.Inscribing:
+        return setStep(3)
+      case OrderStatus.Minted:
+        return setStep(4)
+      default:
+        return setStep(1)
     }
-  }, [getOrderDetail])
+  }
+
+  const {
+    data: orderDetail,
+    refetch: refetchOrderDetail,
+    isLoading,
+  } = useQuery<OrderDetail>({
+    queryKey: ['order-detail'],
+    queryFn: async () => {
+      const result = await orderService
+        .getOrderMintInfo({
+          id: orderId,
+          publicKey: publicKey,
+        })
+        .call()
+
+      if (result.data?.status) {
+        handleUpdateStep(result.data?.status)
+        queryClient.invalidateQueries({ queryKey: ['orders'] })
+      }
+
+      return result.data as OrderDetail
+    },
+    enabled: !!orderId,
+    initialData: orderInfoDetail,
+  })
+
+  const confirmPayment = useCallback(
+    async (id: string) => {
+      const result = await mintService.checkOrder(id).call()
+
+      if (result?.data !== OrderStatus.Pending) {
+        refetchOrderDetail()
+      }
+    },
+    [refetchOrderDetail],
+  )
+
+  useQuery({
+    queryKey: ['interval-fetch-order-detail', orderDetail?.orderId],
+    queryFn: () => refetchOrderDetail(),
+    refetchInterval: 30_000,
+    enabled: orderDetail?.status === OrderStatus.Inscribing,
+  })
+
+  useQuery({
+    queryKey: ['interval-check-order', orderDetail?.orderId, txnID],
+    queryFn: async () => {
+      await confirmPayment(orderDetail?.orderId)
+    },
+    refetchInterval: selectedPayMethod === PayMethodEnum.QRCode || txnID ? 10_000 : 30_000,
+    enabled: Boolean(isOpen && orderDetail?.status === OrderStatus.Pending),
+  })
 
   const handlePayWithWallet = async () => {
     try {
-      setIsOpenWallet(true)
+      if (!provider) return
+
+      setIsSiging(true)
+
+      const recipient = orderDetail.collectorFeeAddress || orderDetail.paymentWallet
+
+      const txId = await provider.sendBitcoin({
+        recipient,
+        amount: getDecimalAmount(orderDetail.feeMint, FEE_DECIMALS),
+      })
+
+      if (txId) {
+        setTxnID(txId)
+      }
+
       setStep(2)
-      const txid = await unisat.sendBitcoin(
-        order?.address_transfer_fee || order?.payment_wallet,
-        Math.ceil(order?.fee_mint * Math.pow(10, 8)),
-      )
-      if (txid) {
-        setTxidd(txid)
-        setIsOpenWallet(false)
-      }
     } catch (e) {
-      setIsOpenWallet(false)
+    } finally {
+      setIsSiging(false)
     }
   }
 
-  const modalRef = useRef<null | HTMLDivElement>(null)
-
   useEffect(() => {
-    if (step === 3 && order?.id_create) {
-      getOrderDetail()
-    }
-  }, [step, getOrderDetail, order?.id_create])
-
-  useEffect(() => {
-    setStep(1)
-    if (orderDetail) {
-      if (orderDetail?.status === 'inscribing') {
-        setStep(3)
-        queryClient.invalidateQueries({ queryKey: ['orders'] })
-      } else if (orderDetail?.status === 'minted') {
-        setStep(4)
-        queryClient.invalidateQueries({ queryKey: ['orders'] })
-      }
-    }
-  }, [orderDetail, queryClient])
-
-  useEffect(() => {
-    if (order?.id_create) {
-      getOrderDetail()
-    }
-    if (!open) setLimitTime(180)
-    setPayBTC(true)
-  }, [open, order, getOrderDetail])
-
-  const closeModal = () => {
-    setOpen(false)
-    dispatch(setProcessState(1))
-    queryClient.invalidateQueries({ queryKey: ['orders'] })
-  }
-
-  useEffect(() => {
-    modalRef.current?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    })
-  }, [open])
-
-  useEffect(() => {
-    if (window !== undefined) {
-      setUnisat((window as any).unisat)
+    return () => {
+      refLimitTime.current = LIMIT_TIME
+      setStep(1)
+      setSelectNFT(undefined)
+      setIsSiging(false)
+      setTxnID('')
+      setPayMethod(null)
     }
   }, [])
 
-  useEffect(() => {
-    if (step === 3) {
-      if (order?.status !== 'minted') {
-        const time = setInterval(() => {
-          getOrderDetail()
-        }, 30000)
-        return () => {
-          clearInterval(time)
-        }
-      } else {
-        console.log('minted')
-      }
-    }
-  }, [step, getOrderDetail, order?.status])
+  const handleCloseAndRefeshMintList = () => {
+    queryClient.invalidateQueries({ queryKey: ['nfts'] })
+    onClose()
+  }
 
-  useEffect(() => {
-    if(countdown>0 && txidd && orderDetail?.status === 'pending') {
-      const time = setInterval(() => {
-        confirmPayment(order?.id_create)
-        setCountdown(countdown - 1)
-      }, 1000)
-      return () => {
-        clearInterval(time)
-      }
-    }
-  }, [countdown,txidd])
+  const handleCloseModal = () => {
+    dispatch(setProcessState(1))
+    handleCloseAndRefeshMintList()
+    queryClient.invalidateQueries({ queryKey: ['orders'] })
+  }
 
+  const renderStep = useMemo(() => {
+    if (orderDetail?.status.includes(OrderStatus.Closed)) return <></>
 
-  useEffect(() => {
-    if (!payBTC && !txidd) setLimitTime(180)
-    else if (limitTime > 0 && open) {
-      if (!orderDetail || orderDetail?.status === 'pending') {
-        const time = setInterval(() => {
-          confirmPayment(order?.id_create)
-          setLimitTime(limitTime - 2)
-        }, 2000)
-        return () => {
-          clearInterval(time)
-        }
-      }
-    } else {
-      setOpen(false)
+    switch (step) {
+      case 1:
+        return (
+          // !orderDetail?.lockNFT &&
+          <PayMethod
+            selectedPayMethod={selectedPayMethod}
+            onSelectPayMethod={(method) => {
+              setPayMethod(selectedPayMethod === method ? null : method)
+            }}
+            isSiging={isSigning}
+            orderDetail={orderDetail}
+            onPayWallet={handlePayWithWallet}
+          />
+        )
+      case 2:
+        return <PaymentReceived />
+      case 3:
+        return <StepInscribing confirmed={1} unconfirmed={1} />
+      default:
+        return (
+          <ButtonImage onClick={handleCloseModal} varirant="primary-asset" className="my-10 w-full px-12 py-4">
+            <Trans>Done</Trans>
+          </ButtonImage>
+        )
     }
-  }, [limitTime, order, payBTC, open, setOpen, confirmPayment, orderDetail,txidd])
+  }, [step, selectedPayMethod, isSigning, orderDetail, setPayMethod, handlePayWithWallet])
 
   return (
     <Dialog
-      open={open}
-      onClose={closeModal}
-      ref={modalRef}
-      className={
-        'fixed inset-0 z-20 flex w-full justify-center overflow-auto bg-black/70 pt-[120px]'
-      }
+      open={isOpen}
+      onClose={handleCloseModal}
+      className={'fixed inset-0 z-20 flex w-full justify-center overflow-auto bg-black/70 pt-[120px]'}
     >
-      <Dialog.Panel className='h-fit pb-[120px] max-sm:w-full max-sm:px-4'>
-        <MintModalLayout className={'py-8'}>
-          <div className='flex flex-col gap-8 text-[#4E473F] sm:gap-10'>
-            <div className='flex flex-col items-start max-sm:gap-2'>
-              <div className='flex w-full justify-between'>
-                <p className='text-2xl font-normal leading-10 tracking-[-0.48px] sm:text-[32px] sm:font-medium sm:tracking-[-0.64px]'>
-                  Inscribing Order
+      <Dialog.Panel>
+        <div className="relative rounded-xl bg-white mx-auto lg:max-w-[1080px] w-full md:w-[calc(100%-24px)] lg:w-full">
+          <div
+            className="cursor-pointer absolute right-[2%] top-[2%]  lg:hidden"
+            onClick={() => {
+              handleCloseAndRefeshMintList()
+            }}
+          >
+            <CloseIcon className="w-11 h-11" />
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr]">
+            <div className="px-4 py-6 xl:p-[40px] border-r-2 border-solid border-bgAlt">
+              <div className="flex justify-center lg:justify-between w-full mb-5">
+                <p className="text-2xl text-red-light font-bold sm:text-[32px]">
+                  <Trans>Inscribing order!</Trans>
                 </p>
-                <div className='cursor-pointer' onClick={closeModal}>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    width='45'
-                    height='45'
-                    viewBox='0 0 45 45'
-                    fill='none'
-                  >
-                    <rect
-                      x='0.515625'
-                      y='1.20093'
-                      width='43'
-                      height='43'
-                      rx='7.5'
-                      stroke='#D4C79C'
-                    />
-                    <path
-                      d='M30.3916 14.325L13.6396 31.0769'
-                      stroke='#AE9955'
-                      stroke-width='3'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
-                    />
-                    <path
-                      d='M13.6396 14.325L30.3916 31.0769'
-                      stroke='#AE9955'
-                      stroke-width='3'
-                      stroke-linecap='round'
-                      stroke-linejoin='round'
-                    />
-                  </svg>
+              </div>
+              <OrderListNFT isLoading={isLoading} onSelectNFT={setSelectNFT} orderDetail={orderDetail} />
+            </div>
+
+            <div className="px-4 py-6 xl:p-[40px] ">
+              <div className="flex justify-center items-center font-Roboto text-black2 text-xs text-center lg:justify-between">
+                <span>
+                  <Trans>Order created</Trans>
+                  {new Date(orderDetail?.createdAt).toLocaleString('en-US', {
+                    timeZone: 'America/New_York',
+                    timeZoneName: 'short',
+                  })}
+                </span>
+                <div
+                  className="cursor-pointer hidden lg:block"
+                  onClick={() => {
+                    handleCloseAndRefeshMintList()
+                  }}
+                >
+                  <CloseIcon className="w-11 h-11" />
                 </div>
               </div>
-              <p className='text-sm font-medium leading-5 tracking-[-0.42px]'>
-                {' '}
-                <span className='font-light text-[#B2B0AD]'>Order ID:</span>{' '}
-                {orderDetail?.id_create}
-              </p>
-              <div className='flex gap-8'>
-                <p className='text-sm font-light leading-5 tracking-[-0.42px] text-[#383F4A]'>
-                  {' '}
-                  <span className=' text-[#B2B0AD]'>Quantity:</span>{' '}
-                  {orderDetail?.mint_list?.length}
-                </p>
-                <p className='text-sm font-medium leading-5 tracking-[-0.42px] text-[#FF6634]'>
-                  {' '}
-                  <span className='font-light text-[#B2B0AD]'>Status:</span>
-                  {orderDetail?.status}
-                </p>
+
+              <div className="my-5 min-w-[380px]">
+                <Stepper step={step} />
               </div>
+
+              <FeeDetails orderDetail={orderDetail} />
+
+              <div className="mt-5">{renderStep}</div>
             </div>
-            <NFTSection
-              listNft={orderDetail?.mint_list}
-              isLoading={isLoading}
-              ableView={orderDetail?.status === 'minted'}
-              setNFT={setNFT}
-            />
-            <Stepper step={step} />
-            {step === 3 && <StepInscribing />}
-            <FeeDetail
-              step={step}
-              feeRate={orderDetail?.fee_rate}
-              feeMint={orderDetail?.fee_mint}
-              gasFee={orderDetail?.gas_fee}
-              status={orderDetail?.status}
-            />
-            {step === 1 && !orderDetail?.status.includes('closed') && (
-              <QRBox
-                payBTC={payBTC}
-                setPayBTC={setPayBTC}
-                orderDetail={orderDetail}
-                step={step}
-                handlePayWithWallet={handlePayWithWallet}
-                isOpenWallet={isOpenWallet}
-              />
-            )}
           </div>
-        </MintModalLayout>
-        <NFTDetail id_create={order?.id_create} item={NFT} setNFT={setNFT} openModal={NFT != ''} />
+        </div>
+
+        <NFTDetail
+          orderId={orderDetail?.orderId}
+          nft={selectedNFT}
+          isOpen={Boolean(selectedNFT)}
+          onClose={() => {
+            setSelectNFT(undefined)
+          }}
+        />
       </Dialog.Panel>
     </Dialog>
   )
 }
+export default InscribeOrderModal

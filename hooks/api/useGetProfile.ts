@@ -14,6 +14,8 @@ const useGetProfile = () => {
       publickey: publicKey,
       wallet_address: address,
     })
+    const { data: nftAssets }: AxiosResponse<ProfileType> = await profileService.getProfileAssets(address)
+
     return data
   }
 
@@ -27,3 +29,4 @@ const useGetProfile = () => {
 }
 
 export default useGetProfile
+
