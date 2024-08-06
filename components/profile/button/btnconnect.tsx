@@ -1,10 +1,10 @@
+import { CloseIcon } from '@/components/ui/icons'
 import ic_line from '@/icons/socials/line.svg'
 import { cn } from '@/lib/utils'
-import { StaticImport } from 'next/dist/shared/lib/get-img-props'
 import Image from 'next/image'
 
 interface PropsButtonConnect {
-  icon: StaticImport | React.ReactNode
+  icon: any
   text: string
   onClick?: () => void
   className?: string
@@ -35,7 +35,9 @@ const ButtonConnect = ({ icon, text, onClick, status, className, ...props }: Pro
             <span className="max-w-[100px] truncate">{text}</span>
           </div>
 
-          <button className="text-xs font-light text-[#D4C79C] ">Remove</button>
+          <button className="text-xs font-light text-[#D4C79C] w-[24px] h-[24px] ">
+            <CloseIcon />
+          </button>
         </>
       )}
     </button>
