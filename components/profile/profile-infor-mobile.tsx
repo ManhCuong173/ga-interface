@@ -3,19 +3,21 @@ import useGetPoints from '@/hooks/api/useGetPoints'
 
 import useLinkSocial from '@/hooks/api/useLinkSocial'
 import pen from '@/icons/profile/profile-info/pen.svg'
+import ic_discord from '@/icons/socials/discord.svg'
+import ic_x from '@/icons/socials/x.svg'
 import { setProfile } from '@/lib/features/profile/profile.slice'
 import { selectAddress, selectedPublicKey } from '@/lib/features/wallet/wallet-slice'
 import { useAppDispatch, useAppSelector } from '@/lib/hook'
 import { QueryObserverResult, RefetchOptions, useQueryClient } from '@tanstack/react-query'
+import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { ProfileType } from '../../types/profile'
 import Trans from '../i18n/Trans'
-import { useGATranslation } from '../i18n/hooks'
-import { DiscordIcon, TwitterIcon } from '../svgs'
 import ButtonConnect from './button/btnconnect'
 import ModalEditProfile from './modal/modal-edit-profile'
+import Referral from './referral'
 interface PropsProfile {
   profile: ProfileType | undefined
   refetch: (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<ProfileType, Error>>
@@ -41,6 +43,8 @@ const ProfileInfoMobile = ({ profile, refetch }: PropsProfile) => {
   const oauth_verifier = searchParams.get('oauth_verifier')
   const code = searchParams.get('code')
   const state = searchParams.get('state')
+
+  const t = useTranslations()
 
   const { bindDiscord, bindTwitter, removeDiscord, removeX } = useLinkSocial({ refetch })
   const { data: point } = useGetPoints()
@@ -136,19 +140,20 @@ const ProfileInfoMobile = ({ profile, refetch }: PropsProfile) => {
       <p className="w-full break-words text-md font-light leading-5 tracking-[-3%] text-black1 font-Roboto">
         {profile?.bio}
       </p>
+      <Referral />
       <div className="flex justify-between items-center gap-3 my-5">
         <ButtonConnect
-          className="text-base font-medium leading-[130%] font-Roboto text-text-secondary hover:bg-red-light hover:text-white hover:border-red-light [&>svg]:hover:text-white"
+          className="text-base font-medium leading-[130%] font-Roboto text-text-secondary"
           status={profile?.twitter_connect}
-          icon={<TwitterIcon />}
-          text={profile?.twitter_connect ? profile.twitter_username : useGATranslation()('Connect X')}
+          icon={ic_x}
+          text={profile?.twitter_connect ? profile.twitter_username : t('Connect X')}
           onClick={connectTwitter}
         />
         <ButtonConnect
-          className="text-base font-medium leading-[130%] font-Roboto text-text-secondary hover:bg-red-light hover:text-white hover:border-red-light [&>svg]:hover:text-white"
+          className="text-base font-medium leading-[130%] font-Roboto text-text-secondary"
           status={profile?.discord_connect}
-          icon={<DiscordIcon />}
-          text={profile?.discord_connect ? profile.discord_username : useGATranslation()('Connect Discord')}
+          icon={ic_discord}
+          text={profile?.discord_connect ? profile.discord_username : t('Connect Discord')}
           onClick={connectDiscord}
         />
       </div>

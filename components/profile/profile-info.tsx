@@ -4,6 +4,8 @@ import { baseURL } from '@/constants/base64'
 import useGetPoints from '@/hooks/api/useGetPoints'
 import useLinkSocial from '@/hooks/api/useLinkSocial'
 import pen from '@/icons/profile/profile-info/pen.svg'
+import ic_discord from '@/icons/socials/discord.svg'
+import ic_x from '@/icons/socials/x.svg'
 import { selectAddress, selectedPublicKey } from '@/lib/features/wallet/wallet-slice'
 import { useAppSelector } from '@/lib/hook'
 import { backend } from '@/services/endpoint/endpoint'
@@ -14,9 +16,9 @@ import { useEffect, useState } from 'react'
 import { ProfileType } from '../../types/profile'
 import Trans from '../i18n/Trans'
 import { useGATranslation } from '../i18n/hooks'
-import { DiscordIcon, TwitterIcon } from '../svgs'
 import ButtonConnect from './button/btnconnect'
 import ModalEditProfile from './modal/modal-edit-profile'
+import Referral from './referral'
 
 interface Props {
   profile: ProfileType | undefined
@@ -137,12 +139,8 @@ export default function ProfileInfo({ profile, refetch }: Props) {
           <Image src={pen} alt="" width={16} height={16} className="ml-2 hover:fill-[#7E6238] hover:stroke-[#7E6238]" />
         </button>
       </div>
-      <p
-        className="w-full md:max-w-[220px] text-wrap 
-      break-words text-center text-base 
-      leading-[150%] font-light tracking-[-3%] 
-      text-black1 mt-[39px] font-Roboto "
-      >
+      <Referral />
+      <p className="w-full md:max-w-[220px] text-wrap break-words text-center text-base leading-[150%] font-light tracking-[-3%] text-black1 font-Roboto ">
         {profile?.bio || <Trans>DefaultBio</Trans>}
       </p>
       {!profile?.twitter_connect && !profile?.discord_connect && (
@@ -150,17 +148,17 @@ export default function ProfileInfo({ profile, refetch }: Props) {
           <div className="flex flex-col items-center space-y-4">
             <ButtonConnect
               status={profile?.twitter_connect}
-              icon={<TwitterIcon />}
-              text={profile?.twitter_connect ? profile.twitter_username : useGATranslation()('Connect X')}
+              icon={ic_x}
+              text={profile?.twitter_connect ? profile.twitter_username : t('Connect X')}
               onClick={connectTwitter}
-              className="border-[1px] border-solid border-bgAlt rounded-[10px] w-[200px] text-text-secondary text-base font-Roboto hover:bg-red-light hover:text-white hover:border-red-light [&>svg]:hover:text-white"
+              className="border-[1px] border-solid border-bgAlt rounded-[10px] w-[200px] text-text-secondary text-base font-Roboto"
             />
             <ButtonConnect
               status={profile?.discord_connect}
-              icon={<DiscordIcon />}
-              text={profile?.discord_connect ? profile.discord_username : useGATranslation()('Connect Discord')}
+              icon={ic_discord}
+              text={profile?.discord_connect ? profile.discord_username : t('Connect Discord')}
               onClick={connectDiscord}
-              className="border-[1px] border-solid border-bgAlt rounded-[10px] w-[200px] text-text-secondary text-base font-Roboto hover:bg-red-light hover:text-white hover:border-red-light [&>svg]:hover:text-white"
+              className="border-[1px] border-solid border-bgAlt rounded-[10px] w-[200px] text-text-secondary text-base font-Roboto"
             />
           </div>
         </div>

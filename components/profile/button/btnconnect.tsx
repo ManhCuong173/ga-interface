@@ -2,10 +2,9 @@ import ic_line from '@/icons/socials/line.svg'
 import { cn } from '@/lib/utils'
 import { StaticImport } from 'next/dist/shared/lib/get-img-props'
 import Image from 'next/image'
-import React, { ReactNode } from 'react'
 
 interface PropsButtonConnect {
-  icon: StaticImport | ReactNode
+  icon: StaticImport | React.ReactNode
   text: string
   onClick?: () => void
   className?: string
@@ -24,16 +23,14 @@ const ButtonConnect = ({ icon, text, onClick, status, className, ...props }: Pro
     >
       {!status && (
         <>
-          {React.isValidElement(icon) ? icon : <Image src={icon as string} alt="icon" />}
-
+          <Image src={icon} alt="icon" />
           <span className="max-w-[140px] truncate">{text}</span>
         </>
       )}
       {status && (
         <>
           <div className="flex items-center space-x-2">
-            {React.isValidElement(icon) ? icon : <Image src={icon as string} alt="icon" />}
-
+            <Image src={icon} alt="icon" />
             <Image src={ic_line} alt="iconLine" />
             <span className="max-w-[100px] truncate">{text}</span>
           </div>
@@ -46,3 +43,4 @@ const ButtonConnect = ({ icon, text, onClick, status, className, ...props }: Pro
 }
 
 export default ButtonConnect
+

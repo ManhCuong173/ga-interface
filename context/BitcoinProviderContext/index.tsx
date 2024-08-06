@@ -1,9 +1,11 @@
 'use client'
 
 import { walletAuthenticated } from '@/constants'
+import { ACCESS_TOKEN_KEY } from '@/constants/auth.constant'
 import { BitcoinAccountWallet } from '@/hooks/WalletProvider/connectors/base'
 import { WalletBitcoinConnectorEnums } from '@/hooks/WalletProvider/useWalletBitcoinProviders'
 import { useDebounce } from '@/hooks/custom/useDebouce'
+import { setToken } from '@/lib/features/auth/auth-slice'
 import { setAddress, setPublicKey } from '@/lib/features/wallet/wallet-slice'
 import { useAppDispatch } from '@/lib/hook'
 import { createContext, useCallback, useMemo, useState } from 'react'
@@ -60,7 +62,9 @@ const BitcoinProviderContext: React.FC<React.PropsWithChildren> = ({ children })
     })
     dispatch(setAddress(''))
     dispatch(setPublicKey(''))
+    dispatch(setToken(''))
     window.localStorage.removeItem(walletAuthenticated)
+    window.localStorage.removeItem(ACCESS_TOKEN_KEY)
   }, [account, dispatch, setAccount, setAddress, setPublicKey])
 
   const value = useMemo(
@@ -76,3 +80,4 @@ const BitcoinProviderContext: React.FC<React.PropsWithChildren> = ({ children })
   return <BitcoinProviderCreateContext.Provider value={value}>{children}</BitcoinProviderCreateContext.Provider>
 }
 export default BitcoinProviderContext
+

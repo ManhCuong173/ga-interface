@@ -2,13 +2,14 @@
 
 import { CHAIN_ID, walletAuthenticated } from '@/constants'
 import {
-  useBitcoinUpdateAccount,
   useBitcoinAddress,
   useBitcoinConnected,
   useBitcoinLogout,
+  useBitcoinUpdateAccount,
 } from '@/context/BitcoinProviderContext/hook'
+import { selectInitializer, selectToken, setToken } from '@/lib/features/auth/auth-slice'
+import { useAppDispatch, useAppSelector } from '@/lib/hook'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { toast } from 'react-toastify'
 import { ChainId } from './connectors/base'
 import { useLatestWallet } from './useLatestWallet'
 import {
@@ -23,6 +24,9 @@ export const useAuthBitcoin = () => {
   const [loading, setLoading] = useState(false)
   const logout = useBitcoinLogout()
 
+  const token = useAppSelector(selectToken)
+  const hasAuthInitialized = useAppSelector(selectInitializer)
+
   const login = useCallback(
     async (wallet: WalletBitcoinConnectorEnums, chainId: ChainId = CHAIN_ID) => {
       const provider = walletBitcoinProvider[wallet]
@@ -34,10 +38,7 @@ export const useAuthBitcoin = () => {
           await provider.changeNetwork(chainId)
 
           const account = await provider.getAccount()
-
           updateAccount(wallet, account)
-        } else {
-          toast.error('Provider not found')
         }
       } catch (e) {
         console.error(e)
@@ -45,7 +46,7 @@ export const useAuthBitcoin = () => {
         setLoading(false)
       }
     },
-    [updateAccount, walletBitcoinProvider],
+    [updateAccount, walletBitcoinProvider['UniSat'], walletBitcoinProvider['Xverse'], token, hasAuthInitialized],
   )
 
   const switchNetwork = useCallback(
@@ -60,6 +61,7 @@ export const useAuthBitcoin = () => {
 }
 
 export const useAutoConnectBitcoinWallet = () => {
+  const dispatch = useAppDispatch()
   const refLogin = useRef(false)
   const bitcoinAddress = useBitcoinAddress()
   const logoutBitcoin = useBitcoinLogout()
@@ -87,6 +89,8 @@ export const useAutoConnectBitcoinWallet = () => {
   useEffect(() => {
     if (provider && isConnected && wallet) {
       provider.onAccountsChanged((account) => {
+        dispatch(setToken(''))
+
         updateAccount(wallet, account)
       })
     }
@@ -94,3 +98,4 @@ export const useAutoConnectBitcoinWallet = () => {
 
   return null
 }
+

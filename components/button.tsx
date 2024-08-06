@@ -47,7 +47,17 @@ export default function Button({ children, className, ...atributes }: Props) {
   )
 }
 
-export const IconCopy = ({ text, customIcon }: { text?: string | number; customIcon?: any }) => {
+export const IconCopy = ({
+  text,
+  customIcon,
+  className,
+  disabled = false,
+}: {
+  text?: string | number
+  customIcon?: any
+  className?: string
+  disabled?: boolean
+}) => {
   const [statusCopy, setStatusCopy] = useState('')
 
   const handleCopy = () => {
@@ -64,8 +74,8 @@ export const IconCopy = ({ text, customIcon }: { text?: string | number; customI
     <button onClick={() => handleCopy()}>
       <span
         data-tooltip-id="icon-copy"
-        className="flex size-4 cursor-pointer items-center justify-center"
-        onClick={handleCopy}
+        className={cn('flex size-4 cursor-pointer items-center justify-center', className)}
+        onClick={!disabled ? handleCopy : undefined}
       >
         {customIcon ? customIcon : <CopyIcon className="min-w-5 min-h-5" />}
       </span>

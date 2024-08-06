@@ -8,14 +8,15 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, unstable_setRequestLocale } from 'next-intl/server'
 import Favicon from './../../public/images/favicon.ico'
 
+import BitcoinProviderContext from '@/context/BitcoinProviderContext'
+import AuthInitializer from '@/providers/auth-initializer.provider'
+import { Updaters } from '@/providers/updaters'
 import { Suspense } from 'react'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { languages } from '../../i18n/setting'
 import '../../styles/index.scss'
 import './globals.css'
-import BitcoinProviderContext from '@/context/BitcoinProviderContext'
-import { Updaters } from '@/providers/updaters'
 
 export const metadata: Metadata = {
   title: 'Golden Apple BRC20',
@@ -38,30 +39,33 @@ export default async function RootLayout({
   const messages = await getMessages()
   return (
     <html lang={locale}>
-      <TanstackProviders>
-        <ReduxStoreProvider>
-          <SolanaProvider>
-            <BitcoinProviderContext>
-              <NextIntlClientProvider messages={messages}>
-                <body className="bg-[#FAF5F0] bg-full bg-fixed">
-                  <Suspense>
-                    <Header />
-                    {children}
-                    <ToastContainer
-                      position="top-right"
-                      className="z-[10000]"
-                      autoClose={5000}
-                      hideProgressBar
-                      closeOnClick
-                    />
-                    <Updaters />
-                  </Suspense>
-                </body>
-              </NextIntlClientProvider>
-            </BitcoinProviderContext>
-          </SolanaProvider>
-        </ReduxStoreProvider>
-      </TanstackProviders>
+      <body className="bg-[#FAF5F0] bg-full bg-fixed">
+        <TanstackProviders>
+          <ReduxStoreProvider>
+            <AuthInitializer>
+              <SolanaProvider>
+                <BitcoinProviderContext>
+                  <NextIntlClientProvider messages={messages}>
+                    <Suspense>
+                      <Header />
+                      {children}
+                      <ToastContainer
+                        position="top-right"
+                        className="z-[10000]"
+                        autoClose={5000}
+                        hideProgressBar
+                        closeOnClick
+                      />
+                      <Updaters />
+                    </Suspense>
+                  </NextIntlClientProvider>
+                </BitcoinProviderContext>
+              </SolanaProvider>
+            </AuthInitializer>
+          </ReduxStoreProvider>
+        </TanstackProviders>
+      </body>
     </html>
   )
 }
+
