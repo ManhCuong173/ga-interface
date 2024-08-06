@@ -32,7 +32,7 @@ const Social: React.FC<{ className?: string; size?: string }> = ({ className, si
                 : telegram
 
           return (
-            <Link href={link.url} target="_blank" key={link.name}>
+            <Link href={link.url} target="_blank" key={link.name} className="hover:opacity-85 transition-all">
               <Image src={socialThubnail} alt={link.name} width={48} height={48} />
             </Link>
           )

@@ -63,12 +63,12 @@ const Card: React.FC<Props> = ({ icon, bgDesktop, bgMobile, color, description, 
             )}
           >
             <div className="flex flex-col items-center justify-center">
-              <div className="text-secondary text-sm font-semibold font-Roboto text-left lg:text-center lg:mb-2">
+              <div className="text-secondary text-sm font-semibold font-Roboto text-left lg:text-center -ml-[1px] lg:mb-2">
                 <Trans>{title}</Trans>
               </div>
               <Link
                 href={`${urlRoute.marketplace}/?elementId=${element?.id}`}
-                className={cn('text-secondary text-xs font-Roboto text-left lg:text-center relative')}
+                className={cn('text-secondary text-xs font-Roboto text-left lg:text-center relative -ml-[1px]')}
               >
                 <Trans>{description}</Trans>
               </Link>

@@ -24,7 +24,7 @@ export const SocialLinks: GaSocialLinkType[] = [
     icon: TeleIcon,
   },
   {
-    url: 'https://discord.gg/j6SGfcXp',
+    url: 'https://discord.gg/goldenappleio',
     name: 'Discord',
     type: GaSocialLinkVariantEnums.Discord,
     icon: Discord,

@@ -5,7 +5,6 @@ import WrapperHero from '@/components/home/WrapperHero'
 import Trans from '@/components/i18n/Trans'
 import { useGATranslation } from '@/components/i18n/hooks'
 import { useState } from 'react'
-import InscribeGuildModal from './InscribeGuildModal'
 
 const Banner = () => {
   const [isPresentOpenInscribeGuildModal, setOpenInscribeGuiidModal] = useState(false)
@@ -36,7 +35,7 @@ const Banner = () => {
                 varirant="outline"
                 className="rounded-xl text-base lg:text-xl font-Roboto border-secondary"
                 onClick={() => {
-                  setOpenInscribeGuiidModal(true)
+                  window.open('/mint-guildline.pdf')
                 }}
               >
                 <Trans>Guide on Inscribe</Trans>
@@ -45,11 +44,11 @@ const Banner = () => {
           </div>
         </div>
       </WrapperHero>
-      <InscribeGuildModal
+      {/* <InscribeGuildModal
         open={isPresentOpenInscribeGuildModal}
         handleClose={() => setOpenInscribeGuiidModal(false)}
         className="w-fit h-fit"
-      />
+      /> */}
     </div>
   )
 }
