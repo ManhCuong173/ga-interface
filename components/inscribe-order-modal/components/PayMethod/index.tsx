@@ -1,7 +1,9 @@
 import { ButtonImage } from '@/components/button'
 import Captcha from '@/components/captcha'
+import { useVerifyCaptcha } from '@/components/captcha/hooks'
 import Trans from '@/components/i18n/Trans'
 import { useGATranslation } from '@/components/i18n/hooks'
+import { useToggle } from '@/hooks/custom/useToggle'
 import { cn } from '@/lib/utils'
 import { OrderDetail } from '@/types/orders'
 import React, { ReactNode, useState } from 'react'
@@ -45,7 +47,16 @@ const PayMethod: React.FC<PayMethodProps> = ({
   onPayWallet,
   isSiging,
 }) => {
-  const [isAbleToInscibe, setIsAbleToInscribe] = useState(false)
+  const [captchaToken, setCaptchaToken] = useState<string>('')
+  const [isAbleToMintNFT, toggle] = useToggle(false)
+  const verifyCaptcha = useVerifyCaptcha()
+
+  const handlePreventSpamAndOpenWalelt = async (value: string) => {
+    const response = await verifyCaptcha(value)
+    if (response.status === 200) {
+      toggle()
+    }
+  }
 
   return (
     <div className="flex flex-col font-Roboto items-center gap-3">
@@ -63,18 +74,26 @@ const PayMethod: React.FC<PayMethodProps> = ({
         selectedPayMethod={selectedPayMethod}
         onSelectPayMethod={onSelectPayMethod}
       >
-        {isAbleToInscibe && (
-          <ButtonImage
-            varirant="primary-asset"
-            disabled={isSiging}
-            className="w-full px-12 py-4 my-4 whitespace-nowrap"
-            onClick={onPayWallet}
-          >
-            <Trans>Open Wallet</Trans>
-          </ButtonImage>
-        )}
+        <ButtonImage
+          varirant="primary-asset"
+          disabled={isSiging}
+          className={cn(
+            'w-full px-12 py-4 my-4 whitespace-nowrap',
+            !isAbleToMintNFT ? 'cursor-not-allowed pointer-events-none opacity-80' : '',
+          )}
+          onClick={onPayWallet}
+        >
+          <Trans>Open Wallet</Trans>
+        </ButtonImage>
       </CardSelect>
-      {!isAbleToInscibe && <Captcha onCaptchaVerifySuccess={(value) => setIsAbleToInscribe(value)} />}
+      {!captchaToken && (
+        <Captcha
+          onCaptchaTokenChanged={(value: string) => {
+            setCaptchaToken(value)
+            handlePreventSpamAndOpenWalelt(value)
+          }}
+        />
+      )}
     </div>
   )
 }

@@ -1,37 +1,36 @@
 import { cn } from '@/lib/utils'
 import { PropsWithClassName } from '@/types'
-import { useRef } from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'
 
-const Captcha: React.FC<PropsWithClassName & { onCaptchaVerifySuccess: (isSuccess: boolean) => void }> = ({
+const Captcha: React.FC<PropsWithClassName & { onCaptchaTokenChanged: (value: string) => void }> = ({
   className,
-  onCaptchaVerifySuccess,
+  onCaptchaTokenChanged,
 }) => {
-  const reCaptchaRef = useRef(null)
-
-  const handleReCaptchaChanged = async (value: any) => {
-    const captchaResponse = await fetch('/api/captcha-verify', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        captcha: value,
-      }),
-    })
-
-    if (captchaResponse) {
-      onCaptchaVerifySuccess(captchaResponse.status === 200)
+  let captcha: any
+  const setCaptchaRef = (ref: any) => {
+    if (ref) {
+      return (captcha = ref)
     }
   }
 
+  const resetCaptcha = () => {
+    setTimeout(() => {
+      captcha.reset()
+    }, 5000)
+  }
+
   return (
-    <ReCAPTCHA
-      ref={reCaptchaRef}
-      sitekey={process.env.NEXT_PUBLIC_RECAPCHA_SITE_KEY as string}
-      onChange={handleReCaptchaChanged}
-      className={cn(className)}
-    />
+    <>
+      <ReCAPTCHA
+        ref={(e) => setCaptchaRef(e)}
+        sitekey={'6LcGySAqAAAAAJB-m5Qbpfo3DLfyOgEMsocKx38w'}
+        onChange={(value) => {
+          onCaptchaTokenChanged(value as string)
+          resetCaptcha()
+        }}
+        className={cn(className)}
+      />
+    </>
   )
 }
 

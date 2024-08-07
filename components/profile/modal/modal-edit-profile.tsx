@@ -2,6 +2,7 @@
 
 import { ButtonImage } from '@/components/button'
 import { useGATranslation } from '@/components/i18n/hooks'
+import Trans from '@/components/i18n/Trans'
 import ModalContainer from '@/components/ui/modal-container'
 import { baseURL } from '@/constants/base64'
 import defaultAvatar from '@/icons/profile/edit-profile/edit-profile-default-avatar.svg'
@@ -87,7 +88,9 @@ const ModalEditProfile = ({ open, handleClose, publickey, wallet_address, queryC
         lg:h-[600px] lg:w-[540px]"
       >
         <div className="relative flex flex-col">
-          <p className="text-[32px] text-red-light font-semibold leading-normal">Edit Profile</p>
+          <p className="text-[32px] text-red-light font-semibold leading-normal">
+            <Trans>Edit Profile</Trans>
+          </p>
           <figure className="mx-auto mt-2 flex  w-[160px] flex-col items-center justify-center">
             {isPending.avatar ? (
               <Image src={loading} width={40} height={40} className="mx-auto" alt="" />
@@ -126,7 +129,7 @@ const ModalEditProfile = ({ open, handleClose, publickey, wallet_address, queryC
                   font-Roboto text-nowrap
                   "
                 >
-                  Upload Avatar
+                  <Trans>Upload Avatar</Trans>
                 </label>
                 <input
                   onChange={(e) => {
@@ -225,7 +228,9 @@ const ModalEditProfile = ({ open, handleClose, publickey, wallet_address, queryC
           </div>
         </div> */}
         <div className="mt-4">
-          <p className="text-left text-sm font-normal  text-text-secondary font-Roboto">Name</p>
+          <p className="text-left text-sm font-normal  text-text-secondary font-Roboto">
+            <Trans>Name</Trans>
+          </p>
           <input
             className="mt-2 h-[44px] w-full truncate rounded border border-bgAlt px-4 py-3 text-sm font-light text-text-black outline-none"
             defaultValue={profile?.name}
@@ -233,7 +238,9 @@ const ModalEditProfile = ({ open, handleClose, publickey, wallet_address, queryC
           />
         </div>
         <div className="relative mt-4">
-          <p className="text-left text-sm font-normal  text-text-secondary font-Roboto">Bio</p>
+          <p className="text-left text-sm font-normal  text-text-secondary font-Roboto">
+            <Trans>Bio</Trans>
+          </p>
           <textarea
             maxLength={100}
             rows={50}
@@ -256,7 +263,9 @@ const ModalEditProfile = ({ open, handleClose, publickey, wallet_address, queryC
           className={`
           mt-8 h-[48px] w-[221px] flex justify-center aligns-center mx-auto`}
         >
-          <p className="text-base font-medium leading-[150%]">Save</p>
+          <p className="text-base font-medium leading-[150%]">
+            <Trans>Save</Trans>
+          </p>
         </ButtonImage>
       </div>
     </ModalContainer>

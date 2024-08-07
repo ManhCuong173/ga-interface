@@ -44,7 +44,7 @@ const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrderId
     dispatch(setAddressReceiver(e.target.value.trim()))
   }
 
-  const handleCreateMintOrder = async () => {
+  const handleProcessMintNFT = async () => {
     try {
       setLoading(true)
       const res = await mintService
@@ -57,17 +57,18 @@ const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrderId
           satsInInscription: dataForm?.satsInscription,
         })
         .call()
+      console.log(res)
 
       if (res.data) {
         onUpdateOrderId(res.data.orderId)
         onShowInscribeOrderModal()
+        queryClient.invalidateQueries({ queryKey: ['nfts'] })
+        queryClient.invalidateQueries({ queryKey: ['orders'] })
       } else if (res.message) {
         toast.error(res.message, {
           position: 'top-right',
         })
       }
-      queryClient.invalidateQueries({ queryKey: ['nfts'] })
-      queryClient.invalidateQueries({ queryKey: ['orders'] })
     } catch (e) {
       toast.error('one or some of selected NFTs has already minted', {
         position: 'bottom-right',
@@ -129,7 +130,7 @@ const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrderId
               checkInvalidAddress(addressReceiver),
           )}
           className="w-full px-12 py-4 mt-10 whitespace-nowrap"
-          onClick={handleCreateMintOrder}
+          onClick={handleProcessMintNFT}
         >
           <Trans>Submit & pay invoice</Trans>
         </ButtonImage>
