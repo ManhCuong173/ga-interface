@@ -39,6 +39,9 @@ export default async function RootLayout({
   const messages = await getMessages()
   return (
     <html lang={locale}>
+      <head>
+        <script src="https://www.google.com/recaptcha/api.js"></script>
+      </head>
       <body className="bg-[#FAF5F0] bg-full bg-fixed">
         <TanstackProviders>
           <ReduxStoreProvider>

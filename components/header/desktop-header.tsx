@@ -51,8 +51,10 @@ export const LanguageSelect: React.FC<Partial<DropdownActionProps>> = ({ show, t
       >
         {listLocale
           .filter((item) => item !== locale)
-          .map((item) => (
-            <div onClick={() => router.replace(pathname, { locale: item })}>{item}</div>
+          .map((item, index) => (
+            <div onClick={() => router.replace(pathname, { locale: item })} key={index}>
+              {item}
+            </div>
           ))}
       </DropdownAnchor>
     </DropdownContainer>
@@ -146,11 +148,21 @@ export default function DesktopHeader() {
               <Fragment key={item.href}>
                 <Link
                   href={item.href}
-                  className={`${(item.href === '/' && isHomePage) || (path.includes(item.href) && !isHomePage && item.href !== '/') ? 'border-red-light text-red-light' : 'border-transparent'} flex h-full items-center gap-2 border-b-2 px-6`}
+                  className={`${(item.href === '/' && isHomePage) || (path.includes(item.href) && !isHomePage && item.href !== '/') ? '' : 'border-transparent'} flex h-full items-center gap-2 px-6 relative`}
                 >
                   <span className="whitespace-nowrap">
                     <Trans>{item.label}</Trans>
                   </span>
+
+                  <div
+                    className={cn(
+                      'absolute w-full top-[calc(100%+19px)] left-0 right-0',
+                      (item.href === '/' && isHomePage) ||
+                        (path.includes(item.href) && !isHomePage && item.href !== '/')
+                        ? 'bg-red-light h-[3px]'
+                        : '',
+                    )}
+                  ></div>
                 </Link>
               </Fragment>
             ))}

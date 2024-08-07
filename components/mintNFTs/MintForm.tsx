@@ -66,6 +66,8 @@ const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrderId
           position: 'top-right',
         })
       }
+      queryClient.invalidateQueries({ queryKey: ['nfts'] })
+      queryClient.invalidateQueries({ queryKey: ['orders'] })
     } catch (e) {
       toast.error('one or some of selected NFTs has already minted', {
         position: 'bottom-right',
@@ -74,8 +76,6 @@ const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrderId
         dispatch(setProcessState(1))
       }, 2000)
     } finally {
-      queryClient.invalidateQueries({ queryKey: ['nfts'] })
-      queryClient.invalidateQueries({ queryKey: ['orders'] })
       setLoading(false)
     }
   }

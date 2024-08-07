@@ -1,9 +1,10 @@
 import { ButtonImage } from '@/components/button'
+import Captcha from '@/components/captcha'
 import Trans from '@/components/i18n/Trans'
 import { useGATranslation } from '@/components/i18n/hooks'
 import { cn } from '@/lib/utils'
 import { OrderDetail } from '@/types/orders'
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useState } from 'react'
 import { MarkCircleIcon } from '../../../ui/icons'
 import { PayMethodEnum } from '../../types'
 import QRCode from './QRCode'
@@ -44,6 +45,8 @@ const PayMethod: React.FC<PayMethodProps> = ({
   onPayWallet,
   isSiging,
 }) => {
+  const [isAbleToInscibe, setIsAbleToInscribe] = useState(false)
+
   return (
     <div className="flex flex-col font-Roboto items-center gap-3">
       <CardSelect
@@ -60,15 +63,18 @@ const PayMethod: React.FC<PayMethodProps> = ({
         selectedPayMethod={selectedPayMethod}
         onSelectPayMethod={onSelectPayMethod}
       >
-        <ButtonImage
-          varirant="primary-asset"
-          disabled={isSiging}
-          className="w-full px-12 py-4 my-4 whitespace-nowrap"
-          onClick={onPayWallet}
-        >
-          <Trans>Open Wallet</Trans>
-        </ButtonImage>
+        {isAbleToInscibe && (
+          <ButtonImage
+            varirant="primary-asset"
+            disabled={isSiging}
+            className="w-full px-12 py-4 my-4 whitespace-nowrap"
+            onClick={onPayWallet}
+          >
+            <Trans>Open Wallet</Trans>
+          </ButtonImage>
+        )}
       </CardSelect>
+      {!isAbleToInscibe && <Captcha onCaptchaVerifySuccess={(value) => setIsAbleToInscribe(value)} />}
     </div>
   )
 }
