@@ -17,7 +17,8 @@ const Banner = () => {
           <div className="grid grid-rows-[3fr_1fr] flex-1 h-full">
             <div className="flex flex-col flex-1 justify-center  items-center text-secondary">
               <h1 className="w-fit font-semibold tracking-[0.96px] text-xl lg:text-[40px]  text-center">
-                {t.rich('Golden Apple <tag /> Inscriber', { tag: (chunks) => <br className="md:hidden" /> })}
+                {/* {t.rich('Golden Apple <tag /> Inscriber', { tag: (chunks) => <br className="md:hidden" /> })} */}
+                <Trans>Golden Apple Testnet is now LIVE!</Trans>
               </h1>
 
               <div
@@ -25,10 +26,7 @@ const Banner = () => {
               text-base lg:text-xl leadig-[150%] font-[400] 
               font-Roboto text-center max-w-[70%] sm:max-w-[540px] lg:max-w-[800px]"
               >
-                <Trans>
-                  The service fee for inscribing applies only to the first 25 inscriptions_In a single batch order, you
-                  can inscribe up to a maximum of 1000 items
-                </Trans>
+                <Trans>Win 0_1 BTC & 99 Rewards worth $99 Each! Join Now!</Trans>
               </div>
 
               <ButtonImage
@@ -44,11 +42,6 @@ const Banner = () => {
           </div>
         </div>
       </WrapperHero>
-      {/* <InscribeGuildModal
-        open={isPresentOpenInscribeGuildModal}
-        handleClose={() => setOpenInscribeGuiidModal(false)}
-        className="w-fit h-fit"
-      /> */}
     </div>
   )
 }

@@ -55,18 +55,19 @@ const Document = () => {
                 <Image src={ViewIcon} width={18} height={18} alt="" />
               </button>
             </Link>
-            <Link href="/inscribe">
-              <button
-                className=" text-red-light  bg-white px-[33px] py-[18px]
+            <button
+              className=" text-red-light  bg-white px-[33px] py-[18px]
               flex items-center justify-center rounded-lg w-[220px] h-[52px] hover:opacity-[0.96]
               "
-              >
-                <span className="font-base font-medium leading-3/2 mr-2">
-                  <Trans>View Pitch Desk</Trans>
-                </span>
-                <Image src={DownloadIcon} width={18} height={18} alt="" />
-              </button>
-            </Link>
+              onClick={() => {
+                window.open('/document_pitchdeck.pdf')
+              }}
+            >
+              <span className="font-base font-medium leading-3/2 mr-2">
+                <Trans>View Pitch Desk</Trans>
+              </span>
+              <Image src={DownloadIcon} width={18} height={18} alt="" />
+            </button>
           </div>
         </div>
       </WrapperHero>

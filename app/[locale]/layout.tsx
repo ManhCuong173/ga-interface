@@ -40,7 +40,7 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <head>
-        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
       </head>
       <body className="bg-[#FAF5F0] bg-full bg-fixed">
         <TanstackProviders>

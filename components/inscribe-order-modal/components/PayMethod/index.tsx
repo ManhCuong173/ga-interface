@@ -90,7 +90,7 @@ const PayMethod: React.FC<PayMethodProps> = ({
         <Captcha
           onCaptchaTokenChanged={(value: string) => {
             setCaptchaToken(value)
-            handlePreventSpamAndOpenWalelt(value)
+            toggle()
           }}
         />
       )}

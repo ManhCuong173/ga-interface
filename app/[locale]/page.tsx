@@ -40,7 +40,9 @@ export default function Home() {
       >
         <Banner />
         <Introduce />
-        <NFTGallery />
+        <div className="lg:mt-[25rem]">
+          <NFTGallery />
+        </div>
         <LuckyDraw />
         <CRM />
         <Slogan />
