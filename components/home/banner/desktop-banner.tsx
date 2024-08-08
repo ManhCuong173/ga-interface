@@ -21,6 +21,7 @@ export default function DesktopBanner() {
 
   const handleReplayVideo = () => {
     if (videoRef.current) {
+      videoRef.current.pause()
       videoRef.current.currentTime = 0
       videoRef.current.play()
     }
