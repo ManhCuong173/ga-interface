@@ -6,6 +6,7 @@ import { useEffect, useRef } from 'react'
 import { useGATranslation } from '@/components/i18n/hooks'
 import { appearAnimation } from '@/constants/animation.constant'
 import { useToggle } from '@/hooks/custom/useToggle'
+import useDebounceCallback from '@/hooks/useDebounceCallback'
 import ReplayVideoIcon from '@/icons/home/replay-icon.svg'
 import SkipVideoIcon from '@/icons/home/skip-icon.svg'
 import { motion } from 'framer-motion'
@@ -15,6 +16,7 @@ const MobileBanner = () => {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isPauseBannerVideo, toggle, setIsPauseBannerVideo] = useToggle(false)
   const t = useGATranslation()
+  const debounceCb = useDebounceCallback()
 
   useEffect(() => {
     const rootDiv = document.getElementById('root-div')
@@ -44,27 +46,63 @@ const MobileBanner = () => {
     }
   }
 
+  useEffect(() => {
+    debounceCb(() => {
+      ;(videoRef.current as any).muted = false
+    }, 10)
+  }, [])
+
+  useEffect(() => {
+    return () => {
+      videoRef.current?.pause()
+    }
+  }, [])
+
   return (
     <div id="mobile-banner" className="snap-center relative h-screen w-full ">
-      <video
-        className="absolute top-0 left-0 object-cover w-full h-screen z-10"
-        autoPlay={true}
-        muted={true}
-        loop={true}
-        controls={false}
-        playsInline={true}
-        ref={videoRef}
-        style={{
-          display: isPauseBannerVideo ? 'none' : 'block',
-        }}
-      >
-        <source src="/video/home-banner-mobile.mp4" type="video/mp4" className="hidden" />
-        Sorry, your browser doesn't support embedded videos.
-      </video>
+      <div className={cn(isPauseBannerVideo ? 'opacity-0' : 'opacity-100')}>
+        <video
+          className="absolute top-0 left-0 object-cover w-full h-screen z-10"
+          autoPlay={true}
+          muted={true}
+          loop={true}
+          controls={false}
+          playsInline={true}
+          ref={videoRef}
+        >
+          <source src="/video/home-banner-mobile.mp4" type="video/mp4" className="hidden" />
+          Sorry, your browser doesn't support embedded videos.
+        </video>
+
+        <div className={cn('absolute bottom-5 left-1/2 -translate-x-1/2 z-20')}>
+          <div className="flex items-center justify-center gap-2">
+            <div className="flex items-center justify-center gap-2">
+              <ButtonImage
+                varirant="outline"
+                onClick={() => {
+                  setIsPauseBannerVideo(true)
+                  videoRef.current?.pause()
+                }}
+                className="flex items-center justify-center bg-[rgba(0,0,0,0.40)] rounded-[1000px] backdrop-blur-[5px] w-[120px] h-[42px] border-none hover:bg-[#000] cursor-pointer"
+              >
+                <Image src={SkipVideoIcon} width={20} height={20} alt="" />
+                <p className="text-base font-medium leading-3/2 font-Roboto text-white ml-2">Skip</p>
+              </ButtonImage>
+              <ButtonImage
+                varirant="outline"
+                onClick={handleReplayVideo}
+                className="flex items-center justify-center bg-[rgba(0,0,0,0.40)] rounded-[1000px] backdrop-blur-[5px] w-[120px] h-[42px] border-none hover:bg-[#000] cursor-pointer"
+              >
+                <Image src={ReplayVideoIcon} width={20} height={20} alt="" />
+                <p className="text-base font-medium leading-3/2 font-Roboto text-white ml-2">Replay</p>
+              </ButtonImage>
+            </div>
+          </div>
+        </div>
+      </div>
       <div
-        style={{ opacity: isPauseBannerVideo ? '1' : '0' }}
         className={cn(
-          isPauseBannerVideo ? 'after:animate-gradientTopBottom' : '',
+          isPauseBannerVideo ? 'after:animate-gradientTopBottom opacity-100' : 'opacity-0',
           'after:absolute after:content-normal after:left-0 after:top-0 after:w-full after:h-full after:bg-white after:transition-all after:duration-300 overflow-hidden',
         )}
       >
@@ -107,28 +145,6 @@ const MobileBanner = () => {
             </div>
           </div>
         </WrapperHero>
-      </div>
-      <div className={cn('absolute bottom-5 left-1/2 -translate-x-1/2 z-20')}>
-        <div className="flex items-center justify-center gap-2">
-          <div className="flex items-center justify-center gap-2">
-            <ButtonImage
-              varirant="outline"
-              onClick={() => setIsPauseBannerVideo(true)}
-              className="flex items-center justify-center bg-[rgba(0,0,0,0.40)] rounded-[1000px] backdrop-blur-[5px] w-[120px] h-[42px] border-none hover:bg-[#000] cursor-pointer"
-            >
-              <Image src={SkipVideoIcon} width={20} height={20} alt="" />
-              <p className="text-base font-medium leading-3/2 font-Roboto text-white ml-2">Skip</p>
-            </ButtonImage>
-            <ButtonImage
-              varirant="outline"
-              onClick={handleReplayVideo}
-              className="flex items-center justify-center bg-[rgba(0,0,0,0.40)] rounded-[1000px] backdrop-blur-[5px] w-[120px] h-[42px] border-none hover:bg-[#000] cursor-pointer"
-            >
-              <Image src={ReplayVideoIcon} width={20} height={20} alt="" />
-              <p className="text-base font-medium leading-3/2 font-Roboto text-white ml-2">Replay</p>
-            </ButtonImage>
-          </div>
-        </div>
       </div>
     </div>
   )
