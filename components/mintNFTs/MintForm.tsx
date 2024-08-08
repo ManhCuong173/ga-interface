@@ -139,4 +139,3 @@ const MintForm: React.FC<{ onShowInscribeOrderModal: () => void; onUpdateOrderId
   )
 }
 export default MintForm
-

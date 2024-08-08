@@ -40,7 +40,14 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <head>
-        <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+        <script src="/cdn/slide-captcha.js" async defer></script>
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+          integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+          crossOrigin="anonymous"
+          referrerPolicy="no-referrer"
+        />
       </head>
       <body className="bg-[#FAF5F0] bg-full bg-fixed">
         <TanstackProviders>
@@ -71,4 +78,3 @@ export default async function RootLayout({
     </html>
   )
 }
-

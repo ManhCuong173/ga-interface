@@ -47,16 +47,7 @@ const PayMethod: React.FC<PayMethodProps> = ({
   onPayWallet,
   isSiging,
 }) => {
-  const [captchaToken, setCaptchaToken] = useState<string>('')
   const [isAbleToMintNFT, toggle] = useToggle(false)
-  const verifyCaptcha = useVerifyCaptcha()
-
-  const handlePreventSpamAndOpenWalelt = async (value: string) => {
-    const response = await verifyCaptcha(value)
-    if (response.status === 200) {
-      toggle()
-    }
-  }
 
   return (
     <div className="flex flex-col font-Roboto items-center gap-3">
@@ -74,29 +65,21 @@ const PayMethod: React.FC<PayMethodProps> = ({
         selectedPayMethod={selectedPayMethod}
         onSelectPayMethod={onSelectPayMethod}
       >
-        <ButtonImage
-          varirant="primary-asset"
-          disabled={isSiging}
-          className={cn(
-            'w-full px-12 py-4 my-4 whitespace-nowrap',
-            !isAbleToMintNFT ? 'cursor-not-allowed pointer-events-none opacity-80' : '',
-          )}
-          onClick={onPayWallet}
-        >
-          <Trans>Open Wallet</Trans>
-        </ButtonImage>
+        {isAbleToMintNFT ? (
+          <ButtonImage
+            varirant="primary-asset"
+            disabled={isSiging}
+            className={cn('w-full px-12 py-4 my-4 whitespace-nowrap')}
+            onClick={onPayWallet}
+          >
+            <Trans>Open Wallet</Trans>
+          </ButtonImage>
+        ) : (
+          <Captcha max={10} onFinished={toggle} />
+        )}
       </CardSelect>
-      {!captchaToken && (
-        <Captcha
-          onCaptchaTokenChanged={(value: string) => {
-            setCaptchaToken(value)
-            toggle()
-          }}
-        />
-      )}
     </div>
   )
 }
 
 export default PayMethod
-

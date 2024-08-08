@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('./slide-captcha.css');
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -358,4 +360,6 @@ input[type='range'] {
   @apply bg-bgAlt;
   border-radius: 100px;
 }
+
+
 
