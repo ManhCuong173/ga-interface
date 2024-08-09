@@ -6,17 +6,16 @@ import { useEffect, useRef } from 'react'
 import { useGATranslation } from '@/components/i18n/hooks'
 import { appearAnimation } from '@/constants/animation.constant'
 import { useToggle } from '@/hooks/custom/useToggle'
-import useDebounceCallback from '@/hooks/useDebounceCallback'
 import ReplayVideoIcon from '@/icons/home/replay-icon.svg'
 import SkipVideoIcon from '@/icons/home/skip-icon.svg'
 import { motion } from 'framer-motion'
 import WrapperHero from '../WrapperHero'
+import BackgroundVideo from './BackgroundVideo'
 
 const MobileBanner = () => {
   const videoRef = useRef<HTMLVideoElement>(null)
-  const [isPauseBannerVideo, toggle, setIsPauseBannerVideo] = useToggle(false)
+  const [isPauseBannerVideo, _, setIsPauseBannerVideo] = useToggle(false)
   const t = useGATranslation()
-  const debounceCb = useDebounceCallback()
 
   useEffect(() => {
     const rootDiv = document.getElementById('root-div')
@@ -47,33 +46,10 @@ const MobileBanner = () => {
     }
   }
 
-  useEffect(() => {
-    debounceCb(() => {
-      ;(videoRef.current as any).muted = false
-    }, 10)
-  }, [])
-
-  useEffect(() => {
-    return () => {
-      videoRef.current?.pause()
-    }
-  }, [])
-
   return (
     <div id="mobile-banner" className="snap-center relative h-screen w-full ">
-      <div className={cn(isPauseBannerVideo ? 'opacity-0' : 'opacity-100')}>
-        <video
-          className="absolute top-0 left-0 object-cover w-full h-screen z-10"
-          autoPlay={true}
-          muted={true}
-          loop={true}
-          controls={false}
-          playsInline={true}
-          ref={videoRef}
-        >
-          <source src="/video/home-banner-mobile.mp4" type="video/mp4" className="hidden" />
-          Sorry, your browser doesn't support embedded videos.
-        </video>
+      <div className={cn(isPauseBannerVideo ? 'hidden' : 'block')}>
+        <BackgroundVideo src="/video/home-banner-mobile.mp4" ref={videoRef} />
 
         <div className={cn('absolute bottom-5 left-1/2 -translate-x-1/2 z-20')}>
           <div className="flex items-center justify-center gap-2">
