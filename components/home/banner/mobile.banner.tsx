@@ -1,7 +1,7 @@
-import { ButtonImage } from '@/components/button'
+import { ButtonImage, ButtonImageProps } from '@/components/button'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
-import { useEffect, useRef } from 'react'
+import { ButtonHTMLAttributes, HTMLProps, useEffect, useRef } from 'react'
 
 import { useGATranslation } from '@/components/i18n/hooks'
 import { appearAnimation } from '@/constants/animation.constant'
@@ -9,12 +9,31 @@ import { useToggle } from '@/hooks/custom/useToggle'
 import useDebounceCallback from '@/hooks/useDebounceCallback'
 import ReplayVideoIcon from '@/icons/home/replay-icon.svg'
 import SkipVideoIcon from '@/icons/home/skip-icon.svg'
+
+import MutedIcon from '@/icons/home/muted.svg'
+import UnMutedIcon from '@/icons/home/unmuted.svg'
+
 import { motion } from 'framer-motion'
 import WrapperHero from '../WrapperHero'
 
+const ButtonCustom: React.FC<Omit<ButtonImageProps, 'varirant'>> = ({ className, children, ...props }) => {
+  return (
+    <ButtonImage
+      varirant={'outline'}
+      className={cn(
+        'flex items-center justify-center bg-[rgba(0,0,0,0.40)] rounded-[1000px] backdrop-blur-[5px] w-[110px] h-[42px] border-none hover:bg-[#000] cursor-pointer',
+        className,
+      )}
+      {...props}
+    >
+      {children}
+    </ButtonImage>
+  )
+}
 const MobileBanner = () => {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isPauseBannerVideo, toggle, setIsPauseBannerVideo] = useToggle(false)
+  const [isMuted, toggleMute] = useToggle(true)
   const t = useGATranslation()
   const debounceCb = useDebounceCallback()
 
@@ -43,6 +62,7 @@ const MobileBanner = () => {
     if (videoRef.current) {
       videoRef.current.pause()
       videoRef.current.currentTime = 0
+      videoRef.current.muted = true
       videoRef.current.play()
     }
   }
@@ -58,6 +78,13 @@ const MobileBanner = () => {
       videoRef.current?.pause()
     }
   }, [])
+
+  const hamdleVolume = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted
+      toggleMute()
+    }
+  }
 
   return (
     <div id="mobile-banner" className="snap-center relative h-screen w-full ">
@@ -78,25 +105,31 @@ const MobileBanner = () => {
         <div className={cn('absolute bottom-5 left-1/2 -translate-x-1/2 z-20')}>
           <div className="flex items-center justify-center gap-2">
             <div className="flex items-center justify-center gap-2">
-              <ButtonImage
-                varirant="outline"
+              {isMuted ? (
+                <ButtonCustom onClick={hamdleVolume}>
+                  <Image src={UnMutedIcon} width={22} height={22} alt="" />
+                  <p className="text-base font-medium leading-3/2 font-Roboto text-white ml-2">Unmute</p>
+                </ButtonCustom>
+              ) : (
+                <ButtonCustom onClick={hamdleVolume}>
+                  <Image src={MutedIcon} width={22} height={22} alt="" />
+                  <p className="text-base font-medium leading-3/2 font-Roboto text-white ml-2">Mute</p>
+                </ButtonCustom>
+              )}
+
+              <ButtonCustom
                 onClick={() => {
                   setIsPauseBannerVideo(true)
                   videoRef.current?.pause()
                 }}
-                className="flex items-center justify-center bg-[rgba(0,0,0,0.40)] rounded-[1000px] backdrop-blur-[5px] w-[120px] h-[42px] border-none hover:bg-[#000] cursor-pointer"
               >
-                <Image src={SkipVideoIcon} width={20} height={20} alt="" />
+                <Image src={SkipVideoIcon} width={16} height={16} alt="" />
                 <p className="text-base font-medium leading-3/2 font-Roboto text-white ml-2">Skip</p>
-              </ButtonImage>
-              <ButtonImage
-                varirant="outline"
-                onClick={handleReplayVideo}
-                className="flex items-center justify-center bg-[rgba(0,0,0,0.40)] rounded-[1000px] backdrop-blur-[5px] w-[120px] h-[42px] border-none hover:bg-[#000] cursor-pointer"
-              >
-                <Image src={ReplayVideoIcon} width={20} height={20} alt="" />
+              </ButtonCustom>
+              <ButtonCustom onClick={handleReplayVideo}>
+                <Image src={ReplayVideoIcon} width={16} height={16} alt="" />
                 <p className="text-base font-medium leading-3/2 font-Roboto text-white ml-2">Replay</p>
-              </ButtonImage>
+              </ButtonCustom>
             </div>
           </div>
         </div>
@@ -152,4 +185,3 @@ const MobileBanner = () => {
 }
 
 export default MobileBanner
-
