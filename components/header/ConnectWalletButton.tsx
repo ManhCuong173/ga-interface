@@ -65,7 +65,7 @@ const ConnectWalletButton: React.FC<Props> = ({ mode }) => {
           </div>
           <span
             className={cn(
-              'text-nowrap transition-all text-[12px] md:text-base font-medium ml-1 md:ml-[12px] font-Roboto',
+              'text-nowrap whitespace-nowrap  transition-all text-[12px] md:text-base font-medium ml-1 md:ml-[12px] font-Roboto',
               'text-red-light address-item-white',
             )}
           >

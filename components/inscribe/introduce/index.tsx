@@ -33,7 +33,7 @@ const Banner = () => {
                 varirant="outline"
                 className="rounded-xl text-base lg:text-xl font-Roboto border-secondary"
                 onClick={() => {
-                  window.open('/mint-guildline.pdf')
+                  window.open('/cdn/mint-guildline.pdf')
                 }}
               >
                 <Trans>Guide on Inscribe</Trans>

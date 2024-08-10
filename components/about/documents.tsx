@@ -60,7 +60,7 @@ const Document = () => {
               flex items-center justify-center rounded-lg w-[220px] h-[52px] hover:opacity-[0.96]
               "
               onClick={() => {
-                window.open('/document_pitchdeck.pdf')
+                window.open('/cdn/document_pitchdeck.pdf')
               }}
             >
               <span className="font-base font-medium leading-3/2 mr-2">

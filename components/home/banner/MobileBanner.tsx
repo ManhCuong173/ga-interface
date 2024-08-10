@@ -76,7 +76,7 @@ const MobileBanner = () => {
       <div className={cn(isPauseBannerVideo ? 'opacity-0' : 'opacity-100')}>
         <BackgroundVideo src="/video/home-banner-mobile.mp4" ref={videoRef} />
 
-        <div className={cn('absolute bottom-[25px] left-1/2 -translate-x-1/2 z-20')}>
+        <div className={cn('absolute bottom-[100px] left-1/2 -translate-x-1/2 z-20')}>
           <div className="flex items-center justify-center gap-2">
             <div className="flex items-center justify-center gap-2">
               {isMuted ? (
