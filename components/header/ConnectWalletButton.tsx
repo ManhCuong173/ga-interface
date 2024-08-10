@@ -50,7 +50,7 @@ const ConnectWalletButton: React.FC<Props> = ({ mode }) => {
   }
 
   return (
-    <motion.div {...appearAnimation} className="flex items-center justify-center p-[8px_16px] w-full h-full">
+    <motion.div {...appearAnimation} className="flex items-center justify-center p-2 w-full h-full">
       <button className={cn('w-[180px]', '')} onClick={toggle}>
         <div className="flex justify-center items-center">
           <div className={cn('relative h-6 w-6 transition-all')}>

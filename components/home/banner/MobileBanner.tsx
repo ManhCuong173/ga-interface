@@ -107,7 +107,7 @@ const MobileBanner = () => {
       <div
         className={cn(
           isPauseBannerVideo ? 'after:animate-gradientTopBottom opacity-100' : 'opacity-0',
-          'after:absolute after:content-normal after:left-0 after:top-0 after:w-full after:h-full after:bg-white after:transition-all after:duration-300 overflow-hidden',
+          'after:absolute after:content-normal after:left-0 after:top-0 after:w-full  after:bg-white after:transition-all after:duration-300 overflow-hidden',
         )}
       >
         <WrapperHero src="/images/home/bg-home.svg">

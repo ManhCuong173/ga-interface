@@ -110,7 +110,7 @@ export default function DesktopBanner() {
         style={{ opacity: isPauseBannerVideo ? '1' : '0' }}
         className={cn(
           isPauseBannerVideo ? 'after:animate-gradientTopBottom' : '',
-          'after:absolute after:content-normal after:left-0 after:top-0 after:w-full after:h-full after:bg-white after:transition-all after:duration-300 overflow-hidden',
+          'after:absolute after:content-normal after:left-0 after:top-0 after:w-full  after:bg-white after:transition-all after:duration-300 overflow-hidden',
         )}
       >
         <WrapperHero src="/images/home/bg-home.svg">
