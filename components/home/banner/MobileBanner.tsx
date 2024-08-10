@@ -1,4 +1,4 @@
-import { ButtonImage } from '@/components/button'
+import { ButtonImage, ButtonImageProps } from '@/components/button'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import { useEffect, useRef } from 'react'
@@ -8,13 +8,32 @@ import { appearAnimation } from '@/constants/animation.constant'
 import { useToggle } from '@/hooks/custom/useToggle'
 import ReplayVideoIcon from '@/icons/home/replay-icon.svg'
 import SkipVideoIcon from '@/icons/home/skip-icon.svg'
+
+import MutedIcon from '@/icons/home/muted.svg'
+import UnMutedIcon from '@/icons/home/unmuted.svg'
+
 import { motion } from 'framer-motion'
 import WrapperHero from '../WrapperHero'
 import BackgroundVideo from './BackgroundVideo'
 
+const ButtonCustom: React.FC<Omit<ButtonImageProps, 'varirant'>> = ({ className, children, ...props }) => {
+  return (
+    <ButtonImage
+      varirant={'outline'}
+      className={cn(
+        'flex items-center justify-center bg-[rgba(0,0,0,0.40)] rounded-[1000px] backdrop-blur-[5px] w-[68px] h-[42px] border-none hover:bg-[#000] cursor-pointer',
+        className,
+      )}
+      {...props}
+    >
+      {children}
+    </ButtonImage>
+  )
+}
 const MobileBanner = () => {
   const videoRef = useRef<HTMLVideoElement>(null)
-  const [isPauseBannerVideo, toggle, setIsPauseBannerVideo] = useToggle(false)
+  const [isPauseBannerVideo, _, setIsPauseBannerVideo] = useToggle(false)
+  const [isMuted, toggleMute] = useToggle(true)
   const t = useGATranslation()
 
   useEffect(() => {
@@ -45,17 +64,49 @@ const MobileBanner = () => {
     }
   }
 
+  const hamdleVolume = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted
+      toggleMute()
+    }
+  }
+
   return (
     <div id="mobile-banner" className="snap-center relative h-screen w-screen ">
-      <BackgroundVideo
-        src="/video/home-banner-mobile.mp4"
-        ref={videoRef}
-        className={cn(isPauseBannerVideo ? 'hidden' : 'block')}
-      />
+      <div className={cn(isPauseBannerVideo ? 'opacity-0' : 'opacity-100')}>
+        <BackgroundVideo src="/video/home-banner-mobile.mp4" ref={videoRef} />
+
+        <div className={cn('absolute bottom-5 left-1/2 -translate-x-1/2 z-20')}>
+          <div className="flex items-center justify-center gap-2">
+            <div className="flex items-center justify-center gap-2">
+              {isMuted ? (
+                <ButtonCustom onClick={hamdleVolume}>
+                  <Image src={MutedIcon} width={22} height={22} alt="" />
+                </ButtonCustom>
+              ) : (
+                <ButtonCustom onClick={hamdleVolume}>
+                  <Image src={UnMutedIcon} width={22} height={22} alt="" />
+                </ButtonCustom>
+              )}
+
+              <ButtonCustom
+                onClick={() => {
+                  setIsPauseBannerVideo(true)
+                  videoRef.current?.pause()
+                }}
+              >
+                <Image src={SkipVideoIcon} width={16} height={16} alt="" />
+              </ButtonCustom>
+              <ButtonCustom onClick={handleReplayVideo}>
+                <Image src={ReplayVideoIcon} width={16} height={16} alt="" />
+              </ButtonCustom>
+            </div>
+          </div>
+        </div>
+      </div>
       <div
-        style={{ opacity: isPauseBannerVideo ? '1' : '0' }}
         className={cn(
-          isPauseBannerVideo ? 'after:animate-gradientTopBottom' : '',
+          isPauseBannerVideo ? 'after:animate-gradientTopBottom opacity-100' : 'opacity-0',
           'after:absolute after:content-normal after:left-0 after:top-0 after:w-full after:h-full after:bg-white after:transition-all after:duration-300 overflow-hidden',
         )}
       >
@@ -98,28 +149,6 @@ const MobileBanner = () => {
             </div>
           </div>
         </WrapperHero>
-      </div>
-      <div className={cn('absolute bottom-5 left-1/2 -translate-x-1/2 z-20')}>
-        <div className="flex items-center justify-center gap-2">
-          <div className="flex items-center justify-center gap-2">
-            <ButtonImage
-              varirant="outline"
-              onClick={() => setIsPauseBannerVideo(true)}
-              className="flex items-center justify-center bg-[rgba(0,0,0,0.40)] rounded-[1000px] backdrop-blur-[5px] w-[120px] h-[42px] border-none hover:bg-[#000] cursor-pointer"
-            >
-              <Image src={SkipVideoIcon} width={20} height={20} alt="" />
-              <p className="text-base font-medium leading-3/2 font-Roboto text-white ml-2">Skip</p>
-            </ButtonImage>
-            <ButtonImage
-              varirant="outline"
-              onClick={handleReplayVideo}
-              className="flex items-center justify-center bg-[rgba(0,0,0,0.40)] rounded-[1000px] backdrop-blur-[5px] w-[120px] h-[42px] border-none hover:bg-[#000] cursor-pointer"
-            >
-              <Image src={ReplayVideoIcon} width={20} height={20} alt="" />
-              <p className="text-base font-medium leading-3/2 font-Roboto text-white ml-2">Replay</p>
-            </ButtonImage>
-          </div>
-        </div>
       </div>
     </div>
   )

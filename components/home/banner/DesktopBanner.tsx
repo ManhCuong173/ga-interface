@@ -13,15 +13,27 @@ import SkipVideoIcon from '@/icons/home/skip-icon.svg'
 import Image from 'next/image'
 import BackgroundVideo from './BackgroundVideo'
 
+import { useToggle } from '@/hooks/custom/useToggle'
+import MutedIcon from '@/icons/home/muted.svg'
+import UnMutedIcon from '@/icons/home/unmuted.svg'
+
 export default function DesktopBanner() {
   const [isPauseBannerVideo, setIsPauseBannerVideo] = useState<boolean>(false)
   const videoRef = useRef<HTMLVideoElement>(null)
   const t = useGATranslation()
+  const [isMuted, toggleMute] = useToggle(true)
 
   const handleReplayVideo = () => {
     if (videoRef.current) {
       videoRef.current.currentTime = 0
       videoRef.current.play()
+    }
+  }
+
+  const hamdleVolume = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted
+      toggleMute()
     }
   }
 
@@ -44,7 +56,7 @@ export default function DesktopBanner() {
         rootDiv.removeEventListener('scroll', handleScroll)
       }
     }
-  }, [videoRef])
+  }, [])
 
   return (
     <div id="banner" className="snap-center relative h-screen w-full ">
@@ -55,6 +67,26 @@ export default function DesktopBanner() {
       />
       <div className={cn(isPauseBannerVideo ? 'opacity-0' : 'opacity-100', 'absolute bottom-5 right-5 z-20')}>
         <div className="flex items-center justify-center gap-2">
+          {isMuted ? (
+            <ButtonImage
+              onClick={hamdleVolume}
+              varirant="outline"
+              className="flex items-center justify-center bg-[rgba(0,0,0,0.40)] rounded-[1000px] backdrop-blur-[5px] w-[120px] h-[42px] border-none hover:bg-[#000] cursor-pointer"
+            >
+              <Image src={MutedIcon} width={22} height={22} alt="" />
+              <p className="text-base font-medium leading-3/2 font-Roboto text-white ml-2">Muted</p>
+            </ButtonImage>
+          ) : (
+            <ButtonImage
+              onClick={hamdleVolume}
+              varirant="outline"
+              className="flex items-center justify-center bg-[rgba(0,0,0,0.40)] rounded-[1000px] backdrop-blur-[5px] w-[120px] h-[42px] border-none hover:bg-[#000] cursor-pointer"
+            >
+              <Image src={UnMutedIcon} width={22} height={22} alt="" />
+              <p className="text-base font-medium leading-3/2 font-Roboto text-white ml-2">UnMuted</p>
+            </ButtonImage>
+          )}
+
           <ButtonImage
             varirant="outline"
             onClick={() => setIsPauseBannerVideo(true)}

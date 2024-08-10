@@ -1,12 +1,4 @@
 node_modules
 .next
-<<<<<<< HEAD
 .env
 .yarn
-=======
-<<<<<<< HEAD
-=======
-.env
-.yarn
->>>>>>> aaf973247c4187a1639fb36cf3c9f1fc7b9af8cc
->>>>>>> esollabs

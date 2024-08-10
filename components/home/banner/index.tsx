@@ -1,15 +1,14 @@
-import DesktopBanner from './desktop-banner'
-import MobileBanner from './mobile.banner'
+import { useMediaQuery } from '@/hooks/custom/useMediaQuery'
+import DesktopBanner from './DesktopBanner'
+import MobileBanner from './MobileBanner'
 
 const HomeBanner = () => {
+  const { isMatchMedia, isLoading } = useMediaQuery('(min-width: 536px)', { returnedState: true })
+
   return (
     <div className="h-screen w-full">
-      <div className="hidden lg:block">
-        <DesktopBanner />
-      </div>
-      <div className="block lg:hidden">
-        <MobileBanner />
-      </div>
+      {isMatchMedia && !isLoading && <DesktopBanner />}
+      {!isMatchMedia && !isLoading && <MobileBanner />}
     </div>
   )
 }

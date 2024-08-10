@@ -104,13 +104,20 @@ const buttonTheme: {
   [variants.OUTLINE]: cn('border border-secondary'),
 }
 
-export const ButtonImage: React.FC<
-  React.PropsWithChildren<
-    {
-      varirant: (typeof variants)[keyof typeof variants]
-    } & DetailedHTMLProps<ButtonHTMLAttributes<HTMLDivElement>, HTMLDivElement>
-  >
-> = ({ children, className, varirant, disabled, onClick, ...props }) => {
+export type ButtonImageProps = React.PropsWithChildren<
+  {
+    varirant: (typeof variants)[keyof typeof variants]
+  } & DetailedHTMLProps<ButtonHTMLAttributes<HTMLDivElement>, HTMLDivElement>
+>
+
+export const ButtonImage: React.FC<ButtonImageProps> = ({
+  children,
+  className,
+  varirant,
+  disabled,
+  onClick,
+  ...props
+}) => {
   return (
     <div
       className={cn(
@@ -128,4 +135,3 @@ export const ButtonImage: React.FC<
     </div>
   )
 }
-
