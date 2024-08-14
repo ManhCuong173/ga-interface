@@ -75,7 +75,7 @@ export const isUnisatInstalled = () => {
     return false
   }
   const unisat = (window as any)?.unisat
-  return unisat && unisat?._initialized
+  return unisat
 }
 
 export const isXverseInstalled = () => {

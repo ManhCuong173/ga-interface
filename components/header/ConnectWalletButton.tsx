@@ -42,6 +42,7 @@ const ConnectWalletButton: React.FC<Props> = ({ mode }) => {
 
   const handleClick = async (connectorKey: WalletBitcoinConnectorEnums) => {
     const wallet = wallets.find((wallet) => wallet.connectorKey === connectorKey)
+
     if (wallet && !wallet?.installed) {
       window.open(wallet.downloadLink, '_blank')
       return
