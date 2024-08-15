@@ -29,15 +29,20 @@ export const useAuthBitcoin = () => {
 
   const login = useCallback(
     async (wallet: WalletBitcoinConnectorEnums, chainId: ChainId = CHAIN_ID) => {
-      const provider = walletBitcoinProvider[wallet]
-
       try {
+        const provider = walletBitcoinProvider[wallet]
+
         setLoading(true)
         if (provider) {
+          console.log('here')
           await provider.connect()
+          console.log('a')
           await provider.changeNetwork(chainId)
+          console.log('1')
 
           const account = await provider.getAccount()
+          console.log('2')
+
           updateAccount(wallet, account)
         }
       } catch (e) {
@@ -98,4 +103,3 @@ export const useAutoConnectBitcoinWallet = () => {
 
   return null
 }
-

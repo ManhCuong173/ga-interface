@@ -3,12 +3,15 @@ import { useMemo } from 'react'
 import { useVariableLoaded } from '../useVariableLoaded'
 import { UniSatWalletProvider } from './connectors/UniSatWallet'
 import { XverseWalletProvider } from './connectors/XverseWallet'
-import { isUnisatInstalled, isXverseInstalled } from './connectors/utils'
+import { isOkxInstalled, isTestnet, isUnisatInstalled, isXverseInstalled } from './connectors/utils'
 import { useLatestWallet } from './useLatestWallet'
+import { OkxWalletProvider } from './connectors/OkxWallet'
+import { CHAIN_ID } from '@/constants'
 
 export enum WalletBitcoinConnectorEnums {
   UniSat = 'UniSat',
   Xverse = 'Xverse',
+  Okx = 'Okx',
 }
 
 export const useUnisat = () => {
@@ -21,16 +24,26 @@ export const useXverse = () => {
   return useMemo(() => (xverse ? (window as any)?.XverseProviders?.BitcoinProvider : null), [xverse])
 }
 
+export const useOkx = () => {
+  const okx = useVariableLoaded(() => isOkxInstalled())
+  return useMemo(
+    () => (okx ? (isTestnet(CHAIN_ID) ? window?.okxwallet?.bitcoinTestnet : window?.okxwallet?.bitcoin) : null),
+    [okx],
+  )
+}
+
 export const useWalletBitcoinProviders = () => {
   const uniSat = useUnisat()
   const xverse = useXverse()
+  const okx = useOkx()
 
   return useMemo(
     () => ({
       [WalletBitcoinConnectorEnums.UniSat]: uniSat ? new UniSatWalletProvider(uniSat) : null,
       [WalletBitcoinConnectorEnums.Xverse]: xverse ? new XverseWalletProvider(xverse) : null,
+      [WalletBitcoinConnectorEnums.Okx]: okx ? new OkxWalletProvider(okx) : null,
     }),
-    [uniSat, xverse],
+    [uniSat, xverse, okx],
   )
 }
 
@@ -43,4 +56,3 @@ export const useWalletBitcoinProviderByWallet = () => {
     return account && wallet ? providers[wallet] : null
   }, [providers, account])
 }
-

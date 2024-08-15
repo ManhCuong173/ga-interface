@@ -1,4 +1,4 @@
-import { isUnisatInstalled } from '@/hooks/WalletProvider/connectors/utils'
+import { isOkxInstalled, isUnisatInstalled } from '@/hooks/WalletProvider/connectors/utils'
 import { WalletBitcoinConnectorEnums } from '@/hooks/WalletProvider/useWalletBitcoinProviders'
 
 export type WalletListType = {
@@ -7,7 +7,7 @@ export type WalletListType = {
   downloadLink: string
   logo: string
   active: boolean
-  get installed(): () => any
+  get installed(): boolean
 }
 
 export const wallets: WalletListType[] = [
@@ -21,6 +21,16 @@ export const wallets: WalletListType[] = [
     logo: '/images/wallets/unisat-wallet.png',
     active: true,
   },
+  {
+    name: 'Okx',
+    connectorKey: WalletBitcoinConnectorEnums.Okx,
+    get installed() {
+      return isOkxInstalled()
+    },
+    downloadLink: 'https://www.okx.com',
+    logo: '/images/wallets/okx-wallet.png',
+    active: true,
+  },
   // {
   //   name: 'Xverse',
   //   connectorKey: WalletBitcoinConnectorEnums.Xverse,
@@ -32,4 +42,3 @@ export const wallets: WalletListType[] = [
   //   active: false
   // },
 ]
-

@@ -12,4 +12,12 @@ interface Window {
   sliderCaptcha: (options: OptionSliderCaptcha) => {
     reset: () => void
   }
+  unisat: {}
+  okxwallet: {
+    bitcoin: {}
+    bitcoinTestnet: {}
+  }
+  XverseProviders: {
+    BitcoinProvider: {}
+  }
 }
