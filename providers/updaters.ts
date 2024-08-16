@@ -3,7 +3,7 @@
 import { useAutoConnectBitcoinWallet } from '@/hooks/WalletProvider/useAuthBitcoin'
 
 export const Updaters = () => {
-  // useAutoConnectBitcoinWallet()
+  useAutoConnectBitcoinWallet()
 
   return null
 }

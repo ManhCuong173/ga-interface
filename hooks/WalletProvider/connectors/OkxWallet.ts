@@ -65,9 +65,10 @@ export class OkxWalletProvider extends WalletProvider<IWalletProvider> {
   }
 
   public onAccountsChanged = async (callback: (account: BitcoinAccountWallet) => void) => {
-    this.provider.on('accountsChanged', async () => {
-      const account = await this.getAccount()
-      callback(account)
+    this.provider.on('accountChanged', async (account: BitcoinAccountWallet) => {
+      if (account.address) {
+        callback(account)
+      }
     })
   }
 
@@ -77,7 +78,12 @@ export class OkxWalletProvider extends WalletProvider<IWalletProvider> {
   }
 
   public changeNetwork = async (chainId: ChainId) => {
-    // dont have
+    // if (isTestnet(CHAIN_ID)) {
+    //   alert(chainId)
+    //   return this.provider.switchNetwork(
+    //     isTestnet(chainId) ? BitcoinNetworkEnum.BITCOIN_TESTNET : BitcoinNetworkEnum.BITCOIN_MAINNET,
+    //   )
+    // }
   }
 
   public async getInscriptions(_: string, offset: number, limit: number): Promise<Inscription> {

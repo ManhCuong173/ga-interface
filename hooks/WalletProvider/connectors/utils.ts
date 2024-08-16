@@ -70,23 +70,28 @@ export const getBalanceByMempool = async (address: string): Promise<Balance> => 
   }
 }
 
+export const getProviderUniSat = () => window?.unisat
+export const getProviderXverse = () => window?.XverseProviders?.BitcoinProvider
+export const getProviderOkx = () =>
+  isTestnet(CHAIN_ID) ? window?.okxwallet?.bitcoinTestnet : window?.okxwallet?.bitcoin
+
 export const isUnisatInstalled = (): boolean => {
   if (typeof window === 'undefined') {
     return false
   }
-  return !!window?.unisat
+  return !!getProviderUniSat()
 }
 
 export const isXverseInstalled = (): boolean => {
   if (typeof window === 'undefined') {
     return false
   }
-  return !!window?.XverseProviders?.BitcoinProvider
+  return !!getProviderXverse()
 }
 
 export const isOkxInstalled = (): boolean => {
   if (typeof window === 'undefined') {
     return false
   }
-  return !!(isTestnet(CHAIN_ID) ? window?.okxwallet?.bitcoinTestnet : window?.okxwallet?.bitcoin)
+  return !!getProviderOkx()
 }
