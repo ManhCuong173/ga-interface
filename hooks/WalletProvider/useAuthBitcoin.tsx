@@ -47,9 +47,9 @@ export const useAuthBitcoin = () => {
               provider,
             })
 
-            if (result) {
-              updateAccount(wallet, account)
-            }
+            // if (result) {
+            updateAccount(wallet, account)
+            // }
           }
           console.log('2')
 
@@ -90,16 +90,16 @@ export const useAutoConnectBitcoinWallet = () => {
 
   const { login } = useAuthBitcoin()
 
-  useEffect(() => {
-    if (refLogin.current) return
+  // useEffect(() => {
+  //   if (refLogin.current) return
 
-    if (wallet) {
-      login(wallet)
-    } else if (bitcoinAddress && !wallet) {
-      logoutBitcoin()
-    }
-    refLogin.current = true
-  }, [login, wallet])
+  //   if (wallet) {
+  //     login(wallet)
+  //   } else if (bitcoinAddress && !wallet) {
+  //     logoutBitcoin()
+  //   }
+  //   refLogin.current = true
+  // }, [login, wallet])
 
   useEffect(() => {
     if (provider && isConnected && wallet) {
