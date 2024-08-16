@@ -1,6 +1,7 @@
 'use client'
 
 import { CHAIN_ID, walletAuthenticated } from '@/constants'
+import { REFERRAL_KEY } from '@/constants/auth.constant'
 import {
   useBitcoinAddress,
   useBitcoinConnected,
@@ -10,7 +11,8 @@ import {
 import { selectInitializer, selectToken, setToken } from '@/lib/features/auth/auth-slice'
 import { useAppDispatch, useAppSelector } from '@/lib/hook'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { ChainId } from './connectors/base'
+import useLogin from '../api/useLogin'
+import { BitcoinAccountWallet, ChainId } from './connectors/base'
 import { useLatestWallet } from './useLatestWallet'
 import {
   WalletBitcoinConnectorEnums,
@@ -25,7 +27,7 @@ export const useAuthBitcoin = () => {
   const logout = useBitcoinLogout()
 
   const token = useAppSelector(selectToken)
-  const hasAuthInitialized = useAppSelector(selectInitializer)
+  const loginBySignWallet = useLoginBySignWallet()
 
   const login = useCallback(
     async (wallet: WalletBitcoinConnectorEnums, chainId: ChainId = CHAIN_ID) => {
@@ -34,16 +36,21 @@ export const useAuthBitcoin = () => {
 
         setLoading(true)
         if (provider) {
-          console.log('here')
           await provider.connect()
-          console.log('a')
           await provider.changeNetwork(chainId)
-          console.log('1')
 
           const account = await provider.getAccount()
-          console.log('2')
 
-          updateAccount(wallet, account)
+          if (account.address && account.publicKey) {
+            const result = await loginBySignWallet({
+              account,
+              provider,
+            })
+
+            if (result) {
+              updateAccount(wallet, account)
+            }
+          }
         }
       } catch (e) {
         console.error(e)
@@ -51,7 +58,7 @@ export const useAuthBitcoin = () => {
         setLoading(false)
       }
     },
-    [updateAccount, walletBitcoinProvider['UniSat'], walletBitcoinProvider['Xverse'], token, hasAuthInitialized],
+    [updateAccount, walletBitcoinProvider, token, loginBySignWallet],
   )
 
   const switchNetwork = useCallback(
@@ -102,4 +109,52 @@ export const useAutoConnectBitcoinWallet = () => {
   }, [provider, isConnected])
 
   return null
+}
+
+export const useLoginBySignWallet = () => {
+  const hasAuthInitialized = useAppSelector(selectInitializer)
+
+  const { login } = useLogin()
+
+  // useEffect(() => {
+  //   if (!provider || typeof window === 'undefined') return
+
+  //   if (!token && hasAuthInitialized) {
+  //     ;(async () => {
+  //       const message = `GoldenAppleConnect-${Date.now()}`
+  //       const signature = await provider.signMessage(walletAddress, message)
+
+  //       const refCode = localStorage.getItem(REFERRAL_KEY) || ''
+
+  //       login({
+  //         message,
+  //         public_key: publicKey,
+  //         ref_code: refCode,
+  //         signature,
+  //         wallet_address: walletAddress,
+  //       })
+  //     })()
+  //   }
+  // }, [walletAddress])
+
+  return useCallback(
+    async ({ account, provider }: { account: BitcoinAccountWallet; provider: any }) => {
+      if (!provider || !hasAuthInitialized) return null
+
+      const message = `GoldenAppleConnect-${Date.now()}`
+      const signature = await provider.signMessage(account.address, message)
+
+      const refCode = localStorage.getItem(REFERRAL_KEY) || ''
+
+      const auth = await login({
+        message,
+        public_key: account.publicKey,
+        ref_code: refCode,
+        signature,
+        wallet_address: account.address,
+      })
+      return auth
+    },
+    [hasAuthInitialized],
+  )
 }
