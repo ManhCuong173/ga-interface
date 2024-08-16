@@ -51,6 +51,9 @@ export const useAuthBitcoin = () => {
               updateAccount(wallet, account)
             }
           }
+          console.log('2')
+
+          updateAccount(wallet, account)
         }
       } catch (e) {
         console.error(e)
@@ -158,3 +161,4 @@ export const useLoginBySignWallet = () => {
     [hasAuthInitialized],
   )
 }
+
