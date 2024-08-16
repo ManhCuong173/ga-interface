@@ -29,7 +29,7 @@ const WalletModal: React.FC<ModalProps & { onSelect: (wallet: WalletBitcoinConne
         onClose={onClosed}
         className={'fixed inset-0 bg-black/70 w-full flex justify-center  items-center overflow-auto z-40'}
       >
-        <Dialog.Panel className={'h-fit bg-white rounded-[8px] lg:w-[362px] lg:h-[320px] p-[40px]'}>
+        <Dialog.Panel className={'h-fit bg-white rounded-[8px] lg:w-[362px] lg:min-h-[320px] p-[40px]'}>
           <div className="flex flex-col items-center justify-center  bg-textPrimary rounded-[8px] overflow-hidden">
             <Image src={'/images/commons/app-logo.png'} width={80} height={80} alt="logo" />
           </div>
@@ -40,7 +40,7 @@ const WalletModal: React.FC<ModalProps & { onSelect: (wallet: WalletBitcoinConne
 
           <div className={cn('gap-[12px] flex flex-col')}>
             {wallets.map((item, index) => (
-              <div className="relative">
+              <div className="relative" key={item.connectorKey}>
                 <WalletItemCard
                   onSelect={() => {
                     if (!item.active) return
@@ -73,4 +73,3 @@ const WalletModal: React.FC<ModalProps & { onSelect: (wallet: WalletBitcoinConne
 }
 
 export default WalletModal
-

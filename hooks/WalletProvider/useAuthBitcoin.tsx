@@ -31,15 +31,19 @@ export const useAuthBitcoin = () => {
 
   const login = useCallback(
     async (wallet: WalletBitcoinConnectorEnums, chainId: ChainId = CHAIN_ID) => {
-      const provider = walletBitcoinProvider[wallet]
-
       try {
+        const provider = walletBitcoinProvider[wallet]
+
         setLoading(true)
         if (provider) {
+          console.log('here')
           await provider.connect()
+          console.log('a')
           await provider.changeNetwork(chainId)
+          console.log('1')
 
           const account = await provider.getAccount()
+<<<<<<< HEAD
 
           if (account.address && account.publicKey) {
             const result = await loginBySignWallet({
@@ -51,6 +55,11 @@ export const useAuthBitcoin = () => {
               updateAccount(wallet, account)
             }
           }
+=======
+          console.log('2')
+
+          updateAccount(wallet, account)
+>>>>>>> ee673809b7b3d772b8433f588520e8548d204e5f
         }
       } catch (e) {
         console.error(e)
@@ -110,6 +119,7 @@ export const useAutoConnectBitcoinWallet = () => {
 
   return null
 }
+<<<<<<< HEAD
 
 export const useLoginBySignWallet = () => {
   const hasAuthInitialized = useAppSelector(selectInitializer)
@@ -158,3 +168,5 @@ export const useLoginBySignWallet = () => {
     [hasAuthInitialized],
   )
 }
+=======
+>>>>>>> ee673809b7b3d772b8433f588520e8548d204e5f

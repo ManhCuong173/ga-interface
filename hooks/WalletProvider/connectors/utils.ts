@@ -70,18 +70,23 @@ export const getBalanceByMempool = async (address: string): Promise<Balance> => 
   }
 }
 
-export const isUnisatInstalled = () => {
+export const isUnisatInstalled = (): boolean => {
   if (typeof window === 'undefined') {
     return false
   }
-  const unisat = (window as any)?.unisat
-  return unisat
+  return !!window?.unisat
 }
 
-export const isXverseInstalled = () => {
+export const isXverseInstalled = (): boolean => {
   if (typeof window === 'undefined') {
     return false
   }
-  return (window as any)?.XverseProviders?.BitcoinProvider
+  return !!window?.XverseProviders?.BitcoinProvider
 }
 
+export const isOkxInstalled = (): boolean => {
+  if (typeof window === 'undefined') {
+    return false
+  }
+  return !!(isTestnet(CHAIN_ID) ? window?.okxwallet?.bitcoinTestnet : window?.okxwallet?.bitcoin)
+}
